@@ -131,7 +131,7 @@ class HouseControlWindow:
         # Device Load Label
         load_label = ttk.Label(
             control_frame,
-            textvariable=device_state.load,
+            textvariable=device_state.loadStr,
             width=15)
         load_label.pack(side="left", padx=5)
         self.device_widgets[device_name]['load_label'] = load_label

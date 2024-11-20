@@ -11,7 +11,7 @@ from house_control import HouseControlWindow
 
 
 # Time acceleration factor (1 second real time = TIME_FACTOR seconds simulation time)
-TIME_FACTOR = 1.0
+TIME_FACTOR = 1
 
 
 class HousesLoadSimulator:
@@ -41,7 +41,8 @@ class HousesLoadSimulator:
         self.init_ui()
 
         self.running = True
-        self.update_thread = threading.Thread(target=self.update_loads_periodically)
+        self.update_thread = threading.Thread(
+            target=self.update_loads_periodically)
         self.update_thread.daemon = True
         self.update_thread.start()
 
@@ -153,21 +154,19 @@ class HousesLoadSimulator:
             for house_index in range(self.num_houses):
                 total_house_load = 0
                 for device_state in self.houses_devices[house_index].values():
-                    elapsed_time = self.sim_time.get_elapsed()
+                    curr_time = self.sim_time.get_elapsed()
+
                     device_state.active_envelopes = [
-                        (start_time, active) for start_time, active in device_state.active_envelopes
-                        if active or (elapsed_time - start_time <= device_state.adsr.r)
+                        (state_toggle_time, state_toggle_load, is_active) for state_toggle_time, state_toggle_load, is_active in device_state.active_envelopes
+                        if is_active or (curr_time - state_toggle_time <= device_state.adsr.r)
                     ]
 
-                    current_wattage = device_state.get_current_wattage(
-                        self.sim_time)
-                    device_state.load.set(f"{int(current_wattage)} Watts")
-                    total_house_load += current_wattage
+                    curr_wattage = device_state.calc_current_wattage(self.sim_time)
+                    device_state.setLoad(int(curr_wattage))
+                    total_house_load += curr_wattage
 
-                self.houses_total_load[house_index].set(
-                    f"Total Load: {int(total_house_load)} Watts")
+                self.houses_total_load[house_index].set(f"Total Load: {int(total_house_load)} Watts")
                 total_system_load += total_house_load
 
-            self.total_power.set(
-                f"Total Power: {total_system_load/1000:.2f} kW")
+            self.total_power.set(f"Total Power: {total_system_load/1000:.2f} kW")
             time.sleep(0.1)

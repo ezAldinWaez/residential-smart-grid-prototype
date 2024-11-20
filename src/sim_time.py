@@ -10,23 +10,21 @@ class SimulationTime:
         - timeFactor : Time acceleration factor (in sec).
         """
         self.time_factor = time_factor
-        self.start_real_time = time.time()
-        self.paused_at = None
-        self.pause_duration = 0
+        self.start_real_time: float = time.time()
+        self.paused_at: float | None = None
+        self.pause_duration: float = 0
 
     def get_elapsed(self) -> float:
         """
         Return the elapsed simulation time (number of seconds).
         """
-        if self.paused_at is not None:
-            return (self.paused_at - self.start_real_time - self.pause_duration) * self.time_factor
-        return (time.time() - self.start_real_time - self.pause_duration) * self.time_factor
+        return ((self.paused_at if self.paused_at else time.time()) - self.start_real_time - self.pause_duration) * self.time_factor
 
     def get_time(self) -> datetime:
         """
         Return the current simulation datetime.
         """
-        return datetime.now() + timedelta(seconds=self.get_elapsed())
+        return datetime.fromtimestamp(self.start_real_time + self.get_elapsed())
 
     def pause(self):
         """

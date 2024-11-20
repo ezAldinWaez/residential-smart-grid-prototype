@@ -6,11 +6,17 @@ class ApplianceSettings:
     """
     Attributes
     ----------
-    - options : (setting name -> list of all possible values).
-    - powerFactors : (setting name -> (value -> power multiplier)).
+    - options : (Setting Name -> List of Options).
+    - power_factors : (Setting Name -> (Option Name -> Multiplier)).
     """
     options: dict[str, list[str]]
     power_factors: dict[str, dict[str, float]]
+
+    def __post_init__(self):
+        for setting, options in self.power_factors.items():
+            for option, multiplier in options.items():
+                assert (option in self.options.get(setting))
+                assert (multiplier > 0)
 
 
 @dataclass
@@ -20,46 +26,51 @@ class ADSRParams:
     ----------
     - a : Attack Time (in sec).
     - d : Decay Time (in sec).
-    - s : Sustain Level (in watt).
-    - r : Release Tiem (in sec).
+    - s : Sustain Level (between 0 and 1).
+    - r : Release Time (in sec).
     - wt : Wave Type ("none" | "sine" | "square" | "random").
     - wp : Wave Period (in sec).
-    - wa : Wave Amplitude Multiplier (betweent 0 and 1).
+    - wa : Wave Amplitude (between 0 and 1).
     """
     a: float
     d: float
     s: float
     r: float
     wt: str = "none"
-    wp: float = 0
+    wp: float = 1
     wa: float = 0
 
+    def __post_init__(self):
+        assert (self.a > 0)
+        assert (self.d > 0)
+        assert (1 >= self.s >= 0)
+        assert (self.r > 0)
+        assert (self.wt in ["none", "sine", "square", "random"])
+        assert (self.wp > 0)
+        assert (1 >= self.wa >= 0)
 
-# Define devices configuration
+
+# Define devices configuration (Device Name -> (wattage -> float, max_count -> int, adsr -> ADSRParams, settings: ApplianceSettings))
 DEVICES_CONFIG = {
-    "LED Lights": {
-        "wattage": 9,
+    "LED Light": {
+        "wattage": 10,
         "max_count": 20,
-        "adsr": ADSRParams(a=1.0, d=1.0, s=1.0, r=1.0),
-        "settings": None
+        "adsr": ADSRParams(a=0.01, d=2, s=0.8, r=0.01),
     },
     "TV/Entertainment": {
         "wattage": 120,
         "max_count": 4,
         "adsr": ADSRParams(a=1.0, d=1.0, s=0.8, r=1.5, wt="sine", wp=.5, wa=0.1),
-        "settings": None
     },
     "Refrigerator": {
         "wattage": 150,
         "max_count": 2,
         "adsr": ADSRParams(a=1.0, d=1.0, s=0.3, r=2.0, wt="square", wp=3, wa=0.06),
-        "settings": None
     },
     "HVAC": {
         "wattage": 3500,
         "max_count": 1,
         "adsr": ADSRParams(a=3.0, d=2.0, s=0.8, r=0.5, wt="sine", wp=2, wa=0.07),
-        "settings": None
     },
     "Washing Machine": {
         "wattage": 500,
@@ -154,12 +165,10 @@ DEVICES_CONFIG = {
         "wattage": 4500,
         "max_count": 1,
         "adsr": ADSRParams(a=1.0, d=0.5, s=0.9, r=1.0, wt="square", wp=5, wa=0.1),
-        "settings": None
     },
     "Microwave": {
         "wattage": 1100,
         "max_count": 1,
         "adsr": ADSRParams(a=0.5, d=0.2, s=1.0, r=0.5),
-        "settings": None
     }
 }

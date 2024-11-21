@@ -1,4 +1,4 @@
-from datetime import datetime, timedelta
+from datetime import datetime
 import time
 
 
@@ -20,11 +20,13 @@ class SimulationTime:
         """
         return ((self.paused_at if self.paused_at else time.time()) - self.start_real_time - self.pause_duration) * self.time_factor
 
-    def get_time(self) -> datetime:
+    def get_time(self, elapsed=None) -> datetime:
         """
         Return the current simulation datetime.
         """
-        return datetime.fromtimestamp(self.start_real_time + self.get_elapsed())
+        if not elapsed:
+            elapsed = self.get_elapsed()
+        return datetime.fromtimestamp(self.start_real_time + elapsed)
 
     def pause(self):
         """

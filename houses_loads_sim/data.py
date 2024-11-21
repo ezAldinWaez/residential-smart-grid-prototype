@@ -50,7 +50,13 @@ class ADSRParams:
         assert (1 >= self.wa >= 0)
 
 
-# Define devices configuration (Device Name -> (wattage -> float, max_count -> int, adsr -> ADSRParams, settings: ApplianceSettings))
+#: Devices Configuration contains some regular house devices with some static info for each device.
+#: Shape: Device Name -> (wattage -> float, max_count -> int, adsr -> ADSRParams, settings: ApplianceSettings)
+#: where:
+#: - `wattage` : Maximum wattage that device can reach. (you can call it Maximum Amplitude)
+#: - `max_count` : Maximum count a regular house could contains from that device.
+#: - `adsr` : ADSRParams for the device.
+#: - `settings` (optional) : ApplianceSettings for the device.
 DEVICES_CONFIG = {
     "LED Light": {
         "wattage": 10,

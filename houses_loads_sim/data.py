@@ -58,6 +58,11 @@ class ADSRParams:
 #: - `adsr` : ADSRParams for the device.
 #: - `settings` (optional) : ApplianceSettings for the device.
 DEVICES_CONFIG = {
+    "Test Device": {
+        "wattage": 1000,
+        "max_count": 10,
+        "adsr": ADSRParams(a=360, d=200, s=0.8, r=10, wt="random", wp=1, wa=.050),
+    },
     "LED Light": {
         "wattage": 10,
         "max_count": 20,

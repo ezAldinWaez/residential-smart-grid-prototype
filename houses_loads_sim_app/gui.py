@@ -8,20 +8,24 @@ class App:
     def __init__(self, sim: HousesLoadsSimulator):
         self.sim = sim
 
-        self.houses_windows: dict[int, HouseControlWindow] = {}
-
         self.root = tk.Tk()
         self.root.title("Houses Load Simulator")
         self.root.attributes('-fullscreen', True)
 
         ttk.Style().theme_use('darkly')
 
-        # Main Container
         main_container = ttk.Frame(self.root, padding="20")
         main_container.pack(fill="both", expand=True)
+        self._build_header(main_container)
+        self._build_body(main_container)
 
+        self.root.protocol("WM_DELETE_WINDOW", self._on_closing)
+
+        self._update_ui(100)  # Update UI every 100 ms
+
+    def _build_header(self, root: ttk.Frame):
         # Header Frame
-        header_frame = ttk.Frame(main_container)
+        header_frame = ttk.Frame(root)
         header_frame.pack(fill="x", pady=(0, 20))
 
         # Simulation Time Display
@@ -58,9 +62,13 @@ class App:
             command=self.sim.resume
         ).pack(side="left", padx=10)
 
-        # Houses Frame
-        houses_frame = ttk.Frame(main_container)
-        houses_frame.pack(fill="both", expand=True)
+    def _build_body(self, root: ttk.Frame):
+        # Body Frame
+        body_frame = ttk.Frame(root)
+        body_frame.pack(fill="both", expand=True, pady=20, padx=20)
+        body_frame.place(relx=.5, rely=.5, anchor='center')
+
+        self.houses_windows: dict[int, HouseControlWindow] = {}
 
         self.houses_total_load = [
             ttk.StringVar(value="Total Load: - Watts")
@@ -69,13 +77,13 @@ class App:
 
         # Configure grid columns to be 3 in row.
         for i in range(3):
-            houses_frame.columnconfigure(i, weight=1)
+            body_frame.columnconfigure(i, weight=1)
 
         for i in range(self.sim.num_houses):
             # Create card-like frame for each house
-            house_card = ttk.Frame(houses_frame, style="Card.TFrame")
+            house_card = ttk.Frame(body_frame, style="Card.TFrame")
             house_card.grid(row=i//3, column=i %
-                            3, padx=10, pady=20, sticky="nsew")
+                            3, ipadx=40, pady=20, sticky="nsew")
 
             # House Title
             ttk.Label(
@@ -95,21 +103,20 @@ class App:
             ttk.Button(
                 house_card,
                 text="Open Control Panel",
-                command=lambda idx=i: self.open_house_control(idx),
+                command=lambda idx=i: self._open_house_control(idx),
                 style="Accent.TButton"
             ).pack(pady=10)
 
-        self.root.protocol("WM_DELETE_WINDOW", self.on_closing)
-
-        self.update_ui()
-
-    def open_house_control(self, idx: int):
+    def _open_house_control(self, idx: int):
         if idx in self.houses_windows and self.houses_windows[idx].root.winfo_exists():
             self.houses_windows[idx].root.focus()
         else:
-            self.houses_windows[idx] = HouseControlWindow(self, idx=idx)
+            self.houses_windows[idx] = HouseControlWindow(
+                app=self,
+                idx=idx
+            )
 
-    def on_closing(self):
+    def _on_closing(self):
         self.sim.pause()
 
         # Close all house control windows
@@ -120,9 +127,9 @@ class App:
         # Close Main Window
         self.root.destroy()
 
-    def update_ui(self):
+    def _update_ui(self, dt: int):
         self.time_display.set(
-            f"Simulation Time: {self.sim.current_sim_time.strftime('%H:%M:%S')}")
+            f"Simulation Time: {self.sim.sim_time.get_time().strftime('%H:%M:%S')}")
         self.total_power.set(
             f"Total Power: {self.sim.system_load/1000:.3f} kW")
         for idx, house_total_load in enumerate(self.houses_total_load):
@@ -134,29 +141,29 @@ class App:
                     device_load.set(
                         f"{self.sim.houses_device_states[idx][device_name].total_load:.1f} Watt")
 
-        self.root.after(100, self.update_ui)
+        self.root.after(dt, self._update_ui, dt)
 
 
 class HouseControlWindow:
-    def __init__(self, app: App, *, idx: int):
+    def __init__(self, app: App, idx: int):
         self.app = app
         self.idx = idx
         self.total_load = self.app.houses_total_load[self.idx]
         self.device_states = self.app.sim.houses_device_states[self.idx]
 
-        # Root
         self.root = ttk.Toplevel(self.app.root)
         self.root.title(f"House {self.idx + 1} Controls")
         self.root.geometry("600x600")
         self.root.minsize(600, 600)
 
-        self.device_loads = {
-            device_name: ttk.StringVar(value="- Watt")
-            for device_name in self.device_states.keys()
-        }
+        main_container = self._build_scrollable_container(self.root)
+        self._build_dody(main_container)
 
+        self.root.protocol("WM_DELETE_WINDOW", self._on_closing)
+
+    def _build_scrollable_container(self, root: ttk.Frame) -> ttk.Frame:
         # Canvas and Scrollbar
-        container = ttk.Frame(self.root)
+        container = ttk.Frame(root)
         container.pack(fill="both", expand=True)
         self.canvas = ttk.Canvas(container)
         scrollbar = ttk.Scrollbar(
@@ -164,29 +171,32 @@ class HouseControlWindow:
             orient="vertical",
             command=self.canvas.yview)
 
-        # Main Frame
-        self.main_frame = ttk.Frame(self.canvas, padding="20")
+        # Main Container
+        main_container = ttk.Frame(self.canvas, padding="20")
 
         # Configure scrolling and canvas
-        self.main_frame.bind("<Configure>", lambda e: self.canvas.configure(
+        main_container.bind("<Configure>", lambda e: self.canvas.configure(
             scrollregion=self.canvas.bbox("all")))
         self.canvas.bind_all(
             "<MouseWheel>", lambda e: self.canvas.yview_scroll(-1 * (e.delta // 120), "units"))
         self.canvas.create_window(
-            (0, 0), window=self.main_frame, anchor="nw", width=580)
+            (0, 0), window=main_container, anchor="nw", width=580)
         self.canvas.configure(yscrollcommand=scrollbar.set)
         scrollbar.pack(side="right", fill="y")
         self.canvas.pack(side="left", fill="both", expand=True)
+        
+        return main_container
 
+    def _build_dody(self, root: ttk.Frame):
         # House Title
         ttk.Label(
-            self.main_frame,
+            root,
             text=f"House {self.idx + 1} Control Panel",
             font=("Calibri", 16, "bold")
         ).pack(pady=(0, 20))
 
         # Total Load Display
-        total_frame = ttk.Frame(self.main_frame)
+        total_frame = ttk.Frame(root)
         total_frame.pack(fill="x", pady=20)
         ttk.Label(
             total_frame,
@@ -194,12 +204,17 @@ class HouseControlWindow:
             font=("Calibri", 12, "bold")
         ).pack()
 
+        self.device_loads = {
+            device_name: ttk.StringVar(value="- Watt")
+            for device_name in self.device_states.keys()
+        }
+
         # Devices Controls
         for device_name, device_state in self.device_states.items():
 
             # Device Frame
             device_frame = ttk.LabelFrame(
-                self.main_frame,
+                root,
                 text=f' {device_name} Controls ',
                 padding="10"
             )
@@ -305,8 +320,6 @@ class HouseControlWindow:
                     combo.bind('<<ComboboxSelected>>', lambda e, wid=power_factor,
                                dn=device_name: update_power_factor_label(wid, dn))
 
-        self.root.protocol("WM_DELETE_WINDOW", self.on_closing)
-
-    def on_closing(self):
+    def _on_closing(self):
         self.canvas.unbind_all("<MouseWheel>")
         self.root.destroy()

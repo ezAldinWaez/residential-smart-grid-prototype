@@ -1,11 +1,12 @@
-from app.gui import App
 from houses_loads_sim.sim import HousesLoadsSimulator
-
-NUM_HOUSES = 9
-SIM_TIME_FACTOR = 1.0
+from houses_loads_sim_app.gui import App
 
 if __name__ == "__main__":
-    sim = HousesLoadsSimulator(NUM_HOUSES, SIM_TIME_FACTOR, log=True)
+    sim = HousesLoadsSimulator(
+        num_houses=9,
+        sim_time_factor=60, # every one real second equals one simulation minute
+        log=True
+    )
     sim.start()
 
     app = App(sim)

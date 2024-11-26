@@ -1,15 +1,16 @@
 import threading
 import time
 
-from .sim_time import SimulationTime
+from sim_time_loc.sim_time_loc import SimulationTimeLocation
+
 from .device_state import DeviceState
 from .data import DEVICES_CONFIG
 
 
 class HousesLoadsSimulator:
-    def __init__(self, num_houses: int, sim_time_factor: float, log=False):
+    def __init__(self, num_houses: int, sim_time_loc: SimulationTimeLocation, log=False):
         self.num_houses: int = num_houses
-        self.sim_time = SimulationTime(sim_time_factor)
+        self.sim_time_loc = sim_time_loc
 
         self.houses_device_states = [
             {
@@ -31,7 +32,7 @@ class HousesLoadsSimulator:
 
         if (self.log):
             self.data_file = open(
-                f"logs\\houses_loads_sim\\log_{self.sim_time.get_time().strftime('%H-%M-%S')}.csv", "w")
+                f"logs\\houses_loads_sim\\log_{self.sim_time_loc.get_time().strftime(f'%Y-%m-%d_%H-%M-%S')}.csv", "w")
             self.data_file.write("elapsed,system_load\n")
 
         threading.Thread(
@@ -42,7 +43,7 @@ class HousesLoadsSimulator:
 
     def pause(self):
         if self.running:
-            self.sim_time.pause()
+            self.sim_time_loc.pause()
             self.running = False
 
             if (self.log):
@@ -50,12 +51,12 @@ class HousesLoadsSimulator:
 
     def resume(self):
         if not self.running:
-            self.sim_time.resume()
+            self.sim_time_loc.resume()
             self.start()
 
     def update_sim(self, dt: int):
         while self.running:
-            elapsed = self.sim_time.get_elapsed()
+            elapsed = self.sim_time_loc.get_elapsed()
 
             for idx in range(self.num_houses):
                 house_load = 0.0

@@ -129,7 +129,7 @@ class App:
 
     def _update_ui(self, dt: int):
         self.time_display.set(
-            f"Simulation Time: {self.sim.sim_time.get_time().strftime('%H:%M:%S')}")
+            f"Simulation Time: {self.sim.sim_time_loc.get_time().strftime('%H:%M:%S')}")
         self.total_power.set(
             f"Total Power: {self.sim.system_load/1000:.3f} kW")
         for idx, house_total_load in enumerate(self.houses_total_load):
@@ -184,7 +184,7 @@ class HouseControlWindow:
         self.canvas.configure(yscrollcommand=scrollbar.set)
         scrollbar.pack(side="right", fill="y")
         self.canvas.pack(side="left", fill="both", expand=True)
-        
+
         return main_container
 
     def _build_dody(self, root: ttk.Frame):
@@ -243,7 +243,7 @@ class HouseControlWindow:
 
             def update_count_value(wid: ttk.Spinbox, dn: str):
                 self.device_states[dn].update_count_and_active_envelopes(
-                    elapsed=self.app.sim.sim_time.get_elapsed(),
+                    elapsed=self.app.sim.sim_time_loc.get_elapsed(),
                     value=wid.get().strip()
                 )
 

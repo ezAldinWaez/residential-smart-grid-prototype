@@ -1,1 +1,1 @@
-# houses-load-simulator
+# Residential Smart Grid

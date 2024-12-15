@@ -32,7 +32,7 @@ class DeviceState:
                 # Default to first option
                 self.current_settings[option_name] = possible_values[0]
 
-    def update_count_and_active_envelopes(self, elapsed, value: str):
+    def update_count_and_active_envelopes(self, elapsed: float, value: str):
         """
         Update device instances count and edit envelopes indead
 

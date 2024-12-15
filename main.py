@@ -1,8 +1,8 @@
-from houses_loads_sim.sim import HousesLoadsSimulator
-from solar_system_sim.sim import SolarSystemSimulator
+from sim_houses_loads.sim import HousesLoadsSimulator
+from sim_solar_system.sim import SolarSystemSimulator
 from sim_time_loc.sim_time_loc import SimulationTimeLocation
 from sim_time_loc.data import Location
-from app.gui import App
+from app_tk.main import App
 
 
 def main():
@@ -11,12 +11,12 @@ def main():
         location=Location.ALEPPO,
     )
 
-    hls_sim = HousesLoadsSimulator(
+    shl_sim = HousesLoadsSimulator(
         sim_time_loc=sim_time_loc,
         num_houses=9,
         log=True,
     )
-    hls_sim.start()
+    shl_sim.start()
 
     sss_sim = SolarSystemSimulator(
         sim_time_loc=sim_time_loc,
@@ -27,8 +27,8 @@ def main():
     )
     sss_sim.start()
 
-    app = App(sim_time_loc, hls_sim, sss_sim)
-    app.root.mainloop()
+    app = App(sim_time_loc, shl_sim, sss_sim)
+    app.mainloop()
 
 
 if __name__ == "__main__":

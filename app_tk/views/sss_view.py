@@ -1,18 +1,16 @@
 import tkinter as tk
 import ttkbootstrap as ttk
 
-from solar_system_sim.sim import SolarSystemSimulator
+# from app_tk.main import App
 
 
-class SSSApp:
-    def __init__(self, root: tk.Tk, sim: SolarSystemSimulator):
-        self.sim = sim
-
+class SSSView:
+    def __init__(self, root: tk.Tk, app):
         self.root = root
+        self.app = app
+
         self.root.title("Solar System Simulator")
         self.root.attributes('-fullscreen', True)
-
-        ttk.Style().theme_use('darkly')
 
         main_container = ttk.Frame(self.root, padding="20")
         main_container.pack(fill="both", expand=True)
@@ -56,32 +54,32 @@ class SSSApp:
         self.output_text.pack(fill='both')
 
     def _on_closing(self):
-        self.sim.pause()
+        self.app.sss_sim.pause()
         self.root.destroy()
 
     def _update_ui(self, dt: int):
         self.time_display.set(
-            f"Simulation Time: {self.sim.sim_time_loc.get_time().strftime('%H:%M:%S')}")
+            f"Simulation Time: {self.app.sss_sim.sim_time_loc.get_time().strftime('%H:%M:%S')}")
         self.total_power.set(
-            f"Total Power: {self.sim.total_power/1000:.3f} kW")
+            f"Total Power: {self.app.sss_sim.total_power/1000:.3f} kW")
 
         # Display real-time wattage output
         self.output_text.delete(1.0, ttk.END)  # Clear previous output
         self.output_text.insert(
-            ttk.END, f"Location: {self.sim.sim_time_loc.loc_name} (lat: {self.sim.sim_time_loc.loc_lat}, lng: {self.sim.sim_time_loc.loc_lng}, alt: {self.sim.sim_time_loc.loc_alt})\n")
+            ttk.END, f"Location: {self.app.sss_sim.sim_time_loc.loc_name} (lat: {self.app.sss_sim.sim_time_loc.loc_lat}, lng: {self.app.sss_sim.sim_time_loc.loc_lng}, alt: {self.app.sss_sim.sim_time_loc.loc_alt})\n")
         self.output_text.insert(
-            ttk.END, f"Timezone: {self.sim.sim_time_loc.loc_tz}\n")
+            ttk.END, f"Timezone: {self.app.sss_sim.sim_time_loc.loc_tz}\n")
         self.output_text.insert(
-            ttk.END, f"Panel Area: {self.sim.panel_area} m²\n")
+            ttk.END, f"Panel Area: {self.app.sss_sim.panel_area} m²\n")
         self.output_text.insert(
-            ttk.END, f"Panel Efficiency: {self.sim.panel_efficiency:.1%}\n")
+            ttk.END, f"Panel Efficiency: {self.app.sss_sim.panel_efficiency:.1%}\n")
         self.output_text.insert(
-            ttk.END, f"Number of Panels: {self.sim.panels_count}\n")
+            ttk.END, f"Number of Panels: {self.app.sss_sim.panels_count}\n")
         self.output_text.insert(
-            ttk.END, f"Zenith Angle: {self.sim.zenith_angle:.2f}°\n")
+            ttk.END, f"Zenith Angle: {self.app.sss_sim.zenith_angle:.2f}°\n")
         self.output_text.insert(
-            ttk.END, f"Panel Power: {self.sim.panel_power:.2f} W\n")
+            ttk.END, f"Panel Power: {self.app.sss_sim.panel_power:.2f} W\n")
         self.output_text.insert(
-            ttk.END, f"Total Power: {self.sim.total_power/1000:.3f} KW\n")
+            ttk.END, f"Total Power: {self.app.sss_sim.total_power/1000:.3f} KW\n")
 
         self.root.after(dt, self._update_ui, dt)

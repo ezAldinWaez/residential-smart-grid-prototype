@@ -1,22 +1,17 @@
 import tkinter as tk
 import ttkbootstrap as ttk
 
-from sim_time_loc.sim_time_loc import SimulationTimeLocation
-from houses_loads_sim.sim import HousesLoadsSimulator
-from solar_system_sim.sim import SolarSystemSimulator
-
-from houses_loads_sim_app.gui import HLSApp
-from solar_system_sim_app.gui import SSSApp
+# from app_tk.main import App
+from app_tk.views.shl_view import SHLView
+from app_tk.views.sss_view import SSSView
 
 
-class App:
-    def __init__(self, sim_time_loc: SimulationTimeLocation, hls_sim: HousesLoadsSimulator, sss_sim: SolarSystemSimulator):
-        self.sim_time_loc = sim_time_loc
-        self.hls_sim = hls_sim
-        self.sss_sim = sss_sim
+class MainView:
+    def __init__(self, root: tk.Tk, app):
+        self.root = root
+        self.app = app
 
-        self.root = tk.Tk()
-        self.root.title("...")
+        self.root.title("Residential Smart Grid Simulator")
         self.root.attributes('-fullscreen', True)
 
         ttk.Style().theme_use('darkly')
@@ -28,7 +23,7 @@ class App:
 
         self.root.protocol("WM_DELETE_WINDOW", self._on_closing)
 
-        self._update_ui(100)  # Update UI every 100 ms
+        self._update_ui(100)
 
     def _build_header(self, root: ttk.Frame):
         # Header Frame
@@ -51,14 +46,14 @@ class App:
         ttk.Button(
             buttons_menue_frame,
             text="Pause Simulation",
-            command=self.pause_sim
+            command=self.app.pause_sim
         ).pack(side="left", padx=10)
 
         # Resume Simulation Button
         ttk.Button(
             buttons_menue_frame,
             text="Resume Simulation",
-            command=self.resume_sim
+            command=self.app.resume_sim
         ).pack(side="left", padx=10)
 
     def _build_body(self, root: ttk.Frame):
@@ -67,11 +62,11 @@ class App:
         body_frame.pack(fill="both", expand=True, pady=20, padx=20)
         body_frame.place(relx=.5, rely=.5, anchor='center')
 
-        # Open HLS Button
+        # Open SHL Button
         ttk.Button(
             body_frame,
             text="Open Houses Loads Simulator",
-            command=lambda: HLSApp(tk.Toplevel(self.root), self.hls_sim),
+            command=lambda: SHLView(tk.Toplevel(self.root), self.app),
             style="Accent.TButton"
         ).pack(pady=10, padx=10)
 
@@ -79,27 +74,16 @@ class App:
         ttk.Button(
             body_frame,
             text="Open Solar System Simulator",
-            command=lambda: SSSApp(tk.Toplevel(self.root), self.sss_sim),
+            command=lambda: SSSView(tk.Toplevel(self.root), self.app),
             style="Accent.TButton"
         ).pack(pady=10, padx=10)
 
-    def pause_sim(self):
-        self.sim_time_loc.pause()
-        self.hls_sim.pause()
-        self.sss_sim.pause()
-
-    def resume_sim(self):
-        self.sim_time_loc.resume()
-        self.hls_sim.resume()
-        self.sss_sim.resume()
-
     def _on_closing(self):
-        self.pause_sim()
+        self.app.pause_sim()
         self.root.destroy()
-
 
     def _update_ui(self, dt: int):
         self.time_display.set(
-            f"Simulation Time: {self.sim_time_loc.get_time().strftime('%H:%M:%S')}")
+            f"Simulation Time: {self.app.sim_time_loc.get_time().strftime('%H:%M:%S')}")
 
         self.root.after(dt, self._update_ui, dt)

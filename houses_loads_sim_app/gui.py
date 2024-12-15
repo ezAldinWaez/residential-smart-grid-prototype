@@ -4,11 +4,11 @@ import ttkbootstrap as ttk
 from houses_loads_sim.sim import HousesLoadsSimulator
 
 
-class App:
-    def __init__(self, sim: HousesLoadsSimulator):
+class HLSApp:
+    def __init__(self, root: tk.Tk, sim: HousesLoadsSimulator):
         self.sim = sim
 
-        self.root = tk.Tk()
+        self.root = root
         self.root.title("Houses Load Simulator")
         self.root.attributes('-fullscreen', True)
 
@@ -43,24 +43,6 @@ class App:
             textvariable=self.total_power,
             font=("Calibri", 14)
         ).pack(side="right")
-
-        # Buttons Menue Frame
-        buttons_menue_frame = ttk.Frame(header_frame)
-        buttons_menue_frame.pack(anchor="center", padx=10)
-
-        # Pause Simulation Button
-        ttk.Button(
-            buttons_menue_frame,
-            text="Pause Simulation",
-            command=self.sim.pause
-        ).pack(side="left", padx=10)
-
-        # Resume Simulation Button
-        ttk.Button(
-            buttons_menue_frame,
-            text="Resume Simulation",
-            command=self.sim.resume
-        ).pack(side="left", padx=10)
 
     def _build_body(self, root: ttk.Frame):
         # Body Frame
@@ -145,7 +127,7 @@ class App:
 
 
 class HouseControlWindow:
-    def __init__(self, app: App, idx: int):
+    def __init__(self, app: HLSApp, idx: int):
         self.app = app
         self.idx = idx
         self.total_load = self.app.houses_total_load[self.idx]

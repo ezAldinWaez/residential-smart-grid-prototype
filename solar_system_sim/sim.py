@@ -35,7 +35,6 @@ class SolarSystemSimulator:
 
     def pause(self):
         if self.running:
-            self.sim_time_loc.pause()
             self.running = False
 
             if (self.log):
@@ -43,7 +42,6 @@ class SolarSystemSimulator:
 
     def resume(self):
         if not self.running:
-            self.sim_time_loc.resume()
             self.start()
 
     def update_sim(self, dt: int):

@@ -7,7 +7,7 @@ from app_tk.main import App
 
 def main():
     sim_time_loc = SimulationTimeLocation(
-        time_factor=3600,  # every one real second equals one simulation hour
+        time_factor=3600,
         location=Location.ALEPPO,
     )
 

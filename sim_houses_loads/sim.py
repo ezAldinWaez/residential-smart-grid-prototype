@@ -32,7 +32,7 @@ class HousesLoadsSimulator:
 
         if (self.log):
             self.data_file = open(
-                f"logs\\shl\\log_{self.sim_time_loc.get_time().strftime(f'%Y-%m-%d_%H-%M-%S')}.csv", "w")
+                f"logs/log_shl_{self.sim_time_loc.get_time().strftime(f'%Y-%m-%d_%H-%M-%S')}.csv", "w")
             self.data_file.write("elapsed,system_load\n")
 
         threading.Thread(

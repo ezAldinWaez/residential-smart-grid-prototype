@@ -24,7 +24,7 @@ class SolarSystemSimulator:
 
         if (self.log):
             self.data_file = open(
-                f"logs\\sss\\log_{self.sim_time_loc.get_time().strftime(f'%Y-%m-%d_%H-%M-%S')}.csv", "w")
+                f"logs/log_sss_{self.sim_time_loc.get_time().strftime(f'%Y-%m-%d_%H-%M-%S')}.csv", "w")
             self.data_file.write("elapsed,total_power\n")
 
         threading.Thread(

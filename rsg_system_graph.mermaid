@@ -1,0 +1,38 @@
+graph TB
+  subgraph SS[Solar System]
+    SS_P([Panels])
+    SS_B([Batteries])
+    SS_I([Inverter])
+  end
+
+  subgraph SSMS[Solar System Mng. System]
+    SSMS_PMM([Power Mng. Module])
+    SSMS_MAM([Mobile API Module])
+  end
+
+  subgraph HS[Houses]
+    HS_H1([House 1])
+    HS_H2([House 2])
+    HS_Hk([...])
+    HS_Hn([House n])
+  end
+
+  subgraph UMA[Users Mobile App]
+    UMA_U1([User 1 App])
+    UMA_U2([User 2 App])
+    UMA_Uk([...])
+    UMA_Un([User n App])
+  end
+
+  SS_P --Power--> SS_I
+  SS_B <--Power--> SS_I
+
+  SS_I --Data----> SSMS_PMM
+  SS_I --Load Line----> SSMS_PMM
+  SSMS_PMM --Grid Line----> SS_I
+
+  SSMS_PMM --Load Line---> HS_H1 & HS_H2 & HS_Hn
+  HS_H1 & HS_H2 & HS_Hn --Grid Lin---> SSMS_PMM
+
+  SSMS_MAM <--> SSMS_PMM
+  SSMS_MAM <--Data----> UMA_U1 & UMA_U2 & UMA_Un

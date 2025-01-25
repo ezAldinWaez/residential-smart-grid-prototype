@@ -1,34 +1,26 @@
-import tkinter as tk
 import ttkbootstrap as ttk
+from ttkbootstrap.widgets import Notebook
 
-# from app_tk.main import App
 from app_tk.views.shl_view import SHLView
 from app_tk.views.sss_view import SSSView
 
 
 class MainView:
-    def __init__(self, root: tk.Tk, app):
-        self.root = root
+    def __init__(self, app):
         self.app = app
 
-        self.root.title("Residential Smart Grid Simulator")
-        self.root.attributes('-fullscreen', True)
+        main_frame = ttk.Frame(self.app.root, padding="10")
+        main_frame.pack(fill="both", expand=True)
 
-        ttk.Style().theme_use('darkly')
+        self._build_header(main_frame)
+        self._build_body(main_frame)
 
-        main_container = ttk.Frame(self.root, padding="20")
-        main_container.pack(fill="both", expand=True)
-        self._build_header(main_container)
-        self._build_body(main_container)
+        self._update_ui(100)  # Update view every 100 ms
 
-        self.root.protocol("WM_DELETE_WINDOW", self._on_closing)
-
-        self._update_ui(100)
-
-    def _build_header(self, root: ttk.Frame):
+    def _build_header(self, main_frame: ttk.Frame):
         # Header Frame
-        header_frame = ttk.Frame(root)
-        header_frame.pack(fill="x", pady=(0, 20))
+        header_frame = ttk.Frame(main_frame)
+        header_frame.pack(fill="x", pady=(0, 10))
 
         # Simulation Time Display
         self.time_display = ttk.StringVar(value="Simulation Time: --:--:--")
@@ -40,7 +32,7 @@ class MainView:
 
         # Buttons Menue Frame
         buttons_menue_frame = ttk.Frame(header_frame)
-        buttons_menue_frame.pack(anchor="center", padx=10)
+        buttons_menue_frame.pack(side="right")
 
         # Pause Simulation Button
         ttk.Button(
@@ -56,34 +48,23 @@ class MainView:
             command=self.app.resume_sim
         ).pack(side="left", padx=10)
 
-    def _build_body(self, root: ttk.Frame):
-        # Body Frame
-        body_frame = ttk.Frame(root)
-        body_frame.pack(fill="both", expand=True, pady=20, padx=20)
-        body_frame.place(relx=.5, rely=.5, anchor='center')
+    def _build_body(self, main_frame: ttk.Frame):
+        # Body Notebook (Tabbed Interface)
+        body_notebook = Notebook(main_frame, style='primary')
+        body_notebook.pack(fill='both', expand=True)
 
-        # Open SHL Button
-        ttk.Button(
-            body_frame,
-            text="Open Houses Loads Simulator",
-            command=lambda: SHLView(tk.Toplevel(self.root), self.app),
-            style="Accent.TButton"
-        ).pack(pady=10, padx=10)
+        # Houses Loads Tab
+        houses_load_frame = ttk.Frame(body_notebook)
+        SHLView(houses_load_frame, self.app)
+        body_notebook.add(houses_load_frame, text='Houses Load Simulation')
 
-        # Open SSS Button
-        ttk.Button(
-            body_frame,
-            text="Open Solar System Simulator",
-            command=lambda: SSSView(tk.Toplevel(self.root), self.app),
-            style="Accent.TButton"
-        ).pack(pady=10, padx=10)
-
-    def _on_closing(self):
-        self.app.pause_sim()
-        self.root.destroy()
+        # Solar System Tab
+        solar_system_frame = ttk.Frame(body_notebook)
+        SSSView(solar_system_frame, self.app)
+        body_notebook.add(solar_system_frame, text='Solar System Simulation')
 
     def _update_ui(self, dt: int):
         self.time_display.set(
             f"Simulation Time: {self.app.sim_time_loc.get_time().strftime('%H:%M:%S')}")
 
-        self.root.after(dt, self._update_ui, dt)
+        self.app.root.after(dt, self._update_ui, dt)

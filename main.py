@@ -13,7 +13,7 @@ def main():
 
     shl_sim = HousesLoadsSimulator(
         sim_time_loc=sim_time_loc,
-        num_houses=9,
+        num_houses=12,
         log=True,
     )
     shl_sim.start()

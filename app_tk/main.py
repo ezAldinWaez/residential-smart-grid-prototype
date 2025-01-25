@@ -1,4 +1,5 @@
 import tkinter as tk
+import ttkbootstrap as ttk
 
 from sim_time_loc.sim_time_loc import SimulationTimeLocation
 from sim_houses_loads.sim import HousesLoadsSimulator
@@ -14,10 +15,19 @@ class App:
         self.sss_sim = sss_sim
 
         self.root = tk.Tk()
-        MainView(self.root, self)
+        ttk.Style().theme_use('darkly')
+        self.root.title("Residential Smart Grid Simulator")
+        self.root.attributes('-fullscreen', True)
+        self.root.protocol("WM_DELETE_WINDOW", self._on_closing)
+
+        MainView(self)
 
     def mainloop(self):
         self.root.mainloop()
+
+    def _on_closing(self):
+        self.pause_sim()
+        self.root.destroy()
 
     def pause_sim(self):
         self.sim_time_loc.pause()

@@ -1,26 +1,18 @@
-import tkinter as tk
 import ttkbootstrap as ttk
-
-# from app_tk.views.shl_view import SHLView
 
 
 class SHLControlsView:
-    def __init__(self, root: tk.Tk, idx: int, parent):
+    def __init__(self, root, parent_view, idx: int):
         self.root = root
+        self.parent_view = parent_view
         self.idx = idx
-        self.parent = parent
 
-        self.total_load = self.parent.houses_total_load[self.idx]
-        self.device_states = self.parent.app.shl_sim.houses_device_states[self.idx]
+        self.total_load = self.parent_view.houses_total_load[self.idx]
+        self.device_states = self.parent_view.app.shl_sim.houses_device_states[self.idx]
 
-        self.root.title(f"House {self.idx + 1} Controls")
-        self.root.geometry("600x600")
-        self.root.minsize(600, 600)
+        main_frame = self._build_scrollable_container(self.root)
 
-        main_container = self._build_scrollable_container(self.root)
-        self._build_dody(main_container)
-
-        self.root.protocol("WM_DELETE_WINDOW", self._on_closing)
+        self._build_dody(main_frame)
 
     def _build_scrollable_container(self, root: ttk.Frame) -> ttk.Frame:
         # Canvas and Scrollbar
@@ -38,8 +30,6 @@ class SHLControlsView:
         # Configure scrolling and canvas
         main_container.bind("<Configure>", lambda e: self.canvas.configure(
             scrollregion=self.canvas.bbox("all")))
-        self.canvas.bind_all(
-            "<MouseWheel>", lambda e: self.canvas.yview_scroll(-1 * (e.delta // 120), "units"))
         self.canvas.create_window(
             (0, 0), window=main_container, anchor="nw", width=580)
         self.canvas.configure(yscrollcommand=scrollbar.set)
@@ -48,16 +38,16 @@ class SHLControlsView:
 
         return main_container
 
-    def _build_dody(self, root: ttk.Frame):
+    def _build_dody(self, main_frame: ttk.Frame):
         # House Title
         ttk.Label(
-            root,
+            main_frame,
             text=f"House {self.idx + 1} Control Panel",
             font=("Calibri", 16, "bold")
         ).pack(pady=(0, 20))
 
         # Total Load Display
-        total_frame = ttk.Frame(root)
+        total_frame = ttk.Frame(main_frame)
         total_frame.pack(fill="x", pady=20)
         ttk.Label(
             total_frame,
@@ -75,7 +65,7 @@ class SHLControlsView:
 
             # Device Frame
             device_frame = ttk.LabelFrame(
-                root,
+                main_frame,
                 text=f' {device_name} Controls ',
                 padding="10"
             )
@@ -104,7 +94,7 @@ class SHLControlsView:
 
             def update_count_value(wid: ttk.Spinbox, dn: str):
                 self.device_states[dn].update_count_and_active_envelopes(
-                    elapsed=self.parent.app.sim_time_loc.get_elapsed(),
+                    elapsed=self.parent_view.app.sim_time_loc.get_elapsed(),
                     value=wid.get().strip()
                 )
 
@@ -180,7 +170,3 @@ class SHLControlsView:
 
                     combo.bind('<<ComboboxSelected>>', lambda e, wid=power_factor,
                                dn=device_name: update_power_factor_label(wid, dn))
-
-    def _on_closing(self):
-        self.canvas.unbind_all("<MouseWheel>")
-        self.root.destroy()

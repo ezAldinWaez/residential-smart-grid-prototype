@@ -93,13 +93,13 @@ class SHLView:
     def _update_ui(self, dt: int):
         self.total_power.set(
             f"Total Load Power: {self.app.shl_sim.system_load/1000:.3f} kW")
-        for idx, house_total_load in enumerate(self.houses_total_load):
+        for house_idx, house_total_load in enumerate(self.houses_total_load):
             house_total_load.set(
-                f"Total Load Power: {self.app.shl_sim.houses_loads[idx]/1000:.3f} KW")
-        for idx, window in enumerate(self.houses_windows.values()):
+                f"Total Load Power: {self.app.shl_sim.houses_loads[house_idx]/1000:.3f} KW")
+        for house_idx, window in self.houses_windows.items():
             if window.root.winfo_exists():
                 for device_name, device_load in window.device_loads.items():
                     device_load.set(
-                        f"{self.app.shl_sim.houses_device_states[idx][device_name].total_load:.1f} Watt")
+                        f"{self.app.shl_sim.houses_device_states[house_idx][device_name].total_load:.1f} Watt")
 
         self.app.root.after(dt, self._update_ui, dt)

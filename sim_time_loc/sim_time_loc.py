@@ -6,7 +6,7 @@ from .data import Location
 
 class SimulationTimeLocation:
     def __init__(self, time_factor: float, location = Location.ALEPPO):
-        """s
+        """
         Parameters
         ----------
         - time_factor : Time acceleration factor (in sec).

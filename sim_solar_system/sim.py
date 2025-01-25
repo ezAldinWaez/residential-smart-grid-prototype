@@ -60,7 +60,7 @@ class SolarSystemSimulator:
             solar_pos = pvloc.get_solarposition(curr_utc_time)
 
             # Calculate the solar zenith angle
-            self.zenith_angle = solar_pos['zenith'][0]
+            self.zenith_angle = solar_pos['zenith'].iloc[0]
 
             if self.zenith_angle > 90:
                 poa_irradiance = 0

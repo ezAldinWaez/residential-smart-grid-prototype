@@ -1,12 +1,12 @@
 import marimo
 
-__generated_with = "0.10.7"
+__generated_with = "0.10.17"
 app = marimo.App(width="medium")
 
 
 @app.cell(hide_code=True)
 def _(mo):
-    mo.md(f"# Plot CSV Log")
+    mo.md(f"# Plot Log")
     return
 
 

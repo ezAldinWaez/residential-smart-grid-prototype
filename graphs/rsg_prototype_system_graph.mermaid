@@ -1,0 +1,23 @@
+graph TB
+
+  subgraph HSHL[Hardware Simulation of Houses Loads]
+    HSHL_H1([House 1])
+    HSHL_H2([House 2])
+    HSHL_H3([House 3])
+  end
+
+  subgraph RSGPS[RSG Prototype System]
+    RSGPS_SSSS[Software Simulation of Solar System]
+    RSGPS_SSHL[Software Simulation of Houses Loads]
+    RSGPS_PMM[Power Mng. Module]
+    RSGPS_MAM[Mobile API Module]
+  end
+
+  subgraph UMA[Users Mobile App]
+    UMA_U1([User 1 App]) & UMA_U2([User 2 App]) & UMA_U3([User 3 App])
+  end
+
+  RSGPS_SSSS & RSGPS_SSHL <--Data--> RSGPS_PMM <--Data--> RSGPS_MAM
+  HSHL_H1 & HSHL_H2 & HSHL_H3 --Controls--> RSGPS_SSHL
+  RSGPS_MAM <--Data & Controls--> UMA_U1 & UMA_U2 & UMA_U3
+  

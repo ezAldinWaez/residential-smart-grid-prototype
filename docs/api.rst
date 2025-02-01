@@ -27,3 +27,19 @@ Simulation of Solar System Module
    :members:
    :undoc-members:
    :show-inheritance:
+
+Tkinter App Package
+----------------------------------------
+
+.. automodule:: app_tk.__init__
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+Views Module
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. automodule:: app_tk.views
+   :members:
+   :undoc-members:
+   :show-inheritance:

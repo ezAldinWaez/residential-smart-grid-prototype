@@ -10,32 +10,11 @@ from .views import MainView
 
 class App:
     def __init__(self, stl: SimulationOfTimeLocation, shl: SimulationOfHousesLoads, sss: SimulationOfSolarSystem):
-        self.stl = stl
-        self.shl = shl
-        self.sss = sss
-
         self.root = tk.Tk()
-        self.root.title("Residential Smart Grid Simulator")
-        self.root.attributes('-fullscreen', True)
-        self.root.protocol("WM_DELETE_WINDOW", self._on_closing)
 
         ttk.Style().theme_use('darkly')
 
-        MainView(self)
+        MainView(self.root, stl, shl, sss)
 
     def mainloop(self):
         self.root.mainloop()
-
-    def _on_closing(self):
-        self.pause_sim()
-        self.root.destroy()
-
-    def pause_sim(self):
-        self.stl.pause()
-        self.shl.pause()
-        self.sss.pause()
-
-    def resume_sim(self):
-        self.stl.resume()
-        self.shl.resume()
-        self.sss.resume()

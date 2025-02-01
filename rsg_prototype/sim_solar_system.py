@@ -38,7 +38,6 @@ class SimulationOfSolarSystem:
     #: bool: Whether the simulation is running or paused.
     running: bool = False
 
-
     #: float: The current zenith angle for the sun.
     zenith_angle: float = .0
 
@@ -58,7 +57,9 @@ class SimulationOfSolarSystem:
         self.pvloc = pvlib.location.Location(
             latitude=self._stl.loc_info.lat,
             longitude=self._stl.loc_info.lng,
-            altitude=self._stl.loc_info.alt
+            tz=self._stl.loc_info.tz_name,
+            altitude=self._stl.loc_info.alt,
+            name=self._stl.loc_name,
         )
 
         self._log = log
@@ -76,7 +77,7 @@ class SimulationOfSolarSystem:
 
             if (not os.path.exists("logs/sim_solar_system")):
                 os.mkdir("logs/sim_solar_system")
-            
+
             with open(f"logs/sim_solar_system/{self._log_file_name}", mode="w", encoding="utf-8") as log_file:
                 columns_line = "elapsed,total_power\n"
                 log_file.write(columns_line)
@@ -84,7 +85,7 @@ class SimulationOfSolarSystem:
 
         threading.Thread(
             target=self._update,
-            args=[100],
+            kwargs={'dt': 100},
             daemon=True
         ).start()
 
@@ -107,10 +108,10 @@ class SimulationOfSolarSystem:
         """
         while self.running:
             curr_elapsed = self._stl.get_elapsed()
-            curr_utc_time = self._stl.get_utc_time(curr_elapsed)
+            curr_time = self._stl.get_time(curr_elapsed)
 
             # Get solar position (elevation and azimuth)
-            solar_pos = self.pvloc.get_solarposition(curr_utc_time)
+            solar_pos = self.pvloc.get_solarposition(curr_time)
 
             # Calculate the solar zenith angle
             self.zenith_angle = solar_pos['zenith'].iloc[0]

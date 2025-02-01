@@ -9,6 +9,7 @@ def main():
         time_factor=3600,
         location=Location.ALEPPO,
     )
+    stl.start()
 
     shl = SimulationOfHousesLoads(
         stl=stl,

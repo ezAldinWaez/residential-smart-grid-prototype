@@ -477,7 +477,7 @@ class SimulationOfHousesLoads:
 
         threading.Thread(
             target=self._update,
-            args=[100],  # Update the simulation every 100 ms
+            kwargs={'dt': 100},
             daemon=True
         ).start()
 

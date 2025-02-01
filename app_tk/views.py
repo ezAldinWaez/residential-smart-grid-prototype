@@ -1,18 +1,30 @@
+import tkinter as tk
 import ttkbootstrap as ttk
 from ttkbootstrap.widgets import Notebook
 
+from rsg_prototype.sim_time_loc import SimulationOfTimeLocation
+from rsg_prototype.sim_houses_loads import SimulationOfHousesLoads
+from rsg_prototype.sim_solar_system import SimulationOfSolarSystem
+
 
 class MainView:
-    def __init__(self, app):
-        self.app = app
+    def __init__(self, root: tk.Tk, stl: SimulationOfTimeLocation, shl: SimulationOfHousesLoads, sss: SimulationOfSolarSystem):
+        self.root = root
+        self.stl = stl
+        self.shl = shl
+        self.sss = sss
 
-        main_frame = ttk.Frame(self.app.root, padding="10")
+        self.root.title("Residential Smart Grid Simulator")
+        self.root.attributes('-fullscreen', True)
+        self.root.protocol("WM_DELETE_WINDOW", self._on_closing)
+
+        main_frame = ttk.Frame(self.root, padding="10")
         main_frame.pack(fill="both", expand=True)
 
         self._build_header(main_frame)
         self._build_body(main_frame)
 
-        self._update_ui(100)  # Update view every 100 ms
+        self._update_ui(dt=100)
 
     def _build_header(self, main_frame: ttk.Frame):
         # Header Frame
@@ -35,14 +47,14 @@ class MainView:
         ttk.Button(
             buttons_menue_frame,
             text="Pause Simulation",
-            command=self.app.pause_sim
+            command=self._pause_sim
         ).pack(side="left", padx=10)
 
         # Resume Simulation Button
         ttk.Button(
             buttons_menue_frame,
             text="Resume Simulation",
-            command=self.app.resume_sim
+            command=self._resume_sim
         ).pack(side="left", padx=10)
 
     def _build_body(self, main_frame: ttk.Frame):
@@ -52,27 +64,44 @@ class MainView:
 
         # Houses Loads Tab
         houses_load_frame = ttk.Frame(body_notebook)
-        SHLView(houses_load_frame, self.app)
+        SHLView(houses_load_frame, self.root, self.stl, self.shl)
         body_notebook.add(houses_load_frame, text='Houses Load Simulation')
 
         # Solar System Tab
         solar_system_frame = ttk.Frame(body_notebook)
-        SSSView(solar_system_frame, self.app)
+        SSSView(solar_system_frame, self.root, self.stl, self.sss)
         body_notebook.add(solar_system_frame, text='Solar System Simulation')
+
+    def _pause_sim(self):
+        self.stl.pause()
+        self.shl.pause()
+        self.sss.pause()
+
+    def _resume_sim(self):
+        self.stl.resume()
+        self.shl.resume()
+        self.sss.resume()
+
+    def _on_closing(self):
+        self._pause_sim()
+        self.root.destroy()
 
     def _update_ui(self, dt: int):
         self.time_display.set(
-            f"Simulation Time: {self.app.stl.get_time().strftime('%H:%M:%S')}")
+            f"Simulation Time: {self.stl.get_time().strftime('%H:%M:%S')}")
 
-        self.app.root.after(dt, self._update_ui, dt)
+        self.root.after(dt, self._update_ui, dt)
 
 
 class SHLView:
-    def __init__(self, parent_frame: ttk.Frame, app):
-        self.parent_frame = parent_frame
-        self.app = app
+    def __init__(self, parent: ttk.Frame, root: tk.Tk, stl: SimulationOfTimeLocation, shl: SimulationOfHousesLoads):
+        self.parent = parent
+        self.root = root
 
-        main_frame = ttk.Frame(self.parent_frame, padding=10)
+        self._stl = stl
+        self._shl = shl
+
+        main_frame = ttk.Frame(self.parent, padding=10)
         main_frame.pack(fill="both", expand=True)
 
         self._build_header(main_frame)
@@ -102,7 +131,7 @@ class SHLView:
 
         self.houses_total_load = [
             ttk.StringVar(value="Total Load Power: - KW")
-            for _ in range(self.app.shl.num_houses)
+            for _ in range(self._shl.num_houses)
         ]
 
         # Configure grid columns to be 4 in row.
@@ -113,7 +142,7 @@ class SHLView:
         for i in range(3):
             body_frame.rowconfigure(i, weight=1)
 
-        for i in range(self.app.shl.num_houses):
+        for i in range(self._shl.num_houses):
             # Create card-like frame for each house
             house_card = ttk.Frame(body_frame, style="Card.TFrame")
             house_card.grid(row=i // 4, column=i % 4)
@@ -144,39 +173,42 @@ class SHLView:
         if idx in self.houses_windows and self.houses_windows[idx].root.winfo_exists():
             self.houses_windows[idx].root.focus()
         else:
-            toplevel_window = ttk.Toplevel(self.app.root)
-            toplevel_window.title(f"House {idx + 1} Controls")
-            toplevel_window.geometry("600x600")
-            toplevel_window.minsize(600, 600)
-
             self.houses_windows[idx] = SHLControlsView(
-                root=toplevel_window,
-                parent_view=self,
-                idx=idx)
+                root=ttk.Toplevel(self.root),
+                idx=idx,
+                stl=self._stl,
+                shl=self._shl,
+                total_load=self.houses_total_load[idx],
+            )
 
     def _update_ui(self, dt: int):
         self.total_power.set(
-            f"Total Load Power: {self.app.shl.system_load/1000:.3f} kW")
+            f"Total Load Power: {self._shl.system_load/1000:.3f} kW")
         for house_idx, house_total_load in enumerate(self.houses_total_load):
             house_total_load.set(
-                f"Total Load Power: {self.app.shl.houses_loads[house_idx]/1000:.3f} KW")
+                f"Total Load Power: {self._shl.houses_loads[house_idx]/1000:.3f} KW")
         for house_idx, window in self.houses_windows.items():
             if window.root.winfo_exists():
                 for device_name, device_load in window.device_loads.items():
                     device_load.set(
-                        f"{self.app.shl.houses_devices_states[house_idx][device_name].total_load:.1f} Watt")
+                        f"{self._shl.houses_devices_states[house_idx][device_name].total_load:.1f} Watt")
 
-        self.app.root.after(dt, self._update_ui, dt)
+        self.root.after(dt, self._update_ui, dt)
 
 
 class SHLControlsView:
-    def __init__(self, root, parent_view, idx: int):
+    def __init__(self, root: tk.Tk, idx: int, stl: SimulationOfTimeLocation, shl: SimulationOfHousesLoads, total_load: ttk.StringVar):
         self.root = root
-        self.parent_view = parent_view
         self.idx = idx
 
-        self.total_load = self.parent_view.houses_total_load[self.idx]
-        self.device_states = self.parent_view.app.shl.houses_devices_states[self.idx]
+        self._stl = stl
+        self._shl = shl
+        self._total_load = total_load
+        self._device_states = self._shl.houses_devices_states[self.idx]
+
+        self.root.title(f"House {self.idx + 1} Controls")
+        self.root.geometry("600x600")
+        self.root.minsize(600, 600)
 
         main_frame = self._build_scrollable_container(self.root)
 
@@ -219,17 +251,17 @@ class SHLControlsView:
         total_frame.pack(fill="x", pady=20)
         ttk.Label(
             total_frame,
-            textvariable=self.total_load,
+            textvariable=self._total_load,
             font=("Calibri", 12, "bold")
         ).pack()
 
         self.device_loads = {
             device_name: ttk.StringVar(value="- Watt")
-            for device_name in self.device_states.keys()
+            for device_name in self._device_states.keys()
         }
 
         # Devices Controls
-        for device_name, device_state in self.device_states.items():
+        for device_name, device_state in self._device_states.items():
 
             # Device Frame
             device_frame = ttk.LabelFrame(
@@ -261,8 +293,8 @@ class SHLControlsView:
             spinbox.insert(0, device_state.count)
 
             def update_count_value(wid: ttk.Spinbox, dn: str):
-                self.device_states[dn].update_count(
-                    elapsed=self.parent_view.app.stl.get_elapsed(),
+                self._device_states[dn].update_count(
+                    elapsed=self._stl.get_elapsed(),
                     value=wid.get().strip()
                 )
 
@@ -297,7 +329,7 @@ class SHLControlsView:
                 ).pack(side="left")
 
                 def update_power_factor_label(wid: ttk.StringVar, dn: str):
-                    factor = self.device_states[dn].settings_multiplier
+                    factor = self._device_states[dn].settings_multiplier
                     wid.set(f"Current Power Factor: {factor:.2f}x")
 
                 # Initial update
@@ -329,7 +361,8 @@ class SHLControlsView:
                     combo.pack(side="right", padx=5)
 
                     def update_setting(wid: ttk.Combobox, dn: str, sn: str):
-                        self.device_states[dn].update_setting(sn, wid.get())
+                        self._device_states[dn].update_setting(
+                            sn, wid.get())
 
                     setting.trace_add('write', lambda *args, wid=setting,
                                       dn=device_name, sn=setting_name: update_setting(wid, dn, sn))
@@ -341,11 +374,14 @@ class SHLControlsView:
 
 
 class SSSView:
-    def __init__(self, parent_frame: ttk.Frame, app):
-        self.parent_frame = parent_frame
-        self.app = app
+    def __init__(self, parent: ttk.Frame, root: tk.Tk, stl: SimulationOfTimeLocation, sss: SimulationOfSolarSystem):
+        self.parent = parent
+        self.root = root
 
-        main_frame = ttk.Frame(self.parent_frame, padding="10")
+        self._stl = stl
+        self._sss = sss
+
+        main_frame = ttk.Frame(self.parent, padding="10")
         main_frame.pack(fill="both", expand=True)
 
         self._build_body(main_frame)
@@ -364,23 +400,20 @@ class SSSView:
         self.output_text.pack(fill='both')
 
     def _update_ui(self, dt: int):
-        # Display real-time wattage output
-        self.output_text.delete(1.0, ttk.END)  # Clear previous output
-        self.output_text.insert(
-            ttk.END, f"Location: {self.app.stl.loc_name} (lat: {self.app.stl.loc_info.lat}, lng: {self.app.stl.loc_info.lng}, alt: {self.app.stl.loc_info.alt})\n")
-        self.output_text.insert(
-            ttk.END, f"Timezone: {self.app.stl.loc_info.tz_name}\n")
-        self.output_text.insert(
-            ttk.END, f"Panel Area: {self.app.sss.pv_conf.panel_area} m²\n")
-        self.output_text.insert(
-            ttk.END, f"Panel Efficiency: {self.app.sss.pv_conf.panel_efficiency:.1%}\n")
-        self.output_text.insert(
-            ttk.END, f"Number of Panels: {self.app.sss.pv_conf.panels_count}\n")
-        self.output_text.insert(
-            ttk.END, f"Zenith Angle: {self.app.sss.zenith_angle:.2f}°\n")
-        self.output_text.insert(
-            ttk.END, f"Panel Power: {self.app.sss.panel_power:.2f} W\n")
-        self.output_text.insert(
-            ttk.END, f"Total Power: {self.app.sss.total_power/1000:.3f} KW\n")
+        if self._sss.running:
+            # Display real-time wattage output
+            self.output_text.delete(1.0, ttk.END)  # Clear previous output
+            self.output_text.insert(
+                ttk.END, chars=f"Time Factor: {self._stl.time_factor}\n")
+            self.output_text.insert(
+                ttk.END, chars=f"Location: {self._stl.loc_name}: {self._stl.loc_info}\n")
+            self.output_text.insert(
+                ttk.END, chars=f"PV Configuration: {self._sss.pv_conf}\n\n")
+            self.output_text.insert(
+                ttk.END, chars=f"Zenith Angle: {self._sss.zenith_angle:.2f}°\n")
+            self.output_text.insert(
+                ttk.END, chars=f"Panel Power: {self._sss.panel_power:.2f} W\n")
+            self.output_text.insert(
+                ttk.END, chars=f"Total Power: {self._sss.total_power/1000:.3f} KW\n")
 
-        self.app.root.after(dt, self._update_ui, dt)
+        self.root.after(dt, self._update_ui, dt)

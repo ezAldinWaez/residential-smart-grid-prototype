@@ -88,6 +88,9 @@ class SimulationOfTimeLocation:
     loc_name: str  #: str: Location name.
     loc_info: LocationInfo  #: LocationInfo: :class:`LocationInfo` object.
 
+    #: bool: Whether the simulation is started or not.
+    started: bool = False
+
     def __init__(self, time_factor: float, location: Location):
         self.time_factor = time_factor
         self.loc_name = location.name_formated
@@ -95,7 +98,7 @@ class SimulationOfTimeLocation:
 
         self._paused_at: float = None
         self._pause_duration = .0
-        self._start_time = datetime.now(tz=self.loc_info.tz).timestamp()
+        self._start_time: datetime = None
 
     def get_elapsed(self) -> float:
         """Calculates the real elapsed time and multiplies it with the time factor.
@@ -104,6 +107,8 @@ class SimulationOfTimeLocation:
             float: The elapsed simulation time (number of seconds) [sec].
 
         """
+        assert self.started
+
         if self._paused_at:
             end_time = self._paused_at
         else:
@@ -124,24 +129,18 @@ class SimulationOfTimeLocation:
             datatiem: The current simulation datetime in current location timezone.
 
         """
+        assert self.started
+
         if not elapsed:
             elapsed = self.get_elapsed()
 
         timestamp = self._start_time + elapsed
         return datetime.fromtimestamp(timestamp, tz=self.loc_info.tz)
 
-    def get_utc_time(self, elapsed: float = None) -> datetime:
-        """Convert the elapsed time to datetime in ``utc`` timezone.
-
-        Args:
-            elapsed (float, optional): The elapsed simulation time, if it was not given, the current
-                elapsed time will be used.
-
-        Returns:
-            datatime: The current simulation datetime in utc timezone.
-
-        """
-        return self.get_time(elapsed).astimezone(pytz.utc)
+    def start(self):
+        """Start the simulation."""
+        self.started = True
+        self._start_time = datetime.now(tz=self.loc_info.tz).timestamp()
 
     def pause(self):
         """Pause the simulation."""

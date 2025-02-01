@@ -6,8 +6,8 @@ graph TB
   end
 
   subgraph RSGS[RSG System]
-    RSGS_PMM[Power Mng. Module]
-    RSGS_MAM[Mobile API Module]
+    RSGS_PM[Power Mng.]
+    RSGS_MA[Mobile API]
   end
 
   subgraph HS[Houses]
@@ -25,10 +25,10 @@ graph TB
   SS_P --Power--> SS_I
   SS_B <--Power--> SS_I
 
-  SS_I <--Data & Controls--> RSGS_PMM
-  SS_I <--Load & Grid--> RSGS_PMM
+  SS_I <--Data & Controls--> RSGS_PM
+  SS_I <--Load & Grid--> RSGS_PM
 
-  HS_H1 & HS_H2 & HS_H3 <--Load & Grid--> RSGS_PMM
+  HS_H1 & HS_H2 & HS_H3 <--Load & Grid--> RSGS_PM
 
-  RSGS_PMM <--Data--> RSGS_MAM
-  RSGS_MAM <--Data & Controls--> UMA_U1 & UMA_U2 & UMA_U3
+  RSGS_PM <--Data--> RSGS_MA
+  RSGS_MA <--Data & Controls--> UMA_U1 & UMA_U2 & UMA_U3

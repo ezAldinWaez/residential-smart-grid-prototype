@@ -1,59 +1,29 @@
 API Reference
 =============
 
-Simulation Time Location Package
---------------------------------
+Residential Smart Grid Prototype Package
+----------------------------------------
 
 Simulation Time Location Module
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-.. automodule:: sim_time_loc.sim_time_loc
+.. automodule:: rsg_prototype.sim_time_loc
    :members:
    :undoc-members:
    :show-inheritance:
 
-Data Module
-~~~~~~~~~~~
+Simulation of Houses Loads Module
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-.. automodule:: sim_time_loc.data
+.. automodule:: rsg_prototype.sim_houses_loads
    :members:
    :undoc-members:
    :show-inheritance:
 
-Simulation Houses Load Package
---------------------------------
+Simulation of Solar System Module
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Simulation Module
-~~~~~~~~~~~~~~~~~
-
-.. automodule:: sim_houses_loads.sim
-   :members:
-   :undoc-members:
-   :show-inheritance:
-
-Data Module
-~~~~~~~~~~~
-
-.. automodule:: sim_houses_loads.data
-   :members:
-   :undoc-members:
-   :show-inheritance:
-
-Device State Module
-~~~~~~~~~~~~~~~~~~~
-
-.. automodule:: sim_houses_loads.device_state
-   :members:
-   :undoc-members:
-   :show-inheritance:
-
-Simulation Solar System Package
---------------------------------
-
-Simulation Module
-~~~~~~~~~~~~~~~~~
-
-.. automodule:: sim_solar_system.sim
+.. automodule:: rsg_prototype.sim_solar_system
    :members:
    :undoc-members:
    :show-inheritance:

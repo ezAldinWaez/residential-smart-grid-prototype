@@ -1,14 +1,13 @@
-Residential Smart Grid documentation
-====================================
+Residential Smart Grid Prototype Documentation
+==============================================
 
 .. toctree::
-   :maxdepth: 2
+   :maxdepth: 4
    :caption: Contents:
 
    api
 
-Indices and tables
+Indices and Tables
 ==================
 * :ref:`genindex`
 * :ref:`modindex`
-* :ref:`search`

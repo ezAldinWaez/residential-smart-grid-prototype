@@ -1,33 +1,34 @@
-from sim_houses_loads.sim import HousesLoadsSimulator
-from sim_solar_system.sim import SolarSystemSimulator
-from sim_time_loc.sim_time_loc import SimulationTimeLocation
-from sim_time_loc.data import Location
-from app_tk.main import App
+from rsg_prototype.sim_time_loc import SimulationOfTimeLocation, Location
+from rsg_prototype.sim_houses_loads import SimulationOfHousesLoads
+from rsg_prototype.sim_solar_system import SimulationOfSolarSystem, PVConf
+from app_tk import App
 
 
 def main():
-    sim_time_loc = SimulationTimeLocation(
+    stl = SimulationOfTimeLocation(
         time_factor=3600,
         location=Location.ALEPPO,
     )
 
-    shl_sim = HousesLoadsSimulator(
-        sim_time_loc=sim_time_loc,
+    shl = SimulationOfHousesLoads(
+        stl=stl,
         num_houses=12,
         log=True,
     )
-    shl_sim.start()
+    shl.start()
 
-    sss_sim = SolarSystemSimulator(
-        sim_time_loc=sim_time_loc,
-        panels_count=10,
-        panel_area=1.6,  # [m**2]
-        panel_efficiency=.15,  # [0->1]
+    sss = SimulationOfSolarSystem(
+        stl=stl,
+        pv_conf=PVConf(
+            panels_count=10,
+            panel_area=1.6,  # [m**2]
+            panel_efficiency=.15,  # [0->1]
+        ),
         log=True,
     )
-    sss_sim.start()
+    sss.start()
 
-    app = App(sim_time_loc, shl_sim, sss_sim)
+    app = App(stl, shl, sss)
     app.mainloop()
 
 

@@ -14,7 +14,7 @@ def _(mo):
 def _(file_browser, mo):
     def _get_code_editor_value():
         if len(file_browser.value):
-            with open(file_browser.path(0), 'r') as _mermaid_file:
+            with open(file_browser.path(0), encoding="utf-8", mode='r') as _mermaid_file:
                 value = _mermaid_file.read()
                 _mermaid_file.close()
         else:
@@ -50,19 +50,21 @@ def _(file_browser, graph_code_editor, graph_rendering, mo):
 @app.cell
 def _(file_browser, graph_code_editor, mo):
     def update_file(v):
+        if not file_browser.value:
+            return "There is no graph file selected!"
+
         try:
-            if len(file_browser.value):
-                with open(file_browser.path(0), 'w') as _mermaid_file:
-                    _mermaid_file.write(graph_code_editor.value)
-                    _mermaid_file.close()
-                return "Graph file have been saved successfully."
-            else:
-                return "There is no graph file selected!"
+            with open(file_browser.path(0), encoding="utf-8", mode='w') as _mermaid_file:
+                _mermaid_file.write(graph_code_editor.value)
+                _mermaid_file.close()
+            return "Graph file have been saved successfully."
+
         except Exception as e:
             print(e)
             return "Could not save the graph file!"
 
-    update_button = mo.ui.button(on_click=update_file, value="", label="Update Graph File")
+    update_button = mo.ui.button(
+        on_click=update_file, value="", label="Update Graph File")
     return update_button, update_file
 
 
@@ -99,7 +101,6 @@ def _(mo, os):
 @app.cell(hide_code=True)
 def _():
     import os
-
     import marimo as mo
     return mo, os
 

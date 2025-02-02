@@ -6,6 +6,7 @@ import random
 import threading
 import time
 import os
+from typing import Literal
 
 import numpy as np
 
@@ -20,9 +21,8 @@ class DeviceSettingsConf:
     #:  (Setting Name -> List of Options)
     options: dict[str, list[str]]
 
-    #: dict[str, dict[str, float]]: power multiplier for each option for
-    #:  each device setting.
-    #:  (Setting Name -> (Option Name -> Power Multiplier))
+    #: dict[str, dict[str, float]]: power multiplier for each option for each device
+    #:  setting. (Setting Name -> (Option Name -> Power Multiplier))
     power_factors: dict[str, dict[str, float]]
 
     def __post_init__(self):
@@ -39,8 +39,8 @@ class ADSRParams:
     d: float  #: float: Decay Time [sec].
     s: float  #: float: Sustain Level Multiplier.
     r: float  #: float: Release Time [sec].
-    #: str: Wave Type ["none" | "sine" | "square" | "random"].
-    wt: str = "none"
+    #: Literal['none', 'sine', 'square', 'random']: Wave Type.
+    wt: Literal['none', 'sine', 'square', 'random'] = 'none'
     wp: float = 1  #: float: Wave Period [sec].
     wa: float = 0  #: float: Wave Amplitude Multiplier.
 
@@ -49,7 +49,7 @@ class ADSRParams:
         assert self.d > 0
         assert 1 >= self.s >= 0
         assert self.r > 0
-        assert self.wt in ["none", "sine", "square", "random"]
+        assert self.wt in ['none', 'sine', 'square', 'random']
         assert self.wp > 0
         assert 1 >= self.wa >= 0
 
@@ -57,6 +57,9 @@ class ADSRParams:
 @dataclass
 class DeviceInfo:
     """Device information.
+
+    Todo:
+        * Implement __post_init__ method to assert correct data.
 
     """
     max_watt: float  #: float: Maximum wattage that device can reach (maximum amplitude).
@@ -252,11 +255,12 @@ class DeviceState:
     count: int = 0  #: int: Number of **active** device instances.
     total_load: float = .0  #: float: Total load for all device instances.
 
-    #: list[tuple[float, float, bool]]: Active Envelopes, each tuple
-    #:  represent an envelope, and it contains three elements:
-    #:  - float: time elapsed at last state toggle for the envelope;
-    #:  - float: time total load at last state toggle for the envelope;
-    #:  - bool: envelope state toggle.
+    #: list[tuple[float, float, bool]]: Active Envelopes, each tuple represent an
+    #:  envelope, and it contains three elements:
+    #:
+    #:    1. float: time elapsed at last state toggle for the envelope;
+    #:    2. float: time total load at last state toggle for the envelope;
+    #:    3. bool: envelope state toggle.
     active_envelopes: list[tuple[float, float, bool]] = []
 
     #: dict[str, str]: Current settings for all instances.
@@ -318,7 +322,7 @@ class DeviceState:
                 if setting in self.device_info.settings.power_factors
             ]))
 
-    def _filter_active_envelopes(self, elapsed: float):
+    def filter_active_envelopes(self, elapsed: float):
         """Filter the active envelopes from IDEL envelopes.
 
         IDEL envelopes are envelopes which where unactive for
@@ -403,7 +407,7 @@ class DeviceState:
         # IDEL Stage
         return 0.0
 
-    def _calc_device_load(self, elapsed: float) -> float:
+    def calc_device_load(self, elapsed: float) -> float:
         """Calculate and update device load at this ``elapsed``.
 
         It's calculated depending on it's base wattage, settings, wave
@@ -464,13 +468,14 @@ class SimulationOfHousesLoads:
         self.running = True
 
         if self._log:
-            if (not os.path.exists("logs")):
+            if not os.path.exists("logs"):
                 os.mkdir("logs")
 
-            if (not os.path.exists("logs/sim_houses_loads")):
+            if not os.path.exists("logs/sim_houses_loads"):
                 os.mkdir("logs/sim_houses_loads")
 
-            with open(f"logs/sim_houses_loads/{self._log_file_name}", mode="w", encoding="utf-8") as log_file:
+            with open(f"logs/sim_houses_loads/{self._log_file_name}",
+                      mode="w", encoding="utf-8") as log_file:
                 columns_line = "elapsed,system_load\n"
                 log_file.write(columns_line)
                 log_file.close()
@@ -504,9 +509,9 @@ class SimulationOfHousesLoads:
             for idx in range(self.num_houses):
                 house_load = 0.0
                 for device_name in self.houses_devices_states[idx].keys():
-                    self.houses_devices_states[idx][device_name]._filter_active_envelopes(
+                    self.houses_devices_states[idx][device_name].filter_active_envelopes(
                         curr_elapsed)
-                    device_load = self.houses_devices_states[idx][device_name]._calc_device_load(
+                    device_load = self.houses_devices_states[idx][device_name].calc_device_load(
                         curr_elapsed)
                     house_load += device_load
 
@@ -515,7 +520,8 @@ class SimulationOfHousesLoads:
             self.system_load = sum(self.houses_loads)
 
             if self._log:
-                with open(f"logs/sim_houses_loads/{self._log_file_name}", mode="a", encoding="utf-8") as log_file:
+                with open(f"logs/sim_houses_loads/{self._log_file_name}",
+                          mode="a", encoding="utf-8") as log_file:
                     record = f"{curr_elapsed:.2f},{self.system_load:.2f}\n"
                     log_file.write(record)
                     log_file.close()

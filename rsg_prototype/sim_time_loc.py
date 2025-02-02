@@ -9,7 +9,12 @@ import pytz
 
 @dataclass
 class LocationInfo:
-    """Location information."""
+    """Location information.
+
+    Todo:
+        * Implement __post_init__ method to assert correct data.
+
+    """
 
     lat: float  #: float: Location latitude.
     lng: float  #: float: Location longitude.

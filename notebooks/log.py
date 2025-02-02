@@ -12,13 +12,15 @@ def _(mo):
 
 @app.cell
 def _(file_browser, pd):
-    data = pd.read_csv(file_browser.path(0)) if len(file_browser.value) else None
+    data = pd.read_csv(file_browser.path(0)) if len(
+        file_browser.value) else None
     return (data,)
 
 
 @app.cell
 def _(data, file_browser, mo):
-    mo.ui.table(data, label=f"Table from {file_browser.name(0)}") if data is not None else None
+    mo.ui.table(data, label=f"Table from {
+                file_browser.name(0)}") if data is not None else None
     return
 
 
@@ -33,13 +35,16 @@ def _(alt, data):
 
 @app.cell
 def _(chart, data, mo):
-    mo.ui.altair_chart(chart, label=f"Chart for {data.columns[0]} vs. {data.columns[1]}") if chart is not None else None
+    mo.ui.altair_chart(
+        chart,
+        label=f"Chart for {data.columns[0]} vs. {data.columns[1]}"
+    ) if chart is not None else None
     return
 
 
 @app.cell
 def _(mo, os):
-    if (not os.path.exists("logs")):
+    if not os.path.exists("logs"):
         os.mkdir("logs")
 
     file_browser = mo.ui.file_browser(
@@ -56,7 +61,6 @@ def _(mo, os):
 @app.cell(hide_code=True)
 def _():
     import os
-    
     import marimo as mo
     import pandas as pd
     import altair as alt

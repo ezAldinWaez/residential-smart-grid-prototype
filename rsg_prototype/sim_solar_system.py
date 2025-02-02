@@ -13,7 +13,12 @@ from .sim_time_loc import SimulationOfTimeLocation
 
 @dataclass
 class PVConf:
-    """PV Configuration."""
+    """PV Configuration.
+
+    Todo:
+        * Implement __post_init__ method to assert correct data.
+
+    """
 
     panels_count: int  #: int: Panels count.
     panel_area: float  #: float: Panel area [m^2].
@@ -72,13 +77,14 @@ class SimulationOfSolarSystem:
         self.running = True
 
         if self._log:
-            if (not os.path.exists("logs")):
+            if not os.path.exists("logs"):
                 os.mkdir("logs")
 
-            if (not os.path.exists("logs/sim_solar_system")):
+            if not os.path.exists("logs/sim_solar_system"):
                 os.mkdir("logs/sim_solar_system")
 
-            with open(f"logs/sim_solar_system/{self._log_file_name}", mode="w", encoding="utf-8") as log_file:
+            with open(f"logs/sim_solar_system/{self._log_file_name}",
+                      mode="w", encoding="utf-8") as log_file:
                 columns_line = "elapsed,total_power\n"
                 log_file.write(columns_line)
                 log_file.close()
@@ -138,7 +144,8 @@ class SimulationOfSolarSystem:
             self.total_power = self.panel_power * self.pv_conf.panels_count
 
             if self._log:
-                with open(f"logs/sim_solar_system/{self._log_file_name}", mode="a", encoding="utf-8") as log_file:
+                with open(f"logs/sim_solar_system/{self._log_file_name}",
+                          mode="a", encoding="utf-8") as log_file:
                     record = f"{curr_elapsed:.2f},{self.total_power:.2f}\n"
                     log_file.write(record)
                     log_file.close()

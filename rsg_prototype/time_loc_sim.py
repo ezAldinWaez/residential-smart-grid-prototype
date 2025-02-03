@@ -85,7 +85,7 @@ class TimeLocSimulator:
 
     time_factor: float  #: float: Time acceleration factor [sec].
     loc_name: str  #: str: Location name.
-    loc_info: LocationInfo  #: LocationInfo: :class:`LocationInfo` object.
+    loc_info: LocationInfo  #: LocationInfo: :class:`LocationInfo` instance.
 
     #: bool: Whether the simulation is started or not.
     started: bool = False

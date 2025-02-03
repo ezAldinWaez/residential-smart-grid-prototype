@@ -1,6 +1,7 @@
 """Simulation for the solar system."""
 
 from dataclasses import dataclass
+from datetime import datetime
 import threading
 import time
 import os
@@ -32,7 +33,7 @@ class SolarSystemSimulator:
     """Simulation for the solar system.
 
     Args:
-        tls (SimulationOfTimeLocation): The :class:`SimulationOfTimeLocation` object.
+        tls (TimeLocSimulator): The :class:`TimeLocSimulator` instance.
         pv_conf (PVConf): The :class:`PVConf` for the system.
         log (bool): If True, an csv file will be created and record the system status.
 
@@ -55,7 +56,7 @@ class SolarSystemSimulator:
     #: float: The current total power given by the panels.
     total_power: float = .0
 
-    #: pvlib.location.Location: The pvlib location object.
+    #: pvlib.location.Location: The pvlib location instance.
     pv_loc: pvlib.location.Location
 
     def __init__(self, tls: TimeLocSimulator, pv_conf: PVConf, log=False):
@@ -72,12 +73,12 @@ class SolarSystemSimulator:
 
         self._log = log
         if self._log:
-            timestamp = self._tls.get_time().strftime("%Y-%m-%d_%H-%M-%S")
-            self._log_fp = f"logs/solar_system_sim/log_sss_{timestamp}.csv"
+            timestamp = datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
+            self._log_fp = f"logs/{timestamp}/log_solar_system_sim_{timestamp}.csv"
             if not os.path.exists("logs"):
                 os.mkdir("logs")
-            if not os.path.exists("logs/solar_system_sim"):
-                os.mkdir("logs/solar_system_sim")
+            if not os.path.exists(f"logs/{timestamp}"):
+                os.mkdir(f"logs/{timestamp}")
 
     def start(self):
         """Start the simulation."""

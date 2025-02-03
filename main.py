@@ -1,8 +1,10 @@
+from rsg_prototype.power_mng import PowerManager
 from rsg_prototype.time_loc_sim import TimeLocSimulator, Location
 from rsg_prototype.houses_loads_sim import HousesLoadsSimulator
 from rsg_prototype.solar_system_sim import SolarSystemSimulator, PVConf
 from app_tk import App
 
+LOG = True
 
 def main():
     tls = TimeLocSimulator(
@@ -14,7 +16,7 @@ def main():
     hls = HousesLoadsSimulator(
         tls=tls,
         num_houses=12,
-        log=True,
+        log=LOG,
     )
     hls.start()
 
@@ -25,11 +27,16 @@ def main():
             panel_area=1.6,  # [m**2]
             panel_efficiency=.15,  # [0->1]
         ),
-        log=True,
+        log=LOG,
     )
     sss.start()
 
-
+    pm = PowerManager(
+        hls=hls,
+        sss=sss,
+        log=LOG,
+    )
+    pm.start()
 
     app = App(tls, hls, sss)
     app.mainloop()

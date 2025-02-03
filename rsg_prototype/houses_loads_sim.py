@@ -1,6 +1,7 @@
 """Simulation for the houses loads."""
 
 from dataclasses import dataclass
+from datetime import datetime
 from enum import Enum
 import random
 import threading
@@ -461,7 +462,7 @@ class HousesLoadsSimulator:
     """Simulation for the houses loads.
 
     Args:
-        tls (SimulationOfTimeLocation): The :class:`SimulationOfTimeLocation` object.
+        tls (TimeLocSimulator): The :class:`TimeLocSimulator` instance.
         pv_conf (PVConf): The :class:`PVConf` for the system.
         log (bool): If True, an csv file will be created and record the system status.
 
@@ -482,12 +483,12 @@ class HousesLoadsSimulator:
 
         self._log = log
         if self._log:
-            timestamp = self._tls.get_time().strftime("%Y-%m-%d_%H-%M-%S")
-            self._log_fp = f"logs/houses_loads_sim/log_hls_{timestamp}.csv"
+            timestamp = datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
+            self._log_fp = f"logs/{timestamp}/log_houses_loads_sim_{timestamp}.csv"
             if not os.path.exists("logs"):
                 os.mkdir("logs")
-            if not os.path.exists("logs/houses_loads_sim"):
-                os.mkdir("logs/houses_loads_sim")
+            if not os.path.exists(f"logs/{timestamp}"):
+                os.mkdir(f"logs/{timestamp}")
 
     def start(self):
         """Start the simulation."""

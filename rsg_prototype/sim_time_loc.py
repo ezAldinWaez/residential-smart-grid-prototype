@@ -73,12 +73,6 @@ class Location(Enum):
         tz_name='Africa/Khartoum',
     )
 
-    @property
-    def name_formated(self) -> str:
-        """str: The formated location name."""
-        return self.name.replace('_', ' ').title()
-
-
 class SimulationOfTimeLocation:
     """Simulation for time and location.
 
@@ -98,7 +92,7 @@ class SimulationOfTimeLocation:
 
     def __init__(self, time_factor: float, location: Location):
         self.time_factor = time_factor
-        self.loc_name = location.name_formated
+        self.loc_name = location.name.replace('_', ' ').title()
         self.loc_info = location.value
 
         self._paused_at: float = None

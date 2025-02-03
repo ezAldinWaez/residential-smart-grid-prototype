@@ -439,6 +439,7 @@ class HouseState:
 
     load: float = .0  #: float: Total load for the whole house.
     grid_line: bool = True  #: bool: Whether the grid line is connected.
+    load_line: bool = True  #: bool: Whether the load line is connected.
 
     def __init__(self, idx: int):
         self.idx = idx
@@ -451,6 +452,10 @@ class HouseState:
     def toggle_grid_line(self):
         """Toggle the grid line status."""
         self.grid_line = not self.grid_line
+
+    def toggle_load_line(self):
+        """Toggle the load line status."""
+        self.load_line = not self.load_line
 
 
 class SimulationOfHousesLoads:
@@ -523,8 +528,15 @@ class SimulationOfHousesLoads:
             sl = .0
             for house in self.houses:
                 hl = .0
-                for device in house.devices.values():
-                    hl += device.calc_load(elapsed)
+                if house.load_line:
+                    for device in house.devices.values():
+                        hl += device.calc_load(elapsed)
+                else:
+                    house.load = 0
+                    for device in house.devices.values():
+                        device.load = 0
+                        device.count = 0
+                        device.active_envelopes = []
                 house.load = hl
                 sl += hl
             self.system_load = sl

@@ -138,6 +138,12 @@ class SHLView:
             for _ in range(self._shl.num_houses)
         ]
 
+
+        self.houses_load_line = [
+            ttk.StringVar(value="---")
+            for _ in range(self._shl.num_houses)
+        ]
+
         # Configure grid columns to be 4 in row.
         for i in range(4):
             body_frame.columnconfigure(i, weight=1)
@@ -156,7 +162,7 @@ class SHLView:
                 house_card,
                 text=f"House {i + 1}",
                 font=("Calibri", 16, "bold")
-            ).pack(pady=10)
+            ).pack(pady=(0, 10))
 
             # Displays
             displays = ttk.Frame(house_card)
@@ -165,19 +171,19 @@ class SHLView:
                 textvariable=self.houses_total_load[i],
                 font=("Calibri", 12)
             ).pack()
-            grid_status_frame = ttk.Frame(displays)
+            status_frame = ttk.Frame(displays)
             ttk.Label(
-                grid_status_frame,
-                text="Grid Line: ",
-                font=("Calibri", 12)
-            ).pack(side="left")
-            ttk.Label(
-                grid_status_frame,
+                status_frame,
                 textvariable=self.houses_grid_line[i],
                 font=("Calibri", 12)
+            ).pack(side="left", padx=(0, 10))
+            ttk.Label(
+                status_frame,
+                textvariable=self.houses_load_line[i],
+                font=("Calibri", 12)
             ).pack(side="left")
-            grid_status_frame.pack()
-            displays.pack(pady=10)
+            status_frame.pack()
+            displays.pack(pady=(0, 10))
 
             # Control Panel Button
             ttk.Button(
@@ -185,7 +191,7 @@ class SHLView:
                 text="Open Control Panel",
                 command=lambda idx=i: self._open_house_control(idx),
                 style="Accent.TButton"
-            ).pack(pady=10)
+            ).pack(pady=(0, 10))
 
     def _open_house_control(self, idx: int):
         if idx in self.houses_windows and self.houses_windows[idx].root.winfo_exists():
@@ -197,6 +203,7 @@ class SHLView:
                 shl=self._shl,
                 total_load=self.houses_total_load[idx],
                 grid_line=self.houses_grid_line[idx],
+                load_line=self.houses_load_line[idx],
             )
 
     def _update_ui(self, dt: int):
@@ -207,7 +214,10 @@ class SHLView:
                 f"Total Load Power: {self._shl.houses[house_idx].load/1000:.3f} KW")
         for house_idx, house_grid_line in enumerate(self.houses_grid_line):
             house_grid_line.set(
-                "Connected" if self._shl.houses[house_idx].grid_line else "Disconnected")
+                "Grid Line: ✅" if self._shl.houses[house_idx].grid_line else "Grid Line: ❎")
+        for house_idx, house_load_line in enumerate(self.houses_load_line):
+            house_load_line.set(
+                "Load Line: ✅" if self._shl.houses[house_idx].load_line else "Load Line: ❎")
 
         for house_idx, window in self.houses_windows.items():
             if window.root.winfo_exists():
@@ -219,13 +229,14 @@ class SHLView:
 
 
 class SHLControlsView:
-    def __init__(self, root: tk.Tk, idx: int, shl: SimulationOfHousesLoads, total_load: ttk.StringVar, grid_line: ttk.StringVar):
+    def __init__(self, root: tk.Tk, idx: int, shl: SimulationOfHousesLoads, total_load: ttk.StringVar, grid_line: ttk.StringVar, load_line: ttk.StringVar):
         self.root = root
         self.idx = idx
 
         self._shl = shl
         self._total_load = total_load
         self._grid_line = grid_line
+        self._load_line = load_line
         self._house = self._shl.houses[self.idx]
 
         self.root.title(f"House {self.idx + 1} Controls")
@@ -269,23 +280,27 @@ class SHLControlsView:
         ).pack(pady=(0, 20))
 
         # Total Load Display
-        frame = ttk.Frame(main_frame)
+        head_frame = ttk.Frame(main_frame)
         ttk.Label(
-            frame,
+            head_frame,
             textvariable=self._total_load,
             font=("Calibri", 12, "bold"),
         ).pack(side="left")
+        status_frame = ttk.Frame(head_frame)
         ttk.Button(
-            frame,
+            status_frame,
             textvariable=self._grid_line,
             command=self._house.toggle_grid_line,
-        ).pack(side="right", padx=(10, 0))
-        ttk.Label(
-            frame,
-            text="Grid Line:",
-            font=("Calibri", 12)
-        ).pack(side="right")
-        frame.pack(fill="x", pady=(0, 10))
+            style="Accent.TButton.Secondary",
+        ).pack(side="left", padx=(0, 10))
+        ttk.Button(
+            status_frame,
+            textvariable=self._load_line,
+            command=self._house.toggle_load_line,
+            style="Accent.TButton.Secondary",
+        ).pack(side="left", padx=(0, 10))
+        status_frame.pack(side="right")
+        head_frame.pack(fill="x", pady=(0, 10))
 
         self.device_loads = {
             device_name: ttk.StringVar(value="- Watt")
@@ -298,7 +313,7 @@ class SHLControlsView:
             # Device Frame
             device_frame = ttk.LabelFrame(
                 main_frame,
-                text=f' {device_name} Controls ',
+                text=f' {device_name.replace('_', ' ').title()} Controls ',
                 padding="10"
             )
             device_frame.pack(fill="x", pady=10)
@@ -310,7 +325,7 @@ class SHLControlsView:
             # Device Base Wattage Label
             ttk.Label(
                 control_frame,
-                text=f"Base Power: {device.info.max_watt}W",
+                text=f"Base Power: {device.info.max_watt} W",
                 width=20
             ).pack(side="left", padx=5)
 

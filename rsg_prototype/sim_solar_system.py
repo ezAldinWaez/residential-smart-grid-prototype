@@ -13,19 +13,19 @@ from .sim_time_loc import SimulationOfTimeLocation
 
 @dataclass
 class PVConf:
-    """PV Configuration.
-
-    Todo:
-        * Implement __post_init__ method to assert correct data.
-
-    """
+    """PV Configuration."""
 
     panels_count: int  #: int: Panels count.
     panel_area: float  #: float: Panel area [m^2].
     panel_efficiency: float  #: float: Panel efficiency multiplier.
 
+    def __str__(self):
+        return f"PVConf:\n  panels count: {self.panels_count}\n  panel area: {self.panel_area}\n  panel efficiency: {self.panel_efficiency}"
+
     def __post_init__(self):
-        pass
+        assert self.panels_count > 0
+        assert self.panel_area > 0
+        assert 0 < self.panel_efficiency <= 1
 
 
 class SimulationOfSolarSystem:
@@ -53,13 +53,13 @@ class SimulationOfSolarSystem:
     total_power: float = .0
 
     #: pvlib.location.Location: The pvlib location object.
-    pvloc: pvlib.location.Location
+    pv_loc: pvlib.location.Location
 
     def __init__(self, stl: SimulationOfTimeLocation, pv_conf: PVConf, log=False):
         self._stl = stl
         self.pv_conf = pv_conf
 
-        self.pvloc = pvlib.location.Location(
+        self.pv_loc = pvlib.location.Location(
             latitude=self._stl.loc_info.lat,
             longitude=self._stl.loc_info.lng,
             tz=self._stl.loc_info.tz_name,
@@ -70,24 +70,20 @@ class SimulationOfSolarSystem:
         self._log = log
         if self._log:
             timestamp = self._stl.get_time().strftime("%Y-%m-%d_%H-%M-%S")
-            self._log_file_name = f"log_sss_{timestamp}.csv"
+            self._log_fp = f"logs/sim_solar_system/log_sss_{timestamp}.csv"
+            if not os.path.exists("logs"):
+                os.mkdir("logs")
+            if not os.path.exists("logs/sim_solar_system"):
+                os.mkdir("logs/sim_solar_system")
 
     def start(self):
         """Start the simulation."""
         self.running = True
 
         if self._log:
-            if not os.path.exists("logs"):
-                os.mkdir("logs")
-
-            if not os.path.exists("logs/sim_solar_system"):
-                os.mkdir("logs/sim_solar_system")
-
-            with open(f"logs/sim_solar_system/{self._log_file_name}",
-                      mode="w", encoding="utf-8") as log_file:
-                columns_line = "elapsed,total_power\n"
-                log_file.write(columns_line)
-                log_file.close()
+            with open(self._log_fp, mode="w", encoding="utf-8") as f:
+                f.write("elapsed,total_power\n")
+                f.close()
 
         threading.Thread(
             target=self._update,
@@ -113,11 +109,11 @@ class SimulationOfSolarSystem:
 
         """
         while self.running:
-            curr_elapsed = self._stl.get_elapsed()
-            curr_time = self._stl.get_time(curr_elapsed)
+            elapsed = self._stl.get_elapsed()
+            curr_time = self._stl.get_time(elapsed)
 
             # Get solar position (elevation and azimuth)
-            solar_pos = self.pvloc.get_solarposition(curr_time)
+            solar_pos = self.pv_loc.get_solarposition(curr_time)
 
             # Calculate the solar zenith angle
             self.zenith_angle = solar_pos['zenith'].iloc[0]
@@ -139,15 +135,13 @@ class SimulationOfSolarSystem:
                 )['poa_global'].iloc[0]
 
             # Calculate the wattage output of each panel
-            self.panel_power = poa_irradiance * self.pv_conf.panel_area * \
-                self.pv_conf.panel_efficiency
+            self.panel_power = poa_irradiance * \
+                self.pv_conf.panel_area * self.pv_conf.panel_efficiency
             self.total_power = self.panel_power * self.pv_conf.panels_count
 
             if self._log:
-                with open(f"logs/sim_solar_system/{self._log_file_name}",
-                          mode="a", encoding="utf-8") as log_file:
-                    record = f"{curr_elapsed:.2f},{self.total_power:.2f}\n"
-                    log_file.write(record)
-                    log_file.close()
+                with open(self._log_fp, mode="a", encoding="utf-8") as f:
+                    f.write(f"{elapsed:.2f},{self.total_power:.2f}\n")
+                    f.close()
 
             time.sleep(dt/1000)

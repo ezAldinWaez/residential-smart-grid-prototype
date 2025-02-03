@@ -64,12 +64,12 @@ class MainView:
 
         # Houses Loads Tab
         houses_load_frame = ttk.Frame(body_notebook)
-        SHLView(houses_load_frame, self.root, self.stl, self.shl)
+        SHLView(houses_load_frame, self.root, self.shl)
         body_notebook.add(houses_load_frame, text='Houses Load Simulation')
 
         # Solar System Tab
         solar_system_frame = ttk.Frame(body_notebook)
-        SSSView(solar_system_frame, self.root, self.stl, self.sss)
+        SSSView(solar_system_frame, self.root, self.sss)
         body_notebook.add(solar_system_frame, text='Solar System Simulation')
 
     def _pause_sim(self):
@@ -94,11 +94,10 @@ class MainView:
 
 
 class SHLView:
-    def __init__(self, parent: ttk.Frame, root: tk.Tk, stl: SimulationOfTimeLocation, shl: SimulationOfHousesLoads):
+    def __init__(self, parent: ttk.Frame, root: tk.Tk, shl: SimulationOfHousesLoads):
         self.parent = parent
         self.root = root
 
-        self._stl = stl
         self._shl = shl
 
         main_frame = ttk.Frame(self.parent, padding=10)
@@ -134,6 +133,11 @@ class SHLView:
             for _ in range(self._shl.num_houses)
         ]
 
+        self.houses_grid_line = [
+            ttk.StringVar(value="---")
+            for _ in range(self._shl.num_houses)
+        ]
+
         # Configure grid columns to be 4 in row.
         for i in range(4):
             body_frame.columnconfigure(i, weight=1)
@@ -154,12 +158,26 @@ class SHLView:
                 font=("Calibri", 16, "bold")
             ).pack(pady=10)
 
-            # Total Load Display
+            # Displays
+            displays = ttk.Frame(house_card)
             ttk.Label(
-                house_card,
+                displays,
                 textvariable=self.houses_total_load[i],
                 font=("Calibri", 12)
-            ).pack(pady=10)
+            ).pack()
+            grid_status_frame = ttk.Frame(displays)
+            ttk.Label(
+                grid_status_frame,
+                text="Grid Line: ",
+                font=("Calibri", 12)
+            ).pack(side="left")
+            ttk.Label(
+                grid_status_frame,
+                textvariable=self.houses_grid_line[i],
+                font=("Calibri", 12)
+            ).pack(side="left")
+            grid_status_frame.pack()
+            displays.pack(pady=10)
 
             # Control Panel Button
             ttk.Button(
@@ -176,9 +194,9 @@ class SHLView:
             self.houses_windows[idx] = SHLControlsView(
                 root=ttk.Toplevel(self.root),
                 idx=idx,
-                stl=self._stl,
                 shl=self._shl,
                 total_load=self.houses_total_load[idx],
+                grid_line=self.houses_grid_line[idx],
             )
 
     def _update_ui(self, dt: int):
@@ -186,25 +204,29 @@ class SHLView:
             f"Total Load Power: {self._shl.system_load/1000:.3f} kW")
         for house_idx, house_total_load in enumerate(self.houses_total_load):
             house_total_load.set(
-                f"Total Load Power: {self._shl.houses_loads[house_idx]/1000:.3f} KW")
+                f"Total Load Power: {self._shl.houses[house_idx].load/1000:.3f} KW")
+        for house_idx, house_grid_line in enumerate(self.houses_grid_line):
+            house_grid_line.set(
+                "Connected" if self._shl.houses[house_idx].grid_line else "Disconnected")
+
         for house_idx, window in self.houses_windows.items():
             if window.root.winfo_exists():
                 for device_name, device_load in window.device_loads.items():
                     device_load.set(
-                        f"{self._shl.houses_devices_states[house_idx][device_name].total_load:.1f} Watt")
+                        f"{self._shl.houses[house_idx].devices[device_name].load:.1f} Watt")
 
         self.root.after(dt, self._update_ui, dt)
 
 
 class SHLControlsView:
-    def __init__(self, root: tk.Tk, idx: int, stl: SimulationOfTimeLocation, shl: SimulationOfHousesLoads, total_load: ttk.StringVar):
+    def __init__(self, root: tk.Tk, idx: int, shl: SimulationOfHousesLoads, total_load: ttk.StringVar, grid_line: ttk.StringVar):
         self.root = root
         self.idx = idx
 
-        self._stl = stl
         self._shl = shl
         self._total_load = total_load
-        self._device_states = self._shl.houses_devices_states[self.idx]
+        self._grid_line = grid_line
+        self._house = self._shl.houses[self.idx]
 
         self.root.title(f"House {self.idx + 1} Controls")
         self.root.geometry("600x600")
@@ -247,21 +269,31 @@ class SHLControlsView:
         ).pack(pady=(0, 20))
 
         # Total Load Display
-        total_frame = ttk.Frame(main_frame)
-        total_frame.pack(fill="x", pady=20)
+        frame = ttk.Frame(main_frame)
         ttk.Label(
-            total_frame,
+            frame,
             textvariable=self._total_load,
-            font=("Calibri", 12, "bold")
-        ).pack()
+            font=("Calibri", 12, "bold"),
+        ).pack(side="left")
+        ttk.Button(
+            frame,
+            textvariable=self._grid_line,
+            command=self._house.toggle_grid_line,
+        ).pack(side="right", padx=(10, 0))
+        ttk.Label(
+            frame,
+            text="Grid Line:",
+            font=("Calibri", 12)
+        ).pack(side="right")
+        frame.pack(fill="x", pady=(0, 10))
 
         self.device_loads = {
             device_name: ttk.StringVar(value="- Watt")
-            for device_name in self._device_states.keys()
+            for device_name in self._house.devices.keys()
         }
 
         # Devices Controls
-        for device_name, device_state in self._device_states.items():
+        for device_name, device in self._house.devices.items():
 
             # Device Frame
             device_frame = ttk.LabelFrame(
@@ -278,7 +310,7 @@ class SHLControlsView:
             # Device Base Wattage Label
             ttk.Label(
                 control_frame,
-                text=f"Base Power: {device_state.device_info.max_watt}W",
+                text=f"Base Power: {device.info.max_watt}W",
                 width=20
             ).pack(side="left", padx=5)
 
@@ -286,18 +318,20 @@ class SHLControlsView:
             spinbox = ttk.Spinbox(
                 control_frame,
                 from_=0,
-                to=device_state.device_info.max_count,
+                to=device.info.max_count,
                 width=5,
             )
             spinbox.pack(side="left", padx=10)
-            spinbox.insert(0, device_state.count)
+            spinbox.insert(0, device.count)
 
             def update_count_value(wid: ttk.Spinbox, dn: str):
-                self._device_states[dn].update_count(
-                    elapsed=self._stl.get_elapsed(),
-                    value=wid.get().strip()
-                )
+                value = wid.get()
+                count = int(float(value)) if value.strip() else 0
 
+                self._house.devices[dn].update_count(
+                    elapsed=self._shl._stl.get_elapsed(),
+                    new_count=count,
+                )
             spinbox.configure(
                 command=lambda wid=spinbox, dn=device_name: update_count_value(wid, dn))
 
@@ -309,11 +343,11 @@ class SHLControlsView:
             load_label.pack(side="left", padx=5)
 
             # Settings Controls
-            if device_state.device_info.settings:
+            if device.info.settings:
                 # Setting Frame
                 settings_frame = ttk.LabelFrame(
                     device_frame,
-                    text=f" {device_name} Settings ",
+                    text=f" Settings ",
                     padding=5)
                 settings_frame.pack(fill="x", pady=(10, 0))
 
@@ -329,14 +363,14 @@ class SHLControlsView:
                 ).pack(side="left")
 
                 def update_power_factor_label(wid: ttk.StringVar, dn: str):
-                    factor = self._device_states[dn].settings_multiplier
+                    factor = self._house.devices[dn].settings_multiplier
                     wid.set(f"Current Power Factor: {factor:.2f}x")
 
                 # Initial update
                 update_power_factor_label(power_factor, device_name)
 
                 # Create controls for each setting
-                for setting_name, possible_values in device_state.device_info.settings.options.items():
+                for setting_name, possible_values in device.info.settings.options.items():
                     # Setting Frame
                     setting_frame = ttk.Frame(settings_frame)
                     setting_frame.pack(fill="x", pady=2)
@@ -357,12 +391,14 @@ class SHLControlsView:
                         width=15,
                         textvariable=setting
                     )
-                    combo.set(device_state.current_settings[setting_name])
+                    combo.set(device.current_settings[setting_name])
                     combo.pack(side="right", padx=5)
 
                     def update_setting(wid: ttk.Combobox, dn: str, sn: str):
-                        self._device_states[dn].update_setting(
-                            sn, wid.get())
+                        self._house.devices[dn].update_setting(
+                            setting_name=sn,
+                            new_option=wid.get(),
+                        )
 
                     setting.trace_add('write', lambda *args, wid=setting,
                                       dn=device_name, sn=setting_name: update_setting(wid, dn, sn))
@@ -374,11 +410,10 @@ class SHLControlsView:
 
 
 class SSSView:
-    def __init__(self, parent: ttk.Frame, root: tk.Tk, stl: SimulationOfTimeLocation, sss: SimulationOfSolarSystem):
+    def __init__(self, parent: ttk.Frame, root: tk.Tk, sss: SimulationOfSolarSystem):
         self.parent = parent
         self.root = root
 
-        self._stl = stl
         self._sss = sss
 
         main_frame = ttk.Frame(self.parent, padding="10")
@@ -404,11 +439,9 @@ class SSSView:
             # Display real-time wattage output
             self.output_text.delete(1.0, ttk.END)  # Clear previous output
             self.output_text.insert(
-                ttk.END, chars=f"Time Factor: {self._stl.time_factor}\n")
+                ttk.END, chars=f"{self._sss.pv_loc}\n\n")
             self.output_text.insert(
-                ttk.END, chars=f"Location: {self._stl.loc_name}: {self._stl.loc_info}\n")
-            self.output_text.insert(
-                ttk.END, chars=f"PV Configuration: {self._sss.pv_conf}\n\n")
+                ttk.END, chars=f"{self._sss.pv_conf}\n\n")
             self.output_text.insert(
                 ttk.END, chars=f"Zenith Angle: {self._sss.zenith_angle:.2f}°\n")
             self.output_text.insert(

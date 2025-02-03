@@ -35,6 +35,7 @@ class DeviceSettingsConf:
 @dataclass
 class ADSRParams:
     """ADSR (Attack, Decay, Sustain, and Release) model parameters."""
+
     a: float  #: float: Attack Time [sec].
     d: float  #: float: Decay Time [sec].
     s: float  #: float: Sustain Level Multiplier.
@@ -56,19 +57,18 @@ class ADSRParams:
 
 @dataclass
 class DeviceInfo:
-    """Device information.
+    """Device information."""
 
-    Todo:
-        * Implement __post_init__ method to assert correct data.
-
-    """
-    max_watt: float  #: float: Maximum wattage that device can reach (maximum amplitude).
+    #: float: Maximum wattage that device can reach (maximum amplitude).
+    max_watt: float
     max_count: int  #: int: Device maximum count a regular house could have.
     adsr_model: ADSRParams  #: ADSRParams: Device ADSR parmeters.
     settings: DeviceSettingsConf = None  #: DeviceSettings: Device settings.
 
     def __post_init__(self):
-        pass
+        assert self.max_watt >= 0
+        assert self.max_count >= 0
+        assert self.adsr_model is not None
 
 
 class Device(Enum):
@@ -236,24 +236,19 @@ class Device(Enum):
         ),
     )
 
-    @property
-    def name_formated(self) -> str:
-        """str: The formated device name."""
-        return self.name.replace('_', ' ').title()
-
 
 class DeviceState:
     """Hold **a device** status for **a house**.
 
     Args:
-        device (Device): Device static info.
+        device_name (str): Device name.
 
     """
 
-    device_name: str  #: str: Device name.
-    device_info: DeviceInfo  #: DeviceInfo: Device static info.
+    name: str  #: str: Device name.
+    info: DeviceInfo  #: DeviceInfo: Device static info.
     count: int = 0  #: int: Number of **active** device instances.
-    total_load: float = .0  #: float: Total load for all device instances.
+    load: float = .0  #: float: Total load for all device instances.
 
     #: list[tuple[float, float, bool]]: Active Envelopes, each tuple represent an
     #:  envelope, and it contains three elements:
@@ -269,60 +264,81 @@ class DeviceState:
     #: float: Setting multiplier for current settings.
     settings_multiplier: float = 1
 
-    def __init__(self, device: Device):
-        self.device_name = device.name_formated
-        self.device_info = device.value
+    def __init__(self, device_name: str):
+        self.name = Device[device_name].name
+        self.info = Device[device_name].value
 
         # Initialize current settings for each option if appliance settings exist
-        if self.device_info.settings:
-            for setting, options in self.device_info.settings.options.items():
+        if self.info.settings:
+            for setting, options in self.info.settings.options.items():
                 # Default to first option
                 self.current_settings[setting] = options[0]
 
-    def update_count(self, elapsed: float, value: str):
+    def update_count(self, elapsed: float, new_count: int):
         """Update device instances count and edit envelopes indead.
 
         Args:
             elapsed (float): Current elapsed time [sec].
-            value (int): The new count.
+            new_count (int): The new count.
 
         """
-        new_count = int(float(value)) if value.strip() else 0
-
         if new_count > self.count:
             for _ in range(new_count - self.count):
-                self.active_envelopes.append((elapsed, self.total_load, True))
+                self.active_envelopes.append((elapsed, self.load, True))
 
         elif new_count < self.count:
             excess = self.count - new_count
             for idx, (_, _, is_active) in enumerate(self.active_envelopes):
                 if is_active and excess > 0:
                     self.active_envelopes[idx] = (
-                        elapsed, self.total_load, False)
+                        elapsed, self.load, False)
                     excess -= 1
 
         self.count = new_count
 
-    def update_setting(self, setting_name: str, value: str):
+    def update_setting(self, setting_name: str, new_option: str):
         """Update a specific setting for the device.
 
         Notice that it will applies for all instances.
 
         Args:
             setting_name (str): Updated setting name.
-            value (str): The new setting option.
+            new_option (str): The new setting option.
 
         """
-        if self.device_info.settings and setting_name in self.device_info.settings.options:
-            self.current_settings[setting_name] = value
+        if self.info.settings and setting_name in self.info.settings.options:
+            self.current_settings[setting_name] = new_option
 
             self.settings_multiplier = np.prod(np.array([
-                self.device_info.settings.power_factors[setting].get(option, 1)
+                self.info.settings.power_factors[setting].get(option, 1)
                 for setting, option in self.current_settings.items()
-                if setting in self.device_info.settings.power_factors
+                if setting in self.info.settings.power_factors
             ]))
 
-    def filter_active_envelopes(self, elapsed: float):
+    def calc_load(self, elapsed: float) -> float:
+        """Calculate and update device load at this ``elapsed``.
+
+        To minimize calculations, it filters unactive envelopes first.
+
+        The load is calculated depending on it's base wattage, settings,
+        wave parameters, and adsr parameters.
+
+        Args:
+            elapsed (float): The elapsed time [sec].
+
+        """
+        self._filter_unactive_envelopes(elapsed)
+        self.load = np.sum(
+            self.info.max_watt *
+            self.settings_multiplier *
+            self._calc_wave_multiplier(elapsed) *
+            np.array([self._calc_adsr_multiplier(elapsed, ae)
+                     for ae in self.active_envelopes])
+        )
+
+        return self.load
+
+    def _filter_unactive_envelopes(self, elapsed: float):
         """Filter the active envelopes from IDEL envelopes.
 
         IDEL envelopes are envelopes which where unactive for
@@ -347,9 +363,9 @@ class DeviceState:
             float: The wave power multiplier.
 
         """
-        wp = self.device_info.adsr_model.wp
-        wa = self.device_info.adsr_model.wa
-        wt = self.device_info.adsr_model.wt
+        wp = self.info.adsr_model.wp
+        wa = self.info.adsr_model.wa
+        wt = self.info.adsr_model.wt
 
         match wt:
             case "none":
@@ -376,10 +392,10 @@ class DeviceState:
             float: The wave power multiplier.
 
         """
-        a = self.device_info.adsr_model.a
-        s = self.device_info.adsr_model.s
-        d = self.device_info.adsr_model.d
-        r = self.device_info.adsr_model.r
+        a = self.info.adsr_model.a
+        s = self.info.adsr_model.s
+        d = self.info.adsr_model.d
+        r = self.info.adsr_model.r
 
         state_toggle_time, state_toggle_load, is_active = envelope
 
@@ -387,7 +403,7 @@ class DeviceState:
         t = elapsed - state_toggle_time
 
         # Level when Last State Toggle
-        llst = state_toggle_load / self.device_info.max_watt
+        llst = state_toggle_load / self.info.max_watt
 
         if is_active:
             if t <= a:
@@ -407,25 +423,34 @@ class DeviceState:
         # IDEL Stage
         return 0.0
 
-    def calc_device_load(self, elapsed: float) -> float:
-        """Calculate and update device load at this ``elapsed``.
 
-        It's calculated depending on it's base wattage, settings, wave
-        parameters, and adsr parameters.
+class HouseState:
+    """Hold **a house** status.
 
-        Args:
-            elapsed (float): The elapsed time [sec].
+    Args:
+        idx (int): House index.
 
-        """
-        self.total_load = np.sum(
-            self.device_info.max_watt *
-            self.settings_multiplier *
-            self._calc_wave_multiplier(elapsed) *
-            np.array([self._calc_adsr_multiplier(elapsed, ae)
-                     for ae in self.active_envelopes])
-        )
+    """
 
-        return self.total_load
+    idx: int  #: int: House index.
+
+    #: dict[str, DeviceState]: Device state for each device in the house.
+    devices: dict[str, DeviceState]
+
+    load: float = .0  #: float: Total load for the whole house.
+    grid_line: bool = True  #: bool: Whether the grid line is connected.
+
+    def __init__(self, idx: int):
+        self.idx = idx
+        # Todo: itter only on Device Enum objects names.
+        self.devices = {
+            device.name: DeviceState(device.name)
+            for device in Device
+        }
+
+    def toggle_grid_line(self):
+        """Toggle the grid line status."""
+        self.grid_line = not self.grid_line
 
 
 class SimulationOfHousesLoads:
@@ -438,47 +463,36 @@ class SimulationOfHousesLoads:
 
     """
 
-    num_houses: int  #: int: Number of houses in the system.
+    num_houses: int   #: int: Number of houses in the system.
+
+    #: list[HouseState]: House state for each house in the system.
+    houses: list[HouseState]
+
     running: bool = False   #: Whether the simulation is running or paused.
     system_load: float = .0  #: float: The current system total load.
-    houses_loads: list[float]  #: list[float]: Total load for each house.
-    #: list[dict[str, DeviceInfo]]: Device state for each device for each house.
-    houses_devices_states: list[dict[str, DeviceState]]
 
     def __init__(self, stl: SimulationOfTimeLocation, num_houses: int, log=False):
         self._stl = stl
-        self.num_houses: int = num_houses
-
-        self.houses_loads = [0 for _ in range(self.num_houses)]
-        self.houses_devices_states = [
-            {
-                device.name_formated: DeviceState(device)
-                for device in Device
-            }
-            for _ in range(self.num_houses)
-        ]
+        self.num_houses = num_houses
+        self.houses = [HouseState(idx) for idx in range(num_houses)]
 
         self._log = log
         if self._log:
             timestamp = self._stl.get_time().strftime("%Y-%m-%d_%H-%M-%S")
-            self._log_file_name = f"log_shl_{timestamp}.csv"
+            self._log_fp = f"logs/sim_houses_loads/log_shl_{timestamp}.csv"
+            if not os.path.exists("logs"):
+                os.mkdir("logs")
+            if not os.path.exists("logs/sim_houses_loads"):
+                os.mkdir("logs/sim_houses_loads")
 
     def start(self):
         """Start the simulation."""
         self.running = True
 
         if self._log:
-            if not os.path.exists("logs"):
-                os.mkdir("logs")
-
-            if not os.path.exists("logs/sim_houses_loads"):
-                os.mkdir("logs/sim_houses_loads")
-
-            with open(f"logs/sim_houses_loads/{self._log_file_name}",
-                      mode="w", encoding="utf-8") as log_file:
-                columns_line = "elapsed,system_load\n"
-                log_file.write(columns_line)
-                log_file.close()
+            with open(self._log_fp, mode="w", encoding="utf-8") as f:
+                f.write("elapsed,system_load\n")
+                f.close()
 
         threading.Thread(
             target=self._update,
@@ -504,26 +518,20 @@ class SimulationOfHousesLoads:
 
         """
         while self.running:
-            curr_elapsed = self._stl.get_elapsed()
+            elapsed = self._stl.get_elapsed()
 
-            for idx in range(self.num_houses):
-                house_load = 0.0
-                for device_name in self.houses_devices_states[idx].keys():
-                    self.houses_devices_states[idx][device_name].filter_active_envelopes(
-                        curr_elapsed)
-                    device_load = self.houses_devices_states[idx][device_name].calc_device_load(
-                        curr_elapsed)
-                    house_load += device_load
-
-                self.houses_loads[idx] = house_load
-
-            self.system_load = sum(self.houses_loads)
+            sl = .0
+            for house in self.houses:
+                hl = .0
+                for device in house.devices.values():
+                    hl += device.calc_load(elapsed)
+                house.load = hl
+                sl += hl
+            self.system_load = sl
 
             if self._log:
-                with open(f"logs/sim_houses_loads/{self._log_file_name}",
-                          mode="a", encoding="utf-8") as log_file:
-                    record = f"{curr_elapsed:.2f},{self.system_load:.2f}\n"
-                    log_file.write(record)
-                    log_file.close()
+                with open(self._log_fp, mode="a", encoding="utf-8") as f:
+                    f.write(f"{elapsed:.2f},{self.system_load:.2f}\n")
+                    f.close()
 
             time.sleep(dt/1000)

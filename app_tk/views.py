@@ -460,6 +460,8 @@ class SSSView:
             self.output_text.insert(
                 ttk.END, chars=f"Zenith Angle: {self._sss.zenith_angle:.2f}°\n")
             self.output_text.insert(
+                ttk.END, chars=f"POA Irradiance: {self._sss.poa_irradiance:.2f}\n")
+            self.output_text.insert(
                 ttk.END, chars=f"Panel Power: {self._sss.panel_power:.2f} W\n")
             self.output_text.insert(
                 ttk.END, chars=f"Total Power: {self._sss.total_power/1000:.3f} KW\n")

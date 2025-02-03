@@ -73,7 +73,7 @@ class Location(Enum):
         tz_name='Africa/Khartoum',
     )
 
-class SimulationOfTimeLocation:
+class TimeLocSimulator:
     """Simulation for time and location.
 
     Args:

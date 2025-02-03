@@ -2,16 +2,16 @@ import tkinter as tk
 import ttkbootstrap as ttk
 from ttkbootstrap.widgets import Notebook
 
-from rsg_prototype.sim_time_loc import SimulationOfTimeLocation
-from rsg_prototype.sim_houses_loads import SimulationOfHousesLoads
-from rsg_prototype.sim_solar_system import SimulationOfSolarSystem
+from rsg_prototype.time_loc_sim import TimeLocSimulator
+from rsg_prototype.houses_loads_sim import HousesLoadsSimulator
+from rsg_prototype.solar_system_sim import SolarSystemSimulator
 
 
 class MainView:
-    def __init__(self, root: tk.Tk, stl: SimulationOfTimeLocation, shl: SimulationOfHousesLoads, sss: SimulationOfSolarSystem):
+    def __init__(self, root: tk.Tk, tls: TimeLocSimulator, hls: HousesLoadsSimulator, sss: SolarSystemSimulator):
         self.root = root
-        self.stl = stl
-        self.shl = shl
+        self.tls = tls
+        self.hls = hls
         self.sss = sss
 
         self.root.title("Residential Smart Grid Simulator")
@@ -64,7 +64,7 @@ class MainView:
 
         # Houses Loads Tab
         houses_load_frame = ttk.Frame(body_notebook)
-        SHLView(houses_load_frame, self.root, self.shl)
+        HLSView(houses_load_frame, self.root, self.hls)
         body_notebook.add(houses_load_frame, text='Houses Load Simulation')
 
         # Solar System Tab
@@ -73,13 +73,13 @@ class MainView:
         body_notebook.add(solar_system_frame, text='Solar System Simulation')
 
     def _pause_sim(self):
-        self.stl.pause()
-        self.shl.pause()
+        self.tls.pause()
+        self.hls.pause()
         self.sss.pause()
 
     def _resume_sim(self):
-        self.stl.resume()
-        self.shl.resume()
+        self.tls.resume()
+        self.hls.resume()
         self.sss.resume()
 
     def _on_closing(self):
@@ -88,17 +88,17 @@ class MainView:
 
     def _update_ui(self, dt: int):
         self.time_display.set(
-            f"Simulation Time: {self.stl.get_time().strftime('%H:%M:%S')}")
+            f"Simulation Time: {self.tls.get_time().strftime('%H:%M:%S')}")
 
         self.root.after(dt, self._update_ui, dt)
 
 
-class SHLView:
-    def __init__(self, parent: ttk.Frame, root: tk.Tk, shl: SimulationOfHousesLoads):
+class HLSView:
+    def __init__(self, parent: ttk.Frame, root: tk.Tk, hls: HousesLoadsSimulator):
         self.parent = parent
         self.root = root
 
-        self._shl = shl
+        self._hls = hls
 
         main_frame = ttk.Frame(self.parent, padding=10)
         main_frame.pack(fill="both", expand=True)
@@ -126,22 +126,22 @@ class SHLView:
         body_frame = ttk.Frame(main_frame)
         body_frame.pack(fill="both", expand=True, pady=10, padx=10)
 
-        self.houses_windows: dict[int, SHLControlsView] = {}
+        self.houses_windows: dict[int, HLSControlsView] = {}
 
         self.houses_total_load = [
             ttk.StringVar(value="Total Load Power: - KW")
-            for _ in range(self._shl.num_houses)
+            for _ in range(self._hls.num_houses)
         ]
 
         self.houses_grid_line = [
             ttk.StringVar(value="---")
-            for _ in range(self._shl.num_houses)
+            for _ in range(self._hls.num_houses)
         ]
 
 
         self.houses_load_line = [
             ttk.StringVar(value="---")
-            for _ in range(self._shl.num_houses)
+            for _ in range(self._hls.num_houses)
         ]
 
         # Configure grid columns to be 4 in row.
@@ -152,7 +152,7 @@ class SHLView:
         for i in range(3):
             body_frame.rowconfigure(i, weight=1)
 
-        for i in range(self._shl.num_houses):
+        for i in range(self._hls.num_houses):
             # Create card-like frame for each house
             house_card = ttk.Frame(body_frame, style="Card.TFrame")
             house_card.grid(row=i // 4, column=i % 4)
@@ -197,10 +197,10 @@ class SHLView:
         if idx in self.houses_windows and self.houses_windows[idx].root.winfo_exists():
             self.houses_windows[idx].root.focus()
         else:
-            self.houses_windows[idx] = SHLControlsView(
+            self.houses_windows[idx] = HLSControlsView(
                 root=ttk.Toplevel(self.root),
                 idx=idx,
-                shl=self._shl,
+                hls=self._hls,
                 total_load=self.houses_total_load[idx],
                 grid_line=self.houses_grid_line[idx],
                 load_line=self.houses_load_line[idx],
@@ -208,36 +208,36 @@ class SHLView:
 
     def _update_ui(self, dt: int):
         self.total_power.set(
-            f"Total Load Power: {self._shl.system_load/1000:.3f} kW")
+            f"Total Load Power: {self._hls.system_load/1000:.3f} kW")
         for house_idx, house_total_load in enumerate(self.houses_total_load):
             house_total_load.set(
-                f"Total Load Power: {self._shl.houses[house_idx].load/1000:.3f} KW")
+                f"Total Load Power: {self._hls.houses[house_idx].load/1000:.3f} KW")
         for house_idx, house_grid_line in enumerate(self.houses_grid_line):
             house_grid_line.set(
-                "Grid Line: ✅" if self._shl.houses[house_idx].grid_line else "Grid Line: ❎")
+                "Grid Line: ✅" if self._hls.houses[house_idx].grid_line else "Grid Line: ❎")
         for house_idx, house_load_line in enumerate(self.houses_load_line):
             house_load_line.set(
-                "Load Line: ✅" if self._shl.houses[house_idx].load_line else "Load Line: ❎")
+                "Load Line: ✅" if self._hls.houses[house_idx].load_line else "Load Line: ❎")
 
         for house_idx, window in self.houses_windows.items():
             if window.root.winfo_exists():
                 for device_name, device_load in window.device_loads.items():
                     device_load.set(
-                        f"{self._shl.houses[house_idx].devices[device_name].load:.1f} Watt")
+                        f"{self._hls.houses[house_idx].devices[device_name].load:.1f} Watt")
 
         self.root.after(dt, self._update_ui, dt)
 
 
-class SHLControlsView:
-    def __init__(self, root: tk.Tk, idx: int, shl: SimulationOfHousesLoads, total_load: ttk.StringVar, grid_line: ttk.StringVar, load_line: ttk.StringVar):
+class HLSControlsView:
+    def __init__(self, root: tk.Tk, idx: int, hls: HousesLoadsSimulator, total_load: ttk.StringVar, grid_line: ttk.StringVar, load_line: ttk.StringVar):
         self.root = root
         self.idx = idx
 
-        self._shl = shl
+        self._hls = hls
         self._total_load = total_load
         self._grid_line = grid_line
         self._load_line = load_line
-        self._house = self._shl.houses[self.idx]
+        self._house = self._hls.houses[self.idx]
 
         self.root.title(f"House {self.idx + 1} Controls")
         self.root.geometry("600x600")
@@ -344,7 +344,7 @@ class SHLControlsView:
                 count = int(float(value)) if value.strip() else 0
 
                 self._house.devices[dn].update_count(
-                    elapsed=self._shl._stl.get_elapsed(),
+                    elapsed=self._hls._tls.get_elapsed(),
                     new_count=count,
                 )
             spinbox.configure(
@@ -425,7 +425,7 @@ class SHLControlsView:
 
 
 class SSSView:
-    def __init__(self, parent: ttk.Frame, root: tk.Tk, sss: SimulationOfSolarSystem):
+    def __init__(self, parent: ttk.Frame, root: tk.Tk, sss: SolarSystemSimulator):
         self.parent = parent
         self.root = root
 

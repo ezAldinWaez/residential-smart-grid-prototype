@@ -10,7 +10,7 @@ from typing import Literal
 
 import numpy as np
 
-from .sim_time_loc import SimulationOfTimeLocation
+from .time_loc_sim import TimeLocSimulator
 
 
 @dataclass
@@ -443,10 +443,9 @@ class HouseState:
 
     def __init__(self, idx: int):
         self.idx = idx
-        # Todo: itter only on Device Enum objects names.
         self.devices = {
-            device.name: DeviceState(device.name)
-            for device in Device
+            device_name: DeviceState(device_name)
+            for device_name in Device.__members__.keys()
         }
 
     def toggle_grid_line(self):
@@ -458,11 +457,11 @@ class HouseState:
         self.load_line = not self.load_line
 
 
-class SimulationOfHousesLoads:
+class HousesLoadsSimulator:
     """Simulation for the houses loads.
 
     Args:
-        stl (SimulationOfTimeLocation): The :class:`SimulationOfTimeLocation` object.
+        tls (SimulationOfTimeLocation): The :class:`SimulationOfTimeLocation` object.
         pv_conf (PVConf): The :class:`PVConf` for the system.
         log (bool): If True, an csv file will be created and record the system status.
 
@@ -476,19 +475,19 @@ class SimulationOfHousesLoads:
     running: bool = False   #: Whether the simulation is running or paused.
     system_load: float = .0  #: float: The current system total load.
 
-    def __init__(self, stl: SimulationOfTimeLocation, num_houses: int, log=False):
-        self._stl = stl
+    def __init__(self, tls: TimeLocSimulator, num_houses: int, log=False):
+        self._tls = tls
         self.num_houses = num_houses
         self.houses = [HouseState(idx) for idx in range(num_houses)]
 
         self._log = log
         if self._log:
-            timestamp = self._stl.get_time().strftime("%Y-%m-%d_%H-%M-%S")
-            self._log_fp = f"logs/sim_houses_loads/log_shl_{timestamp}.csv"
+            timestamp = self._tls.get_time().strftime("%Y-%m-%d_%H-%M-%S")
+            self._log_fp = f"logs/houses_loads_sim/log_hls_{timestamp}.csv"
             if not os.path.exists("logs"):
                 os.mkdir("logs")
-            if not os.path.exists("logs/sim_houses_loads"):
-                os.mkdir("logs/sim_houses_loads")
+            if not os.path.exists("logs/houses_loads_sim"):
+                os.mkdir("logs/houses_loads_sim")
 
     def start(self):
         """Start the simulation."""
@@ -523,7 +522,7 @@ class SimulationOfHousesLoads:
 
         """
         while self.running:
-            elapsed = self._stl.get_elapsed()
+            elapsed = self._tls.get_elapsed()
 
             sl = .0
             for house in self.houses:

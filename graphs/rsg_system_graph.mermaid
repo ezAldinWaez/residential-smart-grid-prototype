@@ -6,20 +6,20 @@ graph TB
   end
 
   subgraph RSGS[RSG System]
-    RSGS_PM[Power Mng.]
+    RSGS_PM[Power Management]
     RSGS_MA[Mobile API]
   end
 
-  subgraph HS[Houses]
+  subgraph HS[Houses System]
     HS_H1([House 1])
     HS_H2([House 2])
     HS_H3([House 3])
   end
 
   subgraph UMA[Users Mobile App]
-    UMA_U1([User 1 App])
-    UMA_U2([User 2 App])
-    UMA_U3([User 3 App])
+    UMA_U1([User 1])
+    UMA_U2([User 2])
+    UMA_U3([User 3])
   end
 
   SS_P --Power--> SS_I

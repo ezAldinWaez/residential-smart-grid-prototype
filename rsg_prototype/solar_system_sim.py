@@ -8,7 +8,7 @@ import os
 import pvlib
 from pvlib import irradiance
 
-from .sim_time_loc import SimulationOfTimeLocation
+from .time_loc_sim import TimeLocSimulator
 
 
 @dataclass
@@ -28,11 +28,11 @@ class PVConf:
         assert 0 < self.panel_efficiency <= 1
 
 
-class SimulationOfSolarSystem:
+class SolarSystemSimulator:
     """Simulation for the solar system.
 
     Args:
-        stl (SimulationOfTimeLocation): The :class:`SimulationOfTimeLocation` object.
+        tls (SimulationOfTimeLocation): The :class:`SimulationOfTimeLocation` object.
         pv_conf (PVConf): The :class:`PVConf` for the system.
         log (bool): If True, an csv file will be created and record the system status.
 
@@ -58,26 +58,26 @@ class SimulationOfSolarSystem:
     #: pvlib.location.Location: The pvlib location object.
     pv_loc: pvlib.location.Location
 
-    def __init__(self, stl: SimulationOfTimeLocation, pv_conf: PVConf, log=False):
-        self._stl = stl
+    def __init__(self, tls: TimeLocSimulator, pv_conf: PVConf, log=False):
+        self._tls = tls
         self.pv_conf = pv_conf
 
         self.pv_loc = pvlib.location.Location(
-            latitude=self._stl.loc_info.lat,
-            longitude=self._stl.loc_info.lng,
-            tz=self._stl.loc_info.tz_name,
-            altitude=self._stl.loc_info.alt,
-            name=self._stl.loc_name,
+            latitude=self._tls.loc_info.lat,
+            longitude=self._tls.loc_info.lng,
+            tz=self._tls.loc_info.tz_name,
+            altitude=self._tls.loc_info.alt,
+            name=self._tls.loc_name,
         )
 
         self._log = log
         if self._log:
-            timestamp = self._stl.get_time().strftime("%Y-%m-%d_%H-%M-%S")
-            self._log_fp = f"logs/sim_solar_system/log_sss_{timestamp}.csv"
+            timestamp = self._tls.get_time().strftime("%Y-%m-%d_%H-%M-%S")
+            self._log_fp = f"logs/solar_system_sim/log_sss_{timestamp}.csv"
             if not os.path.exists("logs"):
                 os.mkdir("logs")
-            if not os.path.exists("logs/sim_solar_system"):
-                os.mkdir("logs/sim_solar_system")
+            if not os.path.exists("logs/solar_system_sim"):
+                os.mkdir("logs/solar_system_sim")
 
     def start(self):
         """Start the simulation."""
@@ -112,8 +112,8 @@ class SimulationOfSolarSystem:
 
         """
         while self.running:
-            elapsed = self._stl.get_elapsed()
-            curr_time = self._stl.get_time(elapsed)
+            elapsed = self._tls.get_elapsed()
+            curr_time = self._tls.get_time(elapsed)
 
             # Get solar position (elevation and azimuth)
             solar_pos = self.pv_loc.get_solarposition(curr_time)

@@ -1,25 +1,25 @@
-from rsg_prototype.sim_time_loc import SimulationOfTimeLocation, Location
-from rsg_prototype.sim_houses_loads import SimulationOfHousesLoads
-from rsg_prototype.sim_solar_system import SimulationOfSolarSystem, PVConf
+from rsg_prototype.time_loc_sim import TimeLocSimulator, Location
+from rsg_prototype.houses_loads_sim import HousesLoadsSimulator
+from rsg_prototype.solar_system_sim import SolarSystemSimulator, PVConf
 from app_tk import App
 
 
 def main():
-    stl = SimulationOfTimeLocation(
+    tls = TimeLocSimulator(
         time_factor=3600,
         location=Location.ALEPPO,
     )
-    stl.start()
+    tls.start()
 
-    shl = SimulationOfHousesLoads(
-        stl=stl,
+    hls = HousesLoadsSimulator(
+        tls=tls,
         num_houses=12,
         log=True,
     )
-    shl.start()
+    hls.start()
 
-    sss = SimulationOfSolarSystem(
-        stl=stl,
+    sss = SolarSystemSimulator(
+        tls=tls,
         pv_conf=PVConf(
             panels_count=10,
             panel_area=1.6,  # [m**2]
@@ -29,7 +29,9 @@ def main():
     )
     sss.start()
 
-    app = App(stl, shl, sss)
+
+
+    app = App(tls, hls, sss)
     app.mainloop()
 
 

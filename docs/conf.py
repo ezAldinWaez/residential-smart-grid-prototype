@@ -44,7 +44,7 @@ default_dark_mode = False
 html_theme = 'sphinx_rtd_theme'
 html_static_path = ['_static']
 html_logo = '_static/logo.jpg'
-
+html_css_files = ['custom.css']
 
 # -- Options for LaTeX output ------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#options-for-latex-output

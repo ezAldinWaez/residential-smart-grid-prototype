@@ -1,22 +1,34 @@
+"""Tkinter app package."""
+
 import tkinter as tk
 import ttkbootstrap as ttk
 
 from rsg_prototype.time_loc_sim import TimeLocSimulator
 from rsg_prototype.houses_loads_sim import HousesLoadsSimulator
 from rsg_prototype.solar_system_sim import SolarSystemSimulator
+from rsg_prototype.power_mng import PowerManager
 
-from .views import MainView
+from .views import MainWindowView
 
 
 class App:
-    def __init__(self, tls: TimeLocSimulator, hls: HousesLoadsSimulator, sss: SolarSystemSimulator):
+    """Tkinter app to browse and control the system."""
+
+    def __init__(self, tls: TimeLocSimulator, hls: HousesLoadsSimulator, sss: SolarSystemSimulator,
+                 pm: PowerManager):
         self.root = tk.Tk()
 
-        # also try 'superhero' and 'solar', and if you want light mode, try 'simplex'.
-        # you can see all possible themes by running `tkk.Style().theme_names()`.
-        ttk.Style().theme_use('darkly')
+        style = ttk.Style()
+        style.theme_use('darkly')  # try 'superhero', 'solar', 'simplex'.
 
-        MainView(self.root, tls, hls, sss)
+        MainWindowView(
+            root=self.root,
+            tls=tls,
+            hls=hls,
+            sss=sss,
+            pm=pm,
+        )
 
     def mainloop(self):
+        """Start tkinter app mainloop."""
         self.root.mainloop()

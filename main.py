@@ -1,44 +1,60 @@
-from rsg_prototype.power_mng import PowerManager
+# pylint: disable=locally-disabled, missing-module-docstring, missing-function-docstring
+
 from rsg_prototype.time_loc_sim import TimeLocSimulator, Location
 from rsg_prototype.houses_loads_sim import HousesLoadsSimulator
 from rsg_prototype.solar_system_sim import SolarSystemSimulator, PVConf
+from rsg_prototype.power_mng import PowerManager
 from app_tk import App
+
+TIME_FACTOR = 3600
+LOCATION = Location.ALEPPO
+NUM_HOUSES = 12
+
+NUM_PANELS = 10
+PANEL_AREA = 1.6
+PANEL_EFFICIENCY = .15
 
 LOG = True
 
-def main():
-    tls = TimeLocSimulator(
-        time_factor=3600,
-        location=Location.ALEPPO,
-    )
-    tls.start()
 
-    hls = HousesLoadsSimulator(
-        tls=tls,
-        num_houses=12,
+def main():
+    time_loc_sim = TimeLocSimulator(
+        time_factor=TIME_FACTOR,
+        location=LOCATION,
+    )
+    time_loc_sim.start()
+
+    houses_loads_sim = HousesLoadsSimulator(
+        tls=time_loc_sim,
+        num_houses=NUM_HOUSES,
         log=LOG,
     )
-    hls.start()
+    houses_loads_sim.start()
 
-    sss = SolarSystemSimulator(
-        tls=tls,
+    solar_system_sim = SolarSystemSimulator(
+        tls=time_loc_sim,
         pv_conf=PVConf(
-            panels_count=10,
-            panel_area=1.6,  # [m**2]
-            panel_efficiency=.15,  # [0->1]
+            num_panels=NUM_PANELS,
+            panel_area=PANEL_AREA,
+            panel_efficiency=PANEL_EFFICIENCY,
         ),
         log=LOG,
     )
-    sss.start()
+    solar_system_sim.start()
 
-    pm = PowerManager(
-        hls=hls,
-        sss=sss,
+    power_mng = PowerManager(
+        hls=houses_loads_sim,
+        sss=solar_system_sim,
         log=LOG,
     )
-    pm.start()
+    power_mng.start()
 
-    app = App(tls, hls, sss)
+    app = App(
+        tls=time_loc_sim,
+        hls=houses_loads_sim,
+        sss=solar_system_sim,
+        pm=power_mng,
+    )
     app.mainloop()
 
 

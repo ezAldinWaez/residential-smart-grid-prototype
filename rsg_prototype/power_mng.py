@@ -1,4 +1,4 @@
-"""Power Management."""
+"""Power management."""
 
 from datetime import datetime
 import os
@@ -10,13 +10,13 @@ from .solar_system_sim import SolarSystemSimulator
 
 
 class PowerManager:
-    """Power Manager.
+    """Power manager.
 
     Args:
-        tls (TimeLocSimulator): The :class:`TimeLocSimulator` instance.
-        hls (HousesLoadsSimulator): The :class:`HousesLoadsSimulator` instance.
-        sss (SolarSystemSimulator): The :class:`SolarSystemSimulator` instance.
+        hls (HousesLoadsSimulator): Houses loads simulator instance.
+        sss (SolarSystemSimulator): Solar system simulator instance.
         log (bool): If True, an csv file will be created and record the system status.
+
     """
 
     #: bool: Whether the simulation is running or paused.
@@ -39,10 +39,10 @@ class PowerManager:
         """Start the power management."""
         self.running = True
 
-        if self._log:
-            with open(self._log_fp, mode="w", encoding="utf-8") as f:
-                f.write("\n")
-                f.close()
+        # if self._log:
+        #     with open(self._log_fp, mode="w", encoding="utf-8") as f:
+        #         f.write("\n")
+        #         f.close()
 
         threading.Thread(
             target=self._update,
@@ -73,9 +73,9 @@ class PowerManager:
                 if house.load > self._sss.total_power / self._hls.num_houses:
                     house.load_line = False
 
-            if self._log:
-                with open(self._log_fp, mode="a", encoding="utf-8") as f:
-                    f.write(f"\n")
-                    f.close()
+            # if self._log:
+            #     with open(self._log_fp, mode="a", encoding="utf-8") as f:
+            #         f.write("\n")
+            #         f.close()
 
             time.sleep(dt/1000)

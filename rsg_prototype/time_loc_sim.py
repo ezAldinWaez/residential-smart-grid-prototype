@@ -1,4 +1,4 @@
-"""Simulation for time and location."""
+"""Time and location simulation."""
 
 from dataclasses import dataclass
 from enum import Enum
@@ -34,7 +34,7 @@ class Location(Enum):
     """Some important places on Earth.
 
     Note:
-        All attributes are from type :class:`LocationInfo`.
+        All members are from type :class:`LocationInfo`.
 
     """
 
@@ -54,7 +54,7 @@ class Location(Enum):
 
     NEW_YORK = LocationInfo(
         lat=40.7128,
-        lng=-74.0060,
+        lng=-74.006,
         alt=10,
         tz_name='America/New_York',
     )
@@ -73,17 +73,17 @@ class Location(Enum):
         tz_name='Africa/Khartoum',
     )
 
+
 class TimeLocSimulator:
-    """Simulation for time and location.
+    """Time and locaiton simulator.
 
     Args:
-        time_factor (float): Time acceleration factor [sec].
-        location (Location): Location, including latitude, longitude, altitude, 
-            and timezone.
+        time_factor (float): Time acceleration factor. [sec]
+        location (Location): Location, including latitude, longitude, altitude, and timezone.
 
     """
 
-    time_factor: float  #: float: Time acceleration factor [sec].
+    time_factor: float  #: float: Time acceleration factor. [sec]
     loc_name: str  #: str: Location name.
     loc_info: LocationInfo  #: LocationInfo: :class:`LocationInfo` instance.
 
@@ -103,7 +103,7 @@ class TimeLocSimulator:
         """Calculates the real elapsed time and multiplies it with the time factor.
 
         Returns:
-            float: The elapsed simulation time (number of seconds) [sec].
+            float: The elapsed simulation time (number of seconds). [sec]
 
         """
         assert self.started
@@ -147,7 +147,7 @@ class TimeLocSimulator:
             self._paused_at = time.time()
 
     def resume(self):
-        """Resume the simulation time."""
+        """Resume the simulation."""
         if self._paused_at is not None:
             last_pause_duration = time.time() - self._paused_at
             self._pause_duration += last_pause_duration

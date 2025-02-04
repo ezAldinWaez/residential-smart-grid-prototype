@@ -1,1 +1,1 @@
-"""Residential Smart Grid Prototype Package."""
+"""Residential smart grid prototype package."""

@@ -1,3 +1,5 @@
+"""Tkinter app views."""
+
 import tkinter as tk
 import ttkbootstrap as ttk
 from ttkbootstrap.widgets import Notebook
@@ -5,454 +7,526 @@ from ttkbootstrap.widgets import Notebook
 from rsg_prototype.time_loc_sim import TimeLocSimulator
 from rsg_prototype.houses_loads_sim import HousesLoadsSimulator
 from rsg_prototype.solar_system_sim import SolarSystemSimulator
+from rsg_prototype.power_mng import PowerManager
 
 
-class MainView:
-    def __init__(self, root: tk.Tk, tls: TimeLocSimulator, hls: HousesLoadsSimulator, sss: SolarSystemSimulator):
+class MainWindowView:
+    """Main window view.
+
+    Args:
+        root (tk.Tk): Tk window root.
+        tls (TimeLocSimulator): Time and location simulator instance.
+        hls (HousesLoadsSimulator): Houses loads simulator instance.
+        sss (SolarSystemSimulator): Solar system simulator instance.
+        pm (PowerManager): Power manager instance.
+
+    """
+
+    def __init__(self, root: tk.Tk, tls: TimeLocSimulator, hls: HousesLoadsSimulator,
+                 sss: SolarSystemSimulator, pm: PowerManager):
         self.root = root
-        self.tls = tls
-        self.hls = hls
-        self.sss = sss
-
-        self.root.title("Residential Smart Grid Simulator")
+        self.root.title("Residential Smart Grid Prototype")
         self.root.attributes('-fullscreen', True)
         self.root.protocol("WM_DELETE_WINDOW", self._on_closing)
+        self._tls = tls
+        self._hls = hls
+        self._sss = sss
+        self._pm = pm
 
-        main_frame = ttk.Frame(self.root, padding="10")
-        main_frame.pack(fill="both", expand=True)
+        self._sv_time = ttk.StringVar(value="Time: ??:??:??")
 
-        self._build_header(main_frame)
-        self._build_body(main_frame)
+        f_main = ttk.Frame(self.root, padding=10)
+        f_main.pack(fill="both", expand=True)
+
+        self._build_header(f_main)
+        self._build_body(f_main)
 
         self._update_ui(dt=100)
 
-    def _build_header(self, main_frame: ttk.Frame):
-        # Header Frame
-        header_frame = ttk.Frame(main_frame)
-        header_frame.pack(fill="x", pady=(0, 10))
+    def _build_header(self, f_parent: ttk.Frame):
+        f_main = ttk.Frame(f_parent)
+        f_main.pack(fill="x", pady=(0, 10))
 
-        # Simulation Time Display
-        self.time_display = ttk.StringVar(value="Simulation Time: --:--:--")
         ttk.Label(
-            header_frame,
-            textvariable=self.time_display,
-            font=("Calibri", 14)
+            f_main,
+            text="Residential Smart Grid Prototype",
+            font=("Calibri", 24),
         ).pack(side="left")
 
-        # Buttons Menue Frame
-        buttons_menue_frame = ttk.Frame(header_frame)
-        buttons_menue_frame.pack(side="right")
+        f_right = ttk.Frame(f_main)
+        f_right.pack(side="right")
 
-        # Pause Simulation Button
+        ttk.Label(
+            f_right,
+            textvariable=self._sv_time,
+            font=("Calibri", 12),
+        ).pack(side="left", padx=(0, 10))
+
+        ttk.Label(
+            f_right,
+            text=f"Location: {self._tls.loc_name}",
+            font=("Calibri", 12),
+        ).pack(side="left", padx=(0, 10))
+
         ttk.Button(
-            buttons_menue_frame,
+            f_right,
             text="Pause Simulation",
-            command=self._pause_sim
-        ).pack(side="left", padx=10)
+            command=self.pause_sim,
+        ).pack(side="left", padx=(0, 10))
 
-        # Resume Simulation Button
         ttk.Button(
-            buttons_menue_frame,
+            f_right,
             text="Resume Simulation",
-            command=self._resume_sim
-        ).pack(side="left", padx=10)
+            command=self.resume_sim,
+        ).pack(side="left")
 
-    def _build_body(self, main_frame: ttk.Frame):
-        # Body Notebook (Tabbed Interface)
-        body_notebook = Notebook(main_frame, style='primary')
-        body_notebook.pack(fill='both', expand=True)
+    def _build_body(self, f_parent: ttk.Frame):
+        n_main = Notebook(
+            f_parent,
+            style="Primary.TNotebook",
+        )
+        n_main.pack(fill='both', expand=True)
 
-        # Houses Loads Tab
-        houses_load_frame = ttk.Frame(body_notebook)
-        HLSView(houses_load_frame, self.root, self.hls)
-        body_notebook.add(houses_load_frame, text='Houses Load Simulation')
+        f_hls = ttk.Frame(n_main)
+        n_main.add(f_hls, text='Houses Load Simulation')
 
-        # Solar System Tab
-        solar_system_frame = ttk.Frame(body_notebook)
-        SSSView(solar_system_frame, self.root, self.sss)
-        body_notebook.add(solar_system_frame, text='Solar System Simulation')
+        HLSTabView(
+            root=self.root,
+            f_parent=f_hls,
+            hls=self._hls,
+        )
 
-    def _pause_sim(self):
-        self.tls.pause()
-        self.hls.pause()
-        self.sss.pause()
+        f_sss = ttk.Frame(n_main)
+        n_main.add(f_sss, text='Solar System Simulation')
 
-    def _resume_sim(self):
-        self.tls.resume()
-        self.hls.resume()
-        self.sss.resume()
+        SSSTabView(
+            root=self.root,
+            f_parent=f_sss,
+            sss=self._sss,
+        )
+
+        f_pm = ttk.Frame(n_main)
+        n_main.add(f_pm, text='Power Management')
+
+        PMTabView(
+            root=self.root,
+            f_parent=f_pm,
+            pm=self._pm,
+        )
 
     def _on_closing(self):
-        self._pause_sim()
+        self.pause_sim()
         self.root.destroy()
 
     def _update_ui(self, dt: int):
-        self.time_display.set(
-            f"Simulation Time: {self.tls.get_time().strftime('%H:%M:%S')}")
+        self._sv_time.set(f"Time: {self._tls.get_time().strftime('%H:%M:%S')}")
+        self.root.after(dt, self._update_ui, dt)
+
+    def pause_sim(self):
+        """Pause simulation."""
+        self._tls.pause()
+        self._hls.pause()
+        self._sss.pause()
+
+    def resume_sim(self):
+        """Resume simulation."""
+        self._tls.resume()
+        self._hls.resume()
+        self._sss.resume()
+
+
+class HLSTabView:
+    """Houses loads simulation tab view.
+
+    Args:
+        root (tk.Tk): Tk window root.
+        f_parent (ttk.Frame): Parent fram, master of the main frame.
+        hls (HousesLoadsSimulator): Houses loads simulator instance.
+
+    """
+
+    def __init__(self, root: tk.Tk, f_parent: ttk.Frame, hls: HousesLoadsSimulator):
+        self.root = root
+        self._hls = hls
+
+        self._hc_windows: dict[int, HouseControlsWindowView] = {}
+
+        self._sv_system_load = ttk.StringVar(value="System Load: ? kW")
+        self._sv_houses_loads = [
+            ttk.StringVar(value="Load: ? KW")
+            for _ in range(self._hls.num_houses)]
+        self._iv_grid_lines = [
+            ttk.IntVar(value=0)
+            for _ in range(self._hls.num_houses)]
+        self._iv_load_lines = [
+            ttk.IntVar(value=0)
+            for _ in range(self._hls.num_houses)]
+
+        if self._hls.num_houses > 10:
+            f_main = build_scrollable_frame(f_parent, padding=10)
+        else:
+            f_main = ttk.Frame(f_parent, padding=10)
+            f_main.pack(fill="both", expand=True)
+
+        self._build_header(f_main)
+        self._build_body(f_main)
+
+        self._update_ui(dt=100)
+
+    def _build_header(self, f_parent: ttk.Frame):
+        f_main = ttk.Frame(f_parent)
+        f_main.pack(fill="x", pady=(0, 10))
+
+        ttk.Label(
+            f_main,
+            text="Houses Loads Simulation",
+            font=("Calibri", 18),
+        ).pack(side="left")
+
+        ttk.Label(
+            f_main,
+            textvariable=self._sv_system_load,
+            font=("Calibri", 12),
+        ).pack(side="right")
+
+    def _build_body(self, f_parent: ttk.Frame):
+        f_main = ttk.Frame(f_parent)
+        f_main.pack(fill="both", expand=True)
+        f_main.columnconfigure(list(range(5)), weight=1)
+
+        for idx in range(self._hls.num_houses):
+            f_house = ttk.Labelframe(
+                f_main,
+                padding=20,
+                labelwidget=ttk.Label(
+                    f_main,
+                    text=f" House {idx + 1:02d} ",
+                    font=("Calibri", 12),
+                ),
+            )
+            f_house.grid(row=idx // 5, column=idx % 5, pady=(0, 20), padx=36)
+
+            ttk.Label(
+                f_house,
+                textvariable=self._sv_houses_loads[idx],
+                font=("Calibri", 12),
+            ).pack(fill='x', pady=(0, 10))
+
+            ttk.Checkbutton(
+                f_house,
+                text="Grid Line",
+                variable=self._iv_grid_lines[idx],
+                command=self._hls.houses[idx].toggle_grid_line,
+                style="Primary.Roundtoggle.Toolbutton",
+            ).pack(fill='x')
+
+            ttk.Checkbutton(
+                f_house,
+                text="Load Line",
+                variable=self._iv_load_lines[idx],
+                command=self._hls.houses[idx].toggle_load_line,
+                style="Primary.Roundtoggle.Toolbutton",
+            ).pack(fill='x', pady=(0, 10))
+
+            ttk.Button(
+                f_house,
+                text="Open Control Panel",
+                command=lambda idx=idx: self.open_hc_window(idx),
+                style="Primary.TButton",
+            ).pack(fill='x')
+
+    def _update_ui(self, dt: int):
+        self._sv_system_load.set(
+            f"System Load: {self._hls.system_load/1000:,.3f} kW")
+        for idx, load in enumerate(self._sv_houses_loads):
+            load.set(f"Load: {self._hls.houses[idx].load/1000:07,.3f} KW")
+        for idx, line in enumerate(self._iv_grid_lines):
+            line.set(int(self._hls.houses[idx].grid_line))
+        for idx, line in enumerate(self._iv_load_lines):
+            line.set(int(self._hls.houses[idx].load_line))
 
         self.root.after(dt, self._update_ui, dt)
 
+    def open_hc_window(self, idx: int):
+        """Open house controls window.
 
-class HLSView:
-    def __init__(self, parent: ttk.Frame, root: tk.Tk, hls: HousesLoadsSimulator):
-        self.parent = parent
-        self.root = root
+        Args:
+            idx (int): House index.
 
-        self._hls = hls
-
-        main_frame = ttk.Frame(self.parent, padding=10)
-        main_frame.pack(fill="both", expand=True)
-
-        self._build_header(main_frame)
-        self._build_body(main_frame)
-
-        self._update_ui(100)  # Update view every 100 ms
-
-    def _build_header(self, main_frame: ttk.Frame):
-        # Header Frame
-        header_frame = ttk.Frame(main_frame)
-        header_frame.pack(fill="x", pady=(0, 10))
-
-        # Total Power Consumption Display
-        self.total_power = ttk.StringVar(value="Total Load Power: - kW")
-        ttk.Label(
-            header_frame,
-            textvariable=self.total_power,
-            font=("Calibri", 14)
-        ).pack(side="left")
-
-    def _build_body(self, main_frame: ttk.Frame):
-        # Body Frame
-        body_frame = ttk.Frame(main_frame)
-        body_frame.pack(fill="both", expand=True, pady=10, padx=10)
-
-        self.houses_windows: dict[int, HLSControlsView] = {}
-
-        self.houses_total_load = [
-            ttk.StringVar(value="Total Load Power: - KW")
-            for _ in range(self._hls.num_houses)
-        ]
-
-        self.houses_grid_line = [
-            ttk.StringVar(value="---")
-            for _ in range(self._hls.num_houses)
-        ]
-
-
-        self.houses_load_line = [
-            ttk.StringVar(value="---")
-            for _ in range(self._hls.num_houses)
-        ]
-
-        # Configure grid columns to be 4 in row.
-        for i in range(4):
-            body_frame.columnconfigure(i, weight=1)
-
-        # Configure grid rows to be 3 in column.
-        for i in range(3):
-            body_frame.rowconfigure(i, weight=1)
-
-        for i in range(self._hls.num_houses):
-            # Create card-like frame for each house
-            house_card = ttk.Frame(body_frame, style="Card.TFrame")
-            house_card.grid(row=i // 4, column=i % 4)
-
-            # House Title
-            ttk.Label(
-                house_card,
-                text=f"House {i + 1}",
-                font=("Calibri", 16, "bold")
-            ).pack(pady=(0, 10))
-
-            # Displays
-            displays = ttk.Frame(house_card)
-            ttk.Label(
-                displays,
-                textvariable=self.houses_total_load[i],
-                font=("Calibri", 12)
-            ).pack()
-            status_frame = ttk.Frame(displays)
-            ttk.Label(
-                status_frame,
-                textvariable=self.houses_grid_line[i],
-                font=("Calibri", 12)
-            ).pack(side="left", padx=(0, 10))
-            ttk.Label(
-                status_frame,
-                textvariable=self.houses_load_line[i],
-                font=("Calibri", 12)
-            ).pack(side="left")
-            status_frame.pack()
-            displays.pack(pady=(0, 10))
-
-            # Control Panel Button
-            ttk.Button(
-                house_card,
-                text="Open Control Panel",
-                command=lambda idx=i: self._open_house_control(idx),
-                style="Accent.TButton"
-            ).pack(pady=(0, 10))
-
-    def _open_house_control(self, idx: int):
-        if idx in self.houses_windows and self.houses_windows[idx].root.winfo_exists():
-            self.houses_windows[idx].root.focus()
+        """
+        if idx in self._hc_windows and self._hc_windows[idx].root.winfo_exists():
+            self._hc_windows[idx].root.focus()
         else:
-            self.houses_windows[idx] = HLSControlsView(
+            self._hc_windows[idx] = HouseControlsWindowView(
                 root=ttk.Toplevel(self.root),
                 idx=idx,
                 hls=self._hls,
-                total_load=self.houses_total_load[idx],
-                grid_line=self.houses_grid_line[idx],
-                load_line=self.houses_load_line[idx],
+                variables={
+                    'total_load': self._sv_houses_loads[idx],
+                    'grid_line': self._iv_grid_lines[idx],
+                    'load_line': self._iv_load_lines[idx],
+                }
             )
 
-    def _update_ui(self, dt: int):
-        self.total_power.set(
-            f"Total Load Power: {self._hls.system_load/1000:.3f} kW")
-        for house_idx, house_total_load in enumerate(self.houses_total_load):
-            house_total_load.set(
-                f"Total Load Power: {self._hls.houses[house_idx].load/1000:.3f} KW")
-        for house_idx, house_grid_line in enumerate(self.houses_grid_line):
-            house_grid_line.set(
-                "Grid Line: ✅" if self._hls.houses[house_idx].grid_line else "Grid Line: ❎")
-        for house_idx, house_load_line in enumerate(self.houses_load_line):
-            house_load_line.set(
-                "Load Line: ✅" if self._hls.houses[house_idx].load_line else "Load Line: ❎")
 
-        for house_idx, window in self.houses_windows.items():
-            if window.root.winfo_exists():
-                for device_name, device_load in window.device_loads.items():
-                    device_load.set(
-                        f"{self._hls.houses[house_idx].devices[device_name].load:.1f} Watt")
+class HouseControlsWindowView:
+    """House controls window view.
+
+    Args:
+        root (tk.Tk): Tk window root.
+        idx (int): House index.
+        hls (HousesLoadsSimulator): Houses loads simulator instance.
+        variables (dict[str, ttk.Variable]): Passed UI variables, including:
+
+                - "total_load" (ttk.StringVar): Total house load label text.
+                - "grid_line" (ttk.IntVar): Grid line status (0 or 1).
+                - "load_line" (ttk.IntVar): Load line status (0 or 1).
+
+    """
+
+    def __init__(self, root: tk.Tk, idx: int, hls: HousesLoadsSimulator,
+                 variables: dict[str, ttk.Variable]):
+        self.root = root
+        self.root.title(f"House {idx + 1} Controls")
+        self.root.geometry("600x600")
+        self.root.resizable(False, False)
+        self.idx = idx
+        self._hls = hls
+        self._house = self._hls.houses[self.idx]
+
+        self._total_load: ttk.StringVar = variables['total_load']
+        self._grid_line: ttk.IntVar = variables['grid_line']
+        self._load_line: ttk.IntVar = variables['load_line']
+
+        self._sv_devices_loads = {
+            device_name: ttk.StringVar(value="Device Load: ? Watt")
+            for device_name in self._house.devices.keys()
+        }
+        self._sv_devices_settings_multipliers = {
+            device_name: ttk.StringVar(value="Setting Multiplier: ?")
+            for device_name in self._house.devices.keys()
+        }
+
+        f_main = build_scrollable_frame(self.root, width=580, padding=10)
+
+        self._build_header(f_main)
+        self._build_body(f_main)
+
+        self._update_ui(dt=100)
+
+    def _build_header(self, f_parent: ttk.Frame):
+        f_main = ttk.Frame(f_parent)
+        f_main.pack(fill="x", pady=(0, 10))
+
+        ttk.Label(
+            f_main,
+            text=f"House {self.idx + 1:02d} Control Panel",
+            font=("Calibri", 24),
+        ).pack()
+
+        ttk.Label(
+            f_main,
+            textvariable=self._total_load,
+            font=("Calibri", 12),
+        ).pack(side="left")
+
+        f_right = ttk.Frame(f_main)
+        f_right.pack(side="right")
+
+        ttk.Checkbutton(
+            f_right,
+            text="Grid Line",
+            variable=self._grid_line,
+            command=self._house.toggle_grid_line,
+            style="Primary.Roundtoggle.Toolbutton",
+        ).pack(side="left", padx=(0, 10))
+
+        ttk.Checkbutton(
+            f_right,
+            text="Load Line",
+            variable=self._load_line,
+            command=self._house.toggle_load_line,
+            style="Primary.Roundtoggle.Toolbutton",
+        ).pack(side="left", padx=(0, 10))
+
+    def _build_body(self, f_parent: ttk.Frame):
+        f_main = ttk.Frame(f_parent)
+        f_main.pack(fill="both")
+
+        for dn, device in self._house.devices.items():
+
+            f_device = ttk.Labelframe(
+                f_main,
+                padding=(10, 0),
+                labelwidget=ttk.Label(
+                    f_main,
+                    text=f' {dn.replace(
+                        '_', ' ').title()} Device Controls ',
+                    font=("Calibri", 12),
+                ),
+            )
+            f_device.pack(fill="x", pady=(0, 10))
+
+            f_control = ttk.Frame(f_device)
+            f_control.pack(fill="x", pady=(0, 10))
+
+            ttk.Label(
+                f_control,
+                text="Number of Instances: ",
+                font=("Calibri", 12),
+            ).pack(side="left")
+
+            spinbox = ttk.Spinbox(
+                f_control,
+                from_=0,
+                to=device.info.max_count,
+                width=5,
+                font=("Calibri", 8),
+                style="Primary.TSpinbox",
+            )
+            spinbox.insert(0, device.count)
+            spinbox.pack(side="left")
+            spinbox.configure(
+                command=lambda wid=spinbox, dn=dn:
+                    self._house.devices[dn].update_count(
+                        elapsed=self._hls.get_tls_elapsed(),
+                        new_count=int(float(wid.get()))
+                        if wid.get().strip() else 0,
+                    ),
+            )
+
+            ttk.Label(
+                f_control,
+                textvariable=self._sv_devices_loads[dn],
+                font=("Calibri", 12),
+            ).pack(side="right")
+
+            ttk.Label(
+                f_device,
+                text=device.info,
+                font=("Calibri", 8),
+                style="Secondary.TLabel",
+            ).pack(fill="x", pady=(0, 10))
+
+            if device.info.settings:
+                f_settings = ttk.Labelframe(
+                    f_device,
+                    padding=(10, 0),
+                    labelwidget=ttk.Label(
+                        f_device,
+                        text=" Settings ",
+                        font=("Calibri", 12),
+                    ),
+                )
+                f_settings.pack(fill="x", pady=(0, 10))
+
+                for setting, all_options in device.info.settings.options.items():
+                    f_setting = ttk.Frame(f_settings)
+                    f_setting.pack(fill="x", pady=(0, 10))
+
+                    ttk.Label(
+                        f_setting,
+                        text=setting.replace('_', ' ').title()
+                    ).pack(side="left")
+
+                    sv_combo = ttk.StringVar()
+                    combo = ttk.Combobox(
+                        f_setting,
+                        values=all_options,
+                        state="readonly",
+                        width=15,
+                        textvariable=sv_combo,
+                        style="Primary.TCombobox",
+                    )
+                    combo.set(device.current_settings[setting])
+                    combo.pack(side="right")
+
+                    sv_combo.trace_add(
+                        'write',
+                        lambda *_, wid=sv_combo, dn=dn, sn=setting:
+                            self._house.devices[dn].update_setting(
+                                setting_name=sn,
+                                new_option=wid.get(),
+                            ),
+                    )
+
+                    combo.bind(
+                        '<<ComboboxSelected>>',
+                        lambda *_, wid=sv_combo, dn=dn, sn=setting:
+                            self._house.devices[dn].update_setting(
+                                setting_name=sn,
+                                new_option=wid.get(),
+                            ),
+                    )
+
+                ttk.Label(
+                    f_settings,
+                    textvariable=self._sv_devices_settings_multipliers[dn],
+                    font=("Calibri", 8),
+                    style="Secondary.TLabel",
+                ).pack(fill="x", pady=(0, 10))
+
+    def _update_ui(self, dt):
+        for device_name, load in self._sv_devices_loads.items():
+            load.set(
+                f"Device Load: {self._house.devices[device_name].load:,.1f} Watt")
+        for device_name, multiplier in self._sv_devices_settings_multipliers.items():
+            multiplier.set(
+                f"Setting Multiplier: {self._house.devices[device_name].settings_multiplier:.1%}")
 
         self.root.after(dt, self._update_ui, dt)
 
 
-class HLSControlsView:
-    def __init__(self, root: tk.Tk, idx: int, hls: HousesLoadsSimulator, total_load: ttk.StringVar, grid_line: ttk.StringVar, load_line: ttk.StringVar):
+class SSSTabView:
+    """Solar system simulation tab view.
+
+    Args:
+        root (tk.Tk): Tk window root.
+        f_parent (ttk.Frame): Parent fram, master of the main frame.
+        sss (SolarSystemSimulator): Solar system simulator instance.
+
+    """
+
+    def __init__(self, root: tk.Tk, f_parent: ttk.Frame, sss: SolarSystemSimulator):
         self.root = root
-        self.idx = idx
-
-        self._hls = hls
-        self._total_load = total_load
-        self._grid_line = grid_line
-        self._load_line = load_line
-        self._house = self._hls.houses[self.idx]
-
-        self.root.title(f"House {self.idx + 1} Controls")
-        self.root.geometry("600x600")
-        self.root.minsize(600, 600)
-
-        main_frame = self._build_scrollable_container(self.root)
-
-        self._build_dody(main_frame)
-
-    def _build_scrollable_container(self, root: ttk.Frame) -> ttk.Frame:
-        # Canvas and Scrollbar
-        container = ttk.Frame(root)
-        container.pack(fill="both", expand=True)
-        self.canvas = ttk.Canvas(container)
-        scrollbar = ttk.Scrollbar(
-            container,
-            orient="vertical",
-            command=self.canvas.yview)
-
-        # Main Container
-        main_container = ttk.Frame(self.canvas, padding="20")
-
-        # Configure scrolling and canvas
-        main_container.bind("<Configure>", lambda e: self.canvas.configure(
-            scrollregion=self.canvas.bbox("all")))
-        self.canvas.create_window(
-            (0, 0), window=main_container, anchor="nw", width=580)
-        self.canvas.configure(yscrollcommand=scrollbar.set)
-        scrollbar.pack(side="right", fill="y")
-        self.canvas.pack(side="left", fill="both", expand=True)
-
-        return main_container
-
-    def _build_dody(self, main_frame: ttk.Frame):
-        # House Title
-        ttk.Label(
-            main_frame,
-            text=f"House {self.idx + 1} Control Panel",
-            font=("Calibri", 16, "bold")
-        ).pack(pady=(0, 20))
-
-        # Total Load Display
-        head_frame = ttk.Frame(main_frame)
-        ttk.Label(
-            head_frame,
-            textvariable=self._total_load,
-            font=("Calibri", 12, "bold"),
-        ).pack(side="left")
-        status_frame = ttk.Frame(head_frame)
-        ttk.Button(
-            status_frame,
-            textvariable=self._grid_line,
-            command=self._house.toggle_grid_line,
-            style="Accent.TButton.Secondary",
-        ).pack(side="left", padx=(0, 10))
-        ttk.Button(
-            status_frame,
-            textvariable=self._load_line,
-            command=self._house.toggle_load_line,
-            style="Accent.TButton.Secondary",
-        ).pack(side="left", padx=(0, 10))
-        status_frame.pack(side="right")
-        head_frame.pack(fill="x", pady=(0, 10))
-
-        self.device_loads = {
-            device_name: ttk.StringVar(value="- Watt")
-            for device_name in self._house.devices.keys()
-        }
-
-        # Devices Controls
-        for device_name, device in self._house.devices.items():
-
-            # Device Frame
-            device_frame = ttk.LabelFrame(
-                main_frame,
-                text=f' {device_name.replace('_', ' ').title()} Controls ',
-                padding="10"
-            )
-            device_frame.pack(fill="x", pady=10)
-
-            # Control Frame
-            control_frame = ttk.Frame(device_frame)
-            control_frame.pack(fill="x", pady=(0, 10))
-
-            # Device Base Wattage Label
-            ttk.Label(
-                control_frame,
-                text=f"Base Power: {device.info.max_watt} W",
-                width=20
-            ).pack(side="left", padx=5)
-
-            # Device Count Spinbox
-            spinbox = ttk.Spinbox(
-                control_frame,
-                from_=0,
-                to=device.info.max_count,
-                width=5,
-            )
-            spinbox.pack(side="left", padx=10)
-            spinbox.insert(0, device.count)
-
-            def update_count_value(wid: ttk.Spinbox, dn: str):
-                value = wid.get()
-                count = int(float(value)) if value.strip() else 0
-
-                self._house.devices[dn].update_count(
-                    elapsed=self._hls._tls.get_elapsed(),
-                    new_count=count,
-                )
-            spinbox.configure(
-                command=lambda wid=spinbox, dn=device_name: update_count_value(wid, dn))
-
-            # Device Load Label
-            load_label = ttk.Label(
-                control_frame,
-                textvariable=self.device_loads[device_name],
-                width=15)
-            load_label.pack(side="left", padx=5)
-
-            # Settings Controls
-            if device.info.settings:
-                # Setting Frame
-                settings_frame = ttk.LabelFrame(
-                    device_frame,
-                    text=f" Settings ",
-                    padding=5)
-                settings_frame.pack(fill="x", pady=(10, 0))
-
-                # Power Factor Frame
-                factor_frame = ttk.Frame(settings_frame)
-                factor_frame.pack(fill="x", pady=(10, 0))
-
-                # Power Factor Label
-                power_factor = ttk.StringVar(value="Current Power Factor: ---")
-                ttk.Label(
-                    factor_frame,
-                    textvariable=power_factor
-                ).pack(side="left")
-
-                def update_power_factor_label(wid: ttk.StringVar, dn: str):
-                    factor = self._house.devices[dn].settings_multiplier
-                    wid.set(f"Current Power Factor: {factor:.2f}x")
-
-                # Initial update
-                update_power_factor_label(power_factor, device_name)
-
-                # Create controls for each setting
-                for setting_name, possible_values in device.info.settings.options.items():
-                    # Setting Frame
-                    setting_frame = ttk.Frame(settings_frame)
-                    setting_frame.pack(fill="x", pady=2)
-
-                    # Setting Label
-                    ttk.Label(
-                        setting_frame,
-                        text=setting_name.replace('_', ' ').title()
-                    ).pack(side="left", padx=5)
-
-                    # Setting Var
-                    setting = ttk.StringVar()
-                    # Setting Combobox
-                    combo = ttk.Combobox(
-                        setting_frame,
-                        values=possible_values,
-                        state="readonly",
-                        width=15,
-                        textvariable=setting
-                    )
-                    combo.set(device.current_settings[setting_name])
-                    combo.pack(side="right", padx=5)
-
-                    def update_setting(wid: ttk.Combobox, dn: str, sn: str):
-                        self._house.devices[dn].update_setting(
-                            setting_name=sn,
-                            new_option=wid.get(),
-                        )
-
-                    setting.trace_add('write', lambda *args, wid=setting,
-                                      dn=device_name, sn=setting_name: update_setting(wid, dn, sn))
-                    combo.bind('<<ComboboxSelected>>', lambda e, wid=setting,
-                               dn=device_name, sn=setting_name: update_setting(wid, dn, sn))
-
-                    combo.bind('<<ComboboxSelected>>', lambda e, wid=power_factor,
-                               dn=device_name: update_power_factor_label(wid, dn))
-
-
-class SSSView:
-    def __init__(self, parent: ttk.Frame, root: tk.Tk, sss: SolarSystemSimulator):
-        self.parent = parent
-        self.root = root
-
+        self.f_parent = f_parent
         self._sss = sss
 
-        main_frame = ttk.Frame(self.parent, padding="10")
-        main_frame.pack(fill="both", expand=True)
+        f_main = ttk.Frame(self.f_parent, padding=10)
+        f_main.pack(fill="both", expand=True)
 
-        self._build_body(main_frame)
+        self._build_header(f_main)
+        self._build_body(f_main)
 
-        self._update_ui(100)  # Update view every 100 ms
+        self._update_ui(100)
 
-    def _build_body(self, main_frame: ttk.Frame):
-        # Body Frame
-        body_frame = ttk.Frame(main_frame)
-        body_frame.pack(fill="both", expand=True, pady=20, padx=20)
-        body_frame.place(relx=.5, rely=.5, anchor='center')
+    def _build_header(self, f_parent: ttk.Frame):
+        f_main = ttk.Frame(f_parent)
+        f_main.pack(fill="x", pady=(0, 10))
 
-        # Output Area
+        ttk.Label(
+            f_main,
+            text="Solar System Simulation",
+            font=("Calibri", 18),
+        ).pack(side="left")
+
+    def _build_body(self, f_parent: ttk.Frame):
+        f_main = ttk.Frame(f_parent)
+        f_main.pack(fill="both", expand=True, pady=20, padx=20)
+        f_main.place(relx=.5, rely=.5, anchor='center')
+
         self.output_text = ttk.Text(
-            body_frame, height=20, width=80, font=("Calibri", 14))
+            f_main,
+            height=20,
+            width=80,
+            font=("Calibri", 12),
+        )
         self.output_text.pack(fill='both')
 
     def _update_ui(self, dt: int):
         if self._sss.running:
             # Display real-time wattage output
-            self.output_text.delete(1.0, ttk.END)  # Clear previous output
+            self.output_text.delete(1.0, ttk.END)
             self.output_text.insert(
                 ttk.END, chars=f"{self._sss.pv_loc}\n\n")
             self.output_text.insert(
@@ -467,3 +541,86 @@ class SSSView:
                 ttk.END, chars=f"Total Power: {self._sss.total_power/1000:.3f} KW\n")
 
         self.root.after(dt, self._update_ui, dt)
+
+
+class PMTabView:
+    """Power management tab view.
+
+    Args:
+        root (tk.Tk): Tk window root.
+        f_parent (ttk.Frame): Parent fram, master of the main frame.
+        pm (PowerManager): Power manager instance.
+
+    """
+
+    def __init__(self, root: tk.Tk, f_parent: ttk.Frame, pm: PowerManager):
+        self.root = root
+        self.f_parent = f_parent
+        self._pm = pm
+
+        f_main = ttk.Frame(self.f_parent, padding=10)
+        f_main.pack(fill="both", expand=True)
+
+        self._build_header(f_main)
+        self._build_body(f_main)
+
+        self._update_ui(100)
+
+    def _build_header(self, f_parent: ttk.Frame):
+        f_main = ttk.Frame(f_parent)
+        f_main.pack(fill="x", pady=(0, 10))
+
+        ttk.Label(
+            f_main,
+            text="Power Management",
+            font=("Calibri", 18),
+        ).pack(side="left")
+
+    def _build_body(self, f_parent: ttk.Frame):
+        f_main = ttk.Frame(f_parent)
+        f_main.pack(fill="both", expand=True, pady=20, padx=20)
+        f_main.place(relx=.5, rely=.5, anchor='center')
+
+        ttk.Label(
+            f_main,
+            text="Nothing Yet ...",
+            font=("Calibri", 8),
+        ).pack()
+
+    def _update_ui(self, dt: int):
+        if self._pm.running:
+            pass
+
+        self.root.after(dt, self._update_ui, dt)
+
+
+def build_scrollable_frame(f_parent: ttk.Frame, width=None, **kwargs) -> ttk.Frame:
+    """Build and return a scrollable frame.
+
+    Args:
+        f_parent (ttk.Frame): Parent fram, master of the main frame.
+        width (int): Minimum width for the scrollable frame.
+        **kwargs: Keyword arguments to pass to scrollable frame when init.
+
+    Returns:
+        ttk.Frame: The scrollable frame.
+
+    """
+    f_main = ttk.Frame(f_parent)
+    f_main.pack(fill="both", expand=True)
+
+    canvas = ttk.Canvas(f_main)
+    canvas.pack(side="left", fill="both", expand=True)
+
+    scrollbar = ttk.Scrollbar(f_main, command=canvas.yview)
+    scrollbar.pack(side="right", fill="y")
+
+    f_scrollable = ttk.Frame(canvas, **kwargs)
+
+    f_scrollable.bind(
+        "<Configure>",
+        lambda e: canvas.configure(scrollregion=canvas.bbox("all")))
+    canvas.create_window((0, 0), window=f_scrollable, anchor="nw", width=width)
+    canvas.configure(yscrollcommand=scrollbar.set)
+
+    return f_scrollable

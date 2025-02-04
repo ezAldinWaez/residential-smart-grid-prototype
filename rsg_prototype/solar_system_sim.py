@@ -1,4 +1,4 @@
-"""Simulation for the solar system."""
+"""Solar system simulation."""
 
 from dataclasses import dataclass
 from datetime import datetime
@@ -14,23 +14,26 @@ from .time_loc_sim import TimeLocSimulator
 
 @dataclass
 class PVConf:
-    """PV Configuration."""
+    """PV configuration."""
 
-    panels_count: int  #: int: Panels count.
-    panel_area: float  #: float: Panel area [m^2].
+    num_panels: int  #: int: Panels count.
+    panel_area: float  #: float: Panel area. [m^2]
     panel_efficiency: float  #: float: Panel efficiency multiplier.
 
     def __str__(self):
-        return f"PVConf:\n  panels count: {self.panels_count}\n  panel area: {self.panel_area}\n  panel efficiency: {self.panel_efficiency}"
+        return "PVConf:\n" +\
+            f"  panels count: {self.num_panels}\n" +\
+            f"  panel area: {self.panel_area}\n" +\
+            f"  panel efficiency: {self.panel_efficiency}"
 
     def __post_init__(self):
-        assert self.panels_count > 0
+        assert self.num_panels > 0
         assert self.panel_area > 0
         assert 0 < self.panel_efficiency <= 1
 
 
 class SolarSystemSimulator:
-    """Simulation for the solar system.
+    """Sorlar system simulator.
 
     Args:
         tls (TimeLocSimulator): The :class:`TimeLocSimulator` instance.
@@ -90,7 +93,7 @@ class SolarSystemSimulator:
                 f.close()
 
         threading.Thread(
-            target=self._update,
+            target=self.update,
             kwargs={'dt': 100},
             daemon=True
         ).start()
@@ -105,7 +108,7 @@ class SolarSystemSimulator:
         if not self.running:
             self.start()
 
-    def _update(self, dt: int):
+    def update(self, dt: int):
         """Update the simulation every ``dt`` milliseconds.
 
         Args:
@@ -141,7 +144,7 @@ class SolarSystemSimulator:
             # Calculate the wattage output of each panel
             self.panel_power = self.poa_irradiance * self.pv_conf.panel_area * \
                 self.pv_conf.panel_efficiency
-            self.total_power = self.panel_power * self.pv_conf.panels_count
+            self.total_power = self.panel_power * self.pv_conf.num_panels
 
             if self._log:
                 with open(self._log_fp, mode="a", encoding="utf-8") as f:

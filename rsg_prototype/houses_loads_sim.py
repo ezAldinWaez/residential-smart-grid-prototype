@@ -1,4 +1,4 @@
-"""Simulation for the houses loads."""
+"""Houses loads simulation."""
 
 from dataclasses import dataclass
 from datetime import datetime
@@ -34,16 +34,16 @@ class DeviceSettingsConf:
 
 
 @dataclass
-class ADSRParams:
-    """ADSR (Attack, Decay, Sustain, and Release) model parameters."""
+class ADSRConf:
+    """ADSR (Attack, Decay, Sustain, and Release) model configuration."""
 
-    a: float  #: float: Attack Time [sec].
-    d: float  #: float: Decay Time [sec].
+    a: float  #: float: Attack Time. [sec]
+    d: float  #: float: Decay Time. [sec]
     s: float  #: float: Sustain Level Multiplier.
-    r: float  #: float: Release Time [sec].
+    r: float  #: float: Release Time. [sec]
     #: Literal['none', 'sine', 'square', 'random']: Wave Type.
     wt: Literal['none', 'sine', 'square', 'random'] = 'none'
-    wp: float = 1  #: float: Wave Period [sec].
+    wp: float = 1  #: float: Wave Period. [sec]
     wa: float = 0  #: float: Wave Amplitude Multiplier.
 
     def __post_init__(self):
@@ -61,68 +61,79 @@ class DeviceInfo:
     """Device information."""
 
     #: float: Maximum wattage that device can reach (maximum amplitude).
-    max_watt: float
+    base_watt: float
     max_count: int  #: int: Device maximum count a regular house could have.
-    adsr_model: ADSRParams  #: ADSRParams: Device ADSR parmeters.
+    adsr_model: ADSRConf  #: ADSR: Device ADSR parmeters.
     settings: DeviceSettingsConf = None  #: DeviceSettings: Device settings.
 
+    def __str__(self):
+        return "Device Information:\n" +\
+            f"  base watt: {self.base_watt}\n" +\
+            f"  max count: {self.max_count}\n" +\
+            f"  adsr model: {self.adsr_model}"
+
     def __post_init__(self):
-        assert self.max_watt >= 0
+        assert self.base_watt >= 0
         assert self.max_count >= 0
         assert self.adsr_model is not None
 
 
 class Device(Enum):
-    """Some important regular house devices static info."""
+    """Some important regular house devices static info.
+
+    Note:
+        All members are from type :class:`DeviceInfo`.
+
+    """
 
     TEST_DEVICE = DeviceInfo(
-        max_watt=1000,
+        base_watt=1000,
         max_count=10,
-        adsr_model=ADSRParams(
+        adsr_model=ADSRConf(
             a=360, d=200, s=.8, r=10,
-            wt="random", wp=1, wa=.050,
+            wt="random", wp=1, wa=.05,
         ),
     )
 
     LED_LIGHT = DeviceInfo(
-        max_watt=10,
+        base_watt=10,
         max_count=20,
-        adsr_model=ADSRParams(
+        adsr_model=ADSRConf(
             a=.01, d=2, s=.8, r=.01,
         ),
     )
 
     TV = DeviceInfo(
-        max_watt=120,
+        base_watt=120,
         max_count=4,
-        adsr_model=ADSRParams(
+        adsr_model=ADSRConf(
             a=1, d=1, s=.8, r=1.5,
             wt="sine", wp=.5, wa=.1,
         ),
     )
 
     REFRIGERATOR = DeviceInfo(
-        max_watt=150,
+        base_watt=150,
         max_count=2,
-        adsr_model=ADSRParams(
+        adsr_model=ADSRConf(
             a=1, d=1, s=.3, r=2,
             wt="square", wp=3, wa=.06,
         ),
     )
 
     HVAC = DeviceInfo(
-        max_watt=3500,
+        base_watt=3500,
         max_count=1,
-        adsr_model=ADSRParams(
+        adsr_model=ADSRConf(
             a=3, d=2, s=.8, r=.5,
             wt="sine", wp=2, wa=.07,
         ),
     )
 
     WASHING_MACHINE = DeviceInfo(
-        max_watt=500,
+        base_watt=500,
         max_count=1,
-        adsr_model=ADSRParams(
+        adsr_model=ADSRConf(
             a=2, d=2, s=.7, r=.5,
             wt="sine", wp=.5, wa=.04,
         ),
@@ -154,9 +165,9 @@ class Device(Enum):
     )
 
     DRYER = DeviceInfo(
-        max_watt=3000,
+        base_watt=3000,
         max_count=1,
-        adsr_model=ADSRParams(
+        adsr_model=ADSRConf(
             a=2, d=1, s=.9, r=2,
             wt="sine", wp=2, wa=.03,
         ),
@@ -188,9 +199,9 @@ class Device(Enum):
     )
 
     DISHWASHER = DeviceInfo(
-        max_watt=1800,
+        base_watt=1800,
         max_count=1,
-        adsr_model=ADSRParams(
+        adsr_model=ADSRConf(
             a=3, d=1.5, s=.6, r=2,
             wt="sine", wp=1, wa=.05,
         ),
@@ -221,18 +232,18 @@ class Device(Enum):
     )
 
     WATER_HEATER = DeviceInfo(
-        max_watt=4500,
+        base_watt=4500,
         max_count=1,
-        adsr_model=ADSRParams(
+        adsr_model=ADSRConf(
             a=1, d=.5, s=.9, r=1,
             wt="square", wp=5, wa=.1,
         ),
     )
 
     MICROWAVE = DeviceInfo(
-        max_watt=1100,
+        base_watt=1100,
         max_count=1,
-        adsr_model=ADSRParams(
+        adsr_model=ADSRConf(
             a=.5, d=.2, s=1, r=.5,
         ),
     )
@@ -279,7 +290,7 @@ class DeviceState:
         """Update device instances count and edit envelopes indead.
 
         Args:
-            elapsed (float): Current elapsed time [sec].
+            elapsed (float): Current elapsed time. [sec]
             new_count (int): The new count.
 
         """
@@ -325,40 +336,40 @@ class DeviceState:
         wave parameters, and adsr parameters.
 
         Args:
-            elapsed (float): The elapsed time [sec].
+            elapsed (float): The elapsed time. [sec]
 
         """
-        self._filter_unactive_envelopes(elapsed)
+        self.filter_unactive_envelopes(elapsed)
         self.load = np.sum(
-            self.info.max_watt *
+            self.info.base_watt *
             self.settings_multiplier *
-            self._calc_wave_multiplier(elapsed) *
-            np.array([self._calc_adsr_multiplier(elapsed, ae)
+            self.calc_wave_multiplier(elapsed) *
+            np.array([self.calc_adsr_multiplier(elapsed, ae)
                      for ae in self.active_envelopes])
         )
 
         return self.load
 
-    def _filter_unactive_envelopes(self, elapsed: float):
+    def filter_unactive_envelopes(self, elapsed: float):
         """Filter the active envelopes from IDEL envelopes.
 
         IDEL envelopes are envelopes which where unactive for
         longer than release time.
 
         Args:
-            elapsed (float): The elapsed time [sec].
+            elapsed (float): The elapsed time. [sec]
 
         """
         def not_idel(envelope) -> bool:
-            return self._calc_adsr_multiplier(elapsed, envelope) > 0
+            return self.calc_adsr_multiplier(elapsed, envelope) > 0
 
         self.active_envelopes = list(filter(not_idel, self.active_envelopes))
 
-    def _calc_wave_multiplier(self, elapsed: float) -> float:
+    def calc_wave_multiplier(self, elapsed: float) -> float:
         """Calculate the power multiplier based on Wave parameters.
 
         Args:
-            elapsed (float): The elapsed time [sec].
+            elapsed (float): The elapsed time. [sec]
 
         Returns:
             float: The wave power multiplier.
@@ -370,22 +381,22 @@ class DeviceState:
 
         match wt:
             case "none":
-                return 1.0
+                return 1
             case "sine":
                 phase = (elapsed % wp) / wp
-                return 1.0 + wa * np.sin(2 * np.pi * phase)
+                return 1 + wa * np.sin(2 * np.pi * phase)
             case "square":
                 phase = (elapsed % wp) / wp
-                return 1.0 + (wa if phase < 0.5 else -wa)
+                return 1 + (wa if phase < .5 else -wa)
             case "random":
-                return 1.0 + (wa * random.uniform(-1, 1))
+                return 1 + (wa * random.uniform(-1, 1))
 
-    def _calc_adsr_multiplier(self, elapsed: float, envelope: tuple[float, float, bool]):
+    def calc_adsr_multiplier(self, elapsed: float, envelope: tuple[float, float, bool]):
         """
         Calculate the power multiplier based on ADSR parameters for certain envelope.
 
         Args:
-            elapsed (float): The elapsed time [sec].
+            elapsed (float): The elapsed time. [sec]
             envelope (tuple[float, float, bool]): The envelope (instance
                 of device) info.
 
@@ -404,7 +415,7 @@ class DeviceState:
         t = elapsed - state_toggle_time
 
         # Level when Last State Toggle
-        llst = state_toggle_load / self.info.max_watt
+        llst = state_toggle_load / self.info.base_watt
 
         if is_active:
             if t <= a:
@@ -422,11 +433,11 @@ class DeviceState:
             return (- s / r) * t + (llst)
 
         # IDEL Stage
-        return 0.0
+        return .0
 
 
 class HouseState:
-    """Hold **a house** status.
+    """Hold a house status.
 
     Args:
         idx (int): House index.
@@ -446,7 +457,7 @@ class HouseState:
         self.idx = idx
         self.devices = {
             device_name: DeviceState(device_name)
-            for device_name in Device.__members__.keys()
+            for device_name in Device.__members__
         }
 
     def toggle_grid_line(self):
@@ -459,7 +470,7 @@ class HouseState:
 
 
 class HousesLoadsSimulator:
-    """Simulation for the houses loads.
+    """Houses loads simulator.
 
     Args:
         tls (TimeLocSimulator): The :class:`TimeLocSimulator` instance.
@@ -500,7 +511,7 @@ class HousesLoadsSimulator:
                 f.close()
 
         threading.Thread(
-            target=self._update,
+            target=self.update,
             kwargs={'dt': 100},
             daemon=True
         ).start()
@@ -515,7 +526,11 @@ class HousesLoadsSimulator:
         if not self.running:
             self.start()
 
-    def _update(self, dt: int):
+    def get_tls_elapsed(self):
+        """Get current elapsed time from time and location simulator."""
+        return self._tls.get_elapsed()
+
+    def update(self, dt: int):
         """Update the simulation every ``dt`` milliseconds.
 
         Args:

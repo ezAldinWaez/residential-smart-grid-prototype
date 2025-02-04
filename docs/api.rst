@@ -5,7 +5,7 @@ Residential Smart Grid Prototype Package
 ----------------------------------------
 
 Time and Location Simulation Module
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 .. automodule:: rsg_prototype.time_loc_sim
    :members:

@@ -2,6 +2,7 @@
 
 from datetime import datetime
 import os
+import random
 import threading
 import time
 
@@ -39,14 +40,14 @@ class PowerManager:
         """Start the power management."""
         self.running = True
 
-        # if self._log:
-        #     with open(self._log_fp, mode="w", encoding="utf-8") as f:
-        #         f.write("\n")
-        #         f.close()
+        if self._log:
+            with open(self._log_fp, mode="w", encoding="utf-8") as f:
+                f.write("elapsed,total_power,battery_charge,load_power\n")
+                f.close()
 
         threading.Thread(
             target=self._update,
-            kwargs={'dt': 100},
+            kwargs={'dt': 1000},
             daemon=True
         ).start()
 
@@ -61,21 +62,40 @@ class PowerManager:
             self.start()
 
     def _update(self, dt: int):
-        """Update the power mangement every ``dt`` milliseconds.
+        """Update the power management every ``dt`` milliseconds.
 
         Args:
             dt (int): The number of milliseconds to update.
 
         """
         while self.running:
+            elapsed = self._sss._tls.get_elapsed()
 
-            for house in self._hls.houses:
-                if house.load > self._sss.total_power / self._hls.num_houses:
-                    house.load_line = False
+            total_load = self._hls.system_load
+            solar_power = self._sss.total_power
 
-            # if self._log:
-            #     with open(self._log_fp, mode="a", encoding="utf-8") as f:
-            #         f.write("\n")
-            #         f.close()
+            if solar_power > total_load:
+                # Excess power, charge the battery
+                excess_power = solar_power - total_load
+                self._sss.battery.charge(excess_power, dt / 1000)
+                battery_provided_power = 0
+            else:
+                # Insufficient power, discharge the battery
+                deficit_power = total_load - solar_power
+                battery_provided_power = self._sss.battery.discharge(
+                    deficit_power, dt / 1000)
+
+            self.total_provided_power = solar_power + battery_provided_power
+
+            while self._hls.system_load > self.total_provided_power:
+                random.choice(self._hls.houses).load_line = False
+
+            if self._log:
+                with open(self._log_fp, mode="a", encoding="utf-8") as f:
+                    f.write(f"{elapsed:.2f}," +
+                            "{solar_power:.2f}," +
+                            "{self._sss.battery.charge_level:.2f}," +
+                            "{total_load:.2f}\n")
+                    f.close()
 
             time.sleep(dt/1000)

@@ -1,4 +1,4 @@
-"""Solar system simulation."""
+"""Solar system simulation with battery."""
 
 from dataclasses import dataclass
 from datetime import datetime
@@ -32,17 +32,81 @@ class PVConf:
         assert 0 < self.panel_efficiency <= 1
 
 
+@dataclass
+class Battery:
+    """Battery configuration and state."""
+
+    capacity: float  #: float: Total capacity of the battery in Wh.
+    charge_level: float  #: float: Current charge level of the battery in Wh.
+    charge_efficiency: float  #: float: Efficiency of charging (0 to 1).
+    max_charge_rate: float  #: float: Maximum charge rate in W.
+    max_discharge_rate: float  #: float: Maximum discharge rate in W.
+
+    def __post_init__(self):
+        assert self.capacity > 0
+        assert 0 <= self.charge_level <= self.capacity
+        assert 0 < self.charge_efficiency <= 1
+        assert self.max_charge_rate > 0
+        assert self.max_discharge_rate > 0
+
+    def charge(self, power: float, dt: float):
+        """Charge the battery.
+
+        Args:
+            power (float): The power available for charging in W.
+            dt (float): The time interval in seconds.
+
+        Returns:
+            float: The power actually used for charging.
+
+        """
+        available_power = min(power, self.max_charge_rate)
+        energy_to_add = available_power * (dt / 3600) * self.charge_efficiency
+        new_charge_level = self.charge_level + energy_to_add
+
+        if new_charge_level > self.capacity:
+            energy_to_add = self.capacity - self.charge_level
+            self.charge_level = self.capacity
+        else:
+            self.charge_level = new_charge_level
+
+        return energy_to_add * 3600 / dt  # Return the power actually used
+
+    def discharge(self, power: float, dt: float):
+        """Discharge the battery.
+
+        Args:
+            power (float): The power required in W.
+            dt (float): The time interval in seconds.
+
+        Returns:
+            float: The power actually provided by the battery.
+
+        """
+        required_energy = power * (dt / 3600)
+        available_energy = min(
+            required_energy, min(self.max_discharge_rate, self.charge_level)
+        )
+        self.charge_level -= available_energy
+
+        return available_energy * 3600 / dt  # Return the power actually provided
+
+    def __str__(self):
+        return f"Battery Configuration: \n" +\
+            f"  Charge Efficiency: {self.charge_efficiency}\n" +\
+            f"  Max Charge Rate: {self.max_charge_rate}\n" +\
+            f"  Max Discharge Rate: {self.max_discharge_rate}\n" +\
+            f"Battery State: {self.charge_level:.2f} / {self.capacity:.2f} Wh " +\
+            f"({self.charge_level / self.capacity:.2%})"
+
+
 class SolarSystemSimulator:
-    """Sorlar system simulator.
+    """Solar system simulator."""
 
-    Args:
-        tls (TimeLocSimulator): The :class:`TimeLocSimulator` instance.
-        pv_conf (PVConf): The :class:`PVConf` for the system.
-        log (bool): If True, an csv file will be created and record the system status.
+    pv_conf: PVConf  #: PVConf: The PV configuration for the system.
 
-    """
-
-    pv_conf: PVConf  #: PVConf: The :class:`PVConf` for the system.
+    #: Battery: The battery inctanse for the system.
+    battery: Battery
 
     #: bool: Whether the simulation is running or paused.
     running: bool = False
@@ -62,9 +126,10 @@ class SolarSystemSimulator:
     #: pvlib.location.Location: The pvlib location instance.
     pv_loc: pvlib.location.Location
 
-    def __init__(self, tls: TimeLocSimulator, pv_conf: PVConf, log=False):
+    def __init__(self, tls: TimeLocSimulator, pv_conf: PVConf, battery_conf: Battery, log=False):
         self._tls = tls
         self.pv_conf = pv_conf
+        self.battery = battery_conf
 
         self.pv_loc = pvlib.location.Location(
             latitude=self._tls.loc_info.lat,

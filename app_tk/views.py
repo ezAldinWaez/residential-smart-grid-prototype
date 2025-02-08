@@ -517,7 +517,7 @@ class SSSTabView:
 
         self.output_text = ttk.Text(
             f_main,
-            height=20,
+            height=23,
             width=80,
             font=("Calibri", 12),
         )
@@ -531,6 +531,8 @@ class SSSTabView:
                 ttk.END, chars=f"{self._sss.pv_loc}\n\n")
             self.output_text.insert(
                 ttk.END, chars=f"{self._sss.pv_conf}\n\n")
+            self.output_text.insert(
+                ttk.END, chars=f"{self._sss.battery}\n\n")
             self.output_text.insert(
                 ttk.END, chars=f"Zenith Angle: {self._sss.zenith_angle:.2f}°\n")
             self.output_text.insert(
@@ -581,15 +583,19 @@ class PMTabView:
         f_main.pack(fill="both", expand=True, pady=20, padx=20)
         f_main.place(relx=.5, rely=.5, anchor='center')
 
-        ttk.Label(
+        self.output_text = ttk.Text(
             f_main,
-            text="Nothing Yet ...",
-            font=("Calibri", 8),
-        ).pack()
+            height=5,
+            width=80,
+            font=("Calibri", 12),
+        )
+        self.output_text.pack(fill='both')
 
     def _update_ui(self, dt: int):
         if self._pm.running:
-            pass
+            self.output_text.delete(1.0, ttk.END)
+            self.output_text.insert(
+                ttk.END, chars=f"Total provided power: {self._pm.total_provided_power}\n")
 
         self.root.after(dt, self._update_ui, dt)
 

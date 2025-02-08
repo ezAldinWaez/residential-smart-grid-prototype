@@ -351,19 +351,19 @@ class DeviceState:
         return self.load
 
     def filter_unactive_envelopes(self, elapsed: float):
-        """Filter the active envelopes from IDEL envelopes.
+        """Filter the active envelopes from IDLE envelopes.
 
-        IDEL envelopes are envelopes which where unactive for
+        IDLE envelopes are envelopes which where unactive for
         longer than release time.
 
         Args:
             elapsed (float): The elapsed time. [sec]
 
         """
-        def not_idel(envelope) -> bool:
+        def not_idle(envelope) -> bool:
             return self.calc_adsr_multiplier(elapsed, envelope) > 0
 
-        self.active_envelopes = list(filter(not_idel, self.active_envelopes))
+        self.active_envelopes = list(filter(not_idle, self.active_envelopes))
 
     def calc_wave_multiplier(self, elapsed: float) -> float:
         """Calculate the power multiplier based on Wave parameters.
@@ -432,7 +432,7 @@ class DeviceState:
             # Release Stage (line from (0, llst) with slope same as line between (0, s) and (r, 0))
             return (- s / r) * t + (llst)
 
-        # IDEL Stage
+        # IDLE Stage
         return .0
 
 
@@ -473,8 +473,8 @@ class HousesLoadsSimulator:
     """Houses loads simulator.
 
     Args:
-        tls (TimeLocSimulator): The :class:`TimeLocSimulator` instance.
-        pv_conf (PVConf): The :class:`PVConf` for the system.
+        tls (TimeLocSimulator): The time location simulator instance.
+        num_houses (int): The number of houses in the system.
         log (bool): If True, an csv file will be created and record the system status.
 
     """
@@ -550,7 +550,7 @@ class HousesLoadsSimulator:
                     house.load = 0
                     for device in house.devices.values():
                         device.load = 0
-                        device.count = 0
+                        # device.count = 0
                         device.active_envelopes = []
                 house.load = hl
                 sl += hl

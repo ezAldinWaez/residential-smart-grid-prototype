@@ -2,7 +2,7 @@
 
 from rsg_prototype.time_loc_sim import TimeLocSimulator, Location
 from rsg_prototype.houses_loads_sim import HousesLoadsSimulator
-from rsg_prototype.solar_system_sim import SolarSystemSimulator, PVConf
+from rsg_prototype.solar_system_sim import Battery, SolarSystemSimulator, PVConf
 from rsg_prototype.power_mng import PowerManager
 from app_tk import App
 
@@ -37,6 +37,13 @@ def main():
             num_panels=NUM_PANELS,
             panel_area=PANEL_AREA,
             panel_efficiency=PANEL_EFFICIENCY,
+        ),
+        battery_conf=Battery(
+            capacity=50000,
+            charge_level=25000,
+            charge_efficiency=0.95,
+            max_charge_rate=50000,
+            max_discharge_rate=10000,
         ),
         log=LOG,
     )

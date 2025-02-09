@@ -2,9 +2,10 @@
   max-width: none !important;
 }
 
-html[data-theme="dark"].writer-html5 .rst-content dl.class > dt:first-child .descclassname,
-html[data-theme="dark"].writer-html5 .rst-content dl.class > dt:first-child .descname,
-html[data-theme="dark"].writer-html5 .rst-content dl.function > dt:first-child .descclassname,
-html[data-theme="dark"].writer-html5 .rst-content dl.function > dt:first-child .descname {
+html[data-theme="dark"].writer-html5
+  .rst-content
+  dl:is(.class, .function)
+  > dt:first-child
+  :is(.descclassname, .descname) {
   color: #f0f0f0 !important;
 }

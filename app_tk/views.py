@@ -127,12 +127,14 @@ class MainWindowView:
         self._tls.pause()
         self._hls.pause()
         self._sss.pause()
+        self._pm.pause()
 
     def resume_sim(self):
         """Resume simulation."""
         self._tls.resume()
         self._hls.resume()
         self._sss.resume()
+        self._pm.resume()
 
 
 class HLSTabView:
@@ -379,7 +381,7 @@ class HouseControlsWindowView:
             spinbox = ttk.Spinbox(
                 f_control,
                 from_=0,
-                to=device.info.max_count,
+                to=device.conf.max_count,
                 width=5,
                 font=("Calibri", 8),
                 style="Primary.TSpinbox",
@@ -403,12 +405,12 @@ class HouseControlsWindowView:
 
             ttk.Label(
                 f_device,
-                text=device.info,
+                text=device.conf,
                 font=("Calibri", 8),
                 style="Secondary.TLabel",
             ).pack(fill="x", pady=(0, 10))
 
-            if device.info.settings:
+            if device.conf.settings:
                 f_settings = ttk.Labelframe(
                     f_device,
                     padding=(10, 0),
@@ -420,7 +422,7 @@ class HouseControlsWindowView:
                 )
                 f_settings.pack(fill="x", pady=(0, 10))
 
-                for setting, all_options in device.info.settings.options.items():
+                for setting, all_options in device.conf.settings.options.items():
                     f_setting = ttk.Frame(f_settings)
                     f_setting.pack(fill="x", pady=(0, 10))
 
@@ -532,9 +534,11 @@ class SSSTabView:
             self.output_text.insert(
                 ttk.END, chars=f"{self._sss.pv_conf}\n\n")
             self.output_text.insert(
-                ttk.END, chars=f"{self._sss.battery}\n\n")
+                ttk.END, chars=f"{self._sss.batt.conf}\n\n")
             self.output_text.insert(
-                ttk.END, chars=f"Zenith Angle: {self._sss.zenith_angle:.2f}°\n")
+                ttk.END, chars=f"{self._sss.batt}\n\n")
+            self.output_text.insert(
+                ttk.END, chars=f"Zenith angle: {self._sss.zenith_angle:.2f}°\n")
             self.output_text.insert(
                 ttk.END, chars=f"POA Irradiance: {self._sss.poa_irradiance:.2f}\n")
             self.output_text.insert(
@@ -595,7 +599,7 @@ class PMTabView:
         if self._pm.running:
             self.output_text.delete(1.0, ttk.END)
             self.output_text.insert(
-                ttk.END, chars=f"Total provided power: {self._pm.total_provided_power}\n")
+                ttk.END, chars=f"Battery exchange power: {self._pm.batt_exchange_power:.2f} W\n")
 
         self.root.after(dt, self._update_ui, dt)
 

@@ -15,13 +15,12 @@ from .time_loc_sim import TimeLocSimulator
 
 
 @dataclass
-class DeviceSettingsConf:
-    """Device settings configuration."""
+class SettingsConf:
+    """Settings configuration."""
 
     #: dict[str, list[str]]: list of all options for each device setting.
     #:  (Setting Name -> List of Options)
     options: dict[str, list[str]]
-
     #: dict[str, dict[str, float]]: power multiplier for each option for each device
     #:  setting. (Setting Name -> (Option Name -> Power Multiplier))
     power_factors: dict[str, dict[str, float]]
@@ -57,87 +56,71 @@ class ADSRConf:
 
 
 @dataclass
-class DeviceInfo:
-    """Device information."""
+class DeviceConf:
+    """Device configuration."""
 
     #: float: Maximum wattage that device can reach (maximum amplitude).
     base_watt: float
     max_count: int  #: int: Device maximum count a regular house could have.
-    adsr_model: ADSRConf  #: ADSR: Device ADSR parmeters.
-    settings: DeviceSettingsConf = None  #: DeviceSettings: Device settings.
+    adsr: ADSRConf  #: ADSRConf: Device ADSR configuration.
+    #: SettingsConf: Device settings configuration.
+    settings: SettingsConf = None
 
     def __str__(self):
-        return "Device Information:\n" +\
+        return "Device Configuration:\n" +\
             f"  base watt: {self.base_watt}\n" +\
             f"  max count: {self.max_count}\n" +\
-            f"  adsr model: {self.adsr_model}"
+            f"  adsr: {self.adsr}"
 
     def __post_init__(self):
         assert self.base_watt >= 0
         assert self.max_count >= 0
-        assert self.adsr_model is not None
+        assert self.adsr is not None
 
 
 class Device(Enum):
-    """Some important regular house devices static info.
+    """Some important regular house devices static configuration.
 
     Note:
-        All members are from type :class:`DeviceInfo`.
+        All members are from type :class:`DeviceConf`.
 
     """
 
-    TEST_DEVICE = DeviceInfo(
+    TEST_DEVICE = DeviceConf(
         base_watt=1000,
         max_count=10,
-        adsr_model=ADSRConf(
-            a=360, d=200, s=.8, r=10,
-            wt="random", wp=1, wa=.05,
-        ),
+        adsr=ADSRConf(a=360, d=200, s=.8, r=10, wt="random", wp=1, wa=.05),
     )
 
-    LED_LIGHT = DeviceInfo(
+    LED_LIGHT = DeviceConf(
         base_watt=10,
         max_count=20,
-        adsr_model=ADSRConf(
-            a=.01, d=2, s=.8, r=.01,
-        ),
+        adsr=ADSRConf(a=.01, d=2, s=.8, r=.01),
     )
 
-    TV = DeviceInfo(
+    TV = DeviceConf(
         base_watt=120,
         max_count=4,
-        adsr_model=ADSRConf(
-            a=1, d=1, s=.8, r=1.5,
-            wt="sine", wp=.5, wa=.1,
-        ),
+        adsr=ADSRConf(a=1, d=1, s=.8, r=1.5, wt="sine", wp=.5, wa=.1),
     )
 
-    REFRIGERATOR = DeviceInfo(
+    REFRIGERATOR = DeviceConf(
         base_watt=150,
         max_count=2,
-        adsr_model=ADSRConf(
-            a=1, d=1, s=.3, r=2,
-            wt="square", wp=3, wa=.06,
-        ),
+        adsr=ADSRConf(a=1, d=1, s=.3, r=2, wt="square", wp=3, wa=.06),
     )
 
-    HVAC = DeviceInfo(
+    HVAC = DeviceConf(
         base_watt=3500,
         max_count=1,
-        adsr_model=ADSRConf(
-            a=3, d=2, s=.8, r=.5,
-            wt="sine", wp=2, wa=.07,
-        ),
+        adsr=ADSRConf(a=3, d=2, s=.8, r=.5, wt="sine", wp=2, wa=.07),
     )
 
-    WASHING_MACHINE = DeviceInfo(
+    WASHING_MACHINE = DeviceConf(
         base_watt=500,
         max_count=1,
-        adsr_model=ADSRConf(
-            a=2, d=2, s=.7, r=.5,
-            wt="sine", wp=.5, wa=.04,
-        ),
-        settings=DeviceSettingsConf(
+        adsr=ADSRConf(a=2, d=2, s=.7, r=.5, wt="sine", wp=.5, wa=.04),
+        settings=SettingsConf(
             options={
                 "program": ["Quick Wash", "Normal", "Heavy Duty", "Delicate"],
                 "temperature": ["Cold", "Warm", "Hot"],
@@ -164,14 +147,11 @@ class Device(Enum):
         ),
     )
 
-    DRYER = DeviceInfo(
+    DRYER = DeviceConf(
         base_watt=3000,
         max_count=1,
-        adsr_model=ADSRConf(
-            a=2, d=1, s=.9, r=2,
-            wt="sine", wp=2, wa=.03,
-        ),
-        settings=DeviceSettingsConf(
+        adsr=ADSRConf(a=2, d=1, s=.9, r=2, wt="sine", wp=2, wa=.03),
+        settings=SettingsConf(
             options={
                 "program": ["Quick Dry", "Normal", "Heavy Duty", "Delicate"],
                 "temperature": ["Low", "Medium", "High"],
@@ -198,14 +178,11 @@ class Device(Enum):
         ),
     )
 
-    DISHWASHER = DeviceInfo(
+    DISHWASHER = DeviceConf(
         base_watt=1800,
         max_count=1,
-        adsr_model=ADSRConf(
-            a=3, d=1.5, s=.6, r=2,
-            wt="sine", wp=1, wa=.05,
-        ),
-        settings=DeviceSettingsConf(
+        adsr=ADSRConf(a=3, d=1.5, s=.6, r=2, wt="sine", wp=1, wa=.05),
+        settings=SettingsConf(
             options={
                 "program": ["Quick", "Eco", "Normal", "Intensive"],
                 "temperature": ["Low", "Medium", "High"],
@@ -231,26 +208,21 @@ class Device(Enum):
         ),
     )
 
-    WATER_HEATER = DeviceInfo(
+    WATER_HEATER = DeviceConf(
         base_watt=4500,
         max_count=1,
-        adsr_model=ADSRConf(
-            a=1, d=.5, s=.9, r=1,
-            wt="square", wp=5, wa=.1,
-        ),
+        adsr=ADSRConf(a=1, d=.5, s=.9, r=1, wt="square", wp=5, wa=.1),
     )
 
-    MICROWAVE = DeviceInfo(
+    MICROWAVE = DeviceConf(
         base_watt=1100,
         max_count=1,
-        adsr_model=ADSRConf(
-            a=.5, d=.2, s=1, r=.5,
-        ),
+        adsr=ADSRConf(a=.5, d=.2, s=1, r=.5),
     )
 
 
 class DeviceState:
-    """Hold **a device** status for **a house**.
+    """Device state that holds a device status for a house.
 
     Args:
         device_name (str): Device name.
@@ -258,10 +230,9 @@ class DeviceState:
     """
 
     name: str  #: str: Device name.
-    info: DeviceInfo  #: DeviceInfo: Device static info.
+    conf: DeviceConf  #: DeviceConf: Device static configuration.
     count: int = 0  #: int: Number of **active** device instances.
     load: float = .0  #: float: Total load for all device instances.
-
     #: list[tuple[float, float, bool]]: Active Envelopes, each tuple represent an
     #:  envelope, and it contains three elements:
     #:
@@ -269,20 +240,18 @@ class DeviceState:
     #:    2. float: time total load at last state toggle for the envelope;
     #:    3. bool: envelope state toggle.
     active_envelopes: list[tuple[float, float, bool]] = []
-
     #: dict[str, str]: Current settings for all instances.
     current_settings: dict[str, str] = {}
-
     #: float: Setting multiplier for current settings.
     settings_multiplier: float = 1
 
     def __init__(self, device_name: str):
         self.name = Device[device_name].name
-        self.info = Device[device_name].value
+        self.conf = Device[device_name].value
 
         # Initialize current settings for each option if appliance settings exist
-        if self.info.settings:
-            for setting, options in self.info.settings.options.items():
+        if self.conf.settings:
+            for setting, options in self.conf.settings.options.items():
                 # Default to first option
                 self.current_settings[setting] = options[0]
 
@@ -318,13 +287,13 @@ class DeviceState:
             new_option (str): The new setting option.
 
         """
-        if self.info.settings and setting_name in self.info.settings.options:
+        if self.conf.settings and setting_name in self.conf.settings.options:
             self.current_settings[setting_name] = new_option
 
             self.settings_multiplier = np.prod(np.array([
-                self.info.settings.power_factors[setting].get(option, 1)
+                self.conf.settings.power_factors[setting].get(option, 1)
                 for setting, option in self.current_settings.items()
-                if setting in self.info.settings.power_factors
+                if setting in self.conf.settings.power_factors
             ]))
 
     def calc_load(self, elapsed: float) -> float:
@@ -341,7 +310,7 @@ class DeviceState:
         """
         self.filter_unactive_envelopes(elapsed)
         self.load = np.sum(
-            self.info.base_watt *
+            self.conf.base_watt *
             self.settings_multiplier *
             self.calc_wave_multiplier(elapsed) *
             np.array([self.calc_adsr_multiplier(elapsed, ae)
@@ -375,9 +344,9 @@ class DeviceState:
             float: The wave power multiplier.
 
         """
-        wp = self.info.adsr_model.wp
-        wa = self.info.adsr_model.wa
-        wt = self.info.adsr_model.wt
+        wp = self.conf.adsr.wp
+        wa = self.conf.adsr.wa
+        wt = self.conf.adsr.wt
 
         match wt:
             case "none":
@@ -392,8 +361,7 @@ class DeviceState:
                 return 1 + (wa * random.uniform(-1, 1))
 
     def calc_adsr_multiplier(self, elapsed: float, envelope: tuple[float, float, bool]):
-        """
-        Calculate the power multiplier based on ADSR parameters for certain envelope.
+        """Calculate the power multiplier based on ADSR parameters for certain envelope.
 
         Args:
             elapsed (float): The elapsed time. [sec]
@@ -404,10 +372,10 @@ class DeviceState:
             float: The wave power multiplier.
 
         """
-        a = self.info.adsr_model.a
-        s = self.info.adsr_model.s
-        d = self.info.adsr_model.d
-        r = self.info.adsr_model.r
+        a = self.conf.adsr.a
+        s = self.conf.adsr.s
+        d = self.conf.adsr.d
+        r = self.conf.adsr.r
 
         state_toggle_time, state_toggle_load, is_active = envelope
 
@@ -415,7 +383,7 @@ class DeviceState:
         t = elapsed - state_toggle_time
 
         # Level when Last State Toggle
-        llst = state_toggle_load / self.info.base_watt
+        llst = state_toggle_load / self.conf.base_watt
 
         if is_active:
             if t <= a:
@@ -437,7 +405,7 @@ class DeviceState:
 
 
 class HouseState:
-    """Hold a house status.
+    """House state that holds a house status.
 
     Args:
         idx (int): House index.
@@ -445,10 +413,8 @@ class HouseState:
     """
 
     idx: int  #: int: House index.
-
     #: dict[str, DeviceState]: Device state for each device in the house.
     devices: dict[str, DeviceState]
-
     load: float = .0  #: float: Total load for the whole house.
     grid_line: bool = True  #: bool: Whether the grid line is connected.
     load_line: bool = True  #: bool: Whether the load line is connected.
@@ -480,10 +446,8 @@ class HousesLoadsSimulator:
     """
 
     num_houses: int   #: int: Number of houses in the system.
-
     #: list[HouseState]: House state for each house in the system.
     houses: list[HouseState]
-
     running: bool = False   #: Whether the simulation is running or paused.
     system_load: float = .0  #: float: The current system total load.
 
@@ -501,9 +465,19 @@ class HousesLoadsSimulator:
             if not os.path.exists(f"logs/{timestamp}"):
                 os.mkdir(f"logs/{timestamp}")
 
-    def start(self):
-        """Start the simulation."""
+    def start(self, dt: int=None):
+        """Start the simulation.
+
+        Args:
+            dt (int): Update time. [millisecond] 
+
+        """
         self.running = True
+
+        if not dt:
+            dt = self._dt
+
+        self._dt = dt
 
         if self._log:
             with open(self._log_fp, mode="w", encoding="utf-8") as f:
@@ -512,7 +486,7 @@ class HousesLoadsSimulator:
 
         threading.Thread(
             target=self.update,
-            kwargs={'dt': 100},
+            kwargs={'dt': dt},
             daemon=True
         ).start()
 

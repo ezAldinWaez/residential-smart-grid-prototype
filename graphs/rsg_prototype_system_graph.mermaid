@@ -19,7 +19,8 @@ graph TB
     UMA_U2([User 2])
     UMA_U3([User 3])
   end
-  RSGPS_TLS --Data--> RSGPS_SSS & RSGPS_HLS
+
+  RSGPS_TLS <--Data--> RSGPS_SSS & RSGPS_HLS
   RSGPS_SSS & RSGPS_HLS <--Data--> RSGPS_PM <--Data--> RSGPS_MA
   HHC_H1 & HHC_H2 & HHC_H3 --Controls---> RSGPS_HLS
   RSGPS_MA <--Data & Controls--> UMA_U1 & UMA_U2 & UMA_U3

@@ -8,17 +8,12 @@ import pytz
 
 
 @dataclass
-class LocationInfo:
-    """Location information.
+class LocationConf:
+    """Location configuration."""
 
-    Todo:
-        * Implement __post_init__ method to assert correct data.
-
-    """
-
-    lat: float  #: float: Location latitude.
-    lng: float  #: float: Location longitude.
-    alt: float  #: float: Location altitude.
+    lat: float  #: float: Location latitude. [°]
+    lng: float  #: float: Location longitude. [°]
+    alt: float  #: float: Location altitude. [m]
     tz_name: str  #: str: Location timezone name.
 
     @property
@@ -27,46 +22,48 @@ class LocationInfo:
         return pytz.timezone(self.tz_name)
 
     def __post_init__(self):
-        pass
+        assert -90 <= self.lat <= 90
+        assert -180 <= self.lng <= 180
+        assert 0 <= self.alt <= 20000
 
 
 class Location(Enum):
     """Some important places on Earth.
 
     Note:
-        All members are from type :class:`LocationInfo`.
+        All members are from type :class:`LocationConf`.
 
     """
 
-    ALEPPO = LocationInfo(
+    ALEPPO = LocationConf(
         lat=36.2022,
         lng=37.1343,
         alt=380,
         tz_name='Asia/Damascus',
     )
 
-    MEXICO = LocationInfo(
+    MEXICO = LocationConf(
         lat=19.4326,
         lng=-99.1332,
         alt=2250,
         tz_name='America/Mexico_City',
     )
 
-    NEW_YORK = LocationInfo(
+    NEW_YORK = LocationConf(
         lat=40.7128,
         lng=-74.006,
         alt=10,
         tz_name='America/New_York',
     )
 
-    ANTARCTICA = LocationInfo(
+    ANTARCTICA = LocationConf(
         lat=-90,
         lng=0,
         alt=0,
         tz_name='Antarctica',
     )
 
-    SAHARA_DESERT = LocationInfo(
+    SAHARA_DESERT = LocationConf(
         lat=23.4162,
         lng=25.6628,
         alt=500,
@@ -85,15 +82,14 @@ class TimeLocSimulator:
 
     time_factor: float  #: float: Time acceleration factor. [sec]
     loc_name: str  #: str: Location name.
-    loc_info: LocationInfo  #: LocationInfo: The location information.
-
+    loc_conf: LocationConf  #: LocationConf: The location configuration.
     #: bool: Whether the simulation is started or not.
     started: bool = False
 
     def __init__(self, time_factor: float, location: Location):
         self.time_factor = time_factor
         self.loc_name = location.name.replace('_', ' ').title()
-        self.loc_info = location.value
+        self.loc_conf = location.value
 
         self._paused_at: float = None
         self._pause_duration = .0
@@ -111,7 +107,7 @@ class TimeLocSimulator:
         if self._paused_at:
             end_time = self._paused_at
         else:
-            end_time = datetime.now(tz=self.loc_info.tz).timestamp()
+            end_time = datetime.now(tz=self.loc_conf.tz).timestamp()
 
         elapsed_time = end_time - self._start_time - self._pause_duration
         elapsed_sim_time = elapsed_time * self.time_factor
@@ -134,12 +130,12 @@ class TimeLocSimulator:
             elapsed = self.get_elapsed()
 
         timestamp = self._start_time + elapsed
-        return datetime.fromtimestamp(timestamp, tz=self.loc_info.tz)
+        return datetime.fromtimestamp(timestamp, tz=self.loc_conf.tz)
 
     def start(self):
         """Start the simulation."""
         self.started = True
-        self._start_time = datetime.now(tz=self.loc_info.tz).timestamp()
+        self._start_time = datetime.now(tz=self.loc_conf.tz).timestamp()
 
     def pause(self):
         """Pause the simulation."""

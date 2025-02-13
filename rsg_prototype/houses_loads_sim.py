@@ -86,15 +86,15 @@ class Device(Enum):
 
     """
 
-    TEST_DEVICE = DeviceConf(
+    TEST = DeviceConf(
         base_watt=1000,
         max_count=10,
-        adsr=ADSRConf(a=360, d=200, s=.8, r=10, wt="random", wp=1, wa=.05),
+        adsr=ADSRConf(a=3600, d=7200, s=.8, r=1800),
     )
 
     LED_LIGHT = DeviceConf(
         base_watt=10,
-        max_count=20,
+        max_count=10,
         adsr=ADSRConf(a=.01, d=2, s=.8, r=.01),
     )
 
@@ -231,17 +231,16 @@ class DeviceState:
 
     name: str  #: str: Device name.
     conf: DeviceConf  #: DeviceConf: Device static configuration.
-    count: int = 0  #: int: Number of **active** device instances.
     load: float = .0  #: float: Total load for all device instances.
-    #: list[tuple[float, float, bool]]: Active Envelopes, each tuple represent an
-    #:  envelope, and it contains three elements:
+    #: list[tuple[float, float, bool]]: Envelopes, each envelope contains
+    #: three elements:
     #:
     #:    1. float: time elapsed at last state toggle for the envelope;
-    #:    2. float: time total load at last state toggle for the envelope;
+    #:    2. float: total load at last state toggle for the envelope;
     #:    3. bool: envelope state toggle.
-    active_envelopes: list[tuple[float, float, bool]] = []
+    envelopes: list[tuple[float, float, bool]]
     #: dict[str, str]: Current settings for all instances.
-    current_settings: dict[str, str] = {}
+    current_settings: dict[str, str]
     #: float: Setting multiplier for current settings.
     settings_multiplier: float = 1
 
@@ -249,33 +248,27 @@ class DeviceState:
         self.name = Device[device_name].name
         self.conf = Device[device_name].value
 
-        # Initialize current settings for each option if appliance settings exist
-        if self.conf.settings:
-            for setting, options in self.conf.settings.options.items():
-                # Default to first option
-                self.current_settings[setting] = options[0]
+        self.envelopes = [
+            (.0, .0, False)
+            for _ in range(self.conf.max_count)
+        ]
 
-    def update_count(self, elapsed: float, new_count: int):
-        """Update device instances count and edit envelopes indead.
+        if self.conf.settings:
+            self.current_settings = {
+                setting: options[0]
+                for setting, options in self.conf.settings.options.items()
+            }
+
+    def toggle_envelope_state(self, idx: int, elapsed: float):
+        """Toggle envelope state.
 
         Args:
+            idx (int): The envelope index.
             elapsed (float): Current elapsed time. [sec]
-            new_count (int): The new count.
 
         """
-        if new_count > self.count:
-            for _ in range(new_count - self.count):
-                self.active_envelopes.append((elapsed, self.load, True))
-
-        elif new_count < self.count:
-            excess = self.count - new_count
-            for idx, (_, _, is_active) in enumerate(self.active_envelopes):
-                if is_active and excess > 0:
-                    self.active_envelopes[idx] = (
-                        elapsed, self.load, False)
-                    excess -= 1
-
-        self.count = new_count
+        prev_state = self.envelopes[idx][2]
+        self.envelopes[idx] = (elapsed, self.load, not prev_state)
 
     def update_setting(self, setting_name: str, new_option: str):
         """Update a specific setting for the device.
@@ -299,7 +292,7 @@ class DeviceState:
     def calc_load(self, elapsed: float) -> float:
         """Calculate and update device load at this ``elapsed``.
 
-        To minimize calculations, it filters unactive envelopes first.
+        To minimize calculations, it filters idle envelopes first.
 
         The load is calculated depending on it's base wattage, settings,
         wave parameters, and adsr parameters.
@@ -308,18 +301,19 @@ class DeviceState:
             elapsed (float): The elapsed time. [sec]
 
         """
-        self.filter_unactive_envelopes(elapsed)
+        envelopes = self.filter_idle_envelopes(elapsed)
+
         self.load = np.sum(
             self.conf.base_watt *
             self.settings_multiplier *
             self.calc_wave_multiplier(elapsed) *
-            np.array([self.calc_adsr_multiplier(elapsed, ae)
-                     for ae in self.active_envelopes])
+            np.array([self.calc_adsr_multiplier(elapsed, e)
+                     for e in envelopes])
         )
 
         return self.load
 
-    def filter_unactive_envelopes(self, elapsed: float):
+    def filter_idle_envelopes(self, elapsed: float):
         """Filter the active envelopes from IDLE envelopes.
 
         IDLE envelopes are envelopes which where unactive for
@@ -332,7 +326,7 @@ class DeviceState:
         def not_idle(envelope) -> bool:
             return self.calc_adsr_multiplier(elapsed, envelope) > 0
 
-        self.active_envelopes = list(filter(not_idle, self.active_envelopes))
+        return list(filter(not_idle, self.envelopes))
 
     def calc_wave_multiplier(self, elapsed: float) -> float:
         """Calculate the power multiplier based on Wave parameters.
@@ -465,7 +459,7 @@ class HousesLoadsSimulator:
             if not os.path.exists(f"logs/{timestamp}"):
                 os.mkdir(f"logs/{timestamp}")
 
-    def start(self, dt: int=None):
+    def start(self, dt: int = None):
         """Start the simulation.
 
         Args:
@@ -521,11 +515,13 @@ class HousesLoadsSimulator:
                     for device in house.devices.values():
                         hl += device.calc_load(elapsed)
                 else:
-                    house.load = 0
+                    house.load = .0
                     for device in house.devices.values():
-                        device.load = 0
-                        # device.count = 0
-                        device.active_envelopes = []
+                        device.load = .0
+                        device.envelopes = [
+                            (elapsed, .0, False)
+                            for _ in range(device.conf.max_count)
+                        ]
                 house.load = hl
                 sl += hl
             self.system_load = sl

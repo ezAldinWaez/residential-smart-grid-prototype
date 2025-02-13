@@ -34,6 +34,7 @@ class MainWindowView:
         self._pm = pm
 
         self._sv_time = ttk.StringVar(value="Time: ??:??:??")
+        self._sv_toggle_sim = ttk.StringVar(value="Toggle")
 
         f_main = ttk.Frame(self.root, padding=10)
         f_main.pack(fill="both", expand=True)
@@ -70,15 +71,38 @@ class MainWindowView:
 
         ttk.Button(
             f_right,
-            text="Pause Simulation",
-            command=self.pause_sim,
-        ).pack(side="left", padx=(0, 10))
+            textvariable=self._sv_toggle_sim,
+            command=self.toggle_sim,
+            width=10,
+        ).pack(side='left', padx=(0, 10))
 
         ttk.Button(
             f_right,
-            text="Resume Simulation",
-            command=self.resume_sim,
-        ).pack(side="left")
+            text="Set Grids",
+            command=lambda: self.set_all_grids(True),
+            width=10,
+        ).pack(side='left', padx=(0, 10))
+
+        ttk.Button(
+            f_right,
+            text="Reset Grids",
+            command=lambda: self.set_all_grids(False),
+            width=10,
+        ).pack(side='left', padx=(0, 10))
+
+        ttk.Button(
+            f_right,
+            text="Set Loads",
+            command=lambda: self.set_all_loads(True),
+            width=10,
+        ).pack(side='left', padx=(0, 10))
+
+        ttk.Button(
+            f_right,
+            text="Reset Loads",
+            command=lambda: self.set_all_loads(False),
+            width=10,
+        ).pack(side='left')
 
     def _build_body(self, f_parent: ttk.Frame):
         n_main = Notebook(
@@ -120,7 +144,17 @@ class MainWindowView:
 
     def _update_ui(self, dt: int):
         self._sv_time.set(f"Time: {self._tls.get_time().strftime('%H:%M:%S')}")
+        self._sv_toggle_sim.set(
+            "Pause" if self._hls.running or self._sss.running or self._pm.running
+            else "Resume")
         self.root.after(dt, self._update_ui, dt)
+
+    def toggle_sim(self):
+        """Toggle simulation state."""
+        if self._hls.running or self._sss.running or self._pm.running:
+            self.pause_sim()
+        else:
+            self.resume_sim()
 
     def pause_sim(self):
         """Pause simulation."""
@@ -135,6 +169,16 @@ class MainWindowView:
         self._hls.resume()
         self._sss.resume()
         self._pm.resume()
+
+    def set_all_grids(self, state: bool):
+        """Turn all grid lines for all houses to ``state``."""
+        for h in self._hls.houses:
+            h.grid_line = state
+
+    def set_all_loads(self, state: bool):
+        """Turn all grid lines for all houses to ``state``."""
+        for h in self._hls.houses:
+            h.load_line = state
 
 
 class HLSTabView:
@@ -296,12 +340,20 @@ class HouseControlsWindowView:
         self._hls = hls
         self._house = self._hls.houses[self.idx]
 
-        self._total_load: ttk.StringVar = variables['total_load']
-        self._grid_line: ttk.IntVar = variables['grid_line']
-        self._load_line: ttk.IntVar = variables['load_line']
+        self._sv_total_load: ttk.StringVar = variables['total_load']
+        self._iv_grid_line: ttk.IntVar = variables['grid_line']
+        self._iv_load_line: ttk.IntVar = variables['load_line']
+
+        self._iv_all_envelopes = {
+            dn: [
+                ttk.IntVar(value=0)
+                for _ in range(self._house.devices[dn].conf.max_count)
+            ]
+            for dn in self._house.devices.keys()
+        }
 
         self._sv_devices_loads = {
-            device_name: ttk.StringVar(value="Device Load: ? Watt")
+            device_name: ttk.StringVar(value="Load: ? Watt")
             for device_name in self._house.devices.keys()
         }
         self._sv_devices_settings_multipliers = {
@@ -328,7 +380,7 @@ class HouseControlsWindowView:
 
         ttk.Label(
             f_main,
-            textvariable=self._total_load,
+            textvariable=self._sv_total_load,
             font=("Calibri", 12),
         ).pack(side="left")
 
@@ -338,7 +390,7 @@ class HouseControlsWindowView:
         ttk.Checkbutton(
             f_right,
             text="Grid Line",
-            variable=self._grid_line,
+            variable=self._iv_grid_line,
             command=self._house.toggle_grid_line,
             style="Primary.Roundtoggle.Toolbutton",
         ).pack(side="left", padx=(0, 10))
@@ -346,7 +398,7 @@ class HouseControlsWindowView:
         ttk.Checkbutton(
             f_right,
             text="Load Line",
-            variable=self._load_line,
+            variable=self._iv_load_line,
             command=self._house.toggle_load_line,
             style="Primary.Roundtoggle.Toolbutton",
         ).pack(side="left", padx=(0, 10))
@@ -372,30 +424,19 @@ class HouseControlsWindowView:
             f_control = ttk.Frame(f_device)
             f_control.pack(fill="x", pady=(0, 10))
 
-            ttk.Label(
-                f_control,
-                text="Number of Instances: ",
-                font=("Calibri", 12),
-            ).pack(side="left")
+            f_envelopes = ttk.Frame(f_control)
+            f_envelopes.pack(side="left")
 
-            spinbox = ttk.Spinbox(
-                f_control,
-                from_=0,
-                to=device.conf.max_count,
-                width=5,
-                font=("Calibri", 8),
-                style="Primary.TSpinbox",
-            )
-            spinbox.insert(0, device.count)
-            spinbox.pack(side="left")
-            spinbox.configure(
-                command=lambda wid=spinbox, dn=dn:
-                    self._house.devices[dn].update_count(
-                        elapsed=self._hls.get_tls_elapsed(),
-                        new_count=int(float(wid.get()))
-                        if wid.get().strip() else 0,
+            for idx in range(device.conf.max_count):
+                ttk.Checkbutton(
+                    f_envelopes,
+                    variable=self._iv_all_envelopes[dn][idx],
+                    command=lambda idx=idx, device=device: device.toggle_envelope_state(
+                        idx=idx,
+                        elapsed=self._hls.get_tls_elapsed()
                     ),
-            )
+                    style="Primary.Squaretoggle.Toolbutton",
+                ).pack(side="left", padx=(0, 10))
 
             ttk.Label(
                 f_control,
@@ -403,12 +444,12 @@ class HouseControlsWindowView:
                 font=("Calibri", 12),
             ).pack(side="right")
 
-            ttk.Label(
-                f_device,
-                text=device.conf,
-                font=("Calibri", 8),
-                style="Secondary.TLabel",
-            ).pack(fill="x", pady=(0, 10))
+            # ttk.Label(
+            #     f_device,
+            #     text=device.conf,
+            #     font=("Calibri", 8),
+            #     style="Secondary.TLabel",
+            # ).pack(fill="x", pady=(0, 10))
 
             if device.conf.settings:
                 f_settings = ttk.Labelframe(
@@ -461,20 +502,25 @@ class HouseControlsWindowView:
                             ),
                     )
 
-                ttk.Label(
-                    f_settings,
-                    textvariable=self._sv_devices_settings_multipliers[dn],
-                    font=("Calibri", 8),
-                    style="Secondary.TLabel",
-                ).pack(fill="x", pady=(0, 10))
+                # ttk.Label(
+                #     f_settings,
+                #     textvariable=self._sv_devices_settings_multipliers[dn],
+                #     font=("Calibri", 8),
+                #     style="Secondary.TLabel",
+                # ).pack(fill="x", pady=(0, 10))
 
     def _update_ui(self, dt):
         for device_name, load in self._sv_devices_loads.items():
             load.set(
-                f"Device Load: {self._house.devices[device_name].load:,.1f} Watt")
+                f"Load: {self._house.devices[device_name].load:,.1f} Watt")
         for device_name, multiplier in self._sv_devices_settings_multipliers.items():
             multiplier.set(
                 f"Setting Multiplier: {self._house.devices[device_name].settings_multiplier:.1%}")
+
+        for dn, _iv_envelopes in self._iv_all_envelopes.items():
+            for idx, _iv_envelope in enumerate(_iv_envelopes):
+                _iv_envelope.set(
+                    int(self._house.devices[dn].envelopes[idx][2]))
 
         self.root.after(dt, self._update_ui, dt)
 

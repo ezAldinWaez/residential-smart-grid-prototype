@@ -1,6 +1,6 @@
 import marimo
 
-__generated_with = "0.10.17"
+__generated_with = "0.10.19"
 app = marimo.App(width="medium")
 
 
@@ -41,8 +41,8 @@ def _(graph_code_editor, mo):
 @app.cell
 def _(file_browser, graph_code_editor, graph_rendering, mo):
     mo.ui.tabs({
-        "Graph Code Editor": graph_code_editor,
         "Graph Rendering": graph_rendering,
+        "Graph Code Editor": graph_code_editor,
     }) if len(file_browser.value) else ""
     return
 

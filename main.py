@@ -4,7 +4,7 @@ from rsg_prototype.time_loc_sim import TimeLocSimulator, Location
 from rsg_prototype.houses_loads_sim import HousesLoadsSimulator
 from rsg_prototype.solar_system_sim import BattConf, SolarSystemSimulator, PVConf
 from rsg_prototype.power_mng import PowerManager
-from app_tk import App
+from admin_dashboard import AdminDashboardApp
 
 
 TIME_FACTOR = 3600  # [sim_sec/real_sec]
@@ -63,7 +63,7 @@ def main():
     )
     power_mng.start(dt=100)
 
-    app = App(
+    app = AdminDashboardApp(
         tls=time_loc_sim,
         hls=houses_loads_sim,
         sss=solar_system_sim,

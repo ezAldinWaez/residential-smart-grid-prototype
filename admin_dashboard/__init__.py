@@ -1,4 +1,4 @@
-"""Tkinter app package."""
+"""Admin dashboard package."""
 
 import tkinter as tk
 import ttkbootstrap as ttk
@@ -11,8 +11,8 @@ from rsg_prototype.power_mng import PowerManager
 from .views import MainWindowView
 
 
-class App:
-    """Tkinter app to browse and control the system."""
+class AdminDashboardApp:
+    """Admin dashboard app to browse and control the system."""
 
     def __init__(self, tls: TimeLocSimulator, hls: HousesLoadsSimulator, sss: SolarSystemSimulator,
                  pm: PowerManager):

@@ -1,4 +1,4 @@
-"""Tkinter app views."""
+"""Admin dashboard views."""
 
 import tkinter as tk
 import ttkbootstrap as ttk

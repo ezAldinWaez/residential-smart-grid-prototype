@@ -1,13 +1,32 @@
 import marimo
 
-__generated_with = "0.10.19"
+__generated_with = "0.11.26"
 app = marimo.App(width="medium")
 
 
 @app.cell(hide_code=True)
 def _(mo):
-    mo.md("""# Graph""")
+    mo.md("""# Graphs Editor""")
     return
+
+
+@app.cell
+def _(mo, os):
+    if not os.path.exists("data/"):
+        os.mkdir("data/")
+
+    if not os.path.exists('data/graphs/'):
+        os.mkdir("data/graphs/")
+
+    file_browser = mo.ui.file_browser(
+        initial_path="data/graphs/",
+        filetypes=['.mermaid'],
+        multiple=False,
+        restrict_navigation=True,
+        label="## Mermaid File Browser"
+    )
+    file_browser
+    return (file_browser,)
 
 
 @app.cell
@@ -23,7 +42,7 @@ def _(file_browser, mo):
 
     graph_code_editor = mo.ui.code_editor(
         value=_get_code_editor_value(),
-        label="Graph Code Editor",
+        label="### Graph Code Editor",
         language="mermaid",
     )
     return (graph_code_editor,)
@@ -31,20 +50,11 @@ def _(file_browser, mo):
 
 @app.cell
 def _(graph_code_editor, mo):
-    graph_rendering = mo.md(f"""
-        Graph Rendering
-        {mo.mermaid(graph_code_editor.value)}
-    """)
+    graph_rendering = mo.md((
+        "### Graph Rendering\n"
+        f"{mo.mermaid(graph_code_editor.value)}\n"
+    ))
     return (graph_rendering,)
-
-
-@app.cell
-def _(file_browser, graph_code_editor, graph_rendering, mo):
-    mo.ui.tabs({
-        "Graph Rendering": graph_rendering,
-        "Graph Code Editor": graph_code_editor,
-    }) if len(file_browser.value) else ""
-    return
 
 
 @app.cell
@@ -64,38 +74,29 @@ def _(file_browser, graph_code_editor, mo):
             return "Could not save the graph file!"
 
     update_button = mo.ui.button(
-        on_click=update_file, value="", label="Update Graph File")
+        on_click=update_file,
+        value="",
+        label="Update Graph File"
+    )
     return update_button, update_file
 
 
 @app.cell
-def _(file_browser, mo, update_button):
-    mo.hstack(
-        [
-            update_button,
-            update_button.value
-        ],
-        justify="start",
-        align="center",
-        gap=1
-    ) if len(file_browser.value) else ""
+def _(file_browser, graph_code_editor, graph_rendering, mo, update_button):
+    mo.vstack([
+        mo.md("## Mermaid Graph"),
+        mo.ui.tabs({
+            "Graph Rendering": graph_rendering,
+            "Graph Code Editor": graph_code_editor,
+        }),
+        mo.hstack(
+            [update_button, update_button.value],
+            justify="start",
+            align="center",
+            gap=1
+        )
+    ]) if len(file_browser.value) else None
     return
-
-
-@app.cell
-def _(mo, os):
-    if (not os.path.exists("graphs")):
-        os.mkdir("graphs")
-
-    file_browser = mo.ui.file_browser(
-        initial_path="graphs/",
-        filetypes=['.mermaid'],
-        multiple=False,
-        restrict_navigation=True,
-        label="Mermaid graph file browser"
-    )
-    file_browser
-    return (file_browser,)
 
 
 @app.cell(hide_code=True)

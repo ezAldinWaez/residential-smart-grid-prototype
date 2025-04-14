@@ -7,7 +7,7 @@ graph TB
   end
 
   subgraph RSGP[RSG Prototype]
-    RSGP_TLS([Time/Location Simulation])
+    RSGP_TS([Time Simulation])
     RSGP_SSS([Solar System Simulation])
     RSGP_HLS([Houses Loads Simulation])
     RSGP_PM([Power Management])
@@ -24,5 +24,5 @@ graph TB
 
   HHC_H1 & HHC_H2 & HHC_H3 --Electric Signals--> RSGP
   AD <--Data & Controls--> RSGP
-  RSGP_TLS <--Data--> RSGP_SSS & RSGP_HLS <--Data--> RSGP_PM <--Data--> RSGP_HAA
+  RSGP_TS <--Data--> RSGP_SSS & RSGP_HLS <--Data--> RSGP_PM <--Data--> RSGP_HAA
   RSGP_HAA <--Data & Controls--> HMA_H1 & HMA_H2 & HMA_H3

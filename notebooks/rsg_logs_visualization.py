@@ -12,11 +12,11 @@ def _(mo):
 
 @app.cell
 def _(mo, os):
-    if not os.path.exists("logs"):
-        os.mkdir("logs")
+    if not os.path.exists("data/logs/"):
+        os.mkdir("data/logs/")
 
     file_browser = mo.ui.file_browser(
-        initial_path="logs/",
+        initial_path="data/logs/",
         filetypes=[".csv"],
         multiple=False,
         restrict_navigation=True,

@@ -20,8 +20,8 @@ from .views import MainWindowView
 class AdminDashboardApp:
     """Admin dashboard app to browse and control the system."""
 
-    def __init__(self, ts: TimeSimulator, hls: HousesLoadsSimulator, sss: SolarSystemSimulator,
-                 pm: PowerManager):
+    def __init__(self, time_sim: TimeSimulator, houses_loads_sim: HousesLoadsSimulator, solar_system_sim: SolarSystemSimulator,
+                 power_mng: PowerManager):
         self.root = tk.Tk()
 
         style = ttk.Style()
@@ -29,10 +29,10 @@ class AdminDashboardApp:
 
         MainWindowView(
             root=self.root,
-            ts=ts,
-            hls=hls,
-            sss=sss,
-            pm=pm,
+            time_sim=time_sim,
+            houses_loads_sim=houses_loads_sim,
+            solar_system_sim=solar_system_sim,
+            power_manager=power_mng,
         )
 
     def mainloop(self):

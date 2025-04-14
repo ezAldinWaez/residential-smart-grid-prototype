@@ -1,5 +1,3 @@
-# pylint: disable=locally-disabled, invalid-name, redefined-builtin
-
 """Configuration file for the Sphinx documentation builder.
 
 For the full list of built-in configuration values, see the documentation:
@@ -42,7 +40,7 @@ default_dark_mode = False
 # -- Options for HTML output -------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#options-for-html-output
 
-html_theme = 'sphinx_rtd_theme' # you can try 'sphinx_book_theme'.
+html_theme = 'sphinx_rtd_theme'  # you can try 'sphinx_book_theme'.
 html_static_path = ['_static']
 html_logo = '_static/logo.jpg'
 html_css_files = ['custom.css']

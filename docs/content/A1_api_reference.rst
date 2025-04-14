@@ -2,9 +2,9 @@ Appendix 01: API Reference
 ==========================
 Residential Smart Grid Prototype Package
 ----------------------------------------
-Time and Location Simulation Module
+Time Simulation Module
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-.. automodule:: rsg_prototype.time_loc_sim
+.. automodule:: rsg_prototype.time_sim
   :members:
   :undoc-members:
   :show-inheritance:
@@ -30,18 +30,18 @@ Power Mangament Module
   :undoc-members:
   :show-inheritance:
 
-Tkinter App Package
--------------------
+Admin Dashboard Package
+-----------------------
 Init Module
 ~~~~~~~~~~~
-.. automodule:: app_tk.__init__
+.. automodule:: admin_dashboard.__init__
   :members:
   :undoc-members:
   :show-inheritance:
 
 Views Module
 ~~~~~~~~~~~~
-.. automodule:: app_tk.views
+.. automodule:: admin_dashboard.views
   :members:
   :undoc-members:
   :show-inheritance:

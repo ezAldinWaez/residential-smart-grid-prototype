@@ -11,7 +11,7 @@ from typing import Literal
 
 import numpy as np
 
-from .time_loc_sim import TimeLocSimulator
+from .time_sim import TimeSimulator
 
 
 @dataclass
@@ -433,7 +433,7 @@ class HousesLoadsSimulator:
     """Houses loads simulator.
 
     Args:
-        tls (TimeLocSimulator): The time location simulator instance.
+        ts (TimeSimulator): Time simulator instance.
         num_houses (int): The number of houses in the system.
         log (bool): If True, an csv file will be created and record the system status.
 
@@ -445,8 +445,8 @@ class HousesLoadsSimulator:
     running: bool = False   #: Whether the simulation is running or paused.
     system_load: float = .0  #: float: The current system total load.
 
-    def __init__(self, tls: TimeLocSimulator, num_houses: int, log=False):
-        self._tls = tls
+    def __init__(self, ts: TimeSimulator, num_houses: int, log=False):
+        self._ts = ts
         self.num_houses = num_houses
         self.houses = [HouseState(idx) for idx in range(num_houses)]
 
@@ -494,9 +494,9 @@ class HousesLoadsSimulator:
         if not self.running:
             self.start()
 
-    def get_tls_elapsed(self):
-        """Get current elapsed time from time and location simulator."""
-        return self._tls.get_elapsed()
+    def get_ts_elapsed(self):
+        """Get current elapsed time from time simulator."""
+        return self._ts.get_elapsed()
 
     def update(self, dt: int):
         """Update the simulation every ``dt`` milliseconds.
@@ -506,7 +506,7 @@ class HousesLoadsSimulator:
 
         """
         while self.running:
-            elapsed = self._tls.get_elapsed()
+            elapsed = self._ts.get_elapsed()
 
             sl = .0
             for house in self.houses:

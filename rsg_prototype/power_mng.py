@@ -84,7 +84,7 @@ class PowerManager:
 
         """
         while self.running:
-            elapsed = self._sss._tls.get_elapsed()
+            elapsed = self._sss._ts.get_elapsed()
 
             houses_load = self._hls.system_load
             solar_power = self._sss.total_power
@@ -94,7 +94,7 @@ class PowerManager:
                 excess_power = solar_power - houses_load
                 batt_consumed_power = self._sss.batt.charge(
                     power=excess_power,
-                    time=(dt / 1000) * self._sss._tls.time_factor
+                    time=(dt / 1000) * self._sss._ts.time_factor
                 )
                 self.batt_exchange_power = - batt_consumed_power
             else:
@@ -102,7 +102,7 @@ class PowerManager:
                 deficit_power = houses_load - solar_power
                 batt_provided_power = self._sss.batt.discharge(
                     power=deficit_power,
-                    time=(dt / 1000) * self._sss._tls.time_factor,
+                    time=(dt / 1000) * self._sss._ts.time_factor,
                 )
                 self.batt_exchange_power = + batt_provided_power
 

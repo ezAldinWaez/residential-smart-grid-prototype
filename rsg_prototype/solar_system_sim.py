@@ -6,10 +6,10 @@ import threading
 import time
 import os
 
+import pandas as pd
 import pvlib
-from pvlib import irradiance
 
-from .time_loc_sim import TimeLocSimulator
+from .time_sim import TimeSimulator
 
 
 @dataclass
@@ -127,52 +127,44 @@ class SolarSystemSimulator:
     """Solar system simulator.
 
     Args:
-        tls (TimeLocSimulator): The time location simulator instance.
+        ts (TimeSimulator): Time simulator instance.
         pv_conf (PVConf): PV configuration.
         batt_conf (BattConf): Battery configuration.
+        nsrdb_data (DataFrame): ....
         log (bool): If True, an csv file will be created and record the system status.
 
     """
 
     pv_conf: PVConf  #: PVConf: The PV configuration for the system.
-
     #: BattState: The battery state for the system.
     batt: BattState
-
     #: bool: Whether the simulation is running or paused.
     running: bool = False
-
-    #: float: The current zenith angle for the sun.
-    zenith_angle: float = .0
-
-    #: float: ...
-    poa_irradiance: float = .0
-
+    zenith_angle: float = .0  #: float: The current zenith angle for the sun.
+    poa_irradiance: float = .0  #: float: ...
     #: float: The current power given by one panel.
     panel_power: float = .0
-
     #: float: The current total power given by the panels.
     total_power: float = .0
+    pv_loc: pvlib.location.Location  #: Location: The pvlib location instance.
+    nsrdb_data: pd.DataFrame  #: DataFrame: ...
 
-    #: pvlib.location.Location: The pvlib location instance.
-    pv_loc: pvlib.location.Location
-
-    def __init__(self, tls: TimeLocSimulator, pv_conf: PVConf, batt_conf: BattConf, log=False):
-        self._tls = tls
+    def __init__(self, ts: TimeSimulator, pv_conf: PVConf, batt_conf: BattConf, nsrdb_data: pd.DataFrame, log=False):
+        self._ts = ts
         self.pv_conf = pv_conf
 
         self.pv_loc = pvlib.location.Location(
-            latitude=self._tls.loc_conf.lat,
-            longitude=self._tls.loc_conf.lng,
-            tz=self._tls.loc_conf.tz_name,
-            altitude=self._tls.loc_conf.alt,
-            name=self._tls.loc_name,
+            latitude=ts.location['lat'],
+            longitude=ts.location['lng'],
+            tz=ts.location['tz'],
         )
 
         self.batt = BattState(
             conf=batt_conf,
             init_charge_level_multiplier=.5,
         )
+
+        self.nsrdb_data = nsrdb_data
 
         self._log = log
         if self._log:
@@ -183,7 +175,7 @@ class SolarSystemSimulator:
             if not os.path.exists(f"logs/{timestamp}"):
                 os.mkdir(f"logs/{timestamp}")
 
-    def start(self, dt: int=None):
+    def start(self, dt: int = None):
         """Start the simulation.
 
         Args:
@@ -226,32 +218,30 @@ class SolarSystemSimulator:
 
         """
         while self.running:
-            elapsed = self._tls.get_elapsed()
-            curr_time = self._tls.get_time(elapsed)
+            current_timestamp = self._ts.get_time()
+            data = find_nearest_timestamp_row(
+                self.nsrdb_data, current_timestamp)
 
-            # Get solar position (elevation and azimuth)
+            elapsed = self._ts.get_elapsed()
+            curr_time = self._ts.get_time(elapsed)
+
             solar_pos = self.pv_loc.get_solarposition(curr_time)
 
-            # Calculate the solar zenith angle
-            self.zenith_angle = solar_pos['zenith'].iloc[0]
+            self.zenith_angle = data['Solar Zenith Angle']
 
             if self.zenith_angle > 90:
                 self.poa_irradiance = 0
             else:
-                # Use a simplified clear-sky model for daytime irradiance
-                self.poa_irradiance = irradiance.get_total_irradiance(
-                    surface_tilt=45,  # Assumed fixed tilt for simplicity
-                    surface_azimuth=180,  # Facing south
-                    solar_zenith=self.zenith_angle,  # Zenith angle from solar position
-                    # Azimuth angle from solar position
+                self.poa_irradiance = pvlib.irradiance.get_total_irradiance(
+                    surface_tilt=35,
+                    surface_azimuth=180,
+                    solar_zenith=data['Solar Zenith Angle'],
                     solar_azimuth=solar_pos['azimuth'],
-                    dni=1000,  # Direct normal irradiance (clear sky)
-                    ghi=1000,  # Global horizontal irradiance (clear sky)
-                    dhi=100,  # Diffuse horizontal irradiance
-                    dni_extra=1367,  # Extra-terrestrial irradiance
+                    dni=data['DNI'],
+                    ghi=data['GHI'],
+                    dhi=data['DHI'],
                 )['poa_global'].iloc[0]
 
-            # Calculate the wattage output of each panel
             self.panel_power = self.poa_irradiance * self.pv_conf.panel_area * \
                 self.pv_conf.panel_efficiency
             self.total_power = self.panel_power * self.pv_conf.num_panels
@@ -262,3 +252,20 @@ class SolarSystemSimulator:
                     f.close()
 
             time.sleep(dt/1000)
+
+
+def find_nearest_timestamp_row(df, target_timestamp):
+    """Find the row in DataFrame with timestamp closest to the target timestamp.
+
+    Args:
+        df: pandas DataFrame with 'Timestamp' column
+        target_timestamp: pandas Timestamp or datetime-like object to search for
+
+    Returns:
+        Series: The row from df with nearest timestamp
+    """
+
+    target_ts = pd.to_datetime(target_timestamp)
+    time_diffs = (df['Timestamp'] - target_ts).abs()
+    nearest_idx = time_diffs.idxmin()
+    return df.loc[nearest_idx]

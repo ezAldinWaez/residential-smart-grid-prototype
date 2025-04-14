@@ -4,7 +4,7 @@ import tkinter as tk
 import ttkbootstrap as ttk
 from ttkbootstrap.widgets import Notebook
 
-from rsg_prototype.time_loc_sim import TimeLocSimulator
+from rsg_prototype.time_sim import TimeSimulator
 from rsg_prototype.houses_loads_sim import HousesLoadsSimulator
 from rsg_prototype.solar_system_sim import SolarSystemSimulator
 from rsg_prototype.power_mng import PowerManager
@@ -15,20 +15,20 @@ class MainWindowView:
 
     Args:
         root (tk.Tk): Tk window root.
-        tls (TimeLocSimulator): Time and location simulator instance.
+        ts (TimeSimulator): Time simulator instance.
         hls (HousesLoadsSimulator): Houses loads simulator instance.
         sss (SolarSystemSimulator): Solar system simulator instance.
         pm (PowerManager): Power manager instance.
 
     """
 
-    def __init__(self, root: tk.Tk, tls: TimeLocSimulator, hls: HousesLoadsSimulator,
+    def __init__(self, root: tk.Tk, ts: TimeSimulator, hls: HousesLoadsSimulator,
                  sss: SolarSystemSimulator, pm: PowerManager):
         self.root = root
         self.root.title("Residential Smart Grid Prototype")
         self.root.attributes('-fullscreen', True)
         self.root.protocol("WM_DELETE_WINDOW", self._on_closing)
-        self._tls = tls
+        self._ts = ts
         self._hls = hls
         self._sss = sss
         self._pm = pm
@@ -51,7 +51,7 @@ class MainWindowView:
         ttk.Label(
             f_main,
             text="Residential Smart Grid Prototype",
-            font=("Calibri", 24),
+            font=("Arial", 24),
         ).pack(side="left")
 
         f_right = ttk.Frame(f_main)
@@ -60,13 +60,7 @@ class MainWindowView:
         ttk.Label(
             f_right,
             textvariable=self._sv_time,
-            font=("Calibri", 12),
-        ).pack(side="left", padx=(0, 10))
-
-        ttk.Label(
-            f_right,
-            text=f"Location: {self._tls.loc_name}",
-            font=("Calibri", 12),
+            font=("Arial", 12),
         ).pack(side="left", padx=(0, 10))
 
         ttk.Button(
@@ -143,7 +137,7 @@ class MainWindowView:
         self.root.destroy()
 
     def _update_ui(self, dt: int):
-        self._sv_time.set(f"Time: {self._tls.get_time().strftime('%H:%M:%S')}")
+        self._sv_time.set(f"Time: {self._ts.get_time().strftime('%H:%M:%S')}")
         self._sv_toggle_sim.set(
             "Pause" if self._hls.running or self._sss.running or self._pm.running
             else "Resume")
@@ -158,14 +152,14 @@ class MainWindowView:
 
     def pause_sim(self):
         """Pause simulation."""
-        self._tls.pause()
+        self._ts.pause()
         self._hls.pause()
         self._sss.pause()
         self._pm.pause()
 
     def resume_sim(self):
         """Resume simulation."""
-        self._tls.resume()
+        self._ts.resume()
         self._hls.resume()
         self._sss.resume()
         self._pm.resume()
@@ -226,13 +220,13 @@ class HLSTabView:
         ttk.Label(
             f_main,
             text="Houses Loads Simulation",
-            font=("Calibri", 18),
+            font=("Arial", 18),
         ).pack(side="left")
 
         ttk.Label(
             f_main,
             textvariable=self._sv_system_load,
-            font=("Calibri", 12),
+            font=("Arial", 12),
         ).pack(side="right")
 
     def _build_body(self, f_parent: ttk.Frame):
@@ -247,7 +241,7 @@ class HLSTabView:
                 labelwidget=ttk.Label(
                     f_main,
                     text=f" House {idx + 1:02d} ",
-                    font=("Calibri", 12),
+                    font=("Arial", 12),
                 ),
             )
             f_house.grid(row=idx // 5, column=idx % 5, pady=(0, 20), padx=36)
@@ -255,7 +249,7 @@ class HLSTabView:
             ttk.Label(
                 f_house,
                 textvariable=self._sv_houses_loads[idx],
-                font=("Calibri", 12),
+                font=("Arial", 12),
             ).pack(fill='x', pady=(0, 10))
 
             ttk.Checkbutton(
@@ -375,13 +369,13 @@ class HouseControlsWindowView:
         ttk.Label(
             f_main,
             text=f"House {self.idx + 1:02d} Control Panel",
-            font=("Calibri", 24),
+            font=("Arial", 24),
         ).pack()
 
         ttk.Label(
             f_main,
             textvariable=self._sv_total_load,
-            font=("Calibri", 12),
+            font=("Arial", 12),
         ).pack(side="left")
 
         f_right = ttk.Frame(f_main)
@@ -416,7 +410,7 @@ class HouseControlsWindowView:
                     f_main,
                     text=f' {dn.replace(
                         '_', ' ').title()} Device Controls ',
-                    font=("Calibri", 12),
+                    font=("Arial", 12),
                 ),
             )
             f_device.pack(fill="x", pady=(0, 10))
@@ -433,7 +427,7 @@ class HouseControlsWindowView:
                     variable=self._iv_all_envelopes[dn][idx],
                     command=lambda idx=idx, device=device: device.toggle_envelope_state(
                         idx=idx,
-                        elapsed=self._hls.get_tls_elapsed()
+                        elapsed=self._hls.get_ts_elapsed()
                     ),
                     style="Primary.Squaretoggle.Toolbutton",
                 ).pack(side="left", padx=(0, 10))
@@ -441,15 +435,15 @@ class HouseControlsWindowView:
             ttk.Label(
                 f_control,
                 textvariable=self._sv_devices_loads[dn],
-                font=("Calibri", 12),
+                font=("Arial", 12),
             ).pack(side="right")
 
-            # ttk.Label(
-            #     f_device,
-            #     text=device.conf,
-            #     font=("Calibri", 8),
-            #     style="Secondary.TLabel",
-            # ).pack(fill="x", pady=(0, 10))
+            ttk.Label(
+                f_device,
+                text=device.conf,
+                font=("Arial", 8),
+                style="Secondary.TLabel",
+            ).pack(fill="x", pady=(0, 10))
 
             if device.conf.settings:
                 f_settings = ttk.Labelframe(
@@ -458,7 +452,7 @@ class HouseControlsWindowView:
                     labelwidget=ttk.Label(
                         f_device,
                         text=" Settings ",
-                        font=("Calibri", 12),
+                        font=("Arial", 12),
                     ),
                 )
                 f_settings.pack(fill="x", pady=(0, 10))
@@ -502,12 +496,12 @@ class HouseControlsWindowView:
                             ),
                     )
 
-                # ttk.Label(
-                #     f_settings,
-                #     textvariable=self._sv_devices_settings_multipliers[dn],
-                #     font=("Calibri", 8),
-                #     style="Secondary.TLabel",
-                # ).pack(fill="x", pady=(0, 10))
+                ttk.Label(
+                    f_settings,
+                    textvariable=self._sv_devices_settings_multipliers[dn],
+                    font=("Arial", 8),
+                    style="Secondary.TLabel",
+                ).pack(fill="x", pady=(0, 10))
 
     def _update_ui(self, dt):
         for device_name, load in self._sv_devices_loads.items():
@@ -555,7 +549,7 @@ class SSSTabView:
         ttk.Label(
             f_main,
             text="Solar System Simulation",
-            font=("Calibri", 18),
+            font=("Arial", 18),
         ).pack(side="left")
 
     def _build_body(self, f_parent: ttk.Frame):
@@ -567,7 +561,7 @@ class SSSTabView:
             f_main,
             height=23,
             width=80,
-            font=("Calibri", 12),
+            font=("Arial", 12),
         )
         self.output_text.pack(fill='both')
 
@@ -625,7 +619,7 @@ class PMTabView:
         ttk.Label(
             f_main,
             text="Power Management",
-            font=("Calibri", 18),
+            font=("Arial", 18),
         ).pack(side="left")
 
     def _build_body(self, f_parent: ttk.Frame):
@@ -637,7 +631,7 @@ class PMTabView:
             f_main,
             height=5,
             width=80,
-            font=("Calibri", 12),
+            font=("Arial", 12),
         )
         self.output_text.pack(fill='both')
 

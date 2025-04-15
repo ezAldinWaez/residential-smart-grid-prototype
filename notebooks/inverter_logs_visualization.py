@@ -1,6 +1,6 @@
 import marimo
 
-__generated_with = "0.11.26"
+__generated_with = "0.12.9"
 app = marimo.App(width="medium")
 
 
@@ -15,12 +15,12 @@ def _(mo, os):
     if not os.path.exists("data/"):
         os.mkdir("data/")
 
-    if not os.path.exists('data/inverter_logs/'):
+    if not os.path.exists("data/inverter_logs/"):
         os.mkdir("data/inverter_logs/")
 
     file_browser = mo.ui.file_browser(
         initial_path="data/inverter_logs/",
-        filetypes=['.xls'],
+        filetypes=[".xls"],
         multiple=False,
         restrict_navigation=True,
         label="## Inverter Logs XLS File Browser",
@@ -32,22 +32,34 @@ def _(mo, os):
 @app.cell
 def _(file_browser, pd):
     # data = pd.read_excel("ftp://admin@192.168.1.2:2121/watchpower/DataLog_929321041053717.xls", engine='xlrd')
-    data = pd.read_excel(file_browser.path(0), engine='xlrd') if len(file_browser.value) else None
+    data = (
+        pd.read_excel(file_browser.path(0), engine="xlrd")
+        if len(file_browser.value)
+        else None
+    )
 
     if data is not None:
         data["Time"] = pd.to_datetime(data["Time"])
 
-    field_options = [col for col in data.columns if col not in ["Time", "Device mode"]] if data is not None else None
+    field_options = (
+        [col for col in data.columns if col not in ["Time", "Device mode"]]
+        if data is not None
+        else None
+    )
     return data, field_options
 
 
 @app.cell
 def _(data, field_options, mo):
-    field_selector = mo.ui.dropdown(
-        options=field_options,
-        value=field_options[0],
-        label="Select field to visualize: ",
-    ) if data is not None else None
+    field_selector = (
+        mo.ui.dropdown(
+            options=field_options,
+            value=field_options[0],
+            label="Select field to visualize: ",
+        )
+        if data is not None
+        else None
+    )
     return (field_selector,)
 
 
@@ -72,7 +84,9 @@ def _(alt, data, field_selector, mo, pd):
                 y=alt.Y(f"{field_selector.value}:Q"),
                 tooltip=["Time", field_selector.value],
             )
-            .properties(width=850, height=400, title=f"{field_selector.value} over Time")
+            .properties(
+                width=850, height=400, title=f"{field_selector.value} over time"
+            )
         )
 
         _timeline_data = data[["Time", "Device mode"]].copy()
@@ -85,7 +99,7 @@ def _(alt, data, field_selector, mo, pd):
                 x=alt.X(
                     "Time:T",
                     scale=alt.Scale(domain=[_time_start, _time_end]),
-                    axis=alt.Axis(format="%H:%M"),
+                    axis=alt.Axis(format="%y-%m-%d"),
                 ),
                 color="Device mode:N",
                 tooltip=["Time", "Device mode"],
@@ -97,11 +111,9 @@ def _(alt, data, field_selector, mo, pd):
         chart = alt.vconcat(_main_chart, _mode_timeline).resolve_scale(x="shared")
 
 
-    mo.vstack([
-        mo.md("## Inverter Logs Chart"),
-        field_selector,
-        chart
-    ]) if data is not None else None
+    mo.vstack(
+        [mo.md("## Inverter Logs Chart"), field_selector, chart]
+    ) if data is not None else None
     return (chart,)
 
 

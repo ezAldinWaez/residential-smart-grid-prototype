@@ -6,82 +6,39 @@ app = marimo.App(width="medium")
 
 @app.cell(hide_code=True)
 def _(mo):
-    mo.md("""# NSRDB Visualization""")
+    mo.md("""# RSG Logs Visualization""")
     return
 
 
 @app.cell
 def _(mo, os):
-    if not os.path.exists("data/"):
-        os.mkdir("data/")
-
-    if not os.path.exists("data/nsrdb/"):
-        os.mkdir("data/nsrdb/")
+    if not os.path.exists("rsgp/logs/"):
+        os.mkdir("rsgp/logs/")
 
     file_browser = mo.ui.file_browser(
-        initial_path="data/nsrdb/",
+        initial_path="rsgp/logs/",
         filetypes=[".csv"],
         multiple=False,
         restrict_navigation=True,
-        label="## NSRDB CSV File Browser",
+        label="CSV log file browser",
     )
     file_browser
     return (file_browser,)
 
 
 @app.cell
-def _(file_browser, pd, timedelta, timezone):
-    meta = (
-        pd.read_csv(file_browser.path(0), nrows=1)
-        if len(file_browser.value)
-        else None
-    )
-
-    data = (
-        pd.read_csv(file_browser.path(0), header=2)
-        if len(file_browser.value)
-        else None
-    )
-
-    if meta is not None and data is not None:
-        tz_offset = int(meta["Local Time Zone"][0] - meta["Time Zone"][0])
-        tz = timezone(timedelta(hours=tz_offset))
-
-        data.insert(
-            loc=0,
-            column="Timestamp",
-            value=pd.to_datetime(
-                {
-                    "year": data["Year"],
-                    "month": data["Month"],
-                    "day": data["Day"],
-                    "hour": data["Hour"],
-                    "minute": data["Minute"],
-                },
-                utc=True,
-            ).dt.tz_convert(tz),
-        )
-        data.drop(columns=["Year", "Month", "Day", "Hour", "Minute"], inplace=True)
-        data.insert(
-            loc=1,
-            column="Time of Day",
-            value=[
-                "Day" if val < 90 else "Night"
-                for val in data["Solar Zenith Angle"]
-            ],
-        )
-    return data, meta, tz, tz_offset
+def _(file_browser, pd):
+    data = pd.read_csv(file_browser.path(0)) if len(file_browser.value) else None
+    if data is not None:
+        data["Timestamp"] = pd.to_datetime(data["Timestamp"])
+    return (data,)
 
 
 @app.cell
-def _(meta, mo):
-    mo.ui.table(meta, label=f"## NSRDB Metadata") if meta is not None else None
-    return
-
-
-@app.cell
-def _(data, mo):
-    mo.ui.table(data, label=f"## NSRDB Data") if data is not None else None
+def _(data, file_browser, mo):
+    mo.ui.table(
+        data, label=f"Table from {file_browser.name(0)}"
+    ) if data is not None else None
     return
 
 
@@ -151,7 +108,7 @@ def _(alt, data, field_selector, mo, pd):
                 ),
                 color=alt.Color(
                     "Time of Day:N",
-                    scale=alt.Scale(domain=["Night", "Day"]),
+                    scale=alt.Scale(domain=["Night", "Day", "Unknown"]),
                     legend=alt.Legend(title="Time of Day"),
                 ),
                 tooltip=["Timestamp:T", "Time of Day:N"],
@@ -172,12 +129,10 @@ def _(alt, data, field_selector, mo, pd):
 @app.cell(hide_code=True)
 def _():
     import os
-    import io
-    from datetime import datetime, timedelta, timezone
     import marimo as mo
     import pandas as pd
     import altair as alt
-    return alt, datetime, io, mo, os, pd, timedelta, timezone
+    return alt, mo, os, pd
 
 
 if __name__ == "__main__":

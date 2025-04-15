@@ -1,6 +1,6 @@
 import marimo
 
-__generated_with = "0.11.26"
+__generated_with = "0.12.9"
 app = marimo.App(width="medium")
 
 
@@ -12,18 +12,15 @@ def _(mo):
 
 @app.cell
 def _(mo, os):
-    if not os.path.exists("data/"):
-        os.mkdir("data/")
-
-    if not os.path.exists('data/graphs/'):
-        os.mkdir("data/graphs/")
+    if not os.path.exists("graphs/"):
+        os.mkdir("graphs/")
 
     file_browser = mo.ui.file_browser(
-        initial_path="data/graphs/",
-        filetypes=['.mermaid'],
+        initial_path="graphs/",
+        filetypes=[".mermaid"],
         multiple=False,
         restrict_navigation=True,
-        label="## Mermaid File Browser"
+        label="## Mermaid File Browser",
     )
     file_browser
     return (file_browser,)
@@ -33,12 +30,15 @@ def _(mo, os):
 def _(file_browser, mo):
     def _get_code_editor_value():
         if len(file_browser.value):
-            with open(file_browser.path(0), encoding="utf-8", mode='r') as _mermaid_file:
+            with open(
+                file_browser.path(0), encoding="utf-8", mode="r"
+            ) as _mermaid_file:
                 value = _mermaid_file.read()
                 _mermaid_file.close()
         else:
             value = ""
         return value
+
 
     graph_code_editor = mo.ui.code_editor(
         value=_get_code_editor_value(),
@@ -50,10 +50,9 @@ def _(file_browser, mo):
 
 @app.cell
 def _(graph_code_editor, mo):
-    graph_rendering = mo.md((
-        "### Graph Rendering\n"
-        f"{mo.mermaid(graph_code_editor.value)}\n"
-    ))
+    graph_rendering = mo.md(
+        (f"### Graph Rendering\n{mo.mermaid(graph_code_editor.value)}\n")
+    )
     return (graph_rendering,)
 
 
@@ -64,7 +63,9 @@ def _(file_browser, graph_code_editor, mo):
             return "There is no graph file selected!"
 
         try:
-            with open(file_browser.path(0), encoding="utf-8", mode='w') as _mermaid_file:
+            with open(
+                file_browser.path(0), encoding="utf-8", mode="w"
+            ) as _mermaid_file:
                 _mermaid_file.write(graph_code_editor.value)
                 _mermaid_file.close()
             return "Graph file have been saved successfully."
@@ -73,29 +74,32 @@ def _(file_browser, graph_code_editor, mo):
             print(e)
             return "Could not save the graph file!"
 
+
     update_button = mo.ui.button(
-        on_click=update_file,
-        value="",
-        label="Update Graph File"
+        on_click=update_file, value="", label="Update Graph File"
     )
     return update_button, update_file
 
 
 @app.cell
 def _(file_browser, graph_code_editor, graph_rendering, mo, update_button):
-    mo.vstack([
-        mo.md("## Mermaid Graph"),
-        mo.ui.tabs({
-            "Graph Rendering": graph_rendering,
-            "Graph Code Editor": graph_code_editor,
-        }),
-        mo.hstack(
-            [update_button, update_button.value],
-            justify="start",
-            align="center",
-            gap=1
-        )
-    ]) if len(file_browser.value) else None
+    mo.vstack(
+        [
+            mo.md("## Mermaid Graph"),
+            mo.ui.tabs(
+                {
+                    "Graph Rendering": graph_rendering,
+                    "Graph Code Editor": graph_code_editor,
+                }
+            ),
+            mo.hstack(
+                [update_button, update_button.value],
+                justify="start",
+                align="center",
+                gap=1,
+            ),
+        ]
+    ) if len(file_browser.value) else None
     return
 
 

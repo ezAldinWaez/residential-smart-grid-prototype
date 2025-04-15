@@ -1,3 +1,0 @@
-Chapter 06: Householder App APIs
-================================
-...

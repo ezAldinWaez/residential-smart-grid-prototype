@@ -1,19 +1,18 @@
-"""Battery state."""
-
-
-from ..config import settings
+"""Solar system simulated battery."""
 
 from .data import BattConf
+
+from ..config import settings
 
 
 class Battery:
     """Solar system simulated battery.
 
     Args:
-        init_charge_level (float): The initialized charge level for the battery.
+        init_charge_level (float): The initialized charge level for the battery. [%]
     """
     conf: BattConf  #: BattConf: The battery configuration.
-    charge_level: float  #: float: Current charge level of the battery in Wh.
+    charge_level: float  #: float: Current charge level of the battery. [Wh]
 
     def __init__(self, init_charge_level: float):
         assert 0 <= init_charge_level <= 1
@@ -71,5 +70,7 @@ class Battery:
         return actual_discharge_power
 
     def __str__(self):
-        return f"Battery State: {self.charge_level:.2f} / {self.conf.capacity:.2f} Wh " +\
+        return (
+            f"Battery State: {self.charge_level:.2f} / {self.conf.capacity:.2f} Wh "
             f"({self.charge_level / self.conf.capacity:.2%})"
+        )

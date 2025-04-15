@@ -1,13 +1,13 @@
 """Admin dashboard views."""
 
+from rsgp.time_sim import TimeSimulator
+from rsgp.houses_loads_sim import HousesLoadsSimulator
+from rsgp.solar_system_sim import SolarSystemSimulator, nsrdb_start_point
+from rsgp.power_mng import PowerManager
+
 import tkinter as tk
 import ttkbootstrap as ttk
 from ttkbootstrap.widgets import Notebook
-
-from rsg_prototype.time_sim import TimeSimulator
-from rsg_prototype.houses_loads_sim import HousesLoadsSimulator
-from rsg_prototype.solar_system_sim import SolarSystemSimulator, nsrdb_start_point
-from rsg_prototype.power_mng import PowerManager
 
 
 class MainWindowView:
@@ -138,7 +138,7 @@ class MainWindowView:
 
     def _update_ui(self, dt: int):
         self._sv_time.set(
-            f"Time: {self._time_sim.get_time(nsrdb_start_point).strftime('%H:%M:%S')}")
+            f"Time: {self._time_sim.get_timestamp(nsrdb_start_point).strftime('%H:%M:%S')}")
         self._sv_toggle_sim.set(
             "Pause" if self._houses_loads_sim.running or self._solar_system_sim.running or self._power_manager.running
             else "Resume")
@@ -166,12 +166,12 @@ class MainWindowView:
         self._power_manager.resume()
 
     def set_all_grids(self, state: bool):
-        """Turn all grid lines for all houses to ``state``."""
+        """Turn all grid lines for all houses to `state`."""
         for h in self._houses_loads_sim.houses:
             h.grid_line = state
 
     def set_all_loads(self, state: bool):
-        """Turn all grid lines for all houses to ``state``."""
+        """Turn all grid lines for all houses to `state`."""
         for h in self._houses_loads_sim.houses:
             h.load_line = state
 
@@ -429,7 +429,7 @@ class HouseControlsWindowView:
                     variable=self._iv_all_envelopes[dn][idx],
                     command=lambda idx=idx, device=device: device.toggle_envelope_state(
                         idx=idx,
-                        elapsed=self._houses_loads_sim.get_time_sim_elapsed()
+                        elapsed=self._houses_loads_sim._time_sim.get_elapsed()
                     ),
                     style="Primary.Squaretoggle.Toolbutton",
                 ).pack(side="left", padx=(0, 10))

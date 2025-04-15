@@ -1,3 +1,5 @@
-__pycache__
-data/
-docs/_build/
+__pycache__/
+logs/
+
+/data/
+/docs/_build/

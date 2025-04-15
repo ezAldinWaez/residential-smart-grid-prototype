@@ -1,14 +1,14 @@
 """Houses loads simulator."""
 
-from datetime import datetime
-import threading
-import time
-import os
+from .house import House
 
 from ..config import settings
+from ..utils import logger
 from ..time_sim import TimeSimulator
+from ..solar_system_sim import nsrdb_start_point
 
-from .house import House
+import threading
+import time
 
 
 class HousesLoadsSimulator:
@@ -17,7 +17,6 @@ class HousesLoadsSimulator:
     Args:
         time_sim (TimeSimulator): Time simulator instance.
     """
-
     num_houses: int   #: int: Number of houses in the system.
     #: list[HouseState]: House state for each house in the system.
     houses: list[House]
@@ -26,33 +25,30 @@ class HousesLoadsSimulator:
 
     def __init__(self, time_sim: TimeSimulator):
         self._time_sim = time_sim
-        self.num_houses = settings.NUM_HOUSES
+        self.num_houses = settings.HOUSES_NUM
         self.houses = [House(idx) for idx in range(self.num_houses)]
 
         if settings.CSV_LOGGING:
-            timestamp = datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
-            self._log_fp = f"data/logs/{timestamp}/log_houses_loads_sim_{timestamp}.csv"
-            if not os.path.exists(f"data/logs/{timestamp}"):
-                os.mkdir(f"data/logs/{timestamp}")
+            with open(settings.CSV_HLS_LOG_PATH, mode="w", encoding="utf-8") as f:
+                f.write((
+                    "Timestamp,"
+                    "Time of Day,"
+                    "System Load\n"
+                ))
+                f.close()
 
     def start(self, dt: int = None):
         """Start the simulation.
 
         Args:
             dt (int): Update time. [millisecond] 
-
         """
         self.running = True
 
         if not dt:
             dt = self._dt
-
-        self._dt = dt
-
-        if settings.CSV_LOGGING:
-            with open(self._log_fp, mode="w", encoding="utf-8") as f:
-                f.write("elapsed,system_load\n")
-                f.close()
+        else:
+            self._dt = dt
 
         threading.Thread(
             target=self.update,
@@ -60,22 +56,22 @@ class HousesLoadsSimulator:
             daemon=True
         ).start()
 
+        logger.info("Houses loads simulation started.")
+
     def pause(self):
         """Pause the simulation."""
         if self.running:
             self.running = False
+
+        logger.info("Houses loads simulation paused.")
 
     def resume(self):
         """Resume the simulation."""
         if not self.running:
             self.start()
 
-    def get_time_sim_elapsed(self):
-        """Get current elapsed time from time simulator."""
-        return self._time_sim.get_elapsed()
-
     def update(self, dt: int):
-        """Update the simulation every ``dt`` milliseconds.
+        """Update the simulation every `dt` milliseconds.
 
         Args:
             dt (int): The number of milliseconds to update.
@@ -83,6 +79,8 @@ class HousesLoadsSimulator:
         """
         while self.running:
             elapsed = self._time_sim.get_elapsed()
+            timestamp = self._time_sim.get_timestamp(
+                nsrdb_start_point, elapsed)
 
             sl = .0
             for house in self.houses:
@@ -103,8 +101,12 @@ class HousesLoadsSimulator:
             self.system_load = sl
 
             if settings.CSV_LOGGING:
-                with open(self._log_fp, mode="a", encoding="utf-8") as f:
-                    f.write(f"{elapsed:.2f},{self.system_load:.2f}\n")
+                with open(settings.CSV_HLS_LOG_PATH, mode="a", encoding="utf-8") as f:
+                    f.write((
+                        f"{timestamp},"
+                        f"Unknown,"
+                        f"{self.system_load:.2f}\n"
+                    ))
                     f.close()
 
             time.sleep(dt/1000)

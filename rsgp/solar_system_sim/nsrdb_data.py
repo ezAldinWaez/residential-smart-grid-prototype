@@ -1,12 +1,12 @@
-"""NSRDB data."""
+"""NSRDB data handlers."""
+
+from ..config import settings
 
 from datetime import datetime, timedelta, timezone
 from typing import Any
 
 from timezonefinder import TimezoneFinder
 import pandas as pd
-
-from ..config import settings
 
 
 def get_nsrdb_data() -> tuple[pd.DataFrame, pd.DataFrame]:
@@ -68,22 +68,6 @@ def get_nsrdb_location(nsrdb_meta: pd.DataFrame) -> dict[str, Any]:
     tz = timezone(tz_offset, name=tz_name)
 
     return {'latitude': lat, 'longitude': lng, 'timezone': tz}
-
-
-def find_nearest_timestamp_row(nsrdb_data: pd.DataFrame, target_timestamp: datetime) -> pd.Series:
-    """Find nsrdb_data row with timestamp closest to the target timestamp.
-
-    Args:
-        nsrdb_data (DataFrame): NSRDB data with'Timestamp' column.
-        target_timestamp (Timestamp): Timestamp to search for.
-
-    Returns:
-        Series: The row from NSRDB data with nearest timestamp.
-    """
-
-    time_diffs = (nsrdb_data['Timestamp'] - target_timestamp).abs()
-    nearest_idx = time_diffs.idxmin()
-    return nsrdb_data.loc[nearest_idx]
 
 
 nsrdb_meta, nsrdb_data = get_nsrdb_data()

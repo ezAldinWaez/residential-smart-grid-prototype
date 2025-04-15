@@ -1,8 +1,8 @@
 """Time simulator."""
 
-from datetime import datetime, timedelta
-
 from ..config import settings
+
+from datetime import datetime, timedelta
 
 
 class TimeSimulator:
@@ -29,7 +29,7 @@ class TimeSimulator:
         elapsed_sim_time = elapsed_time * settings.TIME_FACTOR
         return elapsed_sim_time
 
-    def get_time(self, start_point: datetime, elapsed: float = None) -> datetime:
+    def get_timestamp(self, start_point: datetime, elapsed: float = None) -> datetime:
         """Get current simulation datetime, assuming we spent `elapsed` seconds in the simulation
         starting at `start_point` datetime.
 

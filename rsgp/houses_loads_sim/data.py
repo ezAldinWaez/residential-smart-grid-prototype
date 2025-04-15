@@ -8,7 +8,6 @@ from typing import Literal
 @dataclass
 class SettingsConf:
     """Settings configuration."""
-
     #: dict[str, list[str]]: list of all options for each device setting.
     #:  (Setting Name -> List of Options)
     options: dict[str, list[str]]
@@ -26,7 +25,6 @@ class SettingsConf:
 @dataclass
 class ADSRConf:
     """ADSR (Attack, Decay, Sustain, and Release) model configuration."""
-
     a: float  #: float: Attack Time. [sec]
     d: float  #: float: Decay Time. [sec]
     s: float  #: float: Sustain Level Multiplier.
@@ -49,7 +47,6 @@ class ADSRConf:
 @dataclass
 class DeviceConf:
     """Device configuration."""
-
     #: float: Maximum wattage that device can reach (maximum amplitude).
     base_watt: float
     max_count: int  #: int: Device maximum count a regular house could have.
@@ -78,7 +75,6 @@ class RegularDevices(Enum):
     Note:
         All members are from type :class:`DeviceConf`.
     """
-
     TEST = DeviceConf(
         base_watt=1000,
         max_count=10,
@@ -139,7 +135,6 @@ class RegularDevices(Enum):
             },
         ),
     )
-
     DRYER = DeviceConf(
         base_watt=3000,
         max_count=1,
@@ -170,7 +165,6 @@ class RegularDevices(Enum):
             },
         ),
     )
-
     DISHWASHER = DeviceConf(
         base_watt=1800,
         max_count=1,
@@ -200,7 +194,6 @@ class RegularDevices(Enum):
             },
         ),
     )
-
     WATER_HEATER = DeviceConf(
         base_watt=4500,
         max_count=1,

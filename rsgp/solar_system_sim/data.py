@@ -28,7 +28,6 @@ class PVConf:
 @dataclass
 class BattConf:
     """Battery configuration data type."""
-
     capacity: float  #: float: Total capacity of the battery. [Wh]
     charge_efficiency: float  #: float: Efficiency of charging. [%]
     max_charge_power: float  #: float: Maximum charge rate. [W]

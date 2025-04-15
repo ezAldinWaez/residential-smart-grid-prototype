@@ -1,5 +1,5 @@
 from admin_dashboard import AdminDashboardApp
-from rsg_prototype import rsg_prototype_main
+from rsgp import rsgp_main
 
 
 def main():
@@ -9,7 +9,7 @@ def main():
         houses_loads_sim,
         solar_system_sim,
         power_mng
-    ) = rsg_prototype_main()
+    ) = rsgp_main()
 
     app = AdminDashboardApp(
         time_sim,

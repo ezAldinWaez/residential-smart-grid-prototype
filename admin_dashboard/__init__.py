@@ -1,20 +1,21 @@
 """Admin dashboard package.
 
 Todos:
-    - Make ``Admin Dashboard`` run on a separate proccess, or even a separate computer, and
-      comunicate to the ``RSG Prototype`` process; since it should be run on admin laptop while
-      ``RSG Protytype`` process should be run on Raspberry Pi.
+    - Make `Admin Dashboard` run on a separate proccess, or even a separate computer, and
+      comunicate to the `RSGP` process; since it should be run on admin laptop while
+      `RSGP` process should be run on Raspberry Pi.
 """
+
+
+from .views import MainWindowView
+
+from rsgp.time_sim import TimeSimulator
+from rsgp.houses_loads_sim import HousesLoadsSimulator
+from rsgp.solar_system_sim import SolarSystemSimulator
+from rsgp.power_mng import PowerManager
 
 import tkinter as tk
 import ttkbootstrap as ttk
-
-from rsg_prototype.time_sim import TimeSimulator
-from rsg_prototype.houses_loads_sim import HousesLoadsSimulator
-from rsg_prototype.solar_system_sim import SolarSystemSimulator
-from rsg_prototype.power_mng import PowerManager
-
-from .views import MainWindowView
 
 
 class AdminDashboardApp:

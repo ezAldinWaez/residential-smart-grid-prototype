@@ -9,9 +9,7 @@ class House:
 
     Args:
         idx (int): House index.
-
     """
-
     idx: int  #: int: House index.
     #: dict[str, DeviceState]: Device state for each device in the house.
     devices: dict[str, Device]

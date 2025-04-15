@@ -1,19 +1,18 @@
 """Device."""
 
+from .data import DeviceConf, RegularDevices
+
 import random
 
 import numpy as np
 
-from .data import DeviceConf, RegularDevices
-
 
 class Device:
-    """Device state that holds a device status for a house.
+    """Device.
 
     Args:
         device_name (str): Device name.
     """
-
     name: str  #: str: Device name.
     conf: DeviceConf  #: DeviceConf: Device static configuration.
     load: float = .0  #: float: Total load for all device instances.
@@ -44,7 +43,7 @@ class Device:
                 for setting, options in self.conf.settings.options.items()
             }
 
-    def toggle_envelope_state(self, idx: int, elapsed: float):
+    def toggle_envelope_state(self, idx: int, elapsed: float) -> None:
         """Toggle envelope state.
 
         Args:
@@ -54,7 +53,7 @@ class Device:
         prev_state = self.envelopes[idx][2]
         self.envelopes[idx] = (elapsed, self.load, not prev_state)
 
-    def update_setting(self, setting_name: str, new_option: str):
+    def update_setting(self, setting_name: str, new_option: str) -> None:
         """Update a specific setting for the device.
 
         Notice that it will applies for all instances.
@@ -62,7 +61,6 @@ class Device:
         Args:
             setting_name (str): Updated setting name.
             new_option (str): The new setting option.
-
         """
         if self.conf.settings and setting_name in self.conf.settings.options:
             self.current_settings[setting_name] = new_option
@@ -74,7 +72,7 @@ class Device:
             ]))
 
     def calc_load(self, elapsed: float) -> float:
-        """Calculate and update device load at this ``elapsed``.
+        """Calculate and update device load at this `elapsed`.
 
         To minimize calculations, it filters idle envelopes first.
 
@@ -83,7 +81,6 @@ class Device:
 
         Args:
             elapsed (float): The elapsed time. [sec]
-
         """
         envelopes = self.filter_idle_envelopes(elapsed)
 
@@ -97,7 +94,7 @@ class Device:
 
         return self.load
 
-    def filter_idle_envelopes(self, elapsed: float):
+    def filter_idle_envelopes(self, elapsed: float) -> list[tuple[float, float, bool]]:
         """Filter the active envelopes from IDLE envelopes.
 
         IDLE envelopes are envelopes which where unactive for
@@ -106,6 +103,8 @@ class Device:
         Args:
             elapsed (float): The elapsed time. [sec]
 
+        Returns:
+            list[tuple[float, float, bool]]: The filtered envelopes list.
         """
         def not_idle(envelope) -> bool:
             return self.calc_adsr_multiplier(elapsed, envelope) > 0
@@ -120,7 +119,6 @@ class Device:
 
         Returns:
             float: The wave power multiplier.
-
         """
         wp = self.conf.adsr.wp
         wa = self.conf.adsr.wa
@@ -138,7 +136,7 @@ class Device:
             case "random":
                 return 1 + (wa * random.uniform(-1, 1))
 
-    def calc_adsr_multiplier(self, elapsed: float, envelope: tuple[float, float, bool]):
+    def calc_adsr_multiplier(self, elapsed: float, envelope: tuple[float, float, bool]) -> float:
         """Calculate the power multiplier based on ADSR parameters for certain envelope.
 
         Args:
@@ -148,7 +146,6 @@ class Device:
 
         Returns:
             float: The wave power multiplier.
-
         """
         a = self.conf.adsr.a
         s = self.conf.adsr.s

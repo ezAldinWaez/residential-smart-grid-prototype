@@ -15,7 +15,7 @@ def main():
     solar_system_sim = SolarSystemSimulator(time_sim)
     solar_system_sim.start(dt=100)
 
-    power_mng = PowerManager(houses_loads_sim, solar_system_sim)
+    power_mng = PowerManager(time_sim, houses_loads_sim, solar_system_sim)
     power_mng.start(dt=100)
 
     return (

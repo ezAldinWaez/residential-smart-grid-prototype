@@ -1,22 +1,22 @@
 """Power manager."""
 
-from datetime import datetime
-import os
+from ..config import settings
+from ..utils import logger
+from ..time_sim import TimeSimulator
+from ..houses_loads_sim import HousesLoadsSimulator
+from ..solar_system_sim import SolarSystemSimulator, nsrdb_start_point
+
 import threading
 import time
-
-
-from ..config import settings
-from ..houses_loads_sim import HousesLoadsSimulator
-from ..solar_system_sim import SolarSystemSimulator
 
 
 class PowerManager:
     """Power manager.
 
     Args:
-        houses_loads_sim (HousesLoadsSimulator): Houses loads simulator instance.
-        solar_system_sim (SolarSystemSimulator): Solar system simulator instance.
+        time_sim (TimeSimulator): Time simulator.
+        houses_loads_sim (HousesLoadsSimulator): Houses loads simulator.
+        solar_system_sim (SolarSystemSimulator): Solar system simulator.
 
     Todo:
         * Deal with houses grid line.
@@ -27,34 +27,32 @@ class PowerManager:
     #: float: Battery exchange power. [W]
     batt_exchange_power: float = 0
 
-    def __init__(self, houses_loads_sim: HousesLoadsSimulator, solar_system_sim: SolarSystemSimulator):
+    def __init__(self, time_sim: TimeSimulator, houses_loads_sim: HousesLoadsSimulator, solar_system_sim: SolarSystemSimulator):
+        self._time_sim = time_sim
         self._houses_loads_sim = houses_loads_sim
         self._solar_system_sim = solar_system_sim
 
-        self._log = settings.CSV_LOGGING
         if settings.CSV_LOGGING:
-            timestamp = datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
-            self._log_fp = f"data/logs/{timestamp}/log_power_management_{timestamp}.csv"
-            if not os.path.exists(f"data/logs/{timestamp}"):
-                os.mkdir(f"data/logs/{timestamp}")
+            with open(settings.CSV_PM_LOG_PATH, mode="w", encoding="utf-8") as f:
+                f.write((
+                    "Timestamp,"
+                    "Time of Day,"
+                    "Battery Exchange Power\n"
+                ))
+                f.close()
 
     def start(self, dt: int = None):
         """Start the power management.
 
         Args:
-            dt (int): Update time. [millisecond] 
+            dt (int): Update time. [millisecond]
         """
         self.running = True
 
         if not dt:
             dt = self._dt
-
-        self._dt = dt
-
-        if settings.CSV_LOGGING:
-            with open(self._log_fp, mode="w", encoding="utf-8") as f:
-                f.write("elapsed,total_power,battery_charge,load_power\n")
-                f.close()
+        else:
+            self._dt = dt
 
         threading.Thread(
             target=self.update,
@@ -62,10 +60,14 @@ class PowerManager:
             daemon=True
         ).start()
 
+        logger.info("Power management started.")
+
     def pause(self):
         """Pause the power management."""
         if self.running:
             self.running = False
+
+        logger.info("Power management paused.")
 
     def resume(self):
         """Resume the power management."""
@@ -73,14 +75,12 @@ class PowerManager:
             self.start()
 
     def update(self, dt: int):
-        """Update the power management every ``dt`` milliseconds.
+        """Update the power management every `dt` milliseconds.
 
         Args:
             dt (int): The number of milliseconds to update.
         """
         while self.running:
-            elapsed = self._solar_system_sim._time_sim.get_elapsed()
-
             houses_load = self._houses_loads_sim.system_load
             solar_power = self._solar_system_sim.power
 
@@ -104,9 +104,12 @@ class PowerManager:
             # ...
 
             if settings.CSV_LOGGING:
-                with open(self._log_fp, mode="a", encoding="utf-8") as f:
-                    f.write(f"{elapsed:.2f}," +
-                            f"{self._solar_system_sim.battery.charge_level:.2f}\n")
+                with open(settings.CSV_PM_LOG_PATH, mode="a", encoding="utf-8") as f:
+                    f.write((
+                        f"{self._time_sim.get_timestamp(nsrdb_start_point)},"
+                        f"{self._solar_system_sim.nsrdb_data_row['Time of Day']},"
+                        f"{self.batt_exchange_power:.2f}\n"
+                    ))
                     f.close()
 
             time.sleep(dt/1000)

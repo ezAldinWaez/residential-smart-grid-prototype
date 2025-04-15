@@ -1,19 +1,18 @@
 """Solar system simulator."""
 
-from datetime import datetime
+from .nsrdb_data import nsrdb_data, nsrdb_location, nsrdb_start_point
+from .data import PVConf
+from .battery import Battery
+
+from ..config import settings
+from ..utils import logger, find_nearest_timestamp_row
+from ..time_sim import TimeSimulator
+
 import threading
 import time
-import os
 
 import pandas as pd
 import pvlib
-
-from ..config import settings
-from ..time_sim import TimeSimulator
-
-from .nsrdb_data import nsrdb_data, nsrdb_location, nsrdb_start_point, find_nearest_timestamp_row
-from .data import PVConf
-from .battery import Battery
 
 
 class SolarSystemSimulator:
@@ -47,10 +46,13 @@ class SolarSystemSimulator:
         self.battery = Battery(init_charge_level=.5)
 
         if settings.CSV_LOGGING:
-            timestamp = datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
-            self._log_fp = f"data/logs/{timestamp}/log_solar_system_sim_{timestamp}.csv"
-            if not os.path.exists(f"data/logs/{timestamp}"):
-                os.mkdir(f"data/logs/{timestamp}")
+            with open(settings.CSV_SSS_LOG_PATH, mode="w", encoding="utf-8") as f:
+                f.write((
+                    "Timestamp,"
+                    "Time of Day,"
+                    "Power\n"
+                ))
+                f.close()
 
     def start(self, dt: int = None):
         """Start the simulation.
@@ -65,21 +67,20 @@ class SolarSystemSimulator:
         else:
             self._dt = dt
 
-        if settings.CSV_LOGGING:
-            with open(self._log_fp, mode="w", encoding="utf-8") as f:
-                f.write("elapsed,total_power\n")
-                f.close()
-
         threading.Thread(
             target=self.update,
             kwargs={'dt': dt},
             daemon=True
         ).start()
 
+        logger.info("Solar system simulation started.")
+
     def pause(self):
         """Pause the simulation."""
         if self.running:
             self.running = False
+
+        logger.info("Solar system simulation paused.")
 
     def resume(self):
         """Resume the simulation."""
@@ -94,12 +95,14 @@ class SolarSystemSimulator:
         """
         while self.running:
             elapsed = self._time_sim.get_elapsed()
-            curr_datetime = self._time_sim.get_time(nsrdb_start_point, elapsed)
+
+            timestamp = self._time_sim.get_timestamp(
+                nsrdb_start_point, elapsed)
 
             self.nsrdb_data_row = find_nearest_timestamp_row(
-                nsrdb_data, curr_datetime)
+                nsrdb_data, timestamp)
 
-            solar_pos = self.pv_loc.get_solarposition(curr_datetime)
+            solar_pos = self.pv_loc.get_solarposition(timestamp)
 
             if self.nsrdb_data_row['Solar Zenith Angle'] > 90:
                 poa_irradiance = 0
@@ -118,8 +121,12 @@ class SolarSystemSimulator:
                 self.pv_conf.panel_efficiency * self.pv_conf.num_panels
 
             if settings.CSV_LOGGING:
-                with open(self._log_fp, mode="a", encoding="utf-8") as f:
-                    f.write(f"{elapsed:.2f},{self.power:.2f}\n")
+                with open(settings.CSV_SSS_LOG_PATH, mode="a", encoding="utf-8") as f:
+                    f.write((
+                        f"{timestamp},"
+                        f"{self.nsrdb_data_row['Time of Day']},"
+                        f"{self.power:.2f}\n"
+                    ))
                     f.close()
 
             time.sleep(dt/1000)

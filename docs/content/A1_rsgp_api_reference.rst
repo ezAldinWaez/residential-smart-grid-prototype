@@ -1,5 +1,5 @@
-Appendix 01: Residential Smart Grid Prototype (RSGP) API Reference
-==================================================================
+Appendix 01: RSGP API Reference
+===============================
 Time Simulation
 ---------------
 .. automodule:: rsgp.time_sim.simulator

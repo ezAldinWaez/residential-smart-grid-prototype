@@ -2,7 +2,7 @@ Chapter 04: Solar System Simulation
 ===================================
 The main work of calculating the solar irradiance is done by the Python library Pvlib. However, it requires the following parameters to calculate it: DNI, DHI, GHI, Zenith Angle, and Time Zone. 
 
-.. image:: ../_static/SolarSystemSimulationVisualization.png
+.. image:: ../_static/images/C4_solar_system_simulation_visualization.png
   :width: 800
   :align: center
   :alt: Solar System Simulation Visualization
@@ -13,14 +13,14 @@ DHI is the Diffused Horizontal Irradiance, which is the irradiance that reaches 
 
 GHI is the Global Horizontal Irradiance, which is calculated as DHI + DNI * Coz(Z), where Z is the Zenith Angle. 
 
-.. image:: ../_static/TypesOfIrradianceGraphic.png
+.. image:: ../_static/images/C4_types_of_irradiance.png
   :width: 600
   :align: center
   :alt: Types of Solar Irradiance
 
 The Zenith Angle is the angle between the zenith and the sun beams. 
 
-.. image:: ../_static/ZenithAngle.jpg
+.. image:: ../_static/images/C4_zenith_angle.jpg
   :width: 600
   :align: center
   :alt: Solar Zenith Angle

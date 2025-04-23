@@ -11,14 +11,14 @@ The main point of this simulation is to mimic the behavior of devices, otherwise
 
 ADSR stands for Attack, Decay, Sustain, Release. In programming, we have defined for each type of device its own envelope: how long its Attack, Decay, and Release times are, and at what percentage of the max does the sustain level sit; where the max is the level reached by Attack (so for example the Sustain can be 80% of the Attack level). So, it takes ``A`` seconds to get to the ``base_wattage`` of the device (which is the Attack level), then ``D`` seconds to reach the ``base_wattage * S``, and once the device is released it takes ``R`` seconds for its usage to reach ``0``. 
 
-.. image:: ../_static/ADSREnvelope.png
+.. image:: ../_static/images/C5_adsr_envelope.png
   :width: 500
   :align: center
   :alt: ADSR Envelope Demonstration
 
 Additionally, devices do not sustain at a static level; their behavior more closely resemebles a wave. So on top of that, the entire envelope of the device is multiplied by a wave to simulate that behavior. Alternatively, random noise can be added atop the envelope. 
 
-.. image:: ../_static/SystemLoadOverTimeForOneDevice.png
+.. image:: ../_static/images/C5_system_load_over_time_for_one_device.png
   :width: 1000
   :align: center
   :alt: System Load Over Time for One Device

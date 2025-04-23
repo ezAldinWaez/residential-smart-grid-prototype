@@ -1,5 +1,6 @@
 """Solar system simulator."""
 
+from datetime import datetime
 from .nsrdb_data import nsrdb_data, nsrdb_location, nsrdb_start_point
 from .data import PVConf
 from .battery import Battery
@@ -13,8 +14,10 @@ import time
 
 import pandas as pd
 import pvlib
+import Pyro5.api
 
 
+@Pyro5.api.expose
 class SolarSystemSimulator:
     """Solar system simulator.
 
@@ -26,8 +29,6 @@ class SolarSystemSimulator:
     battery: Battery  #: Battery: The simulated battery for the system.
     power: float = .0  #: float: The current total power given by the panels.
     nsrdb_data_row: pd.Series  #: Series: The current nsrdb data row.
-    #: bool: Whether the simulation is running or paused.
-    running: bool = False
 
     def __init__(self, time_sim: TimeSimulator):
         self._time_sim = time_sim
@@ -45,6 +46,7 @@ class SolarSystemSimulator:
         )
         self.battery = Battery(init_charge_level=.5)
 
+        self._running = False
         if settings.CSV_LOGGING:
             with open(settings.CSV_SSS_LOG_PATH, mode="w", encoding="utf-8") as f:
                 f.write((
@@ -60,7 +62,7 @@ class SolarSystemSimulator:
         Args:
             dt (int): Update time. [millisecond]
         """
-        self.running = True
+        self._running = True
 
         if not dt:
             dt = self._dt
@@ -77,14 +79,14 @@ class SolarSystemSimulator:
 
     def pause(self):
         """Pause the simulation."""
-        if self.running:
-            self.running = False
+        if self._running:
+            self._running = False
 
         logger.info("Solar system simulation paused.")
 
     def resume(self):
         """Resume the simulation."""
-        if not self.running:
+        if not self._running:
             self.start()
 
     def update(self, dt: int):
@@ -93,7 +95,7 @@ class SolarSystemSimulator:
         Args:
             dt (int): Update time. [millisecond]
         """
-        while self.running:
+        while self._running:
             elapsed = self._time_sim.get_elapsed()
 
             timestamp = self._time_sim.get_timestamp(
@@ -130,3 +132,23 @@ class SolarSystemSimulator:
                     f.close()
 
             time.sleep(dt/1000)
+
+    def summery(self) -> str:
+        """Generate a summery string for the current status of the simulation.
+
+        Returns:
+            str: Simulation summery string.
+        """
+        return str((
+            f"{self.pv_loc}\n"
+            f"{self.pv_conf}\n"
+            f"{self.battery.conf}\n"
+            f"{self.battery}\n"
+            f"Total Power: {self.power/1000:.3f} KW\n"
+        ))
+
+    def get_nsrdb_start_point(self) -> datetime:
+        return nsrdb_start_point
+
+    def is_running(self) -> bool:
+        return self._running

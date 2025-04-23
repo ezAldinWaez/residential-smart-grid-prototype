@@ -9,7 +9,10 @@ from ..solar_system_sim import SolarSystemSimulator, nsrdb_start_point
 import threading
 import time
 
+import Pyro5.api
 
+
+@Pyro5.api.expose
 class PowerManager:
     """Power manager.
 
@@ -22,8 +25,6 @@ class PowerManager:
         * Deal with houses grid line.
     """
 
-    #: bool: Whether the simulation is running or paused.
-    running: bool = False
     #: float: Battery exchange power. [W]
     batt_exchange_power: float = 0
 
@@ -32,6 +33,7 @@ class PowerManager:
         self._houses_loads_sim = houses_loads_sim
         self._solar_system_sim = solar_system_sim
 
+        self._running = False
         if settings.CSV_LOGGING:
             with open(settings.CSV_PM_LOG_PATH, mode="w", encoding="utf-8") as f:
                 f.write((
@@ -47,7 +49,7 @@ class PowerManager:
         Args:
             dt (int): Update time. [millisecond]
         """
-        self.running = True
+        self._running = True
 
         if not dt:
             dt = self._dt
@@ -64,14 +66,14 @@ class PowerManager:
 
     def pause(self):
         """Pause the power management."""
-        if self.running:
-            self.running = False
+        if self._running:
+            self._running = False
 
         logger.info("Power management paused.")
 
     def resume(self):
         """Resume the power management."""
-        if not self.running:
+        if not self._running:
             self.start()
 
     def update(self, dt: int):
@@ -80,7 +82,7 @@ class PowerManager:
         Args:
             dt (int): The number of milliseconds to update.
         """
-        while self.running:
+        while self._running:
             houses_load = self._houses_loads_sim.system_load
             solar_power = self._solar_system_sim.power
 
@@ -113,3 +115,16 @@ class PowerManager:
                     f.close()
 
             time.sleep(dt/1000)
+
+    def summery(self) -> str:
+        """Generate a summery string for the current status of the manager.
+
+        Returns:
+            str: Power manager summery string.
+        """
+        return str((
+            f"Battery exchange power: {self.batt_exchange_power:.2f} W\n"
+        ))
+
+    def is_running(self) -> bool:
+        return self._running

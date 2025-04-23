@@ -3,7 +3,10 @@
 from .data import RegularDevices
 from .device import Device
 
+import Pyro5
 
+
+@Pyro5.api.expose
 class House:
     """House state that holds a house status.
 
@@ -31,3 +34,27 @@ class House:
     def toggle_load_line(self):
         """Toggle the load line status."""
         self.load_line = not self.load_line
+
+    def get_idx(self) -> int:
+        return int(self.idx)
+
+    def get_devices(self) -> dict[str, Device]:
+        return self.devices
+
+    def get_device(self, dn: str) -> Device:
+        return self.devices[dn]
+
+    def get_load(self) -> float:
+        return float(self.load)
+
+    def get_grid_line(self) -> bool:
+        return bool(self.grid_line)
+
+    def get_load_line(self) -> bool:
+        return bool(self.load_line)
+
+    def set_grid_line(self, new_value: bool) -> None:
+        self.grid_line = new_value
+
+    def set_load_line(self, new_value: bool) -> None:
+        self.load_line = new_value

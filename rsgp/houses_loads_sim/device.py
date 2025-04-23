@@ -5,8 +5,10 @@ from .data import DeviceConf, RegularDevices
 import random
 
 import numpy as np
+import Pyro5
 
 
+@Pyro5.api.expose
 class Device:
     """Device.
 
@@ -148,3 +150,29 @@ class Device:
 
         # IDLE Stage
         return .0
+
+    name: str
+    conf: DeviceConf
+    load: float
+    envelopes: list[tuple[float, float, bool]]
+
+    def get_name(self) -> str:
+        return str(self.name)
+
+    def get_conf_summery(self) -> str:
+        return str(self.conf)
+
+    def get_conf_base_watt(self) -> float:
+        return float(self.conf.base_watt)
+
+    def get_conf_max_count(self) -> int:
+        return int(self.conf.max_count)
+
+    def get_load(self) -> float:
+        return float(self.load)
+
+    def get_envelopes(self) -> list[tuple[float, float, bool]]:
+        return [
+            (float(envelope[0]), float(envelope[1]), bool(envelope[2]))
+            for envelope in self.envelopes
+        ]

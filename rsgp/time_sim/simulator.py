@@ -4,13 +4,15 @@ from ..config import settings
 
 from datetime import datetime, timedelta
 
+import Pyro5.api
 
+
+@Pyro5.api.expose
 class TimeSimulator:
     """Time simulator."""
-    started: bool  #: bool: Whether the simulation is started or not.
 
     def __init__(self):
-        self.started = False
+        self._started = False
 
         self._start_at: float = None
         self._paused_at: float = None
@@ -22,35 +24,38 @@ class TimeSimulator:
         Returns:
             float: The simulation elapsed time. [sec]
         """
-        assert self.started
+        assert self._started
 
         end_at = self._paused_at if self._paused_at else datetime.now().timestamp()
         elapsed_time = end_at - self._start_at - self._pause_duration
         elapsed_sim_time = elapsed_time * settings.TIME_FACTOR
         return elapsed_sim_time
 
-    def get_timestamp(self, start_point: datetime, elapsed: float = None) -> datetime:
+    def get_timestamp(self, start_point: datetime | str, elapsed: float = None) -> datetime:
         """Get current simulation datetime, assuming we spent `elapsed` seconds in the simulation
         starting at `start_point` datetime.
 
         Args:
-            start_point (datetime): <...>
+            start_point (datetime | str): <...>
             elapsed (float, optional): The elapsed simulation time, if it was not given, the
                 current simulation elapsed time will be used.
 
         Returns:
             datetime: The current simulation datetime, in simulation timezone.
         """
-        assert self.started
+        assert self._started
 
         if not elapsed:
             elapsed = self.get_elapsed()
 
-        return start_point + timedelta(seconds=elapsed)
+        start_point_datetime = start_point if isinstance(
+            start_point, datetime) else datetime.fromisoformat(start_point)
+
+        return start_point_datetime + timedelta(seconds=elapsed)
 
     def start(self) -> None:
         """Start the simulation."""
-        self.started = True
+        self._started = True
         self._start_at = datetime.now().timestamp()
 
     def pause(self) -> None:

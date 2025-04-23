@@ -10,7 +10,10 @@ from ..solar_system_sim import nsrdb_start_point
 import threading
 import time
 
+import Pyro5.api
 
+
+@Pyro5.api.expose
 class HousesLoadsSimulator:
     """Houses loads simulator.
 
@@ -18,16 +21,16 @@ class HousesLoadsSimulator:
         time_sim (TimeSimulator): Time simulator instance.
     """
     num_houses: int   #: int: Number of houses in the system.
+    system_load: float = .0  #: float: The current system total load.
     #: list[HouseState]: House state for each house in the system.
     houses: list[House]
-    running: bool = False   #: Whether the simulation is running or paused.
-    system_load: float = .0  #: float: The current system total load.
 
     def __init__(self, time_sim: TimeSimulator):
         self._time_sim = time_sim
         self.num_houses = settings.HOUSES_NUM
         self.houses = [House(idx) for idx in range(self.num_houses)]
 
+        self._running = False
         if settings.CSV_LOGGING:
             with open(settings.CSV_HLS_LOG_PATH, mode="w", encoding="utf-8") as f:
                 f.write((
@@ -43,7 +46,7 @@ class HousesLoadsSimulator:
         Args:
             dt (int): Update time. [millisecond] 
         """
-        self.running = True
+        self._running = True
 
         if not dt:
             dt = self._dt
@@ -60,14 +63,14 @@ class HousesLoadsSimulator:
 
     def pause(self):
         """Pause the simulation."""
-        if self.running:
-            self.running = False
+        if self._running:
+            self._running = False
 
         logger.info("Houses loads simulation paused.")
 
     def resume(self):
         """Resume the simulation."""
-        if not self.running:
+        if not self._running:
             self.start()
 
     def update(self, dt: int):
@@ -77,7 +80,7 @@ class HousesLoadsSimulator:
             dt (int): The number of milliseconds to update.
 
         """
-        while self.running:
+        while self._running:
             elapsed = self._time_sim.get_elapsed()
             timestamp = self._time_sim.get_timestamp(
                 nsrdb_start_point, elapsed)
@@ -110,3 +113,21 @@ class HousesLoadsSimulator:
                     f.close()
 
             time.sleep(dt/1000)
+
+    def get_num_houses(self) -> int:
+        return self.num_houses
+
+    def get_system_load(self) -> float:
+        return float(self.system_load)
+
+    def is_running(self) -> bool:
+        return self._running
+
+    def get_houses(self) -> list[House]:
+        return self.houses
+
+    def get_house(self, idx: int) -> House:
+        return self.houses[idx]
+
+    def get_time_sim_elapsed(self) -> float:
+        return self._time_sim.get_elapsed()

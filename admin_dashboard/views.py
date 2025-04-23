@@ -1,10 +1,6 @@
 """Admin dashboard views."""
 
-from rsgp.time_sim import TimeSimulator
-from rsgp.houses_loads_sim import HousesLoadsSimulator
-from rsgp.solar_system_sim import SolarSystemSimulator, nsrdb_start_point
-from rsgp.power_mng import PowerManager
-
+from datetime import datetime
 import tkinter as tk
 import ttkbootstrap as ttk
 from ttkbootstrap.widgets import Notebook
@@ -22,8 +18,7 @@ class MainWindowView:
 
     """
 
-    def __init__(self, root: tk.Tk, time_sim: TimeSimulator, houses_loads_sim: HousesLoadsSimulator,
-                 solar_system_sim: SolarSystemSimulator, power_manager: PowerManager):
+    def __init__(self, root: tk.Tk, time_sim, houses_loads_sim, solar_system_sim, power_manager):
         self.root = root
         self.root.title("Residential Smart Grid Prototype")
         self.root.attributes('-fullscreen', True)
@@ -32,6 +27,7 @@ class MainWindowView:
         self._houses_loads_sim = houses_loads_sim
         self._solar_system_sim = solar_system_sim
         self._power_manager = power_manager
+        self._nsrdb_start_point = self._solar_system_sim.get_nsrdb_start_point()
 
         self._sv_time = ttk.StringVar(value="Time: ??:??:??")
         self._sv_toggle_sim = ttk.StringVar(value="Toggle")
@@ -138,15 +134,15 @@ class MainWindowView:
 
     def _update_ui(self, dt: int):
         self._sv_time.set(
-            f"Time: {self._time_sim.get_timestamp(nsrdb_start_point).strftime('%H:%M:%S')}")
+            f"Time: {datetime.fromisoformat(self._time_sim.get_timestamp(self._nsrdb_start_point)).strftime('%H:%M:%S')}")
         self._sv_toggle_sim.set(
-            "Pause" if self._houses_loads_sim.running or self._solar_system_sim.running or self._power_manager.running
+            "Pause" if self._houses_loads_sim.is_running() or self._solar_system_sim.is_running() or self._power_manager.is_running()
             else "Resume")
         self.root.after(dt, self._update_ui, dt)
 
     def toggle_sim(self):
         """Toggle simulation state."""
-        if self._houses_loads_sim.running or self._solar_system_sim.running or self._power_manager.running:
+        if self._houses_loads_sim.is_running() or self._solar_system_sim.is_running() or self._power_manager.is_running():
             self.pause_sim()
         else:
             self.resume_sim()
@@ -167,13 +163,13 @@ class MainWindowView:
 
     def set_all_grids(self, state: bool):
         """Turn all grid lines for all houses to `state`."""
-        for h in self._houses_loads_sim.houses:
-            h.grid_line = state
+        for h in self._houses_loads_sim.get_houses():
+            h.set_grid_line(state)
 
     def set_all_loads(self, state: bool):
         """Turn all grid lines for all houses to `state`."""
-        for h in self._houses_loads_sim.houses:
-            h.load_line = state
+        for h in self._houses_loads_sim.get_houses():
+            h.set_load_line(state)
 
 
 class HLSTabView:
@@ -186,7 +182,7 @@ class HLSTabView:
 
     """
 
-    def __init__(self, root: tk.Tk, f_parent: ttk.Frame, houses_loads_sim: HousesLoadsSimulator):
+    def __init__(self, root: tk.Tk, f_parent: ttk.Frame, houses_loads_sim):
         self.root = root
         self._houses_loads_sim = houses_loads_sim
 
@@ -195,15 +191,15 @@ class HLSTabView:
         self._sv_system_load = ttk.StringVar(value="System Load: ? kW")
         self._sv_houses_loads = [
             ttk.StringVar(value="Load: ? KW")
-            for _ in range(self._houses_loads_sim.num_houses)]
+            for _ in range(self._houses_loads_sim.get_num_houses())]
         self._iv_grid_lines = [
             ttk.IntVar(value=0)
-            for _ in range(self._houses_loads_sim.num_houses)]
+            for _ in range(self._houses_loads_sim.get_num_houses())]
         self._iv_load_lines = [
             ttk.IntVar(value=0)
-            for _ in range(self._houses_loads_sim.num_houses)]
+            for _ in range(self._houses_loads_sim.get_num_houses())]
 
-        if self._houses_loads_sim.num_houses > 10:
+        if self._houses_loads_sim.get_num_houses() > 10:
             f_main = build_scrollable_frame(f_parent, padding=10)
         else:
             f_main = ttk.Frame(f_parent, padding=10)
@@ -235,7 +231,7 @@ class HLSTabView:
         f_main.pack(fill="both", expand=True)
         f_main.columnconfigure(list(range(5)), weight=1)
 
-        for idx in range(self._houses_loads_sim.num_houses):
+        for idx in range(self._houses_loads_sim.get_num_houses()):
             f_house = ttk.Labelframe(
                 f_main,
                 padding=20,
@@ -257,7 +253,8 @@ class HLSTabView:
                 f_house,
                 text="Grid Line",
                 variable=self._iv_grid_lines[idx],
-                command=self._houses_loads_sim.houses[idx].toggle_grid_line,
+                command=lambda idx=idx: self._houses_loads_sim.get_house(
+                    idx).toggle_grid_line(),
                 style="Primary.Roundtoggle.Toolbutton",
             ).pack(fill='x')
 
@@ -265,7 +262,8 @@ class HLSTabView:
                 f_house,
                 text="Load Line",
                 variable=self._iv_load_lines[idx],
-                command=self._houses_loads_sim.houses[idx].toggle_load_line,
+                command=lambda idx=idx: self._houses_loads_sim.get_house(
+                    idx).toggle_load_line(),
                 style="Primary.Roundtoggle.Toolbutton",
             ).pack(fill='x', pady=(0, 10))
 
@@ -277,15 +275,18 @@ class HLSTabView:
             ).pack(fill='x')
 
     def _update_ui(self, dt: int):
-        self._sv_system_load.set(
-            f"System Load: {self._houses_loads_sim.system_load/1000:,.3f} kW")
-        for idx, load in enumerate(self._sv_houses_loads):
-            load.set(
-                f"Load: {self._houses_loads_sim.houses[idx].load/1000:07,.3f} KW")
-        for idx, line in enumerate(self._iv_grid_lines):
-            line.set(int(self._houses_loads_sim.houses[idx].grid_line))
-        for idx, line in enumerate(self._iv_load_lines):
-            line.set(int(self._houses_loads_sim.houses[idx].load_line))
+        if self._houses_loads_sim.is_running():
+            self._sv_system_load.set(
+                f"System Load: {self._houses_loads_sim.get_system_load()/1000:,.3f} kW")
+            for idx, load in enumerate(self._sv_houses_loads):
+                load.set(
+                    f"Load: {self._houses_loads_sim.get_house(idx).get_load()/1000:07,.3f} KW")
+            for idx, line in enumerate(self._iv_grid_lines):
+                line.set(
+                    int(self._houses_loads_sim.get_house(idx).get_grid_line()))
+            for idx, line in enumerate(self._iv_load_lines):
+                line.set(
+                    int(self._houses_loads_sim.get_house(idx).get_load_line()))
 
         self.root.after(dt, self._update_ui, dt)
 
@@ -326,15 +327,14 @@ class HouseControlsWindowView:
 
     """
 
-    def __init__(self, root: tk.Tk, idx: int, houses_loads_sim: HousesLoadsSimulator,
-                 variables: dict[str, ttk.Variable]):
+    def __init__(self, root: tk.Tk, idx: int, houses_loads_sim, variables: dict[str, ttk.Variable]):
         self.root = root
         self.root.title(f"House {idx + 1} Controls")
         self.root.geometry("600x600")
         self.root.resizable(False, False)
         self.idx = idx
         self._houses_loads_sim = houses_loads_sim
-        self._house = self._houses_loads_sim.houses[self.idx]
+        self._house = self._houses_loads_sim.get_house(self.idx)
 
         self._sv_total_load: ttk.StringVar = variables['total_load']
         self._iv_grid_line: ttk.IntVar = variables['grid_line']
@@ -343,14 +343,14 @@ class HouseControlsWindowView:
         self._iv_all_envelopes = {
             dn: [
                 ttk.IntVar(value=0)
-                for _ in range(self._house.devices[dn].conf.max_count)
+                for _ in range(self._house.get_device(dn).get_conf_max_count())
             ]
-            for dn in self._house.devices.keys()
+            for dn in self._house.get_devices().keys()
         }
 
         self._sv_devices_loads = {
             device_name: ttk.StringVar(value="Load: ? Watt")
-            for device_name in self._house.devices.keys()
+            for device_name in self._house.get_devices().keys()
         }
 
         f_main = build_scrollable_frame(self.root, width=580, padding=10)
@@ -383,7 +383,7 @@ class HouseControlsWindowView:
             f_right,
             text="Grid Line",
             variable=self._iv_grid_line,
-            command=self._house.toggle_grid_line,
+            command=lambda: self._house.toggle_grid_line(),
             style="Primary.Roundtoggle.Toolbutton",
         ).pack(side="left", padx=(0, 10))
 
@@ -391,7 +391,7 @@ class HouseControlsWindowView:
             f_right,
             text="Load Line",
             variable=self._iv_load_line,
-            command=self._house.toggle_load_line,
+            command=lambda: self._house.toggle_load_line(),
             style="Primary.Roundtoggle.Toolbutton",
         ).pack(side="left", padx=(0, 10))
 
@@ -399,7 +399,7 @@ class HouseControlsWindowView:
         f_main = ttk.Frame(f_parent)
         f_main.pack(fill="both")
 
-        for dn, device in self._house.devices.items():
+        for dn, device in self._house.get_devices().items():
 
             f_device = ttk.Labelframe(
                 f_main,
@@ -419,13 +419,13 @@ class HouseControlsWindowView:
             f_envelopes = ttk.Frame(f_control)
             f_envelopes.pack(side="left")
 
-            for idx in range(device.conf.max_count):
+            for idx in range(device.get_conf_max_count()):
                 ttk.Checkbutton(
                     f_envelopes,
                     variable=self._iv_all_envelopes[dn][idx],
                     command=lambda idx=idx, device=device: device.toggle_envelope_state(
                         idx=idx,
-                        elapsed=self._houses_loads_sim._time_sim.get_elapsed()
+                        elapsed=self._houses_loads_sim.get_time_sim_elapsed()
                     ),
                     style="Primary.Squaretoggle.Toolbutton",
                 ).pack(side="left", padx=(0, 10))
@@ -438,20 +438,21 @@ class HouseControlsWindowView:
 
             ttk.Label(
                 f_device,
-                text=device.conf,
+                text=device.get_conf_summery(),
                 font=("Arial", 8),
                 style="Secondary.TLabel",
             ).pack(fill="x", pady=(0, 10))
 
     def _update_ui(self, dt):
-        for device_name, load in self._sv_devices_loads.items():
-            load.set(
-                f"Load: {self._house.devices[device_name].load:,.1f} Watt")
+        if self._houses_loads_sim.is_running():
+            for device_name, load in self._sv_devices_loads.items():
+                load.set(
+                    f"Load: {self._house.get_device(device_name).get_load():,.1f} Watt")
 
-        for dn, _iv_envelopes in self._iv_all_envelopes.items():
-            for idx, _iv_envelope in enumerate(_iv_envelopes):
-                _iv_envelope.set(
-                    int(self._house.devices[dn].envelopes[idx][2]))
+            for dn, _iv_envelopes in self._iv_all_envelopes.items():
+                for idx, _iv_envelope in enumerate(_iv_envelopes):
+                    _iv_envelope.set(
+                        int(self._house.get_device(dn).get_envelopes()[idx][2]))
 
         self.root.after(dt, self._update_ui, dt)
 
@@ -466,7 +467,7 @@ class SSSTabView:
 
     """
 
-    def __init__(self, root: tk.Tk, f_parent: ttk.Frame, solar_system_sim: SolarSystemSimulator):
+    def __init__(self, root: tk.Tk, f_parent: ttk.Frame, solar_system_sim):
         self.root = root
         self.f_parent = f_parent
         self._solar_system_sim = solar_system_sim
@@ -503,17 +504,11 @@ class SSSTabView:
         self.output_text.pack(fill='both')
 
     def _update_ui(self, dt: int):
-        if self._solar_system_sim.running:
+        if self._solar_system_sim.is_running():
             # Display real-time wattage output
             self.output_text.delete(1.0, ttk.END)
             self.output_text.insert(
-                ttk.END, chars=(
-                    f"{self._solar_system_sim.pv_loc}\n"
-                    f"{self._solar_system_sim.pv_conf}\n"
-                    f"{self._solar_system_sim.battery.conf}\n"
-                    f"{self._solar_system_sim.battery}\n"
-                    f"Total Power: {self._solar_system_sim.power/1000:.3f} KW\n"
-                ))
+                ttk.END, chars=self._solar_system_sim.summery())
         self.root.after(dt, self._update_ui, dt)
 
 
@@ -527,7 +522,7 @@ class PMTabView:
 
     """
 
-    def __init__(self, root: tk.Tk, f_parent: ttk.Frame, power_manager: PowerManager):
+    def __init__(self, root: tk.Tk, f_parent: ttk.Frame, power_manager):
         self.root = root
         self.f_parent = f_parent
         self._power_manager = power_manager
@@ -564,12 +559,10 @@ class PMTabView:
         self.output_text.pack(fill='both')
 
     def _update_ui(self, dt: int):
-        if self._power_manager.running:
+        if self._power_manager.is_running():
             self.output_text.delete(1.0, ttk.END)
             self.output_text.insert(
-                ttk.END, chars=(
-                    f"Battery exchange power: {self._power_manager.batt_exchange_power:.2f} W\n"
-                ))
+                ttk.END, chars=self._power_manager.summery())
 
         self.root.after(dt, self._update_ui, dt)
 

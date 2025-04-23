@@ -18,7 +18,7 @@ class MainWindowView:
         time_sim (TimeSimulator): Time simulator instance.
         houses_loads_sim (HousesLoadsSimulator): Houses loads simulator instance.
         solar_system_sim (SolarSystemSimulator): Solar system simulator instance.
-        pm (PowerManager): Power manager instance.
+        power_manager (PowerManager): Power manager instance.
 
     """
 
@@ -123,13 +123,13 @@ class MainWindowView:
             solar_system_sim=self._solar_system_sim,
         )
 
-        f_pm = ttk.Frame(n_main)
-        n_main.add(f_pm, text='Power Management')
+        f_power_manager = ttk.Frame(n_main)
+        n_main.add(f_power_manager, text='Power Management')
 
         PMTabView(
             root=self.root,
-            f_parent=f_pm,
-            pm=self._power_manager,
+            f_parent=f_power_manager,
+            power_manager=self._power_manager,
         )
 
     def _on_closing(self):
@@ -352,10 +352,6 @@ class HouseControlsWindowView:
             device_name: ttk.StringVar(value="Load: ? Watt")
             for device_name in self._house.devices.keys()
         }
-        self._sv_devices_settings_multipliers = {
-            device_name: ttk.StringVar(value="Setting Multiplier: ?")
-            for device_name in self._house.devices.keys()
-        }
 
         f_main = build_scrollable_frame(self.root, width=580, padding=10)
 
@@ -447,71 +443,10 @@ class HouseControlsWindowView:
                 style="Secondary.TLabel",
             ).pack(fill="x", pady=(0, 10))
 
-            if device.conf.settings:
-                f_settings = ttk.Labelframe(
-                    f_device,
-                    padding=(10, 0),
-                    labelwidget=ttk.Label(
-                        f_device,
-                        text=" Settings ",
-                        font=("Arial", 12),
-                    ),
-                )
-                f_settings.pack(fill="x", pady=(0, 10))
-
-                for setting, all_options in device.conf.settings.options.items():
-                    f_setting = ttk.Frame(f_settings)
-                    f_setting.pack(fill="x", pady=(0, 10))
-
-                    ttk.Label(
-                        f_setting,
-                        text=setting.replace('_', ' ').title()
-                    ).pack(side="left")
-
-                    sv_combo = ttk.StringVar()
-                    combo = ttk.Combobox(
-                        f_setting,
-                        values=all_options,
-                        state="readonly",
-                        width=15,
-                        textvariable=sv_combo,
-                        style="Primary.TCombobox",
-                    )
-                    combo.set(device.current_settings[setting])
-                    combo.pack(side="right")
-
-                    sv_combo.trace_add(
-                        'write',
-                        lambda *_, wid=sv_combo, dn=dn, sn=setting:
-                            self._house.devices[dn].update_setting(
-                                setting_name=sn,
-                                new_option=wid.get(),
-                            ),
-                    )
-
-                    combo.bind(
-                        '<<ComboboxSelected>>',
-                        lambda *_, wid=sv_combo, dn=dn, sn=setting:
-                            self._house.devices[dn].update_setting(
-                                setting_name=sn,
-                                new_option=wid.get(),
-                            ),
-                    )
-
-                ttk.Label(
-                    f_settings,
-                    textvariable=self._sv_devices_settings_multipliers[dn],
-                    font=("Arial", 8),
-                    style="Secondary.TLabel",
-                ).pack(fill="x", pady=(0, 10))
-
     def _update_ui(self, dt):
         for device_name, load in self._sv_devices_loads.items():
             load.set(
                 f"Load: {self._house.devices[device_name].load:,.1f} Watt")
-        for device_name, multiplier in self._sv_devices_settings_multipliers.items():
-            multiplier.set(
-                f"Setting Multiplier: {self._house.devices[device_name].settings_multiplier:.1%}")
 
         for dn, _iv_envelopes in self._iv_all_envelopes.items():
             for idx, _iv_envelope in enumerate(_iv_envelopes):
@@ -588,14 +523,14 @@ class PMTabView:
     Args:
         root (tk.Tk): Tk window root.
         f_parent (ttk.Frame): Parent fram, master of the main frame.
-        pm (PowerManager): Power manager instance.
+        power_manager (PowerManager): Power manager instance.
 
     """
 
-    def __init__(self, root: tk.Tk, f_parent: ttk.Frame, pm: PowerManager):
+    def __init__(self, root: tk.Tk, f_parent: ttk.Frame, power_manager: PowerManager):
         self.root = root
         self.f_parent = f_parent
-        self._pm = pm
+        self._power_manager = power_manager
 
         f_main = ttk.Frame(self.f_parent, padding=10)
         f_main.pack(fill="both", expand=True)
@@ -629,11 +564,11 @@ class PMTabView:
         self.output_text.pack(fill='both')
 
     def _update_ui(self, dt: int):
-        if self._pm.running:
+        if self._power_manager.running:
             self.output_text.delete(1.0, ttk.END)
             self.output_text.insert(
                 ttk.END, chars=(
-                    f"Battery exchange power: {self._pm.batt_exchange_power:.2f} W\n"
+                    f"Battery exchange power: {self._power_manager.batt_exchange_power:.2f} W\n"
                 ))
 
         self.root.after(dt, self._update_ui, dt)

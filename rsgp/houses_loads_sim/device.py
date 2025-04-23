@@ -23,10 +23,6 @@ class Device:
     #:    2. float: total load at last state toggle for the envelope;
     #:    3. bool: envelope state toggle.
     envelopes: list[tuple[float, float, bool]]
-    #: dict[str, str]: Current settings for all instances.
-    current_settings: dict[str, str]
-    #: float: Setting multiplier for current settings.
-    settings_multiplier: float = 1
 
     def __init__(self, device_name: str):
         self.name = RegularDevices[device_name].name
@@ -36,12 +32,6 @@ class Device:
             (.0, .0, False)
             for _ in range(self.conf.max_count)
         ]
-
-        if self.conf.settings:
-            self.current_settings = {
-                setting: options[0]
-                for setting, options in self.conf.settings.options.items()
-            }
 
     def toggle_envelope_state(self, idx: int, elapsed: float) -> None:
         """Toggle envelope state.
@@ -53,31 +43,13 @@ class Device:
         prev_state = self.envelopes[idx][2]
         self.envelopes[idx] = (elapsed, self.load, not prev_state)
 
-    def update_setting(self, setting_name: str, new_option: str) -> None:
-        """Update a specific setting for the device.
-
-        Notice that it will applies for all instances.
-
-        Args:
-            setting_name (str): Updated setting name.
-            new_option (str): The new setting option.
-        """
-        if self.conf.settings and setting_name in self.conf.settings.options:
-            self.current_settings[setting_name] = new_option
-
-            self.settings_multiplier = np.prod(np.array([
-                self.conf.settings.power_factors[setting].get(option, 1)
-                for setting, option in self.current_settings.items()
-                if setting in self.conf.settings.power_factors
-            ]))
-
     def calc_load(self, elapsed: float) -> float:
         """Calculate and update device load at this `elapsed`.
 
         To minimize calculations, it filters idle envelopes first.
 
-        The load is calculated depending on it's base wattage, settings,
-        wave parameters, and adsr parameters.
+        The load is calculated depending on it's base wattage, wave
+        parameters, and adsr parameters.
 
         Args:
             elapsed (float): The elapsed time. [sec]
@@ -86,7 +58,6 @@ class Device:
 
         self.load = np.sum(
             self.conf.base_watt *
-            self.settings_multiplier *
             self.calc_wave_multiplier(elapsed) *
             np.array([self.calc_adsr_multiplier(elapsed, e)
                      for e in envelopes])

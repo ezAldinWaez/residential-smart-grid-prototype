@@ -3,10 +3,10 @@
 from .data import RegularDevices
 from .device import Device
 
-import Pyro5
+from Pyro5.api import expose as remote_interface_expose
 
 
-@Pyro5.api.expose
+@remote_interface_expose
 class House:
     """House state that holds a house status.
 

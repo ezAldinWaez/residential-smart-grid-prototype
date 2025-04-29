@@ -5,10 +5,10 @@ from .data import DeviceConf, RegularDevices
 import random
 
 import numpy as np
-import Pyro5
+from Pyro5.api import expose as remote_interface_expose
 
 
-@Pyro5.api.expose
+@remote_interface_expose
 class Device:
     """Device.
 

@@ -1,8 +1,7 @@
 """Solar system simulated battery."""
 
 from .data import BattConf
-
-from ..config import settings
+from ..config.settings import settings
 
 
 class Battery:

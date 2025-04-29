@@ -1,13 +1,12 @@
 """RSGP Logger."""
 
-from pathlib import Path
-import sys
-from typing import Optional
+from ..config.settings import settings
 
+from pathlib import Path
+from typing import Optional
+import sys
 import logging
 import logging.handlers
-
-from ..config import settings
 
 
 def configure_logger(
@@ -20,11 +19,11 @@ def configure_logger(
     """Configure and return a logger with console and optional file handlers.
 
     Args:
-        name: Logger name
-        log_level: Minimum logging level (DEBUG, INFO, WARNING, ERROR, CRITICAL)
-        log_file: Path to log file (optional)
-        max_bytes: Maximum log file size before rotation
-        backup_count: Number of backup logs to keep
+        name (str): Logger name.
+        log_level (str): Minimum logging level (DEBUG, INFO, WARNING, ERROR, CRITICAL).
+        log_file (str, optional): Path to log file.
+        max_bytes (int, optional): Maximum log file size before rotation, default is 5 MB.
+        backup_count (int, optional): Number of backup logs to keep, default is 3.
     """
     logger = logging.getLogger(name)
     logger.setLevel(log_level.upper())
@@ -52,9 +51,8 @@ def configure_logger(
         if issubclass(exc_type, KeyboardInterrupt):
             sys.__excepthook__(exc_type, exc_value, exc_traceback)
             return
-        logger.critical(
-            "Uncaught exception",
-            exc_info=(exc_type, exc_value, exc_traceback))
+        logger.critical("Uncaught exception", exc_info=(
+            exc_type, exc_value, exc_traceback))
 
     sys.excepthook = handle_exception
 
@@ -65,4 +63,6 @@ logger = configure_logger(
     name="RSGP",
     log_level=settings.LOG_LEVEL,
     log_file=settings.LOG_PATH,
+    max_bytes=settings.LOG_MAX_BYTES,
+    backup_count=settings.LOG_BACKUP_COUNT,
 )

@@ -16,14 +16,14 @@ class AdminDashboardApp:
         host = "localhost"
         port = "41991"
 
-        self.time_sim = Pyro5.api.Proxy(base.format(
-            name="time_sim", host=host, port=port))
-        self.houses_loads_sim = Pyro5.api.Proxy(base.format(
-            name="houses_loads_sim", host=host, port=port))
-        self.solar_system_sim = Pyro5.api.Proxy(base.format(
-            name="solar_system_sim", host=host, port=port))
-        self.power_manager = Pyro5.api.Proxy(base.format(
-            name="power_manager", host=host, port=port))
+        self.time_sim = Pyro5.api.Proxy(
+            base.format(name="time_sim", host=host, port=port))
+        self.houses_loads_sim = Pyro5.api.Proxy(
+            base.format(name="houses_loads_sim", host=host, port=port))
+        self.solar_system_sim = Pyro5.api.Proxy(
+            base.format(name="solar_system_sim", host=host, port=port))
+        self.power_manager = Pyro5.api.Proxy(
+            base.format(name="power_manager", host=host, port=port))
 
         self.root = tk.Tk()
 

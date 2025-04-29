@@ -20,6 +20,8 @@ class Settings:
     PV_EFFICIENCY = .15  # [%]
 
     LOG_LEVEL = "INFO"
+    LOG_MAX_BYTES = 5 * 1024 * 1024  # 5 MB
+    LOG_BACKUP_COUNT = 3
     CSV_LOGGING = True
 
     ROOT_DIR = Path(__file__).parent.parent
@@ -40,5 +42,7 @@ class Settings:
     CSV_SSS_LOG_PATH = CSV_Log_DIR / "solar_system_simulation.csv"
     CSV_PM_LOG_PATH = CSV_Log_DIR / "power_management.csv"
 
+    REMOTE_INTERFACE_HOST = 'localhost'
+    REMOTE_INTERFACE_PORT = 41991
 
 settings = Settings()

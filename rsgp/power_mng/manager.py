@@ -1,18 +1,19 @@
 """Power manager."""
 
-from ..config import settings
-from ..utils import logger
-from ..time_sim import TimeSimulator
-from ..houses_loads_sim import HousesLoadsSimulator
-from ..solar_system_sim import SolarSystemSimulator, nsrdb_start_point
+from ..config.settings import settings
+from ..utils.logger import logger
+from ..time_sim.simulator import TimeSimulator
+from ..houses_loads_sim.simulator import HousesLoadsSimulator
+from ..solar_system_sim.simulator import SolarSystemSimulator
+from ..solar_system_sim.nsrdb_data import nsrdb_start_point
 
 import threading
 import time
 
-import Pyro5.api
+from Pyro5.api import expose as remote_interface_expose
 
 
-@Pyro5.api.expose
+@remote_interface_expose
 class PowerManager:
     """Power manager.
 

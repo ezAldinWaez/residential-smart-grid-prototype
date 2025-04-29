@@ -1,23 +1,23 @@
 """Solar system simulator."""
 
-from datetime import datetime
 from .nsrdb_data import nsrdb_data, nsrdb_location, nsrdb_start_point
 from .data import PVConf
 from .battery import Battery
+from ..config.settings import settings
+from ..utils.logger import logger
+from ..utils.helpers import find_nearest_timestamp_row
+from ..time_sim.simulator import TimeSimulator
 
-from ..config import settings
-from ..utils import logger, find_nearest_timestamp_row
-from ..time_sim import TimeSimulator
-
+from datetime import datetime
 import threading
 import time
 
 import pandas as pd
 import pvlib
-import Pyro5.api
+from Pyro5.api import expose as remote_interface_expose
 
 
-@Pyro5.api.expose
+@remote_interface_expose
 class SolarSystemSimulator:
     """Solar system simulator.
 

@@ -1,6 +1,6 @@
 """NSRDB data handlers."""
 
-from ..config import settings
+from ..config.settings import settings
 
 from datetime import datetime, timedelta, timezone
 from typing import Any

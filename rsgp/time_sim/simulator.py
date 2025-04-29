@@ -1,19 +1,18 @@
 """Time simulator."""
 
-from ..config import settings
+from ..config.settings import settings
 
 from datetime import datetime, timedelta
 
-import Pyro5.api
+from Pyro5.api import expose as remote_interface_expose
 
 
-@Pyro5.api.expose
+@remote_interface_expose
 class TimeSimulator:
     """Time simulator."""
 
     def __init__(self):
         self._started = False
-
         self._start_at: float = None
         self._paused_at: float = None
         self._pause_duration = .0
@@ -36,7 +35,7 @@ class TimeSimulator:
         starting at `start_point` datetime.
 
         Args:
-            start_point (datetime | str): <...>
+            start_point (datetime | str): The start point datetime.
             elapsed (float, optional): The elapsed simulation time, if it was not given, the
                 current simulation elapsed time will be used.
 

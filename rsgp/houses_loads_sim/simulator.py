@@ -1,19 +1,18 @@
 """Houses loads simulator."""
 
 from .house import House
-
-from ..config import settings
-from ..utils import logger
-from ..time_sim import TimeSimulator
-from ..solar_system_sim import nsrdb_start_point
+from ..config.settings import settings
+from ..utils.logger import logger
+from ..time_sim.simulator import TimeSimulator
+from ..solar_system_sim.nsrdb_data import nsrdb_start_point
 
 import threading
 import time
 
-import Pyro5.api
+from Pyro5.api import expose as remote_interface_expose
 
 
-@Pyro5.api.expose
+@remote_interface_expose
 class HousesLoadsSimulator:
     """Houses loads simulator.
 

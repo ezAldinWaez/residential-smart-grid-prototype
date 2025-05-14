@@ -1,13 +1,20 @@
-Residential Smart Grid
-======================
-Table of Contents
------------------
+.. only:: html
+
+  Residential Smart Grid
+  ======================
+
 .. toctree::
-  :maxdepth: 2
+  :maxdepth: 1
 
   content/dedication
   content/abstract
   content/indecies
+
+.. toctree::
+  :maxdepth: 2
+  :caption: Chapters
+  :numbered:
+
   content/C1_introduction
   content/C2_project_preview
   content/C3_time_simulation
@@ -18,11 +25,16 @@ Table of Contents
   content/C8_householder_mobile_app
   content/C9_final_results
   content/C10_conclusions_and_suggestions
+
+.. toctree::
+  :maxdepth: 1
+
   content/references
   content/thanks_and_appreciation
-  content/A1_rsgp_api_reference
 
-Indices and Tables
-------------------
-- :ref:`genindex`
-- :ref:`modindex`
+.. toctree::
+  :maxdepth: 1
+  :caption: Appendices
+  :numbered:
+
+  content/A1_rsgp_api_reference

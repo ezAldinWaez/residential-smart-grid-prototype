@@ -1,5 +1,5 @@
-Chapter 05: Houses Loads Simulation
-===================================
+Houses Loads Simulation
+=======================
 
 This simulation provides a way to interact with the solar system. It allows the user to "turn on" simulated devices to see their impact on the system; how they draw from solar energy or from the battery depending on the situation. As its sole purpose is to test the solar system simulation and the power management, it only runs in conjunction with them and never standalone. 
 

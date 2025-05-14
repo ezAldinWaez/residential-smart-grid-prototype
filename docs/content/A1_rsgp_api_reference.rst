@@ -1,5 +1,9 @@
-Appendix 01: RSGP API Reference
-===============================
+.. raw:: latex
+
+  \appendix
+
+RSGP API Reference
+==================
 Time Simulation
 ---------------
 .. automodule:: rsgp.time_sim.simulator

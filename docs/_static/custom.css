@@ -1,11 +1,3 @@
 .wy-nav-content {
   max-width: none !important;
 }
-
-html[data-theme="dark"].writer-html5
-  .rst-content
-  dl:is(.class, .function)
-  > dt:first-child
-  :is(.descclassname, .descname) {
-  color: #f0f0f0 !important;
-}

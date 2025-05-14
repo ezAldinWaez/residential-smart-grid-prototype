@@ -1,3 +1,3 @@
-Chapter 07: Householder App API
-===============================
-...
+Householder App API
+===================
+some content for section: Householder App API

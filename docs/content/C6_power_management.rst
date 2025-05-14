@@ -1,3 +1,3 @@
-Chapter 06: Power Management
-============================
-...
+Power Management
+================
+some content for section: Power Management

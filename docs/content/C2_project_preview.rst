@@ -1,3 +1,3 @@
-Chapter 02: Project Preview
-===========================
-...
+Project Preview
+===============
+some content for section: Project Preview

@@ -1,3 +1,3 @@
-Chapter 08: Householder Mobile App
-==================================
-...
+Householder Mobile App
+======================
+some content for section: Householder Mobile App

@@ -159,7 +159,7 @@ class Device:
     def get_name(self) -> str:
         return str(self.name)
 
-    def get_conf_summery(self) -> str:
+    def get_conf_summary(self) -> str:
         return str(self.conf)
 
     def get_conf_base_watt(self) -> float:

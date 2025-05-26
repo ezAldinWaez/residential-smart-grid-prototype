@@ -438,7 +438,7 @@ class HouseControlsWindowView:
 
             ttk.Label(
                 f_device,
-                text=device.get_conf_summery(),
+                text=device.get_conf_summary(),
                 font=("Arial", 8),
                 style="Secondary.TLabel",
             ).pack(fill="x", pady=(0, 10))
@@ -508,7 +508,7 @@ class SSSTabView:
             # Display real-time wattage output
             self.output_text.delete(1.0, ttk.END)
             self.output_text.insert(
-                ttk.END, chars=self._solar_system_sim.summery())
+                ttk.END, chars=self._solar_system_sim.summary())
         self.root.after(dt, self._update_ui, dt)
 
 
@@ -562,7 +562,7 @@ class PMTabView:
         if self._power_manager.is_running():
             self.output_text.delete(1.0, ttk.END)
             self.output_text.insert(
-                ttk.END, chars=self._power_manager.summery())
+                ttk.END, chars=self._power_manager.summary())
 
         self.root.after(dt, self._update_ui, dt)
 

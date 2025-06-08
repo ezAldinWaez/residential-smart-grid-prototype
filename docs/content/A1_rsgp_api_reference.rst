@@ -4,6 +4,28 @@
 
 RSGP API Reference
 ==================
+RSGP Utilities
+--------------
+.. automodule:: rsgp.utils.decorators
+  :members:
+  :undoc-members:
+  :show-inheritance:
+
+.. automodule:: rsgp.utils.helpers
+  :members:
+  :undoc-members:
+  :show-inheritance:
+
+.. automodule:: rsgp.utils.logger
+  :members:
+  :undoc-members:
+  :show-inheritance:
+
+.. automodule:: rsgp.utils.remote_interface
+  :members:
+  :undoc-members:
+  :show-inheritance:
+
 Time Simulation
 ---------------
 .. automodule:: rsgp.time_sim.simulator

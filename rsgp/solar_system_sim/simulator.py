@@ -1,5 +1,11 @@
 """Solar system simulator."""
 
+from __future__ import annotations
+from typing import TYPE_CHECKING
+from datetime import datetime
+import threading
+import time
+
 from .nsrdb_data import nsrdb_data, nsrdb_location, nsrdb_start_point
 from .data import PVConf
 from .battery import Battery
@@ -7,16 +13,14 @@ from .inverter import Inverter
 from ..config.settings import settings
 from ..utils.logger import logger
 from ..utils.helpers import find_nearest_timestamp_row
-from ..time_sim.simulator import TimeSimulator
-from ..houses_loads_sim.simulator import HousesLoadsSimulator # Import HousesLoadsSimulator
+from ..utils.remote_interface import remote_interface_expose
+if TYPE_CHECKING:
+    from ..time_sim.simulator import TimeSimulator
+    from ..houses_loads_sim.simulator import HousesLoadsSimulator
 
-from datetime import datetime
-import threading
-import time
 
 import pandas as pd
 import pvlib
-from Pyro5.api import expose as remote_interface_expose
 
 
 @remote_interface_expose
@@ -88,7 +92,7 @@ class SolarSystemSimulator:
                 "Timestamp,"
                 "Time of Day,"
                 "PV DC Total Generated (W),"
-                "AC Load Demand (W)," # This will now be the live system load
+                "AC Load Demand (W),"
                 "Inverter Night Consumption AC (W),"
                 "AC to Load from PV (W),"
                 "AC to Load from Battery (W),"

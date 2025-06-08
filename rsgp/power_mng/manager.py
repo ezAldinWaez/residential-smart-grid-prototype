@@ -1,16 +1,18 @@
 """Power manager with abstract solution integration."""
 
-from ..config.settings import settings
-from ..utils.logger import logger
-from ..time_sim.simulator import TimeSimulator
-from ..houses_loads_sim.simulator import HousesLoadsSimulator
-from ..solar_system_sim.simulator import SolarSystemSimulator
-from ..solar_system_sim.nsrdb_data import nsrdb_start_point
-
+from __future__ import annotations
+from typing import TYPE_CHECKING
 import threading
 import time
 
-from Pyro5.api import expose as remote_interface_expose
+from ..config.settings import settings
+from ..utils.logger import logger
+from ..utils.remote_interface import remote_interface_expose
+from ..solar_system_sim.nsrdb_data import nsrdb_start_point
+if TYPE_CHECKING:
+    from ..time_sim.simulator import TimeSimulator
+    from ..houses_loads_sim.simulator import HousesLoadsSimulator
+    from ..solar_system_sim.simulator import SolarSystemSimulator
 
 
 @remote_interface_expose
@@ -88,7 +90,7 @@ class PowerManager:
             dt (int): The number of milliseconds to update.
         """
         while self._running:
-            
+
             # TODO: integragte solutions with inverter APIs.
 
             if settings.CSV_LOGGING:

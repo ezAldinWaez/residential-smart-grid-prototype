@@ -1,4 +1,4 @@
-"""RSGP main with Strategy Selector."""
+"""RSGP main."""
 
 from .time_sim.simulator import TimeSimulator
 from .houses_loads_sim.simulator import HousesLoadsSimulator

@@ -1,8 +1,14 @@
+"""RSGP remote interface."""
+
+from __future__ import annotations
+from typing import TYPE_CHECKING
+
 from ..config.settings import settings
-from ..solar_system_sim.simulator import SolarSystemSimulator
-from ..houses_loads_sim.simulator import HousesLoadsSimulator
-from ..power_mng.manager import PowerManager
-from ..time_sim.simulator import TimeSimulator
+if TYPE_CHECKING:
+    from ..solar_system_sim.simulator import SolarSystemSimulator
+    from ..houses_loads_sim.simulator import HousesLoadsSimulator
+    from ..power_mng.manager import PowerManager
+    from ..time_sim.simulator import TimeSimulator
 
 import Pyro5.api
 
@@ -13,7 +19,7 @@ def start_remote_interface(
     solar_system_sim: SolarSystemSimulator,
     power_manager: PowerManager,
 ) -> None:
-    """Start the remote object interface using `Pyro5`.
+    """Start the remote object interface via `Pyro5`.
 
     Args:
         time_sim (TimeSimulator): Time simulator.
@@ -35,3 +41,6 @@ def start_remote_interface(
     daemon.register(solar_system_sim, "solar_system_sim")
     daemon.register(power_manager, "power_manager")
     daemon.requestLoop()
+
+
+remote_interface_expose = Pyro5.api.expose

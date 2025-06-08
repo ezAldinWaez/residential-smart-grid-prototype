@@ -1,15 +1,17 @@
 """Houses loads simulator."""
 
-from .house import House
-from ..config.settings import settings
-from ..utils.logger import logger
-from ..time_sim.simulator import TimeSimulator
-from ..solar_system_sim.nsrdb_data import nsrdb_start_point
-
+from __future__ import annotations
+from typing import TYPE_CHECKING
 import threading
 import time
 
-from Pyro5.api import expose as remote_interface_expose
+from .house import House
+from ..config.settings import settings
+from ..utils.logger import logger
+from ..utils.remote_interface import remote_interface_expose
+from ..solar_system_sim.nsrdb_data import nsrdb_start_point
+if TYPE_CHECKING:
+    from ..time_sim.simulator import TimeSimulator
 
 
 @remote_interface_expose

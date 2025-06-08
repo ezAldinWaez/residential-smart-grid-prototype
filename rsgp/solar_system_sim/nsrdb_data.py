@@ -1,9 +1,9 @@
 """NSRDB data handlers."""
 
-from ..config.settings import settings
-
 from datetime import datetime, timedelta, timezone
 from typing import Any
+
+from ..config.settings import settings
 
 from timezonefinder import TimezoneFinder
 import pandas as pd

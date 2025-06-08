@@ -1,4 +1,4 @@
-"""Settings."""
+"""RSGP settings."""
 
 from datetime import datetime
 from pathlib import Path
@@ -6,9 +6,11 @@ from pathlib import Path
 
 class Settings:
     """Settings."""
+    # ==============================================================================
+    # SIMULATION GENERAL SETTINGS
+    # ==============================================================================
     TIME_FACTOR = 3600
-
-    HOUSES_NUM = 12 #
+    HOUSES_NUM = 12
 
     # ==============================================================================
     # BATTERY SETTINGS
@@ -21,7 +23,7 @@ class Settings:
     # ==============================================================================
     # PV SETTINGS
     # ==============================================================================
-    PV_NUM_PANELS = 80 #
+    PV_NUM_PANELS = 80
     PV_PANEL_AREA = 1.6  # [m^2]
     PV_EFFICIENCY = .15  # [%]
 
@@ -54,34 +56,34 @@ class Settings:
     # ==============================================================================
     # LOGGING SETTINGS
     # ==============================================================================
-    LOG_LEVEL = "INFO" #
+    LOG_LEVEL = "DEBUG" # It could be "DEBUG", "INFO", "WARNING", "ERROR", or "CRITICAL".
     LOG_MAX_BYTES = 5 * 1024 * 1024  # 5 MB
-    LOG_BACKUP_COUNT = 3 #
-    CSV_LOGGING = True #
+    LOG_BACKUP_COUNT = 3
+    CSV_LOGGING = True
 
-    ROOT_DIR = Path(__file__).parent.parent #
+    _ROOT_DIR = Path(__file__).parent.parent
 
-    DATA_DIR = ROOT_DIR / "data" #
-    DATA_DIR.mkdir(parents=True, exist_ok=True) #
+    _DATA_DIR = _ROOT_DIR / "data"
+    _DATA_DIR.mkdir(parents=True, exist_ok=True)
 
-    Log_DIR = ROOT_DIR / "logs" #
-    Log_DIR.mkdir(parents=True, exist_ok=True) #
+    _Log_DIR = _ROOT_DIR / "logs"
+    _Log_DIR.mkdir(parents=True, exist_ok=True)
 
-    CSV_Log_DIR = Log_DIR / f"rsgp_{datetime.now().strftime('%Y-%m-%d_%H-%M')}" #
-    CSV_Log_DIR.mkdir(parents=True, exist_ok=True) #
+    _CSV_Log_DIR = _Log_DIR / f"rsgp_{datetime.now().strftime('%Y-%m-%d_%H-%M')}"
+    _CSV_Log_DIR.mkdir(parents=True, exist_ok=True)
 
-    NSRDB_PATH = DATA_DIR / "nsrdb.csv" #
-    LOG_PATH = Log_DIR / "rsgp.log" #
+    NSRDB_PATH = _DATA_DIR / "nsrdb.csv"
+    LOG_PATH = _Log_DIR / "rsgp.log"
 
-    CSV_HLS_LOG_PATH = CSV_Log_DIR / "houses_loads_simulation.csv" #
-    CSV_SSS_LOG_PATH = CSV_Log_DIR / "solar_system_simulation.csv" # Used by simulator.py
-    CSV_PM_LOG_PATH = CSV_Log_DIR / "power_management.csv" #
+    CSV_HLS_LOG_PATH = _CSV_Log_DIR / "houses_loads_simulation.csv"
+    CSV_SSS_LOG_PATH = _CSV_Log_DIR / "solar_system_simulation.csv"
+    CSV_PM_LOG_PATH = _CSV_Log_DIR / "power_management.csv"
 
 
     # ==============================================================================
     # REMOTE INTERFACE SETTINGS
     # ==============================================================================
-    REMOTE_INTERFACE_HOST = 'localhost' #
-    REMOTE_INTERFACE_PORT = 41991 #
+    REMOTE_INTERFACE_HOST = 'localhost'
+    REMOTE_INTERFACE_PORT = 41991
 
-settings = Settings() #
+settings = Settings()

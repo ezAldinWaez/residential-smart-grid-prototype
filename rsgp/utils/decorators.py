@@ -1,9 +1,8 @@
-"""RSGP Decorators."""
-
-from ..utils.logger import logger
+"""RSGP decorators."""
 
 import time
 
+from ..utils.logger import logger
 
 def log_execution(func: callable) -> callable:
     """Decorator to log the execution of the function.

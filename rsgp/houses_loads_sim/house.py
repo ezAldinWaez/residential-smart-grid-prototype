@@ -2,8 +2,7 @@
 
 from .data import RegularDevices
 from .device import Device
-
-from Pyro5.api import expose as remote_interface_expose
+from ..utils.remote_interface import remote_interface_expose
 
 
 @remote_interface_expose
@@ -36,25 +35,68 @@ class House:
         self.load_line = not self.load_line
 
     def get_idx(self) -> int:
+        """Get the house index.
+
+        Returns:
+            int: the house index.
+        """
         return int(self.idx)
 
     def get_devices(self) -> dict[str, Device]:
+        """Get all devices as a dictionary.
+
+        Returns:
+            dict[str, Device]: all devices dictionary (device_name -> device instance).
+        """
         return self.devices
 
     def get_device(self, dn: str) -> Device:
+        """Get the device instance by it's name.
+
+        Args:
+            dn (str): device name.
+
+        Returns:
+            Device: the device instance.
+        """
         return self.devices[dn]
 
     def get_load(self) -> float:
+        """Get the house current load.
+
+        Returns:
+            float: the house load. [Watt]
+        """
         return float(self.load)
 
     def get_grid_line(self) -> bool:
+        """Get grid line value.
+
+        Returns:
+            bool: grid line value.
+        """
         return bool(self.grid_line)
 
     def get_load_line(self) -> bool:
+        """Get load line value.
+
+        Returns:
+            bool: load line value.
+        """
         return bool(self.load_line)
 
     def set_grid_line(self, new_value: bool) -> None:
+        """Set grid line.
+
+        Args:
+            new_value (bool): the grid line new value.
+        """
         self.grid_line = new_value
 
     def set_load_line(self, new_value: bool) -> None:
+        """Set load line.
+
+        Args:
+            new_value (bool): the load line new value.
+        """
         self.load_line = new_value

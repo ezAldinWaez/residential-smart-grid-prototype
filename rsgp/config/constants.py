@@ -1,4 +1,4 @@
-"""Constants."""
+"""RSGP constants."""
 
 DAYS_IN_YEAR = 365
 HOURS_IN_DAY = 24

@@ -1,11 +1,11 @@
 """Device."""
 
-from .data import DeviceConf, RegularDevices
-
 import random
 
+from .data import DeviceConf, RegularDevices
+from ..utils.remote_interface import remote_interface_expose
+
 import numpy as np
-from Pyro5.api import expose as remote_interface_expose
 
 
 @remote_interface_expose

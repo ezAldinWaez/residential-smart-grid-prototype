@@ -1,12 +1,12 @@
-"""RSGP Logger."""
-
-from ..config.settings import settings
+"""RSGP logger."""
 
 from pathlib import Path
 from typing import Optional
 import sys
 import logging
 import logging.handlers
+
+from ..config.settings import settings
 
 
 def configure_logger(
@@ -24,6 +24,9 @@ def configure_logger(
         log_file (str, optional): Path to log file.
         max_bytes (int, optional): Maximum log file size before rotation, default is 5 MB.
         backup_count (int, optional): Number of backup logs to keep, default is 3.
+
+    Returns:
+        Logger: Logger object.
     """
     logger = logging.getLogger(name)
     logger.setLevel(log_level.upper())

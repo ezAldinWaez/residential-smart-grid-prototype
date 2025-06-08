@@ -1,10 +1,9 @@
 """Time simulator."""
 
-from ..config.settings import settings
-
 from datetime import datetime, timedelta
 
-from Pyro5.api import expose as remote_interface_expose
+from ..config.settings import settings
+from ..utils.remote_interface import remote_interface_expose
 
 
 @remote_interface_expose

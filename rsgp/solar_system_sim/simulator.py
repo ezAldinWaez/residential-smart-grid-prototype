@@ -38,26 +38,26 @@ class SolarSystemSimulator:
     power: float = .0  # Current total DC power given by the panels.
     nsrdb_data_row: pd.Series
 
-    _houses_loads_sim: HousesLoadsSimulator # To store the instance
+    _houses_loads_sim: HousesLoadsSimulator  # To store the instance
 
     # Power flow tracking variables for the current step
     pv_dc_total_generated: float
-    ac_load_demand_total: float 
+    ac_load_demand_total: float
     inverter_night_consumption_ac: float
     ac_supplied_to_load_from_pv: float
     ac_supplied_to_load_from_battery: float
     ac_supplied_to_load_from_grid: float
-    dc_power_to_battery_from_pv: float 
-    dc_power_from_battery_for_load: float 
+    dc_power_to_battery_from_pv: float
+    dc_power_from_battery_for_load: float
     ac_power_exported_to_grid: float
     pv_dc_power_curtailed: float
     unmet_ac_load: float
     battery_soc_percentage: float
 
-
-    def __init__(self, time_sim: TimeSimulator, houses_loads_sim: HousesLoadsSimulator): # Added houses_loads_sim
+    # Added houses_loads_sim
+    def __init__(self, time_sim: TimeSimulator, houses_loads_sim: HousesLoadsSimulator):
         self._time_sim = time_sim
-        self._houses_loads_sim = houses_loads_sim # Store the instance
+        self._houses_loads_sim = houses_loads_sim  # Store the instance
 
         self.pv_conf = PVConf(
             num_panels=settings.PV_NUM_PANELS,
@@ -71,7 +71,7 @@ class SolarSystemSimulator:
             tz=nsrdb_location['timezone'],
         )
         self.battery = Battery(init_charge_level=.5)
-        
+
         self.inverter = Inverter(
             paco=settings.INVERTER_NOMINAL_AC_POWER,
             pdco=settings.INVERTER_PDCO,
@@ -79,14 +79,12 @@ class SolarSystemSimulator:
             eta_inv_ref=settings.INVERTER_ETA_INV_REF,
             pnt=settings.INVERTER_PNT,
             effective_nominal_efficiency=settings.EFFECTIVE_INVERTER_NOMINAL_EFFICIENCY,
-            initial_grid_status=True 
+            initial_grid_status=True
         )
-        
-        # self.current_ac_load_demand = settings.DEFAULT_AC_LOAD_DEMAND # REMOVED - Load will be live
 
         self._running = False
-        self._dt = 1000 
-        
+        self._dt = 1000
+
         if settings.CSV_LOGGING:
             csv_header = (
                 "Timestamp,"
@@ -112,12 +110,12 @@ class SolarSystemSimulator:
     def start(self, dt: int = None):
         self._running = True
         if not dt:
-            dt = self._dt 
+            dt = self._dt
         else:
             self._dt = dt
 
         threading.Thread(
-            target=self.update_loop, 
+            target=self.update_loop,
             daemon=True
         ).start()
         logger.info("Solar system simulation started.")
@@ -131,12 +129,11 @@ class SolarSystemSimulator:
         if not self._running:
             self.start(self._dt)
 
-    def update_loop(self): 
+    def update_loop(self):
         """Continuously updates the simulation state."""
         while self._running:
             self.perform_update_step()
             time.sleep(self._dt / 1000.0)
-
 
     def perform_update_step(self):
         """Performs a single update step of the simulation."""
@@ -157,7 +154,7 @@ class SolarSystemSimulator:
                 ghi=self.nsrdb_data_row['GHI'],
                 dhi=self.nsrdb_data_row['DHI'],
             )['poa_global'].iloc[0]
-        
+
         self.power = poa_irradiance * self.pv_conf.panel_area * \
             self.pv_conf.panel_efficiency * self.pv_conf.num_panels
         self.pv_dc_total_generated = self.power
@@ -175,51 +172,61 @@ class SolarSystemSimulator:
         self.unmet_ac_load = 0.0
 
         pv_dc_available = self.pv_dc_total_generated
-        
-        # Get live AC load from HousesLoadsSimulator
-        current_total_ac_load_from_houses = self._houses_loads_sim.get_system_load() #
-        
-        current_ac_load_to_meet = current_total_ac_load_from_houses # Base load for this step
 
-        if pv_dc_available <= 0: 
+        current_total_ac_load_from_houses = self._houses_loads_sim.get_system_load()
+
+        current_ac_load_to_meet = current_total_ac_load_from_houses  # Base load for this step
+
+        if pv_dc_available <= 0:
             self.inverter_night_consumption_ac = self.inverter.get_night_consumption()
-            current_ac_load_to_meet += self.inverter_night_consumption_ac # Add inverter standby load
-        
-        self.ac_load_demand_total = current_ac_load_to_meet # For logging
+
+            current_ac_load_to_meet += self.inverter_night_consumption_ac
+
+        self.ac_load_demand_total = current_ac_load_to_meet  # For logging
         ac_load_remaining = current_ac_load_to_meet
 
         if ac_load_remaining > 0 and pv_dc_available > 0:
-            dc_power_for_load_from_pv_ideal = self.inverter.get_dc_input_for_ac_output(ac_load_remaining)
-            dc_to_inverter_for_load = min(pv_dc_available, dc_power_for_load_from_pv_ideal)
-            
-            self.ac_supplied_to_load_from_pv = self.inverter.get_ac_output(dc_to_inverter_for_load) 
-            
-            dc_actually_used_for_load_pv = self.inverter.get_dc_input_for_ac_output(self.ac_supplied_to_load_from_pv)
-            pv_dc_available -= dc_actually_used_for_load_pv 
+            dc_power_for_load_from_pv_ideal = self.inverter.get_dc_input_for_ac_output(
+                ac_load_remaining)
+            dc_to_inverter_for_load = min(
+                pv_dc_available, dc_power_for_load_from_pv_ideal)
+
+            self.ac_supplied_to_load_from_pv = self.inverter.get_ac_output(
+                dc_to_inverter_for_load)
+
+            dc_actually_used_for_load_pv = self.inverter.get_dc_input_for_ac_output(
+                self.ac_supplied_to_load_from_pv)
+            pv_dc_available -= dc_actually_used_for_load_pv
             ac_load_remaining -= self.ac_supplied_to_load_from_pv
             ac_load_remaining = max(0, ac_load_remaining)
 
         if pv_dc_available > 0 and dt_seconds > 0:
-            self.dc_power_to_battery_from_pv = self.battery.charge(pv_dc_available, dt_seconds)
+            self.dc_power_to_battery_from_pv = self.battery.charge(
+                pv_dc_available, dt_seconds)
             pv_dc_available -= self.dc_power_to_battery_from_pv
             pv_dc_available = max(0, pv_dc_available)
 
         if ac_load_remaining > 0 and dt_seconds > 0:
-            dc_power_for_load_from_batt_ideal = self.inverter.get_dc_input_for_ac_output(ac_load_remaining)
-            self.dc_power_from_battery_for_load = self.battery.discharge(dc_power_for_load_from_batt_ideal, dt_seconds)
-            
+            dc_power_for_load_from_batt_ideal = self.inverter.get_dc_input_for_ac_output(
+                ac_load_remaining)
+            self.dc_power_from_battery_for_load = self.battery.discharge(
+                dc_power_for_load_from_batt_ideal, dt_seconds)
+
             if self.dc_power_from_battery_for_load > 0:
-                ac_from_battery = self.inverter.get_ac_output(self.dc_power_from_battery_for_load)
+                ac_from_battery = self.inverter.get_ac_output(
+                    self.dc_power_from_battery_for_load)
                 self.ac_supplied_to_load_from_battery = ac_from_battery
                 ac_load_remaining -= ac_from_battery
                 ac_load_remaining = max(0, ac_load_remaining)
 
         if pv_dc_available > 0:
             if self.inverter.is_grid_connected:
-                self.ac_power_exported_to_grid = self.inverter.get_ac_output(pv_dc_available)
-                dc_actually_converted_for_export = self.inverter.get_dc_input_for_ac_output(self.ac_power_exported_to_grid)
+                self.ac_power_exported_to_grid = self.inverter.get_ac_output(
+                    pv_dc_available)
+                dc_actually_converted_for_export = self.inverter.get_dc_input_for_ac_output(
+                    self.ac_power_exported_to_grid)
                 self.pv_dc_power_curtailed = pv_dc_available - dc_actually_converted_for_export
-            else: 
+            else:
                 self.pv_dc_power_curtailed = pv_dc_available
         self.pv_dc_power_curtailed = max(0, self.pv_dc_power_curtailed)
 
@@ -227,12 +234,13 @@ class SolarSystemSimulator:
             if self.inverter.is_grid_connected:
                 self.ac_supplied_to_load_from_grid = ac_load_remaining
                 ac_load_remaining = 0
-            else: 
+            else:
                 self.unmet_ac_load = ac_load_remaining
                 ac_load_remaining = 0
-        
+
         if self.battery.conf.capacity > 0:
-            self.battery_soc_percentage = (self.battery.charge_level / self.battery.conf.capacity) * 100
+            self.battery_soc_percentage = (
+                self.battery.charge_level / self.battery.conf.capacity) * 100
         else:
             self.battery_soc_percentage = 0.0
 
@@ -241,7 +249,7 @@ class SolarSystemSimulator:
                 f"{timestamp},"
                 f"{self.nsrdb_data_row['Time of Day']},"
                 f"{self.pv_dc_total_generated:.2f},"
-                f"{self.ac_load_demand_total:.2f}," # Now reflects live load + inverter night use
+                f"{self.ac_load_demand_total:.2f},"
                 f"{self.inverter_night_consumption_ac:.2f},"
                 f"{self.ac_supplied_to_load_from_pv:.2f},"
                 f"{self.ac_supplied_to_load_from_battery:.2f},"
@@ -258,22 +266,20 @@ class SolarSystemSimulator:
                 f.write(log_data)
                 f.close()
 
-    # Removed set_ac_load_demand method as load is now live
-
     def set_inverter_grid_status(self, is_connected: bool):
         self.inverter.set_grid_status(is_connected)
         status = "connected" if is_connected else "disconnected"
         logger.info(f"Inverter grid status set to: {status}")
-        
+
     def summary(self) -> str:
         # Fetch live load for summary display
-        live_load = self._houses_loads_sim.get_system_load() if self._houses_loads_sim else 0.0 #
-        
+        live_load = self._houses_loads_sim.get_system_load() if self._houses_loads_sim else 0.0
+
         return str((
             f"{self.pv_loc}\n"
-            f"{self.pv_conf}\n" #
-            f"{self.battery.conf}\n" #
-            f"{self.battery}\n" #
+            f"{self.pv_conf}\n"
+            f"{self.battery.conf}\n"
+            f"{self.battery}\n"
             f"{self.inverter}\n"
             f"Current Live AC Load from Houses: {live_load:.2f} W\n"
             f"Total AC Load Demand this Step (incl. inverter): {self.ac_load_demand_total:.2f} W\n"

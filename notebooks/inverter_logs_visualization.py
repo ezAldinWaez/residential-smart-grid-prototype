@@ -108,8 +108,8 @@ def _(alt, data, field_selector, mo, pd):
             .interactive()
         )
 
-        chart = alt.vconcat(_main_chart, _mode_timeline).resolve_scale(x="shared")
-
+        chart = alt.vconcat(
+            _main_chart, _mode_timeline).resolve_scale(x="shared")
 
     mo.vstack(
         [mo.md("## Inverter Logs Chart"), field_selector, chart]

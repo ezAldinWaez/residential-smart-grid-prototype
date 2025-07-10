@@ -1,9 +1,16 @@
 """Admin dashboard views."""
 
+from __future__ import annotations
+from typing import TYPE_CHECKING
 from datetime import datetime
 import tkinter as tk
 import ttkbootstrap as ttk
 from ttkbootstrap.widgets import Notebook
+if TYPE_CHECKING:
+    from ..rsgp.time_sim.simulator import TimeSimulator
+    from ..rsgp.houses_loads_sim.simulator import HousesLoadsSimulator
+    from ..rsgp.solar_system_sim.simulator import SolarSystemSimulator
+    from ..rsgp.power_mng.manager import PowerManager
 
 
 class MainWindowView:
@@ -18,7 +25,8 @@ class MainWindowView:
 
     """
 
-    def __init__(self, root: tk.Tk, time_sim, houses_loads_sim, solar_system_sim, power_manager):
+    def __init__(self, root: tk.Tk, time_sim: TimeSimulator, houses_loads_sim: HousesLoadsSimulator,
+                 solar_system_sim: SolarSystemSimulator, power_manager: PowerManager):
         self.root = root
         self.root.title("Residential Smart Grid Prototype")
         self.root.attributes('-fullscreen', True)
@@ -34,6 +42,8 @@ class MainWindowView:
 
         f_main = ttk.Frame(self.root, padding=10)
         f_main.pack(fill="both", expand=True)
+
+        self.resume_sim()
 
         self._build_header(f_main)
         self._build_body(f_main)
@@ -182,7 +192,7 @@ class HLSTabView:
 
     """
 
-    def __init__(self, root: tk.Tk, f_parent: ttk.Frame, houses_loads_sim):
+    def __init__(self, root: tk.Tk, f_parent: ttk.Frame, houses_loads_sim: HousesLoadsSimulator):
         self.root = root
         self._houses_loads_sim = houses_loads_sim
 
@@ -327,7 +337,8 @@ class HouseControlsWindowView:
 
     """
 
-    def __init__(self, root: tk.Tk, idx: int, houses_loads_sim, variables: dict[str, ttk.Variable]):
+    def __init__(self, root: tk.Tk, idx: int, houses_loads_sim: HousesLoadsSimulator,
+                 variables: dict[str, ttk.Variable]):
         self.root = root
         self.root.title(f"House {idx + 1} Controls")
         self.root.geometry("600x600")
@@ -467,7 +478,7 @@ class SSSTabView:
 
     """
 
-    def __init__(self, root: tk.Tk, f_parent: ttk.Frame, solar_system_sim):
+    def __init__(self, root: tk.Tk, f_parent: ttk.Frame, solar_system_sim: SolarSystemSimulator):
         self.root = root
         self.f_parent = f_parent
         self._solar_system_sim = solar_system_sim
@@ -522,7 +533,7 @@ class PMTabView:
 
     """
 
-    def __init__(self, root: tk.Tk, f_parent: ttk.Frame, power_manager):
+    def __init__(self, root: tk.Tk, f_parent: ttk.Frame, power_manager: PowerManager):
         self.root = root
         self.f_parent = f_parent
         self._power_manager = power_manager

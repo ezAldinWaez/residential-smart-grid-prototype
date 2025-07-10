@@ -28,7 +28,8 @@ def _(mo, os):
 
 @app.cell
 def _(file_browser, pd):
-    data = pd.read_csv(file_browser.path(0)) if len(file_browser.value) else None
+    data = pd.read_csv(file_browser.path(0)) if len(
+        file_browser.value) else None
     if data is not None:
         data["Timestamp"] = pd.to_datetime(data["Timestamp"])
     return (data,)
@@ -83,7 +84,8 @@ def _(alt, data, field_selector, mo, pd):
                     axis=alt.Axis(format="%H:%M"),
                     title="Time",
                 ),
-                y=alt.Y(f"{field_selector.value}:Q", title=field_selector.value),
+                y=alt.Y(f"{field_selector.value}:Q",
+                        title=field_selector.value),
                 tooltip=["Timestamp:T", field_selector.value],
             )
             .properties(
@@ -117,8 +119,8 @@ def _(alt, data, field_selector, mo, pd):
             .interactive()
         )
 
-        chart = alt.vconcat(_main_chart, _mode_timeline).resolve_scale(x="shared")
-
+        chart = alt.vconcat(
+            _main_chart, _mode_timeline).resolve_scale(x="shared")
 
     mo.vstack(
         [mo.md("## NSRDB Chart"), field_selector, chart]

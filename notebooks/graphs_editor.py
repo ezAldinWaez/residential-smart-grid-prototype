@@ -39,7 +39,6 @@ def _(file_browser, mo):
             value = ""
         return value
 
-
     graph_code_editor = mo.ui.code_editor(
         value=_get_code_editor_value(),
         label="### Graph Code Editor",
@@ -73,7 +72,6 @@ def _(file_browser, graph_code_editor, mo):
         except Exception as e:
             print(e)
             return "Could not save the graph file!"
-
 
     update_button = mo.ui.button(
         on_click=update_file, value="", label="Update Graph File"

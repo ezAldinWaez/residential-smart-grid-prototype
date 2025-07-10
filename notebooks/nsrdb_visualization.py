@@ -61,7 +61,8 @@ def _(file_browser, pd, timedelta, timezone):
                 utc=True,
             ).dt.tz_convert(tz),
         )
-        data.drop(columns=["Year", "Month", "Day", "Hour", "Minute"], inplace=True)
+        data.drop(columns=["Year", "Month", "Day",
+                  "Hour", "Minute"], inplace=True)
         data.insert(
             loc=1,
             column="Time of Day",
@@ -126,7 +127,8 @@ def _(alt, data, field_selector, mo, pd):
                     axis=alt.Axis(format="%H:%M"),
                     title="Time",
                 ),
-                y=alt.Y(f"{field_selector.value}:Q", title=field_selector.value),
+                y=alt.Y(f"{field_selector.value}:Q",
+                        title=field_selector.value),
                 tooltip=["Timestamp:T", field_selector.value],
             )
             .properties(
@@ -160,8 +162,8 @@ def _(alt, data, field_selector, mo, pd):
             .interactive()
         )
 
-        chart = alt.vconcat(_main_chart, _mode_timeline).resolve_scale(x="shared")
-
+        chart = alt.vconcat(
+            _main_chart, _mode_timeline).resolve_scale(x="shared")
 
     mo.vstack(
         [mo.md("## NSRDB Chart"), field_selector, chart]

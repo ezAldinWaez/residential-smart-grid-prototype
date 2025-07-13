@@ -18,9 +18,4 @@ solar_system_sim.start(dt=100)
 power_manager = PowerManager(time_sim, houses_loads_sim, solar_system_sim)
 power_manager.start(dt=100)
 
-start_remote_interface(
-    time_sim,
-    houses_loads_sim,
-    solar_system_sim,
-    power_manager,
-)
+start_remote_interface(time_sim, houses_loads_sim, solar_system_sim, power_manager)

@@ -1,4 +1,4 @@
-"""Houses loads simulation data."""
+"""Houses loads simulation data types."""
 
 from dataclasses import dataclass
 from enum import Enum
@@ -8,14 +8,14 @@ from typing import Literal
 @dataclass
 class ADSRConf:
     """ADSR (Attack, Decay, Sustain, and Release) model configuration."""
-    a: float  #: float: Attack Time. [sec]
-    d: float  #: float: Decay Time. [sec]
-    s: float  #: float: Sustain Level Multiplier.
-    r: float  #: float: Release Time. [sec]
-    #: Literal['none', 'sine', 'square', 'random']: Wave Type.
+    a: float  #: float: Attack time [sec]
+    d: float  #: float: Decay time [sec]
+    s: float  #: float: Sustain level multiplier
+    r: float  #: float: Release time [sec]
+    #: Literal['none', 'sine', 'square', 'random']: Wave type
     wt: Literal['none', 'sine', 'square', 'random'] = 'none'
-    wp: float = 1  #: float: Wave Period. [sec]
-    wa: float = 0  #: float: Wave Amplitude Multiplier.
+    wp: float = 1  #: float: Wave period [sec]
+    wa: float = 0  #: float: Wave amplitude multiplier
 
     def __post_init__(self):
         assert self.a > 0
@@ -30,14 +30,13 @@ class ADSRConf:
 @dataclass
 class DeviceConf:
     """Device configuration."""
-    #: float: Maximum wattage that device can reach (maximum amplitude).
-    base_watt: float
-    max_count: int  #: int: Device maximum count a regular house could have.
-    adsr: ADSRConf  #: ADSRConf: Device ADSR configuration.
+    #: float: Maximum wattage that device can reach (maximum amplitude)
+    base_watt: float  #: float: Device base wattage [Watt]
+    max_count: int  #: int: Device maximum count a regular house could have
+    adsr: ADSRConf  #: ADSRConf: Device ADSR configuration
 
     def __str__(self):
         return (
-            "\n"
             "Device Configruation:\n"
             f"- base watt: {self.base_watt}\n"
             f"- max count: {self.max_count}\n"

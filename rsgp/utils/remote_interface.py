@@ -32,14 +32,20 @@ def start_remote_interface(
         port=settings.REMOTE_INTERFACE_PORT,
     )
     daemon.register(time_sim, "time_sim")
+
     daemon.register(houses_loads_sim, "houses_loads_sim")
     for house in houses_loads_sim.houses:
         daemon.register(house, f"houses_loads_sim.house_{house.idx}")
         for device in house.devices.values():
-            daemon.register(
-                device, f"houses_loads_sim.house_{house.idx}.device_{device.name}")
+            daemon.register(device, f"houses_loads_sim.house_{house.idx}.device_{device.name}")
+
     daemon.register(solar_system_sim, "solar_system_sim")
+    daemon.register(solar_system_sim.inverter, "solar_system_sim.inverter")
+    daemon.register(solar_system_sim.battery, "solar_system_sim.battery")
+    daemon.register(solar_system_sim.panels, "solar_system_sim.panels")
+
     daemon.register(power_manager, "power_manager")
+
     daemon.requestLoop()
 
 

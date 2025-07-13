@@ -1,4 +1,4 @@
-"""Power manager with abstract solution integration."""
+"""Power manager."""
 
 from __future__ import annotations
 from typing import TYPE_CHECKING
@@ -6,9 +6,9 @@ import threading
 import time
 
 from ..config.settings import settings
-from ..utils.logger import logger
+from ..utils.decorators import log_start_end_error
+from ..utils.helpers import log_record_into_csv
 from ..utils.remote_interface import remote_interface_expose
-from ..solar_system_sim.nsrdb_data import nsrdb_start_point
 if TYPE_CHECKING:
     from ..time_sim.simulator import TimeSimulator
     from ..houses_loads_sim.simulator import HousesLoadsSimulator
@@ -17,100 +17,52 @@ if TYPE_CHECKING:
 
 @remote_interface_expose
 class PowerManager:
-    """Power manager integrated with abstract power management solutions.
-
-    Args:
-        time_sim (TimeSimulator): Time simulator.
-        houses_loads_sim (HousesLoadsSimulator): Houses loads simulator.
-        solar_system_sim (SolarSystemSimulator): Solar system simulator.
-        solution (PowerManagementSolution): Power management solution.
-
-    Todo:
-        * Deal with houses grid line.
-    """
-
-    #: float: Battery exchange power. [W]
-    batt_exchange_power: float = 0
-
-    def __init__(
-            self,
-            time_sim: TimeSimulator,
-            houses_loads_sim: HousesLoadsSimulator,
-            solar_system_sim: SolarSystemSimulator):
+    def __init__(self, time_sim: TimeSimulator, houses_loads_sim: HousesLoadsSimulator, solar_system_sim: SolarSystemSimulator):
         self._time_sim = time_sim
         self._houses_loads_sim = houses_loads_sim
         self._solar_system_sim = solar_system_sim
-
         self._running = False
-        if settings.CSV_LOGGING:
-            with open(settings.CSV_PM_LOG_PATH, mode="w", encoding="utf-8") as f:
-                f.write((
-                    "Timestamp,"
-                    "Time of Day,"
-                    "Battery Exchange Power\n"
-                ))
-
-    def start(self, dt: int = None):
-        """Start the power management.
-
-        Args:
-            dt (int): Update time. [millisecond]
-        """
-        self._running = True
-
-        if not dt:
-            dt = self._dt
-        else:
-            self._dt = dt
-
-        threading.Thread(
-            target=self.update,
-            kwargs={'dt': dt},
-            daemon=True
-        ).start()
-
-        logger.info("Power management started.")
-
-    def pause(self):
-        """Pause the power management."""
-        if self._running:
-            self._running = False
-
-        logger.info("Power management paused.")
-
-    def resume(self):
-        """Resume the power management."""
-        if not self._running:
-            self.start()
-
-    def update(self, dt: int):
-        """Update the power management every `dt` milliseconds.
-
-        Args:
-            dt (int): The number of milliseconds to update.
-        """
-        while self._running:
-
-            # TODO: integragte solutions with inverter APIs.
-
-            if settings.CSV_LOGGING:
-                with open(settings.CSV_PM_LOG_PATH, mode="a", encoding="utf-8") as f:
-                    f.write((
-                        f"{self._time_sim.get_timestamp(nsrdb_start_point)},"
-                        f"{self._solar_system_sim.nsrdb_data_row['Time of Day']},"
-                    ))
-
-            time.sleep(dt/1000)
-
-    def summary(self) -> str:
-        """Generate a summary string for the current status of the manager.
-
-        Returns:
-            str: Power manager summary string.
-        """
-        return str((
-            f"Battery exchange power: {self.batt_exchange_power:.2f} W\n"
-        ))
 
     def is_running(self) -> bool:
         return self._running
+
+    def start(self, dt: int = None) -> None:
+        self._running = True
+        self._dt = dt
+
+        threading.Thread(
+            target=self._update_loop,
+            daemon=True
+        ).start()
+
+    def pause(self) -> None:
+        if self._running:
+            self._running = False
+
+    def resume(self) -> None:
+        if not self._running:
+            self.start(self._dt)
+
+    @log_start_end_error("Starting power manager.", "Stoping power manager.")
+    def _update_loop(self) -> None:
+        while self._running:
+            self._update_step()
+            time.sleep(self._dt/1000)
+
+    def _update_step(self) -> None:
+        elapsed = self._time_sim.get_elapsed()
+        timestamp = self._time_sim.get_timestamp(elapsed)
+
+        # TODO: Integragte solutions with inverter APIs.
+        # TODO: Deal with houses grid line.
+
+        if settings.CSV_LOGGING:
+            log_record_into_csv(
+                settings.CSV_PM_LOG_PATH,
+                timestamp=f"{timestamp}",
+            )
+
+    def summary(self) -> str:
+        return str((
+            f"Power Manager Status: ..."
+        ))

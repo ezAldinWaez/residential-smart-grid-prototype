@@ -1,5 +1,7 @@
 """NSRDB data handlers."""
 
+# TODO: Use `pvlib.iotools` to do that.
+
 from datetime import datetime, timedelta, timezone
 from typing import Any
 
@@ -13,7 +15,7 @@ def get_nsrdb_data() -> tuple[pd.DataFrame, pd.DataFrame]:
     """Read NSRDB dataset, manipulate it, and returen it as DataFrames.
 
     Returns:
-        tuple[pd.DataFrame, pd.DataFrame]: NSRDB metadata, and NSRDB data.
+        tuple[pd.DataFrame, pd.DataFrame]: NSRDB metadata, and NSRDB data
     """
     nsrdb_meta = pd.read_csv(settings.NSRDB_PATH, nrows=1)
     nsrdb_data = pd.read_csv(settings.NSRDB_PATH, header=2)
@@ -54,16 +56,14 @@ def get_nsrdb_location(nsrdb_meta: pd.DataFrame) -> dict[str, Any]:
     """Get location basic info based on NSRDB dataset metadata.
 
     Args:
-        nsrdb_meta (pd.DataFrame): NSRDB dataset metadata.
+        nsrdb_meta (pd.DataFrame): NSRDB dataset metadata
 
     Returns:
-        dict[str, Any]: Location basic info: 'latitude', 'longitude', and 'timezone'.
+        dict[str, Any]: Location basic info: 'latitude', 'longitude', and 'timezone'
     """
     lat = float(nsrdb_meta["Latitude"][0])
     lng = float(nsrdb_meta["Longitude"][0])
-    tz_offset = timedelta(hours=int(
-        nsrdb_meta["Local Time Zone"][0] - nsrdb_meta["Time Zone"][0]
-    ))
+    tz_offset = timedelta(hours=int(nsrdb_meta["Local Time Zone"][0] - nsrdb_meta["Time Zone"][0]))
     tz_name = TimezoneFinder().timezone_at(lat=lat, lng=lng)
     tz = timezone(tz_offset, name=tz_name)
 

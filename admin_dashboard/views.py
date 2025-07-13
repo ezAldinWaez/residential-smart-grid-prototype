@@ -35,7 +35,6 @@ class MainWindowView:
         self._houses_loads_sim = houses_loads_sim
         self._solar_system_sim = solar_system_sim
         self._power_manager = power_manager
-        self._nsrdb_start_point = self._solar_system_sim.get_nsrdb_start_point()
 
         self._sv_time = ttk.StringVar(value="Time: ??:??:??")
         self._sv_toggle_sim = ttk.StringVar(value="Toggle")
@@ -144,7 +143,7 @@ class MainWindowView:
 
     def _update_ui(self, dt: int):
         self._sv_time.set(
-            f"Time: {datetime.fromisoformat(self._time_sim.get_timestamp(self._nsrdb_start_point)).strftime('%H:%M:%S')}")
+            f"Time: {datetime.fromisoformat(self._time_sim.get_timestamp()).strftime('%H:%M:%S')}")
         self._sv_toggle_sim.set(
             "Pause" if self._houses_loads_sim.is_running() or self._solar_system_sim.is_running() or self._power_manager.is_running()
             else "Resume")
@@ -508,7 +507,7 @@ class SSSTabView:
 
         self.output_text = ttk.Text(
             f_main,
-            height=23,
+            height=30,
             width=80,
             font=("Arial", 12),
         )

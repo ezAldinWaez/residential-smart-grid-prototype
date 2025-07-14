@@ -3,9 +3,9 @@ Houses Loads Simulation
 
 This simulation provides a way to interact with the solar system. It allows the user to "turn on" simulated devices to see their impact on the system; how they draw from solar energy or from the battery depending on the situation. As its sole purpose is to test the solar system simulation and the power management, it only runs in conjunction with them and never standalone. 
 
-The simulation consists of `n` houses, the exact number is defined in the project settings. Each house connects with power management through a grid line and a load line. Its load is determined by the devices the house is running. The device types are shared between houses for simplicity.
+The simulation consists of `n` houses, the exact number is defined in the project settings. Each house connects with power management through a utility line and a load line. Its load is determined by the devices the house is running. The device types are shared between houses for simplicity.
 
-.. note:: The grid line has no functionality. Some plans were made to integrate it into the system. The plans were scrapped in favor of narrowing the scope of the project. 
+.. note:: The utility line has no functionality. Some plans were made to integrate it into the system. The plans were scrapped in favor of narrowing the scope of the project. 
 
 The main point of this simulation is to mimic the behavior of devices, otherwise, we might as well have an input field to set the exact number of watts each house is to use. Devices do not use a static amount of energy. When they first run, they have a spike in energy, then they decay and sustain their level until they are released. That is, the behavior of electronic devices can be modeled as an ADSR envelope. 
 

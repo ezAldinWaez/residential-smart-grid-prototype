@@ -27,7 +27,7 @@ def log_excution(func: callable) -> callable:
 
 
 def log_start_end_error(start_msg: str = None, finish_msg: str = None, error_msg: str = None) -> callable:
-    """Decorator Generator to log when the function start and end and handle errors.
+    """Decorator generator to log when the function start and end and handle errors.
 
     Args:
         start_msg (str, optional): The message to log when the function start

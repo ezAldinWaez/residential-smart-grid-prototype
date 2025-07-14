@@ -12,7 +12,7 @@ time_sim.start()
 houses_loads_sim = HousesLoadsSimulator(time_sim)
 houses_loads_sim.start(dt=100)
 
-solar_system_sim = SolarSystemSimulator(time_sim, houses_loads_sim)
+solar_system_sim = SolarSystemSimulator(time_sim)
 solar_system_sim.start(dt=100)
 
 power_manager = PowerManager(time_sim, houses_loads_sim, solar_system_sim)

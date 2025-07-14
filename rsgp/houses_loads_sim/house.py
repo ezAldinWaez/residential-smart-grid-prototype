@@ -12,7 +12,7 @@ class House:
     idx: int  #: int: House index.
     devices: dict[str, Device]  #: dict[str, Device]: Devices in the house
     load: float  #: float: Total load for the house
-    grid_line: bool = True  #: bool: Flag for grid line state (connected=1, disconnected=0)
+    utility_line: bool = True  #: bool: Flag for utility line state (connected=1, disconnected=0)
     load_line: bool = True  #: bool: Flag for load line state (connected=1, disconnected=0)
 
     def __init__(self, idx: int):
@@ -23,8 +23,8 @@ class House:
             for device_name in RegularDevices.__members__
         }
 
-    def toggle_grid_line(self):
-        self.grid_line = not self.grid_line
+    def toggle_utility_line(self):
+        self.utility_line = not self.utility_line
 
     def toggle_load_line(self):
         self.load_line = not self.load_line
@@ -41,14 +41,14 @@ class House:
     def get_load(self) -> float:
         return float(self.load)
 
-    def get_grid_line(self) -> bool:
-        return bool(self.grid_line)
+    def get_utility_line(self) -> bool:
+        return bool(self.utility_line)
 
     def get_load_line(self) -> bool:
         return bool(self.load_line)
 
-    def set_grid_line(self, new_value: bool) -> None:
-        self.grid_line = new_value
+    def set_utility_line(self, new_value: bool) -> None:
+        self.utility_line = new_value
 
     def set_load_line(self, new_value: bool) -> None:
         self.load_line = new_value

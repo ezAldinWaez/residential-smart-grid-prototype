@@ -1,14 +1,20 @@
 """Solar system simulated inverter."""
 
 from datetime import datetime
+import os
 import pvlib
+
 
 from .data import InverterConf
 from .battery import Battery
 from .panels import Panels
+from .utility import Utility
+from .load import Load
 from ..config.settings import settings
+from ..utils.remote_interface import remote_interface_expose
 
 
+@remote_interface_expose
 class Inverter:
     """
     Solar system simulated inverter.
@@ -16,14 +22,16 @@ class Inverter:
     Args:
         - battery (Battery): The battery instance
         - panels (Panels): The panels instance
-        - initial_grid_status (bool): The initial grid connection status
+        - utility (Utility): The utility instance
+        - load (Load): The load instance
     """
     conf: InverterConf  #: InverterConf: The inverter configuration
     battery: Battery  #: Battery: The battery instance
     panels: Panels  #: Panels: The panels instance
-    is_grid_connected: bool  #: bool: Flag indicating if the inverter is connected to the utility grid
+    utility: Utility  #: Utility: The utility instance
+    load: Load  #: Load: The load instance
 
-    def __init__(self, battery: Battery, panels: Panels, initial_grid_status: bool = True):
+    def __init__(self, battery: Battery, panels: Panels, utility: Utility, load: Load):
         self.conf = InverterConf(
             paco=settings.INVERTER_NOMINAL_AC_POWER,
             pdco=settings.INVERTER_PDCO,
@@ -35,11 +43,8 @@ class Inverter:
 
         self.battery = battery
         self.panels = panels
-        self.is_grid_connected = initial_grid_status
-
-    def set_grid_status(self, is_connected: bool):
-        """Allows external control over the grid connection status."""
-        self.is_grid_connected = is_connected
+        self.utility = utility
+        self.load = load
 
     def dc_to_ac(self, p_dc: float) -> float:
         """
@@ -88,51 +93,64 @@ class Inverter:
         """
         return self.conf.pnt
 
-    def work(self, timestamp: datetime, dt_seconds: float, system_load: float):
+    def work(self, timestamp: datetime, dt_seconds: float):
+        """_summary_
+
+        Args:
+            timestamp (datetime): _description_
+            dt_seconds (float): _description_
+        """
         available_panels_dc_power = self.panels.calc_total_power(timestamp)
-        required_load_ac_power = system_load + self.get_night_consumption()
+        required_load_dc_power = self.ac_to_needed_dc(
+            self.load.system_load + self.get_night_consumption()
+        )
+
 
         # Meet load from panels dc, convert it to ac, and charge battery with the remaining
         if available_panels_dc_power > 0:
             dc_to_inverter_for_load = min(
                 available_panels_dc_power,
-                self.ac_to_needed_dc(required_load_ac_power)
+                required_load_dc_power
             )
 
-            ac_supplied_to_load_from_panels = self.dc_to_ac(dc_to_inverter_for_load)
             available_panels_dc_power -= dc_to_inverter_for_load
-            required_load_ac_power -= ac_supplied_to_load_from_panels
+            required_load_dc_power -= dc_to_inverter_for_load
 
             if available_panels_dc_power > 0:
+
                 available_panels_dc_power -= self.battery.charge(available_panels_dc_power, dt_seconds)
 
-        # Meet remaining load from battery
-        if required_load_ac_power > 0.0:
-            needed_dc_from_batt = self.ac_to_needed_dc(required_load_ac_power)
-            dc_from_batt = self.battery.discharge(needed_dc_from_batt, dt_seconds)
-            if dc_from_batt > 0.0:
-                required_load_ac_power -= self.dc_to_ac(dc_from_batt)
+        # Meet remaining load from battery USB/SUB/SBU - Solar First/Solar Only/Solar+Utility
+        if required_load_dc_power > 0.0:
 
-        # Export remaining panels dc to grid after meeting all demands
-        if available_panels_dc_power > 0.0 and self.is_grid_connected:
-            # TODO: Export extra power to the grid
-            # ac_power_exported_to_grid = self.dc_to_ac(available_panels_dc_power)
-            # self.grid.export(ac_power_exported_to_grid)
+            dc_from_batt = self.battery.discharge(required_load_dc_power, dt_seconds)
+            if dc_from_batt > 0.0:
+
+                required_load_dc_power -= dc_from_batt
+
+        # Export remaining panels dc to utility after meeting all demands
+        if available_panels_dc_power > 0.0 and self.utility.is_connected:
+
+            # TODO: Export extra power to the utility
+            ac_power_exported_to_utility = self.dc_to_ac(available_panels_dc_power)
+            self.utility.export_power(ac_power_exported_to_utility)
             available_panels_dc_power = 0.0
 
         # Store the curtailed power
         self.panels.curtailed_power = available_panels_dc_power
 
-        # TODO: Meet the load from grid (bypassing), or break if not connected to grid.
-        if required_load_ac_power > 0.0:
-            if self.is_grid_connected:
-                pass
-            else:
-                pass
+        # TODO: Meet the load from utility (bypassing), or break if not connected to utility.
+        if required_load_dc_power > 0.0:
 
+            if self.utility.is_connected:
+                imported_power = self.dc_to_ac(required_load_dc_power)
+                self.utility.import_power(imported_power)
+            else:
+                self.load.set_connection_status(False)
+                required_load_dc_power = 0
 
     def __str__(self):
         return (
             f"Inverter Status:\n"
-            f"- Grid status: {self.is_grid_connected}"
+            f"- Utility status: {self.utility.is_connected}"
         )

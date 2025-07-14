@@ -3,7 +3,7 @@
 from datetime import datetime
 from pathlib import Path
 
-from rsgp.config import constants
+from rsgp.config.constants import SECONDS_IN_HOUR
 
 
 class Settings:
@@ -11,7 +11,7 @@ class Settings:
     # =================================================================================================================
     # SIMULATION GENERAL SETTINGS
     # =================================================================================================================
-    TIME_FACTOR = constants.SECONDS_IN_HOUR
+    TIME_FACTOR = SECONDS_IN_HOUR
     HOUSES_NUM = 12
 
     # =================================================================================================================

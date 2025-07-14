@@ -3,8 +3,10 @@
 from .data import BattConf
 from ..config.constants import SECONDS_IN_HOUR
 from ..config.settings import settings
+from ..utils.remote_interface import remote_interface_expose
 
 
+@remote_interface_expose
 class Battery:
     """Solar system simulated battery.
 

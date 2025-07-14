@@ -77,15 +77,15 @@ class MainWindowView:
 
         ttk.Button(
             f_right,
-            text="Set Grids",
-            command=lambda: self.set_all_grids(True),
+            text="Set Utilities",
+            command=lambda: self.set_all_utilities(True),
             width=10,
         ).pack(side='left', padx=(0, 10))
 
         ttk.Button(
             f_right,
-            text="Reset Grids",
-            command=lambda: self.set_all_grids(False),
+            text="Reset Utilities",
+            command=lambda: self.set_all_utilities(False),
             width=10,
         ).pack(side='left', padx=(0, 10))
 
@@ -170,13 +170,13 @@ class MainWindowView:
         self._solar_system_sim.resume()
         self._power_manager.resume()
 
-    def set_all_grids(self, state: bool):
-        """Turn all grid lines for all houses to `state`."""
+    def set_all_utilities(self, state: bool):
+        """Turn all utility lines for all houses to `state`."""
         for h in self._houses_loads_sim.get_houses():
-            h.set_grid_line(state)
+            h.set_utility_line(state)
 
     def set_all_loads(self, state: bool):
-        """Turn all grid lines for all houses to `state`."""
+        """Turn all utility lines for all houses to `state`."""
         for h in self._houses_loads_sim.get_houses():
             h.set_load_line(state)
 
@@ -201,7 +201,7 @@ class HLSTabView:
         self._sv_houses_loads = [
             ttk.StringVar(value="Load: ? KW")
             for _ in range(self._houses_loads_sim.get_num_houses())]
-        self._iv_grid_lines = [
+        self._iv_utility_lines = [
             ttk.IntVar(value=0)
             for _ in range(self._houses_loads_sim.get_num_houses())]
         self._iv_load_lines = [
@@ -260,10 +260,10 @@ class HLSTabView:
 
             ttk.Checkbutton(
                 f_house,
-                text="Grid Line",
-                variable=self._iv_grid_lines[idx],
+                text="Utility Line",
+                variable=self._iv_utility_lines[idx],
                 command=lambda idx=idx: self._houses_loads_sim.get_house(
-                    idx).toggle_grid_line(),
+                    idx).toggle_utility_line(),
                 style="Primary.Roundtoggle.Toolbutton",
             ).pack(fill='x')
 
@@ -290,9 +290,9 @@ class HLSTabView:
             for idx, load in enumerate(self._sv_houses_loads):
                 load.set(
                     f"Load: {self._houses_loads_sim.get_house(idx).get_load()/1000:07,.3f} KW")
-            for idx, line in enumerate(self._iv_grid_lines):
+            for idx, line in enumerate(self._iv_utility_lines):
                 line.set(
-                    int(self._houses_loads_sim.get_house(idx).get_grid_line()))
+                    int(self._houses_loads_sim.get_house(idx).get_utility_line()))
             for idx, line in enumerate(self._iv_load_lines):
                 line.set(
                     int(self._houses_loads_sim.get_house(idx).get_load_line()))
@@ -315,7 +315,7 @@ class HLSTabView:
                 houses_loads_sim=self._houses_loads_sim,
                 variables={
                     'total_load': self._sv_houses_loads[idx],
-                    'grid_line': self._iv_grid_lines[idx],
+                    'utility_line': self._iv_utility_lines[idx],
                     'load_line': self._iv_load_lines[idx],
                 }
             )
@@ -331,7 +331,7 @@ class HouseControlsWindowView:
         variables (dict[str, ttk.Variable]): Passed UI variables, including:
 
                 - "total_load" (ttk.StringVar): Total house load label text.
-                - "grid_line" (ttk.IntVar): Grid line status (0 or 1).
+                - "utility_line" (ttk.IntVar): Utility line status (0 or 1).
                 - "load_line" (ttk.IntVar): Load line status (0 or 1).
 
     """
@@ -347,7 +347,7 @@ class HouseControlsWindowView:
         self._house = self._houses_loads_sim.get_house(self.idx)
 
         self._sv_total_load: ttk.StringVar = variables['total_load']
-        self._iv_grid_line: ttk.IntVar = variables['grid_line']
+        self._iv_utility_line: ttk.IntVar = variables['utility_line']
         self._iv_load_line: ttk.IntVar = variables['load_line']
 
         self._iv_all_envelopes = {
@@ -391,9 +391,9 @@ class HouseControlsWindowView:
 
         ttk.Checkbutton(
             f_right,
-            text="Grid Line",
-            variable=self._iv_grid_line,
-            command=lambda: self._house.toggle_grid_line(),
+            text="Utility Line",
+            variable=self._iv_utility_line,
+            command=lambda: self._house.toggle_utility_line(),
             style="Primary.Roundtoggle.Toolbutton",
         ).pack(side="left", padx=(0, 10))
 
@@ -507,7 +507,7 @@ class SSSTabView:
 
         self.output_text = ttk.Text(
             f_main,
-            height=30,
+            height=50,
             width=80,
             font=("Arial", 12),
         )

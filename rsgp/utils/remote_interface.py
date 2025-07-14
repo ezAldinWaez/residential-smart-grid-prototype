@@ -41,8 +41,10 @@ def start_remote_interface(
 
     daemon.register(solar_system_sim, "solar_system_sim")
     daemon.register(solar_system_sim.inverter, "solar_system_sim.inverter")
-    daemon.register(solar_system_sim.battery, "solar_system_sim.battery")
-    daemon.register(solar_system_sim.panels, "solar_system_sim.panels")
+    daemon.register(solar_system_sim.inverter.battery, "solar_system_sim.inverter.battery")
+    daemon.register(solar_system_sim.inverter.panels, "solar_system_sim.inverter.panels")
+    daemon.register(solar_system_sim.inverter.load, "solar_system_sim.inverter.load")
+    daemon.register(solar_system_sim.inverter.utility, "solar_system_sim.inverter.utility")
 
     daemon.register(power_manager, "power_manager")
 

@@ -7,20 +7,19 @@ from typing import TYPE_CHECKING
 import threading
 import time
 
-import pandas as pd
 
 
 from .panels import Panels
 from .battery import Battery
+from .utility import Utility
+from .load import Load
 from .inverter import Inverter
 from ..config.settings import settings
 from ..utils.decorators import log_start_end_error
 from ..utils.helpers import log_record_into_csv
-from ..utils.logger import logger
 from ..utils.remote_interface import remote_interface_expose
 if TYPE_CHECKING:
     from ..time_sim.simulator import TimeSimulator
-    from ..houses_loads_sim.simulator import HousesLoadsSimulator
 
 
 @remote_interface_expose
@@ -29,13 +28,15 @@ class SolarSystemSimulator:
     battery: Battery
     inverter: Inverter
 
-    def __init__(self, time_sim: TimeSimulator, houses_loads_sim: HousesLoadsSimulator):
+    def __init__(self, time_sim: TimeSimulator):
         self._time_sim = time_sim
-        self._houses_loads_sim = houses_loads_sim
 
-        self.panels = Panels()
-        self.battery = Battery(init_charge_level=.5)
-        self.inverter = Inverter(self.battery, self.panels, initial_grid_status=True)
+        self.inverter = Inverter(
+            battery=Battery(init_charge_level=.5),
+            panels=Panels(),
+            utility=Utility(init_connection_status=True),
+            load=Load(init_connection_status=True)
+        )
 
         self._running = False
 
@@ -68,23 +69,24 @@ class SolarSystemSimulator:
     def _update_step(self) -> None:
         timestamp = self._time_sim.get_timestamp()
 
-        system_load = self._houses_loads_sim.get_system_load()
         dt_seconds = (self._dt / 1000.0) * settings.TIME_FACTOR
-        self.inverter.work(timestamp, dt_seconds, system_load)
+        self.inverter.work(timestamp, dt_seconds)
 
         if settings.CSV_LOGGING:
             log_record_into_csv(
                 settings.CSV_SSS_LOG_PATH,
                 timestamp=f"{timestamp}",
-                batt_charge_level=f"{self.battery.charge_level:.2f}",
+                batt_charge_level=f"{self.inverter.battery.charge_level:.2f}",
             )
 
     def summary(self) -> str:
         return str((
-            f"{self.panels.conf}\n"
-            f"{self.panels}\n"
-            f"{self.battery.conf}\n"
-            f"{self.battery}\n"
-            f"{self.inverter.conf}\n"
             f"{self.inverter}\n"
+            f"{self.inverter.conf}\n"
+            f"{self.inverter.panels.conf}\n"
+            f"{self.inverter.panels}\n"
+            f"{self.inverter.battery.conf}\n"
+            f"{self.inverter.battery}\n"
+            f"{self.inverter.utility}\n"
+            f"{self.inverter.load}\n"
         ))

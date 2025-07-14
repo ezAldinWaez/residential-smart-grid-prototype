@@ -53,8 +53,12 @@ class PowerManager:
         elapsed = self._time_sim.get_elapsed()
         timestamp = self._time_sim.get_timestamp(elapsed)
 
+        system_load = self._houses_loads_sim.get_system_load()
+        
         # TODO: Integragte solutions with inverter APIs.
-        # TODO: Deal with houses grid line.
+        # TODO: Deal with houses utility line.
+
+        self._solar_system_sim.inverter.load.set_system_load(system_load)
 
         if settings.CSV_LOGGING:
             log_record_into_csv(

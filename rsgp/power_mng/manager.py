@@ -56,7 +56,15 @@ class PowerManager:
         system_load = self._houses_loads_sim.get_system_load()
         
         # TODO: Integragte solutions with inverter APIs.
-        # TODO: Deal with houses utility line.
+
+        # Set inverter utility line connection status
+        is_any_utility_on = False
+        list_of_utility_lines_state = [house.utility_line for house in self._houses_loads_sim.houses]
+        for utility in list_of_utility_lines_state: 
+            if utility:
+                is_any_utility_on = True
+                break
+        self._solar_system_sim.inverter.utility.set_connection_status(is_any_utility_on)
 
         self._solar_system_sim.inverter.load.set_system_load(system_load)
 

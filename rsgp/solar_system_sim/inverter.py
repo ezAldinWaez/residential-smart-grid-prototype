@@ -102,11 +102,10 @@ class Inverter:
         """
         available_panels_dc_power = self.panels.calc_total_power(timestamp)
         required_load_dc_power = self.ac_to_needed_dc(
-            self.load.system_load + self.get_night_consumption()
+            self.load.system_load + self.get_night_consumption() if self.load.is_connected else self.get_night_consumption()
         )
 
-
-        # Meet load from panels dc, convert it to ac, and charge battery with the remaining
+        # Meet load from panels dc, convert it to ac, charge battery with the remaining
         if available_panels_dc_power > 0:
             dc_to_inverter_for_load = min(
                 available_panels_dc_power,
@@ -117,7 +116,6 @@ class Inverter:
             required_load_dc_power -= dc_to_inverter_for_load
 
             if available_panels_dc_power > 0:
-
                 available_panels_dc_power -= self.battery.charge(available_panels_dc_power, dt_seconds)
 
         # Meet remaining load from battery USB/SUB/SBU - Solar First/Solar Only/Solar+Utility

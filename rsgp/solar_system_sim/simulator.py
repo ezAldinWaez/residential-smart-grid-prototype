@@ -72,7 +72,7 @@ class SolarSystemSimulator:
         dt_seconds = (self._dt / 1000.0) * settings.TIME_FACTOR
         self.inverter.work(timestamp, dt_seconds)
         
-        #TODO: re-connect the load line after a set interval
+        # TODO: re-connect the load line after a set interval
 
         if settings.CSV_LOGGING:
             log_record_into_csv(

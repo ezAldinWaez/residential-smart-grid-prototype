@@ -1,7 +1,7 @@
 """Solar system simulation data."""
 
 from dataclasses import dataclass
-
+from enum import Enum
 
 @dataclass
 class PanelsConf:
@@ -47,6 +47,15 @@ class BattConf:
             f"- Max Discharge Power: {self.max_discharge_power}\n"
         )
 
+class InverterMode(Enum):
+    SBU = "SBU"
+    SUB = "SUB"
+    USB = "USB"
+
+class ChargePriority(Enum):
+    SOLAR_ONLY = "Solar Only"
+    SOLAR_FIRST = "Solar First"
+    UTILITY_AND_SOLAR = "Utility + Solar"
 
 @dataclass
 class InverterConf:
@@ -57,6 +66,8 @@ class InverterConf:
     eta_inv_nom: float  #: ...
     eta_inv_ref: float  #: ...
     eta_inv_ovr: float  #: ...
+    mode: InverterMode #: ...
+    charge_priority: ChargePriority
 
     def __post_init__(self):
         assert self.paco > self.pnt >= 0
@@ -68,6 +79,8 @@ class InverterConf:
     def __str__(self):
         return (
             "Inverter Configuration:\n"
+            f"- Inverter Mode: {self.mode}\n"
+            f"- Battery Charge Priority: {self.charge_priority}\n"
             f"- AC Power Rating: {self.paco}\n"
             f"- DC Power Rating: {self.pdco}\n"
             f"- Night Consumption: {self.pnt}\n"

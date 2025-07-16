@@ -17,11 +17,15 @@ class Utility:
     def set_connection_status(self, new_status: bool):
         self.is_connected = new_status
 
+    #TODO: do something with the exported and imported power; maybe to log and track it
     def export_power(self, power_ac: float) -> None:
-        self.exchange_power_ac = +power_ac
+        self.exchange_power_ac += power_ac
 
     def import_power(self, power_ac: float) -> None:
-        self.exchange_power_ac = -power_ac
+        self.exchange_power_ac -= power_ac
+    
+    def clear_exchange_power(self) -> None:
+        self.exchange_power_ac = 0.0
 
     def __str__(self):
         return (

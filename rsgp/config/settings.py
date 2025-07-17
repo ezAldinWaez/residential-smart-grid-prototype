@@ -4,6 +4,8 @@ from datetime import datetime
 from pathlib import Path
 
 from rsgp.config.constants import SECONDS_IN_HOUR
+from rsgp.solar_system_sim.data import InverterMode
+from rsgp.solar_system_sim.data import ChargePriority
 
 
 class Settings:
@@ -50,6 +52,12 @@ class Settings:
     # Simplified overall nominal efficiency for reverse calculation (DC needed for AC load)
     # It could be INVERTER_ETA_INV_NOM, or INVERTER_NOMINAL_AC_POWER / INVERTER_PDCO, or a specific value (e.g., 0.95)
     INVERTER_ETA_OVR = INVERTER_ETA_INV_NOM
+
+    # Initial mode the inverter is set to use
+    INITIAL_INVERTER_MODE = InverterMode.SBU
+
+    # Initial charge priority the inverter is set to use
+    INITIAL_CHARGE_PRIORITY = ChargePriority.SOLAR_ONLY
 
     # =================================================================================================================
     # LOGGING SETTINGS

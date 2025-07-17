@@ -10,6 +10,7 @@ class Load:
 
     def __init__(self, init_connection_status: bool):
         self.is_connected = init_connection_status
+        self.system_load = 0.0
 
     def get_system_load(self) -> float:
         return self.system_load

@@ -37,8 +37,12 @@ class SolarSystemSimulator:
             utility=Utility(init_connection_status=True),
             load=Load(init_connection_status=True)
         )
-
         self._running = False
+        #TODO: define the type of this rather than do this ugly thing
+        self.post_inverter_work_hook = self.ugly_thing
+
+    def ugly_thing(self):
+        pass
 
     def is_running(self) -> bool:
         return self._running
@@ -71,6 +75,8 @@ class SolarSystemSimulator:
 
         dt_seconds = (self._dt / 1000.0) * settings.TIME_FACTOR
         self.inverter.work(timestamp, dt_seconds)
+        # To ensure the power manager triggers only after the inverter has calculated the necessary variables needed
+        self.post_inverter_work_hook()
         
         # TODO: re-connect the load line after a set interval
 

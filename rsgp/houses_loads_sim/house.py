@@ -4,10 +4,10 @@
 
 from .data import RegularDevices
 from .device import Device
-from ..utils.remote_interface import remote_interface_expose
+from ..remote_object import expose
 
 
-@remote_interface_expose
+@expose
 class House:
     idx: int  #: int: House index.
     devices: dict[str, Device]  #: dict[str, Device]: Devices in the house

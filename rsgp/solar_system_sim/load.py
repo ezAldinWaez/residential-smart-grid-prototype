@@ -1,9 +1,9 @@
 """Solar system simulated load."""
 
-from ..utils.remote_interface import remote_interface_expose
+from ..remote_object import expose
 
 
-@remote_interface_expose
+@expose
 class Load:
     is_connected: bool  #: bool: ...
     system_load: float  #: float: ...

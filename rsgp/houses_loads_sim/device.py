@@ -5,12 +5,12 @@
 import random
 
 from .data import DeviceConf, RegularDevices
-from ..utils.remote_interface import remote_interface_expose
+from ..remote_object import expose
 
 import numpy as np
 
 
-@remote_interface_expose
+@expose
 class Device:
     name: str  #: str: Device name
     conf: DeviceConf  #: DeviceConf: Device static configuration

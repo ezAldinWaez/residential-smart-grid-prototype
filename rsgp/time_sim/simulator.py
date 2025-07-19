@@ -4,12 +4,12 @@
 
 from datetime import datetime, timedelta, timezone
 
+from ..remote_object import expose
 from ..config.settings import settings
-from ..utils.remote_interface import remote_interface_expose
 from ..utils.nsrdb_data import nsrdb_location, nsrdb_start_point
 
 
-@remote_interface_expose
+@expose
 class TimeSimulator:
     """Time simulator."""
 

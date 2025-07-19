@@ -1,12 +1,12 @@
 """Solar system simulated battery."""
 
 from .data import BattConf
+from ..remote_object import expose
 from ..config.constants import SECONDS_IN_HOUR
 from ..config.settings import settings
-from ..utils.remote_interface import remote_interface_expose
 
 
-@remote_interface_expose
+@expose
 class Battery:
     """Solar system simulated battery.
 

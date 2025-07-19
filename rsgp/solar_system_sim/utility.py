@@ -1,8 +1,8 @@
 """Solar system simulated utility."""
-from ..utils.remote_interface import remote_interface_expose
+from ..remote_object import expose
 
 
-@remote_interface_expose
+@expose
 class Utility:
     is_connected: bool  #: bool: ...
     exchange_power_ac: float  #: float: ...
@@ -23,7 +23,7 @@ class Utility:
 
     def import_power(self, power_ac: float) -> None:
         self.exchange_power_ac -= power_ac
-    
+
     def clear_exchange_power(self) -> None:
         self.exchange_power_ac = 0.0
 

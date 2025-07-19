@@ -12,13 +12,13 @@ from rsgp.utils.helpers import log_record_into_csv
 from .house import House
 from ..config.settings import settings
 from ..utils.decorators import log_start_end_error
-from ..utils.remote_interface import remote_interface_expose
+from ..remote_object import expose
 
 if TYPE_CHECKING:
     from ..time_sim.simulator import TimeSimulator
 
 
-@remote_interface_expose
+@expose
 class HousesLoadsSimulator:
     num_houses: int  #: int: Number of houses in the system
     load: float  #: float: Total load for the system

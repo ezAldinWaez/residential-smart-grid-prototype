@@ -1,9 +1,8 @@
 """Solar system simulated inverter."""
 
 from datetime import datetime
-import os
-import pvlib
 
+import pvlib
 
 from .data import InverterConf
 from .data import InverterMode
@@ -12,11 +11,11 @@ from .battery import Battery
 from .panels import Panels
 from .utility import Utility
 from .load import Load
+from ..remote_object import expose
 from ..config.settings import settings
-from ..utils.remote_interface import remote_interface_expose
 
 
-@remote_interface_expose
+@expose
 class Inverter:
     """
     Solar system simulated inverter.

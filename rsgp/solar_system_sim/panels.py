@@ -10,10 +10,10 @@ from ..config.settings import settings
 from pvlib.location import Location
 from pvlib.irradiance import get_total_irradiance
 import pandas as pd
-from ..utils.remote_interface import remote_interface_expose
+from ..remote_object import expose
 
 
-@remote_interface_expose
+@expose
 class Panels:
     """Solar system simulated panels."""
     conf: PanelsConf  #: PanelsConf: The panels configuration

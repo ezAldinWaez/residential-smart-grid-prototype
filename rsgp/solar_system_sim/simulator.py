@@ -7,8 +7,6 @@ from typing import TYPE_CHECKING
 import threading
 import time
 
-
-
 from .panels import Panels
 from .battery import Battery
 from .utility import Utility
@@ -17,12 +15,12 @@ from .inverter import Inverter
 from ..config.settings import settings
 from ..utils.decorators import log_start_end_error
 from ..utils.helpers import log_record_into_csv
-from ..utils.remote_interface import remote_interface_expose
+from ..remote_object import expose
 if TYPE_CHECKING:
     from ..time_sim.simulator import TimeSimulator
 
 
-@remote_interface_expose
+@expose
 class SolarSystemSimulator:
     panels: Panels
     battery: Battery
@@ -38,7 +36,7 @@ class SolarSystemSimulator:
             load=Load(init_connection_status=True)
         )
         self._running = False
-        #TODO: define the type of this rather than do this ugly thing
+        # TODO: define the type of this rather than do this ugly thing
         self.post_inverter_work_hook = self.ugly_thing
 
     def ugly_thing(self):
@@ -77,7 +75,7 @@ class SolarSystemSimulator:
         self.inverter.work(timestamp, dt_seconds)
         # To ensure the power manager triggers only after the inverter has calculated the necessary variables needed
         self.post_inverter_work_hook()
-        
+
         # TODO: re-connect the load line after a set interval
 
         if settings.CSV_LOGGING:

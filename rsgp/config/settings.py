@@ -87,10 +87,10 @@ class Settings:
     CSV_PM_LOG_PATH = _CSV_Log_DIR / "power_management.csv"
 
     # =================================================================================================================
-    # REMOTE INTERFACE SETTINGS
+    # REMOTE OBJECT SETTINGS
     # =================================================================================================================
-    REMOTE_INTERFACE_HOST = 'localhost'
-    REMOTE_INTERFACE_PORT = 41991
+    REMOTE_OBJECT_HOST = 'localhost'
+    REMOTE_OBJECT_PORT = 41991
 
 
 settings = Settings()

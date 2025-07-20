@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 from typing import TYPE_CHECKING
-import threading
+from threading import Thread
 import time
 
 from .virtual_battery import VirtualBattery
@@ -41,7 +41,7 @@ class PowerManager:
         self._running = True
         self._dt = dt
 
-        threading.Thread(
+        Thread(
             target=self._update_loop,
             daemon=True
         ).start()

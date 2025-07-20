@@ -21,4 +21,11 @@ power_manager.start(dt=100)
 remote_object_server = RemoteObjectServer(time_sim, houses_loads_sim, solar_system_sim, power_manager)
 remote_object_server.start()
 
-remote_object_server.thread.join()
+try:
+    remote_object_server.thread.join()
+except KeyboardInterrupt:
+    time_sim.pause()
+    solar_system_sim.pause()
+    houses_loads_sim.pause()
+    power_manager.pause()
+    remote_object_server.stop()

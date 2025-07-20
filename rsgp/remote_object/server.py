@@ -1,7 +1,7 @@
 """RSGP remote interface."""
 
 from __future__ import annotations
-import threading
+from threading import Thread
 from typing import TYPE_CHECKING
 
 from ..config.settings import settings
@@ -12,14 +12,14 @@ if TYPE_CHECKING:
     from ..solar_system_sim.simulator import SolarSystemSimulator
     from ..power_mng.manager import PowerManager
 
-import Pyro5.api
+from Pyro5.api import Daemon
 
 
 class RemoteObjectServer:
     """Remote interface server using Pyro5."""
 
-    daemon: Pyro5.api.Daemon  #: Daemon: ...
-    thread: threading.Thread  #: Thread: ...
+    daemon: Daemon  #: Daemon: ...
+    thread: Thread  #: Thread: ...
 
     def __init__(self, time_sim: TimeSimulator, houses_loads_sim: HousesLoadsSimulator,
                  solar_system_sim: SolarSystemSimulator, power_manager: PowerManager):
@@ -41,7 +41,7 @@ class RemoteObjectServer:
         logger.info("Starting remote object server.")
 
         # Create and configure daemon
-        self.daemon = Pyro5.api.Daemon(
+        self.daemon = Daemon(
             host=settings.REMOTE_OBJECT_HOST,
             port=settings.REMOTE_OBJECT_PORT,
         )
@@ -70,7 +70,7 @@ class RemoteObjectServer:
             self.daemon.register(vb, f"power_manager.virtual_battery_{vb.idx}")
 
         # Start daemon in a separate thread
-        self.thread = threading.Thread(
+        self.thread = Thread(
             target=self.daemon.requestLoop,
             daemon=True
         )

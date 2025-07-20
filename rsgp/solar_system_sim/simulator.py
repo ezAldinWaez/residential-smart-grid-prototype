@@ -4,7 +4,7 @@
 
 from __future__ import annotations
 from typing import TYPE_CHECKING
-import threading
+from threading import Thread
 import time
 
 from .panels import Panels
@@ -22,9 +22,9 @@ if TYPE_CHECKING:
 
 @expose
 class SolarSystemSimulator:
-    panels: Panels
-    battery: Battery
-    inverter: Inverter
+    panels: Panels  #: Panels: ...
+    battery: Battery  #: Battery: ...
+    inverter: Inverter  #: Inverter: ...
 
     def __init__(self, time_sim: TimeSimulator):
         self._time_sim = time_sim
@@ -49,7 +49,7 @@ class SolarSystemSimulator:
         self._running = True
         self._dt = dt
 
-        threading.Thread(
+        Thread(
             target=self._update_loop,
             daemon=True
         ).start()

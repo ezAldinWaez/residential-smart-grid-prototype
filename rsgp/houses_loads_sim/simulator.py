@@ -4,7 +4,7 @@
 
 from __future__ import annotations
 from typing import TYPE_CHECKING
-import threading
+from threading import Thread
 import time
 
 from rsgp.utils.helpers import log_record_into_csv
@@ -54,7 +54,7 @@ class HousesLoadsSimulator:
         self._running = True
         self._dt = dt
 
-        threading.Thread(
+        Thread(
             target=self._update_loop,
             daemon=True
         ).start()

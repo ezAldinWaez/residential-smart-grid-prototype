@@ -11,15 +11,12 @@ def _(mo):
 
 
 @app.cell
-def _(mo, os):
-    if not os.path.exists("data/"):
-        os.mkdir("data/")
-
-    if not os.path.exists("data/nsrdb/"):
-        os.mkdir("data/nsrdb/")
-
+def _(mo, os, Path):
+    _NSRDB_DIR = Path(__file__).parent / "_static" / "nsrdb"
+    _NSRDB_DIR.mkdir(parents=True, exist_ok=True)
+    
     file_browser = mo.ui.file_browser(
-        initial_path="data/nsrdb/",
+        initial_path=_NSRDB_DIR,
         filetypes=[".csv"],
         multiple=False,
         restrict_navigation=True,
@@ -179,7 +176,8 @@ def _():
     import marimo as mo
     import pandas as pd
     import altair as alt
-    return alt, datetime, io, mo, os, pd, timedelta, timezone
+    from pathlib import Path
+    return alt, datetime, io, mo, os, pd, timedelta, timezone, Path
 
 
 if __name__ == "__main__":

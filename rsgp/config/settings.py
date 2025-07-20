@@ -70,16 +70,16 @@ class Settings:
 
     _ROOT_DIR = Path(__file__).parent.parent
 
-    _DATA_DIR = _ROOT_DIR / "data"
-    _DATA_DIR.mkdir(parents=True, exist_ok=True)
+    _STATIC_DIR = _ROOT_DIR / "_static"
+    _STATIC_DIR.mkdir(parents=True, exist_ok=True)
 
-    _Log_DIR = _ROOT_DIR / "logs"
+    _Log_DIR = _ROOT_DIR / "_logs"
     _Log_DIR.mkdir(parents=True, exist_ok=True)
 
     _CSV_Log_DIR = _Log_DIR / f"rsgp_{datetime.now().strftime('%Y-%m-%d_%H-%M')}"
     _CSV_Log_DIR.mkdir(parents=True, exist_ok=True)
 
-    NSRDB_PATH = _DATA_DIR / "nsrdb.csv"
+    NSRDB_PATH = _STATIC_DIR / "nsrdb.csv"
     LOG_PATH = _Log_DIR / "rsgp.log"
 
     CSV_HLS_LOG_PATH = _CSV_Log_DIR / "houses_loads_simulation.csv"

@@ -1,6 +1,57 @@
+# Byte-compiled / optimized / DLL files
 __pycache__/
-__marimo__/
-logs/
+*.py[codz]
+*$py.class
 
-/data/
-/docs/_build/
+# Environments
+.env
+.envrc
+.venv
+env/
+venv/
+ENV/
+env.bak/
+venv.bak/
+.python-version
+Pipfile.lock
+uv.lock
+poetry.lock
+poetry.toml
+pdm.lock
+pdm.toml
+.pdm-python
+.pdm-build/
+pixi.lock
+.pixi
+
+# Distribution / packaging
+.Python
+build/
+_build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+share/python-wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+
+# Logs
+logs/
+_logs/
+*.log
+*.a
+
+# Marimo
+marimo/_static/
+marimo/_lsp/
+__marimo__/

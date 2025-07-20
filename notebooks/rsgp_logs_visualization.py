@@ -11,12 +11,12 @@ def _(mo):
 
 
 @app.cell
-def _(mo, os):
-    if not os.path.exists("rsgp/logs/"):
-        os.mkdir("rsgp/logs/")
+def _(mo, os, Path):
+    _RSGP_LOGS_DIR = Path(__file__).parent.parent / "rsgp" / "_logs"
+    _RSGP_LOGS_DIR.mkdir(parents=True, exist_ok=True)
 
     file_browser = mo.ui.file_browser(
-        initial_path="rsgp/logs/",
+        initial_path=_RSGP_LOGS_DIR,
         filetypes=[".csv"],
         multiple=False,
         restrict_navigation=True,
@@ -134,7 +134,8 @@ def _():
     import marimo as mo
     import pandas as pd
     import altair as alt
-    return alt, mo, os, pd
+    from pathlib import Path
+    return alt, mo, os, pd, Path
 
 
 if __name__ == "__main__":

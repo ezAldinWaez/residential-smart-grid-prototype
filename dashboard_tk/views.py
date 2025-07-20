@@ -1,4 +1,4 @@
-"""Admin dashboard views."""
+"""Dashboard views."""
 
 from __future__ import annotations
 from typing import TYPE_CHECKING

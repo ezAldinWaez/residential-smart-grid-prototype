@@ -1,7 +1,6 @@
-"""Dashboard app main."""
+"""Dashboard main."""
 
-from . import DashboardApp
-
+from .app import DashboardApp
 
 app = DashboardApp()
 app.mainloop()

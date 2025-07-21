@@ -1,6 +1,6 @@
 import marimo
 
-__generated_with = "0.12.9"
+__generated_with = "0.14.10"
 app = marimo.App(width="medium")
 
 
@@ -11,10 +11,10 @@ def _(mo):
 
 
 @app.cell
-def _(mo, os, Path):
+def _(Path, mo):
     _NSRDB_DIR = Path(__file__).parent / "_static" / "nsrdb"
     _NSRDB_DIR.mkdir(parents=True, exist_ok=True)
-    
+
     file_browser = mo.ui.file_browser(
         initial_path=_NSRDB_DIR,
         filetypes=[".csv"],
@@ -68,7 +68,7 @@ def _(file_browser, pd, timedelta, timezone):
                 for val in data["Solar Zenith Angle"]
             ],
         )
-    return data, meta, tz, tz_offset
+    return data, meta
 
 
 @app.cell
@@ -100,7 +100,7 @@ def _(data, mo):
         if field_options
         else None
     )
-    return field_options, field_selector
+    return (field_selector,)
 
 
 @app.cell
@@ -165,19 +165,17 @@ def _(alt, data, field_selector, mo, pd):
     mo.vstack(
         [mo.md("## NSRDB Chart"), field_selector, chart]
     ) if data is not None else None
-    return (chart,)
+    return
 
 
 @app.cell(hide_code=True)
 def _():
-    import os
-    import io
     from datetime import datetime, timedelta, timezone
     import marimo as mo
     import pandas as pd
     import altair as alt
     from pathlib import Path
-    return alt, datetime, io, mo, os, pd, timedelta, timezone, Path
+    return Path, alt, mo, pd, timedelta, timezone
 
 
 if __name__ == "__main__":

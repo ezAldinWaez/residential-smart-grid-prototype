@@ -1,0 +1,51 @@
+graph TB
+
+  subgraph HHC[Hardware Houses Controls]
+    HHC_H1([House 1])
+    HHC_H2([House 2])
+    HHC_H3([House 3])
+  end
+
+  subgraph RSGP[RSGP]
+    RSGP_TS([Time Simulation])
+    subgraph RSGP_SSS[Solar System Simulation]
+      subgraph  RSGP_SSS_I[Inverter]
+        RSGP_SSS_I_IC([Inverter Controller])
+        RSGP_SSS_I_UI([Utility Interface])
+        RSGP_SSS_I_LI([Load Interface])
+      end
+      RSGP_SSS_B([Battery])
+      RSGP_SSS_P([Panels])
+    end
+    subgraph RSGP_PM[Power Management]
+      RSGP_PM_LM([Load Management])
+      RSGP_PM_UM([Utility Management])
+      RSGP_PM_C([Power Manager Controller])
+    end
+    subgraph RSGP_HLS[Houses Loads Simulation]
+      subgraph RSGP_HLS_H1[House 1]
+        RSGP_HLS_H1_D([Devices])
+      end
+      subgraph RSGP_HLS_H2[House 2]
+        RSGP_HLS_H2_D([Devices])
+      end
+      subgraph RSGP_HLS_H3[House 3]
+        RSGP_HLS_H3_D([Devices])
+      end
+    end
+    RSGP_IOT([I/O Tracker])
+    RSGP_RO([RSGP Remote Object])
+  end
+
+  subgraph D[Dashboard]
+    D_A([App])
+    D_V([Views])
+  end
+  
+  RSGP_SSS_P & RSGP_SSS_B <--Data--> RSGP_SSS_I_IC <--Data--> RSGP_SSS_I_UI & RSGP_SSS_I_LI
+  RSGP_PM_LM <--Data--> RSGP_PM_C <--Data--> RSGP_PM_UM
+  RSGP_SSS_I_UI <--Data--> RSGP_PM_UM <--Data--> RSGP_HLS_H1 & RSGP_HLS_H2 & RSGP_HLS_H3
+  RSGP_SSS_I_LI <--Data--> RSGP_PM_LM <--Data--> RSGP_HLS_H1 & RSGP_HLS_H2 & RSGP_HLS_H3
+  RSGP_HLS_H1 & RSGP_HLS_H2 & RSGP_HLS_H3 <--Data--> RSGP_IOT <--Electric Signals--> HHC_H1 & HHC_H2 & HHC_H3
+  RSGP_RO <--Data--> D_A
+

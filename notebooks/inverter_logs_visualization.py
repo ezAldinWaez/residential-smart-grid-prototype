@@ -1,17 +1,17 @@
 import marimo
 
-__generated_with = "0.12.9"
+__generated_with = "0.14.10"
 app = marimo.App(width="medium")
 
 
 @app.cell(hide_code=True)
 def _(mo):
-    mo.md(f"# Inverter Logs Visualization")
+    mo.md(f"""# Inverter Logs Visualization""")
     return
 
 
 @app.cell
-def _(mo, os, Path):
+def _(Path, mo):
     _LOGS_DIR = Path(__file__).parent / "_static" / "inverter_logs"
     _LOGS_DIR.mkdir(parents=True, exist_ok=True)
 
@@ -111,7 +111,7 @@ def _(alt, data, field_selector, mo, pd):
     mo.vstack(
         [mo.md("## Inverter Logs Chart"), field_selector, chart]
     ) if data is not None else None
-    return (chart,)
+    return
 
 
 @app.cell(hide_code=True)
@@ -121,7 +121,7 @@ def _():
     import pandas as pd
     import altair as alt
     from pathlib import Path
-    return alt, mo, os, pd, Path
+    return Path, alt, mo, pd
 
 
 if __name__ == "__main__":

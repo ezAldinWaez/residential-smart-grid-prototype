@@ -1,6 +1,6 @@
 import marimo
 
-__generated_with = "0.12.9"
+__generated_with = "0.14.10"
 app = marimo.App(width="medium")
 
 
@@ -11,7 +11,7 @@ def _(mo):
 
 
 @app.cell
-def _(mo, os, Path):
+def _(Path, mo):
     _GRAPHS_DIR = Path(__file__).parent.parent / "docs" / "_static" / "graphs"
     _GRAPHS_DIR.mkdir(parents=True, exist_ok=True)
 
@@ -76,7 +76,7 @@ def _(file_browser, graph_code_editor, mo):
     update_button = mo.ui.button(
         on_click=update_file, value="", label="Update Graph File"
     )
-    return update_button, update_file
+    return (update_button,)
 
 
 @app.cell
@@ -103,10 +103,9 @@ def _(file_browser, graph_code_editor, graph_rendering, mo, update_button):
 
 @app.cell(hide_code=True)
 def _():
-    import os
     import marimo as mo
     from pathlib import Path
-    return mo, os, Path
+    return Path, mo
 
 
 if __name__ == "__main__":

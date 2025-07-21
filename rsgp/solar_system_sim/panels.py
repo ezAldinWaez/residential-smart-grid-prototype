@@ -30,9 +30,9 @@ class Panels:
         )
 
         self.conf = PanelsConf(
-            num_panels=settings.PV_NUM_PANELS,
-            panel_area=settings.PV_PANEL_AREA,
-            panel_efficiency=settings.PV_EFFICIENCY,
+            num_panels=settings.PANELS_NUM,
+            panel_area=settings.PANEL_AREA,
+            panel_efficiency=settings.PANEL_EFFICIENCY,
         )
         self.nsrdb_data_row = None
         self.total_power = 0.0
@@ -69,7 +69,8 @@ class Panels:
 
     def __str__(self):
         return (
-            f"Panels State:\n"
-            f"- Total Power: {self.total_power}\n"
-            f"- NSRDB data row: {self.nsrdb_data_row}\n"
+            f"- Panels:\n"
+            f"\t- Configurations: {self.conf}\n"
+            f"\t- Total Power: {self.total_power:.3f} Watt\n"
+            f"\t- Curtailed Power: {self.curtailed_power:.3f} Watt"
         )

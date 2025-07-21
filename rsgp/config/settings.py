@@ -3,67 +3,59 @@
 from datetime import datetime
 from pathlib import Path
 
-from rsgp.config.constants import SECONDS_IN_HOUR
-from rsgp.solar_system_sim.data import InverterMode
-from rsgp.solar_system_sim.data import ChargePriority
+from .constants import SECONDS_IN_HOUR, BYTES_IN_MB
+from ..solar_system_sim.data import InverterMode, ChargePriority
 
 
 class Settings:
     """Settings."""
     # =================================================================================================================
-    # SIMULATION GENERAL SETTINGS
+    # TIME SIMULATION SETTINGS
     # =================================================================================================================
-    TIME_FACTOR = SECONDS_IN_HOUR
-    HOUSES_NUM = 12
-
-    # =================================================================================================================
-    # BATTERY SETTINGS
-    # =================================================================================================================
-    BATTERY_CAPACITY = 100_000  # [Wh]
-    BATTERY_CHARGE_EFFICIENCY = 0.95  # [%]
-    BATTERY_MAX_CHARGE_POWER = 40_000  # [Watt]
-    BATTERY_MAX_DISCHARGE_POWER = 10_000  # [Watt]
+    TIME_FACTOR = SECONDS_IN_HOUR  # The time factor to multiply the simulation time with to get the real time
 
     # =================================================================================================================
-    # PV SETTINGS
+    # HOUSES LOADS SIMULATION SETTINGS
     # =================================================================================================================
-    PV_NUM_PANELS = 80
-    PV_PANEL_AREA = 1.6  # [m^2]
-    PV_EFFICIENCY = 0.15  # [%]
+    HOUSES_NUM = 12  # The number of houses to simulate.
 
     # =================================================================================================================
-    # INVERTER SETTINGS
+    # SOLAR SYSTEM SIMULATION SETTINGS
     # =================================================================================================================
-    # AC power rating of the inverter [Watt]
-    INVERTER_NOMINAL_AC_POWER = 15000.0
+    BATTERY_CAPACITY = 100_000  # The battery capacity in Watt-hours [Wh]
+    BATTERY_CHARGE_EFFICIENCY = 0.95  # The efficiency of charging and discharging [%]
+    BATTERY_MAX_CHARGE_POWER = 40_000  # The maximum charge power for the battery [Watt]
+    BATTERY_MAX_DISCHARGE_POWER = 10_000  # The maximum discharge power for the battery [Watt]
+    BATTERY_INIT_CHARGE_LEVEL = 0.5  # The initial charge level for the battery [%]
 
-    # DC power rating of the inverter [Watt]
-    INVERTER_PDCO = 16000.0
+    PANELS_NUM = 80  # The number of panels in the system.
+    PANEL_AREA = 1.6  # The area of a single solar panel in square meters [m^2]
+    PANEL_EFFICIENCY = 0.15  # The efficiency of a single solar panel as a multiplier [%]
 
-    # Nominal inverter efficiency (e.g., 0.96)
-    INVERTER_ETA_INV_NOM = 0.96
+    INVERTER_NOMINAL_AC_POWER = 15000.0  # AC power rating of the inverter [Watt]
+    INVERTER_PDCO = 16000.0  # DC power rating of the inverter [Watt]
+    INVERTER_ETA_INV_NOM = 0.96  # Nominal inverter efficiency [%] (e.g., 0.96)
+    INVERTER_ETA_INV_REF = 0.9637  # Reference inverter efficiency [%] (e.g., 0.9637)
+    INVERTER_PNT = 20.0  # AC power consumed by inverter at night [Watt]
+    INVERTER_ETA_OVR = INVERTER_ETA_INV_NOM  # Simplified overall nominal efficiency for reverse calculation [%]
+    INVERTER_INIT_MODE = InverterMode.SBU  # Initial mode the inverter is set to use
+    INVERTER_INIT_CHARGE_PRIORITY = ChargePriority.SOLAR_ONLY  # Initial charge priority the inverter is set to use
 
-    # Reference inverter efficiency (e.g., 0.9637)
-    INVERTER_ETA_INV_REF = 0.9637
+    # =================================================================================================================
+    # POWER MANAGEMENT SETTINGS
+    # =================================================================================================================
 
-    # AC power consumed by inverter at night [Watt]
-    INVERTER_PNT = 20.0
-
-    # Simplified overall nominal efficiency for reverse calculation (DC needed for AC load)
-    # It could be INVERTER_ETA_INV_NOM, or INVERTER_NOMINAL_AC_POWER / INVERTER_PDCO, or a specific value (e.g., 0.95)
-    INVERTER_ETA_OVR = INVERTER_ETA_INV_NOM
-
-    # Initial mode the inverter is set to use
-    INITIAL_INVERTER_MODE = InverterMode.SBU
-
-    # Initial charge priority the inverter is set to use
-    INITIAL_CHARGE_PRIORITY = ChargePriority.SOLAR_ONLY
+    # =================================================================================================================
+    # REMOTE OBJECT SETTINGS
+    # =================================================================================================================
+    REMOTE_OBJECT_HOST = 'localhost'
+    REMOTE_OBJECT_PORT = 41991
 
     # =================================================================================================================
     # LOGGING SETTINGS
     # =================================================================================================================
     LOG_LEVEL = "DEBUG"  # It could be "DEBUG", "INFO", "WARNING", "ERROR", or "CRITICAL"
-    LOG_MAX_BYTES = 5 * 1024 * 1024  # 5 MB
+    LOG_MAX_BYTES = 5 * BYTES_IN_MB
     LOG_BACKUP_COUNT = 3
 
     CSV_LOGGING = True
@@ -85,12 +77,6 @@ class Settings:
     CSV_HLS_LOG_PATH = _CSV_Log_DIR / "houses_loads_simulation.csv"
     CSV_SSS_LOG_PATH = _CSV_Log_DIR / "solar_system_simulation.csv"
     CSV_PM_LOG_PATH = _CSV_Log_DIR / "power_management.csv"
-
-    # =================================================================================================================
-    # REMOTE OBJECT SETTINGS
-    # =================================================================================================================
-    REMOTE_OBJECT_HOST = 'localhost'
-    REMOTE_OBJECT_PORT = 41991
 
 
 settings = Settings()

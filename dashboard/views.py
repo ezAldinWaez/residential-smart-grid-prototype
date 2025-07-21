@@ -119,7 +119,7 @@ class MainWindowView:
         HLSTabView(
             root=self._root,
             f_parent=f_houses_loads_sim,
-            _rsgp_hls=self._rsgp_hls,
+            rsgp_hls=self._rsgp_hls,
         )
 
         f_solar_system_sim = ttk.Frame(n_main)
@@ -513,8 +513,8 @@ class SSSTabView:
 
         self.output_text = ttk.Text(
             f_main,
-            height=50,
-            width=80,
+            height=30,
+            width=100,
             font=("Arial", 12),
         )
         self.output_text.pack(fill='both')

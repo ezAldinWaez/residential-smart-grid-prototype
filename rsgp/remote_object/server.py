@@ -4,6 +4,8 @@ from __future__ import annotations
 from threading import Thread
 from typing import TYPE_CHECKING
 
+from Pyro5.api import Daemon
+
 from ..config.settings import settings
 from ..utils.logger import logger
 if TYPE_CHECKING:
@@ -11,8 +13,6 @@ if TYPE_CHECKING:
     from ..houses_loads_sim.simulator import HousesLoadsSimulator
     from ..solar_system_sim.simulator import SolarSystemSimulator
     from ..power_mng.manager import PowerManager
-
-from Pyro5.api import Daemon
 
 
 class RemoteObjectServer:
@@ -59,10 +59,10 @@ class RemoteObjectServer:
         # Register solar system simulator and its components
         self.daemon.register(self._solar_system_sim, "solar_system_sim")
         self.daemon.register(self._solar_system_sim.inverter, "solar_system_sim.inverter")
-        self.daemon.register(self._solar_system_sim.inverter.battery, "solar_system_sim.inverter.battery")
-        self.daemon.register(self._solar_system_sim.inverter.panels, "solar_system_sim.inverter.panels")
-        self.daemon.register(self._solar_system_sim.inverter.load, "solar_system_sim.inverter.load")
-        self.daemon.register(self._solar_system_sim.inverter.utility, "solar_system_sim.inverter.utility")
+        self.daemon.register(self._solar_system_sim.inverter._battery, "solar_system_sim.inverter.battery")
+        self.daemon.register(self._solar_system_sim.inverter._panels, "solar_system_sim.inverter.panels")
+        self.daemon.register(self._solar_system_sim.inverter.load_interface, "solar_system_sim.inverter.load")
+        self.daemon.register(self._solar_system_sim.inverter.utility_interface, "solar_system_sim.inverter.utility")
 
         # Register power manager
         self.daemon.register(self._power_manager, "power_manager")

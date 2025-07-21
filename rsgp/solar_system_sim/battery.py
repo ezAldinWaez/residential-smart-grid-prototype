@@ -16,8 +16,7 @@ class Battery:
     conf: BattConf  #: BattConf: The battery configuration.
     charge_level: float  #: float: Current charge level of the battery. [Wh]
 
-    def __init__(self, init_charge_level: float):
-        assert 0 <= init_charge_level <= 1
+    def __init__(self):
 
         self.conf = BattConf(
             capacity=settings.BATTERY_CAPACITY,
@@ -26,7 +25,7 @@ class Battery:
             max_discharge_power=settings.BATTERY_MAX_DISCHARGE_POWER,
         )
 
-        self.charge_level = self.conf.capacity * init_charge_level
+        self.charge_level = self.conf.capacity * settings.BATTERY_INIT_CHARGE_LEVEL
 
     def charge(self, power: float, time: float) -> float:
         """Simulate the battery charging.
@@ -74,6 +73,7 @@ class Battery:
 
     def __str__(self):
         return (
-            f"Battery State: {self.charge_level:.2f} / {self.conf.capacity:.2f} Wh "
-            f"({self.charge_level / self.conf.capacity:.2%})"
+            f"- Battery:\n"
+            f"\t- Configurations: {self.conf}\n"
+            f"\t- State: {self.charge_level:.2f} / {self.conf.capacity:.2f} Wh ({self.charge_level / self.conf.capacity:.2%})"
         )

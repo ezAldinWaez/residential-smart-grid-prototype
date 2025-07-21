@@ -3,14 +3,12 @@
 # TODO: Document this module.
 
 from __future__ import annotations
-from typing import TYPE_CHECKING
+from typing import Callable, TYPE_CHECKING
 from threading import Thread
 import time
 
 from .panels import Panels
 from .battery import Battery
-from .utility import Utility
-from .load import Load
 from .inverter import Inverter
 from ..config.settings import settings
 from ..utils.decorators import log_start_end_error
@@ -26,21 +24,20 @@ class SolarSystemSimulator:
     battery: Battery  #: Battery: ...
     inverter: Inverter  #: Inverter: ...
 
+    post_inverter_operate_hook: Callable[[], None]  #: Callable: ...
+
     def __init__(self, time_sim: TimeSimulator):
         self._time_sim = time_sim
 
-        self.inverter = Inverter(
-            battery=Battery(init_charge_level=.5),
-            panels=Panels(),
-            utility=Utility(init_connection_status=True),
-            load=Load(init_connection_status=True)
-        )
-        self._running = False
-        # TODO: define the type of this rather than do this ugly thing
-        self.post_inverter_work_hook = self.ugly_thing
+        self.panels = Panels()
+        self.battery = Battery()
 
-    def ugly_thing(self):
-        pass
+        self.inverter = Inverter(
+            battery=self.battery,
+            panels=self.panels,
+        )
+
+        self._running = False
 
     def is_running(self) -> bool:
         return self._running
@@ -72,9 +69,12 @@ class SolarSystemSimulator:
         timestamp = self._time_sim.get_timestamp()
 
         dt_seconds = (self._dt / 1000.0) * settings.TIME_FACTOR
-        self.inverter.work(timestamp, dt_seconds)
+
+        self.inverter.operate(timestamp, dt_seconds)
+
         # To ensure the power manager triggers only after the inverter has calculated the necessary variables needed
-        self.post_inverter_work_hook()
+        if self.post_inverter_operate_hook is not None:
+            self.post_inverter_operate_hook()
 
         # TODO: re-connect the load line after a set interval
 
@@ -82,17 +82,12 @@ class SolarSystemSimulator:
             log_record_into_csv(
                 settings.CSV_SSS_LOG_PATH,
                 timestamp=f"{timestamp}",
-                batt_charge_level=f"{self.inverter.battery.charge_level:.2f}",
+                batt_charge_level=f"{self.inverter._battery.charge_level:.2f}",
             )
 
     def summary(self) -> str:
         return str((
             f"{self.inverter}\n"
-            f"{self.inverter.conf}\n"
-            f"{self.inverter.panels.conf}\n"
-            f"{self.inverter.panels}\n"
-            f"{self.inverter.battery.conf}\n"
-            f"{self.inverter.battery}\n"
-            f"{self.inverter.utility}\n"
-            f"{self.inverter.load}\n"
+            f"{self.panels}\n"
+            f"{self.battery}\n"
         ))

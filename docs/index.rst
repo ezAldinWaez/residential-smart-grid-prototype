@@ -1,4 +1,4 @@
-.. only:: html
+.. only:: not latex
 
   Residential Smart Grid
   ======================

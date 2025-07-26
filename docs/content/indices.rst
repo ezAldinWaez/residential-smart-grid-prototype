@@ -2,8 +2,8 @@
 
   \cleardoublepage
   \phantomsection
-  \chapter*{Indecies}
-  \addcontentsline{toc}{chapter}{Indecies}
+  \chapter*{Indices}
+  \addcontentsline{toc}{chapter}{Indices}
 
   \tableofcontents
   \listoffigures
@@ -12,7 +12,7 @@
 
 .. only:: not latex
 
-  Indicies
-  ========
+  Indices
+  =======
 
-some content for section: Indicies
+some content for section: Indices

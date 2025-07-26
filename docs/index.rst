@@ -8,7 +8,7 @@
 
   content/dedication
   content/abstract
-  content/indicies
+  content/indices
 
 .. toctree::
   :maxdepth: 2

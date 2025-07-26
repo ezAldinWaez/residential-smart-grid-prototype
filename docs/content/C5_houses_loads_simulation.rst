@@ -39,7 +39,7 @@ to reach the ``base_wattage * S``, and once the device is released it takes
   :alt: ADSR Envelope Demonstration
 
 Additionally, devices do not sustain at a static level; their behavior more
-closely resemebles a wave. So on top of that, the entire envelope of the device
+closely resembles a wave. So on top of that, the entire envelope of the device
 is multiplied by a wave to simulate that behavior. Alternatively, random noise
 can be added atop the envelope.
 

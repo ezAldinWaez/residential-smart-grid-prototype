@@ -79,6 +79,19 @@ Remote Object
   :undoc-members:
   :show-inheritance:
 
+Configuration
+-------------
+.. automodule:: rsgp.config.settings
+  :members:
+  :undoc-members:
+  :show-inheritance:
+
+.. automodule:: rsgp.config.constants
+  :members:
+  :undoc-members:
+  :show-inheritance:
+
+
 Utilities
 ---------
 .. automodule:: rsgp.utils.decorators

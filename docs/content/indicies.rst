@@ -1,8 +1,3 @@
-.. only:: not latex
-
-  Indicies
-  ========
-
 .. raw:: latex
 
   \cleardoublepage
@@ -14,3 +9,10 @@
   \listoffigures
   \listoftables
   \cleardoublepage
+
+.. only:: not latex
+
+  Indicies
+  ========
+
+some content for section: Indicies

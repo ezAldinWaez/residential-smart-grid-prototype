@@ -1,5 +1,5 @@
-Solar System Simulation
-=======================
+RSGP Solar System Simulation
+============================
 The mechanism of Solar System Simulation is this: it requests the timestamp
 from the Time Simulation, then it seeks to the timestamp in the NSRDB dataset
 that is closest to that timestamp, and it takes the related DNI, DHI, GHI, and

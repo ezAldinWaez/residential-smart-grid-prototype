@@ -1,4 +1,4 @@
-"""Houses loads simulator."""
+"""Houses simulator."""
 
 # TODO: Document this module.
 
@@ -15,7 +15,7 @@ from ..remote_object import expose
 
 
 @expose
-class HousesLoadsSimulator:
+class HousesSimulator:
     num_houses: int  #: int: Number of houses in the system
     load: float  #: float: Total load for the system
     houses: list[House]  #: list[House]: Houses in the system
@@ -62,7 +62,7 @@ class HousesLoadsSimulator:
         if not self._running:
             self.start(self._dt)
 
-    @log_start_end_error("Starting houses loads simulation.", "Stoping houses loads simulation.")
+    @log_start_end_error("Starting houses simulation.", "Stoping houses simulation.")
     def _update_loop(self) -> None:
         while self._running:
             self._update_step()
@@ -92,7 +92,7 @@ class HousesLoadsSimulator:
 
         if settings.CSV_LOGGING:
             log_record_into_csv(
-                settings.CSV_HLS_LOG_PATH,
+                settings.CSV_HS_LOG_PATH,
                 timestamp=f"{timestamp}",
                 system_load=f"{self.load:.3f}",
             )

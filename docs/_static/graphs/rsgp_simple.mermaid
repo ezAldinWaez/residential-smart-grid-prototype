@@ -9,7 +9,7 @@ graph TB
   subgraph RSGP[RSGP]
     RSGP_SSS([Solar System Simulation])
     RSGP_PM([Power Management])
-    RSGP_HLS([Houses Loads Simulation])
+    RSGP_HS([Houses Simulation])
     RSGP_IOT([I/O Tracker])
     RSGP_RO([RSGP Remote Object])
   end
@@ -19,6 +19,6 @@ graph TB
     D_A([App])
   end
   
-  RSGP_SSS <--Data--> RSGP_PM <--Data--> RSGP_HLS
-  RSGP_HLS <--Data--> RSGP_IOT <--Electric Signals--> HHC_H1 & HHC_H2 & HHC_H3
+  RSGP_SSS <--Data--> RSGP_PM <--Data--> RSGP_HS
+  RSGP_HS <--Data--> RSGP_IOT <--Electric Signals--> HHC_H1 & HHC_H2 & HHC_H3
   RSGP_RO <--Data--> D_A

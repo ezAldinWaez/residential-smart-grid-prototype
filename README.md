@@ -39,7 +39,7 @@ graph TB
   subgraph RSGP[RSGP]
     RSGP_SSS([Solar System Simulation])
     RSGP_PM([Power Management])
-    RSGP_HLS([Houses Loads Simulation])
+    RSGP_HS([Houses Simulation])
     RSGP_IOT([I/O Tracker])
     RSGP_RO([RSGP Remote Object])
   end
@@ -49,8 +49,8 @@ graph TB
     D_A([App])
   end
 
-  RSGP_SSS <--Data--> RSGP_PM <--Data--> RSGP_HLS
-  RSGP_HLS <--Data--> RSGP_IOT <--Electric Signals--> HHC_H1 & HHC_H2 & HHC_H3
+  RSGP_SSS <--Data--> RSGP_PM <--Data--> RSGP_HS
+  RSGP_HS <--Data--> RSGP_IOT <--Electric Signals--> HHC_H1 & HHC_H2 & HHC_H3
   RSGP_RO <--Data--> D_A
 ```
 
@@ -80,15 +80,15 @@ graph TB
       RSGP_PM_UM([Utility Management])
       RSGP_PM_C([Power Manager Controller])
     end
-    subgraph RSGP_HLS[Houses Loads Simulation]
-      subgraph RSGP_HLS_H1[House 1]
-        RSGP_HLS_H1_D([Devices])
+    subgraph RSGP_HS[Houses Simulation]
+      subgraph RSGP_HS_H1[House 1]
+        RSGP_HS_H1_D([Devices])
       end
-      subgraph RSGP_HLS_H2[House 2]
-        RSGP_HLS_H2_D([Devices])
+      subgraph RSGP_HS_H2[House 2]
+        RSGP_HS_H2_D([Devices])
       end
-      subgraph RSGP_HLS_H3[House 3]
-        RSGP_HLS_H3_D([Devices])
+      subgraph RSGP_HS_H3[House 3]
+        RSGP_HS_H3_D([Devices])
       end
     end
     RSGP_IOT([I/O Tracker])
@@ -102,9 +102,9 @@ graph TB
 
   RSGP_SSS_P & RSGP_SSS_B <--Data--> RSGP_SSS_I_IC <--Data--> RSGP_SSS_I_UI & RSGP_SSS_I_LI
   RSGP_PM_LM <--Data--> RSGP_PM_C <--Data--> RSGP_PM_UM
-  RSGP_SSS_I_UI <--Data--> RSGP_PM_UM <--Data--> RSGP_HLS_H1 & RSGP_HLS_H2 & RSGP_HLS_H3
-  RSGP_SSS_I_LI <--Data--> RSGP_PM_LM <--Data--> RSGP_HLS_H1 & RSGP_HLS_H2 & RSGP_HLS_H3
-  RSGP_HLS_H1 & RSGP_HLS_H2 & RSGP_HLS_H3 <--Data--> RSGP_IOT <--Electric Signals--> HHC_H1 & HHC_H2 & HHC_H3
+  RSGP_SSS_I_UI <--Data--> RSGP_PM_UM <--Data--> RSGP_HS_H1 & RSGP_HS_H2 & RSGP_HS_H3
+  RSGP_SSS_I_LI <--Data--> RSGP_PM_LM <--Data--> RSGP_HS_H1 & RSGP_HS_H2 & RSGP_HS_H3
+  RSGP_HS_H1 & RSGP_HS_H2 & RSGP_HS_H3 <--Data--> RSGP_IOT <--Electric Signals--> HHC_H1 & HHC_H2 & HHC_H3
   RSGP_RO <--Data--> D_A
 ```
 
@@ -224,7 +224,7 @@ Explore the Jupyter notebooks in `notebooks/` for:
 residential-smart-grid/
 ├── rsgp/                      # Main simulation package
 │   ├── solar_system_sim/     # Solar PV system modeling
-│   ├── houses_loads_sim/     # Residential load simulation
+│   ├── houses_sim/     # Residential load simulation
 │   ├── power_mng/           # Power management algorithms
 │   ├── remote_object/       # Pyro5 remote interface
 │   ├── config/              # Configuration settings

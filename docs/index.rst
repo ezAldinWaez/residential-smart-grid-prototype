@@ -19,7 +19,7 @@
   content/C2_project_preview
   content/C3_time_simulation
   content/C4_solar_system_simulation
-  content/C5_houses_loads_simulation
+  content/C5_houses_simulation
   content/C6_power_management
   content/C7_householder_app_api
   content/C8_householder_mobile_app

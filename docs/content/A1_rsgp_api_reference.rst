@@ -4,24 +4,24 @@
 
 RSGP API Reference
 ==================
-Houses Loads Simulation
+Houses Simulation
 -----------------------
-.. automodule:: rsgp.houses_loads_sim.simulator
+.. automodule:: rsgp.houses_sim.simulator
   :members:
   :undoc-members:
   :show-inheritance:
 
-.. automodule:: rsgp.houses_loads_sim.house
+.. automodule:: rsgp.houses_sim.house
   :members:
   :undoc-members:
   :show-inheritance:
 
-.. automodule:: rsgp.houses_loads_sim.device
+.. automodule:: rsgp.houses_sim.device
   :members:
   :undoc-members:
   :show-inheritance:
 
-.. automodule:: rsgp.houses_loads_sim.data
+.. automodule:: rsgp.houses_sim.data
   :members:
   :undoc-members:
   :show-inheritance:

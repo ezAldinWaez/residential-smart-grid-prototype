@@ -10,7 +10,7 @@ from ..config.settings import settings
 from ..utils.logger import logger
 from ..utils.time_sim import time_sim
 if TYPE_CHECKING:
-    from ..houses_loads_sim.simulator import HousesLoadsSimulator
+    from ..houses_sim.simulator import HousesSimulator
     from ..solar_system_sim.simulator import SolarSystemSimulator
     from ..power_mng.manager import PowerManager
 
@@ -21,17 +21,17 @@ class RemoteObjectServer:
     daemon: Daemon  #: Daemon: ...
     thread: Thread  #: Thread: ...
 
-    def __init__(self, houses_loads_sim: HousesLoadsSimulator,
-                 solar_system_sim: SolarSystemSimulator, power_manager: PowerManager):
+    def __init__(self, houses_sim: HousesSimulator, solar_system_sim: SolarSystemSimulator,
+                 power_manager: PowerManager):
         """Initialize the remote interface with simulation objects.
 
         Args:
             time_sim (TimeSimulator): Time simulator.
-            houses_loads_sim (HousesLoadsSimulator): Houses loads simulator.
+            houses_sim (HousesSimulator): Houses simulator.
             solar_system_sim (SolarSystemSimulator): Solar system simulator.
             power_manager (PowerManager): Power manager.
         """
-        self._houses_loads_sim = houses_loads_sim
+        self._houses_sim = houses_sim
         self._solar_system_sim = solar_system_sim
         self._power_manager = power_manager
 
@@ -48,12 +48,12 @@ class RemoteObjectServer:
         # Register time simulator
         self.daemon.register(time_sim, "time_sim")
 
-        # Register houses loads simulator and its components
-        self.daemon.register(self._houses_loads_sim, "houses_loads_sim")
-        for house in self._houses_loads_sim.houses:
-            self.daemon.register(house, f"houses_loads_sim.house_{house.idx}")
+        # Register houses simulator and its components
+        self.daemon.register(self._houses_sim, "houses_sim")
+        for house in self._houses_sim.houses:
+            self.daemon.register(house, f"houses_sim.house_{house.idx}")
             for device in house.devices.values():
-                self.daemon.register(device, f"houses_loads_sim.house_{house.idx}.device_{device.name}")
+                self.daemon.register(device, f"houses_sim.house_{house.idx}.device_{device.name}")
 
         # Register solar system simulator and its components
         self.daemon.register(self._solar_system_sim, "solar_system_sim")

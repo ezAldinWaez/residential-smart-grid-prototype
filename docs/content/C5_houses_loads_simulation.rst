@@ -1,4 +1,4 @@
-Houses Loads Simulation
+Houses Simulation
 =======================
 
 This simulation provides a way to interact with the solar system. It allows the
@@ -55,7 +55,7 @@ multiplier that adjusts the device's energy consumption. For example, one mode
 sets the Attack level to 90% of the ``base_wattage``, while another sets it to
 150%.
 
-To keep track of all of this, the Houses Loads Simulation relies on the Time
+To keep track of all of this, the Houses Simulation relies on the Time
 Simulation and stores the time each device was turned on. By comparing that
 with the current simulation time, it calculates how far into the envelope the
 device is and its current load based on that. The house then calculates its
@@ -63,6 +63,6 @@ aggregate load, and the simulation the entire system load. This data is sent to
 power management, which may trigger breaking a certain house's load line.
 
 .. note::
-  Houses Loads Simulation also optionally logs the system load over time into a
+  Houses Simulation also optionally logs the system load over time into a
   csv file. Whether it logs or not is set in the project settings along the
   number of houses in the simulation.

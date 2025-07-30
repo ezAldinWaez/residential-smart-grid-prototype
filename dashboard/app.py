@@ -11,7 +11,7 @@ class DashboardApp:
     """Dashboard app to browse and control the system."""
 
     rsgp_ts: Proxy  #: Proxy: Remote object proxy for `TimeSimulator` remote object.
-    rsgp_hls: Proxy  #: Proxy: Remote object proxy for `HousesLoadsSimulator` remote object.
+    rsgp_hs: Proxy  #: Proxy: Remote object proxy for `HousesSimulator` remote object.
     rsgp_sss: Proxy  #: Proxy: Remote object proxy for `SolarSystemSimulator` remote object.
     rsgp_pm: Proxy  #: Proxy: Remote object proxy for `PowerManager` remote object.
 
@@ -21,7 +21,7 @@ class DashboardApp:
         BASE = f"PYRO:{{name}}@{HOST}:{PORT}"
 
         self.rsgp_ts = Proxy(BASE.format(name="time_sim"))
-        self.rsgp_hls = Proxy(BASE.format(name="houses_loads_sim"))
+        self.rsgp_hs = Proxy(BASE.format(name="houses_sim"))
         self.rsgp_sss = Proxy(BASE.format(name="solar_system_sim"))
         self.rsgp_pm = Proxy(BASE.format(name="power_manager"))
 
@@ -33,7 +33,7 @@ class DashboardApp:
         MainWindowView(
             root=self.root,
             rsgp_ts=self.rsgp_ts,
-            rsgp_hls=self.rsgp_hls,
+            rsgp_hs=self.rsgp_hs,
             rsgp_sss=self.rsgp_sss,
             rsgp_pm=self.rsgp_pm,
         )

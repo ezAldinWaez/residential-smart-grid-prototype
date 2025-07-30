@@ -1,4 +1,4 @@
-"""Houses loads simulation data types."""
+"""Houses simulation data types."""
 
 from dataclasses import dataclass
 from enum import Enum

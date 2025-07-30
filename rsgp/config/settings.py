@@ -15,7 +15,7 @@ class Settings:
     TIME_FACTOR = SECONDS_IN_HOUR  # The time factor to multiply the simulation time with to get the real time
 
     # =================================================================================================================
-    # HOUSES LOADS SIMULATION SETTINGS
+    # HOUSES SIMULATION SETTINGS
     # =================================================================================================================
     HOUSES_NUM = 12  # The number of houses to simulate.
 
@@ -74,7 +74,7 @@ class Settings:
     NSRDB_PATH = _STATIC_DIR / "nsrdb.csv"
     LOG_PATH = _Log_DIR / "rsgp.log"
 
-    CSV_HLS_LOG_PATH = _CSV_Log_DIR / "houses_loads_simulation.csv"
+    CSV_HS_LOG_PATH = _CSV_Log_DIR / "houses_simulation.csv"
     CSV_SSS_LOG_PATH = _CSV_Log_DIR / "solar_system_simulation.csv"
     CSV_PM_LOG_PATH = _CSV_Log_DIR / "power_management.csv"
 

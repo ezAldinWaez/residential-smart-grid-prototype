@@ -1,5 +1,3 @@
-"""Houses simulation data types."""
-
 from dataclasses import dataclass
 from enum import Enum
 from typing import Literal
@@ -7,13 +5,11 @@ from typing import Literal
 
 @dataclass
 class ADSRConf:
-    """ADSR (Attack, Decay, Sustain, and Release) model configuration."""
     a: float  #: float: Attack time [sec]
     d: float  #: float: Decay time [sec]
     s: float  #: float: Sustain level multiplier
     r: float  #: float: Release time [sec]
-    #: Literal['none', 'sine', 'square', 'random']: Wave type
-    wt: Literal['none', 'sine', 'square', 'random'] = 'none'
+    wt: Literal['none', 'sine', 'square', 'random'] = 'none'  #: Literal['none', 'sine', 'square', 'random']: Wave type
     wp: float = 1  #: float: Wave period [sec]
     wa: float = 0  #: float: Wave amplitude multiplier
 
@@ -29,32 +25,20 @@ class ADSRConf:
 
 @dataclass
 class DeviceConf:
-    """Device configuration."""
-    #: float: Maximum wattage that device can reach (maximum amplitude)
-    base_watt: float  #: float: Device base wattage [Watt]
+    base_watt: float  #: float: Device base wattage (maximum amplitude) [Watt]
     max_count: int  #: int: Device maximum count a regular house could have
     adsr: ADSRConf  #: ADSRConf: Device ADSR configuration
-
-    def __str__(self):
-        return (
-            "Device Configruation:\n"
-            f"- base watt: {self.base_watt}\n"
-            f"- max count: {self.max_count}\n"
-            f"- adsr: {self.adsr}"
-        )
 
     def __post_init__(self):
         assert self.base_watt >= 0
         assert self.max_count >= 0
         assert self.adsr is not None
 
+    def __str__(self):
+        return f"DeviceConf(base_watt={self.base_watt}, max_count={self.max_count}, adsr={self.adsr})"
+
 
 class RegularDevices(Enum):
-    """Some important regular house devices static configuration.
-
-    Note:
-        All members are from type :class:`DeviceConf`.
-    """
     TEST = DeviceConf(
         base_watt=1000,
         max_count=10,

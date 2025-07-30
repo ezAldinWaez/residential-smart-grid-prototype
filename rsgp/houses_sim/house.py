@@ -1,7 +1,3 @@
-"""House."""
-
-# TODO: Document this module.
-
 from .data import RegularDevices
 from .device import DeviceClass
 from ..remote_object import expose
@@ -11,7 +7,6 @@ from ..remote_object import expose
 class House:
     idx: int  #: int: House index.
     devices: dict[str, DeviceClass]  #: dict[str, Device]: Devices in the house
-
     load_line: bool = True  #: bool: Flag for load line state (connected=1, disconnected=0)
     load_power: float  #: float: Total load for the house
     utility_line: bool = True  #: bool: Flag for utility line state (connected=1, disconnected=0)

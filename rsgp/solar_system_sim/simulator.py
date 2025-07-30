@@ -1,7 +1,3 @@
-"""Solar system simulator."""
-
-# TODO: Document this module.
-
 from threading import Thread
 import time
 
@@ -66,7 +62,7 @@ class SolarSystemSimulator:
 
         self.inverter.operate(timestamp, dt_seconds)
 
-        # TODO: re-connect the load line after a set interval
+        # TODO: Re-connect the load line after a set interval
 
         if settings.CSV_LOGGING:
             log_record_into_csv(
@@ -84,7 +80,10 @@ class SolarSystemSimulator:
 
     def summary(self) -> str:
         return str((
-            f"{self.inverter}\n"
-            f"{self.panels}\n"
-            f"{self.battery}\n"
+            f"{self.inverter.conf}\n\n"
+            f"{self.inverter}\n\n"
+            f"{self.panels.conf}\n\n"
+            f"{self.panels}\n\n"
+            f"{self.battery.conf}\n\n"
+            f"{self.battery}\n\n"
         ))

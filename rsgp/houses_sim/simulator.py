@@ -1,7 +1,3 @@
-"""Houses simulator."""
-
-# TODO: Document this module.
-
 from threading import Thread
 import time
 
@@ -17,7 +13,6 @@ from ..remote_object import expose
 @expose
 class HousesSimulator:
     houses: list[House]  #: list[House]: Houses in the system
-
     system_load: float  #: float: Total load for the system
 
     def __init__(self):
@@ -103,9 +98,4 @@ class HousesSimulator:
             )
 
     def summary(self) -> str:
-        return str((
-            f"Houses Loads Status: ..."
-        ))
-
-    def __str__(self):
-        return f"HousesSimulator(houses={len(self.houses)}, system_load={self.system_load:.3f})"
+        return str('\n\n'.join(f"{house}" for house in self.houses))

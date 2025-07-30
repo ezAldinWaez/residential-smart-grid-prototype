@@ -114,7 +114,7 @@ class MainWindowView:
         n_main.pack(fill='both', expand=True)
 
         f_houses_sim = ttk.Frame(n_main)
-        n_main.add(f_houses_sim, text='Houses Load Simulation')
+        n_main.add(f_houses_sim, text='Houses Simulation')
 
         HSTabView(
             root=self._root,
@@ -122,21 +122,30 @@ class MainWindowView:
             rsgp_hs=self._rsgp_hs,
         )
 
-        f_solar_system_sim = ttk.Frame(n_main)
-        n_main.add(f_solar_system_sim, text='Solar System Simulation')
+        f_houses_sim_summery = ttk.Frame(n_main)
+        n_main.add(f_houses_sim_summery, text='Houses Simulation Summery')
 
-        SSSTabView(
+        HSSummeryTabView(
             root=self._root,
-            f_parent=f_solar_system_sim,
+            f_parent=f_houses_sim_summery,
+            rsgp_hs=self._rsgp_hs,
+        )
+
+        f_solar_system_sim_summery = ttk.Frame(n_main)
+        n_main.add(f_solar_system_sim_summery, text='Solar System Simulation Summery')
+
+        SSSSummeryTabView(
+            root=self._root,
+            f_parent=f_solar_system_sim_summery,
             rsgp_sss=self._rsgp_sss,
         )
 
-        f_power_manager = ttk.Frame(n_main)
-        n_main.add(f_power_manager, text='Power Management')
+        f_power_mng_summery = ttk.Frame(n_main)
+        n_main.add(f_power_mng_summery, text='Power Management Summery')
 
-        PMTabView(
+        PMSummeryTabView(
             root=self._root,
-            f_parent=f_power_manager,
+            f_parent=f_power_mng_summery,
             rsgp_pm=self._rsgp_pm,
         )
 
@@ -474,8 +483,62 @@ class HouseControlsWindowView:
         self._root.after(dt, self._update_ui, dt)
 
 
-class SSSTabView:
-    """Solar system simulation tab view.
+class HSSummeryTabView:
+    """Houses simulation summery tab view.
+
+    Args:
+        root (tk.Tk): Tk window root.
+        f_parent (ttk.Frame): Parent fram, master of the main frame.
+        rsgp_hs (HousesSimulator): Solar system simulator instance.
+
+    """
+
+    def __init__(self, root: tk.Tk, f_parent: ttk.Frame, rsgp_hs: HousesSimulator):
+        self._root = root
+        self._rsgp_hs = rsgp_hs
+
+        f_main = ttk.Frame(f_parent, padding=10)
+        f_main.pack(fill="both", expand=True)
+
+        self._build_header(f_main)
+        self._build_body(f_main)
+
+        self._update_ui(100)
+
+    def _build_header(self, f_parent: ttk.Frame):
+        f_main = ttk.Frame(f_parent)
+        f_main.pack(fill="x", pady=(0, 10))
+
+        ttk.Label(
+            f_main,
+            text="Houses Simulation",
+            font=("Arial", 18),
+        ).pack(side="left")
+
+    def _build_body(self, f_parent: ttk.Frame):
+        f_main = ttk.Frame(f_parent)
+        f_main.pack(fill="both", expand=True, pady=20, padx=20)
+        f_main.place(relx=.5, rely=.5, anchor='center')
+
+        self.output_text = ttk.Text(
+            f_main,
+            height=30,
+            width=140,
+            font=("Arial", 12),
+        )
+        self.output_text.pack(fill='both')
+
+    def _update_ui(self, dt: int):
+        if self._rsgp_hs.is_running():
+            # Display real-time wattage output
+            self.output_text.delete(1.0, ttk.END)
+            self.output_text.insert(
+                ttk.END, chars=self._rsgp_hs.summary())
+        self._root.after(dt, self._update_ui, dt)
+
+
+class SSSSummeryTabView:
+    """Solar system simulation summery tab view.
 
     Args:
         root (tk.Tk): Tk window root.
@@ -514,7 +577,7 @@ class SSSTabView:
         self.output_text = ttk.Text(
             f_main,
             height=30,
-            width=100,
+            width=140,
             font=("Arial", 12),
         )
         self.output_text.pack(fill='both')
@@ -528,8 +591,8 @@ class SSSTabView:
         self._root.after(dt, self._update_ui, dt)
 
 
-class PMTabView:
-    """Power management tab view.
+class PMSummeryTabView:
+    """Power management summery tab view.
 
     Args:
         root (tk.Tk): Tk window root.

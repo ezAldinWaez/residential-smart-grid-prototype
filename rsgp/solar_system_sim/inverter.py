@@ -1,5 +1,3 @@
-"""Solar system simulated inverter."""
-
 from datetime import datetime
 
 import pvlib
@@ -12,24 +10,7 @@ from ..config.settings import settings
 
 
 @expose
-class PowerInterface:
-    """Power interface for the inverter."""
-    is_connected: bool  #: bool: The connection status
-    exchange_power: float  #: float: The total power exchanged (+ === export, - === import) [Watt]
-
-    def __init__(self):
-        self.is_connected = True
-        self.exchange_power = 0.0
-
-
-@expose
 class Inverter:
-    """Solar system simulated inverter.
-
-    Args:
-        - battery (Battery): The battery object connected to the inverter
-        - panels (Panels): The panels object connected to the inverter
-    """
     conf: InverterConf  #: InverterConf: The inverter configuration
 
     load_line: bool  #: bool: Flag for load line state (connected=1, disconnected=0)
@@ -62,17 +43,6 @@ class Inverter:
         self.battery_exchange_power = 0.0
 
     def dc_to_ac(self, p_dc: float) -> float:
-        """
-        Calculates the AC power produced from a given DC input power.
-
-        Uses the `pvlib.inverter.pvwatts` model.
-
-        Args:
-            p_dc (float): DC power available to the inverter [Watt]
-
-        Returns:
-            float: AC power produced [Watt], capped at `self.Paco`
-        """
         if p_dc <= 0:
             return 0.0
         ac_power_calculated = pvlib.inverter.pvwatts(pdc=p_dc, pdc0=self.conf.pdco)
@@ -80,17 +50,6 @@ class Inverter:
         return actual_ac_power
 
     def ac_to_needed_dc(self, p_ac_target: float) -> float:
-        """
-        Calculates the DC power required to produce a target AC output power.
-
-        Uses the simplified `eta_inv_ovr` efficiency factor for this reverse calculation.
-
-        Args:
-            p_ac_target (float): Target AC output power [Watt]
-
-        Returns:
-            float: Required DC input power [Watt]
-        """
         if p_ac_target <= 0:
             return 0.0
         p_ac_target_capped = min(p_ac_target, self.conf.paco)
@@ -98,17 +57,6 @@ class Inverter:
         return p_dc_required
 
     def operate(self, timestamp: datetime, dt_seconds: float):
-        """Simulate the inverter's operation for a given time step.
-
-        This method orchestrates the power flow within the solar system,
-        considering the inverter's mode, charge priority, and the availability
-        of solar power, battery charge, and utility connection.
-
-        Args:
-            - timestamp (datetime): The current simulation timestamp
-            - dt_seconds (float): The time step duration in seconds
-        """
-
         initial_panels_dc_power = self._panels.calc_total_power(timestamp)
         required_load_dc_power = self.ac_to_needed_dc(
             self.conf.pnt + (self.load_power if self.load_line else 0))
@@ -207,4 +155,4 @@ class Inverter:
         self.battery_exchange_power = battery_exchange_power
 
     def __str__(self):
-        return f"Inverter(load_power={self.load_power}, utility_exchange_power={self.utility_exchange_power}, panels_power={self.panels_power}, battery_exchange_power={self.battery_exchange_power})"
+        return f"Inverter(load_power={self.load_power:.3f}, utility_exchange_power={self.utility_exchange_power:.3f}, panels_power={self.panels_power:.3f}, battery_exchange_power={self.battery_exchange_power:.3f})"

@@ -1,7 +1,3 @@
-"""Device."""
-
-# TODO: Document this module.
-
 import random
 
 from .data import DeviceConf, RegularDevices
@@ -14,7 +10,6 @@ import numpy as np
 class DeviceClass:
     name: str  #: str: Device class name
     conf: DeviceConf  #: DeviceConf: Device class static configuration
-
     load: float  #: float: Total load for all device instances
 
     def __init__(self, device_name: str):

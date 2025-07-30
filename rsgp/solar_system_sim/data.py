@@ -1,12 +1,9 @@
-"""Solar system simulation data."""
-
 from dataclasses import dataclass
 from enum import Enum
 
 
 @dataclass
 class PanelsConf:
-    """Panels configuration data type."""
     num_panels: int  #: int: Panels count
     panel_area: float  #: float: Panel area [m^2]
     panel_efficiency: float  #: float: Panel efficiency multiplier
@@ -17,16 +14,11 @@ class PanelsConf:
         assert 0 < self.panel_efficiency <= 1
 
     def __str__(self):
-        return (
-            "\n"
-            f"\t\t- Panels Count: {self.num_panels}\n"
-            f"\t\t- Panel Area: {self.panel_area}\n"
-            f"\t\t- Panel Efficiency: {self.panel_efficiency}"
-        )
+        return f"PanelsConf(num_panels={self.num_panels}, panel_area={self.panel_area}, panel_efficiency={self.panel_efficiency})"
 
 
 @dataclass
-class BattConf:
+class BatteryConf:
     """Battery configuration data type."""
     capacity: float  #: float: Total capacity of the battery [Wh]
     charge_efficiency: float  #: float: Efficiency of charging [%]
@@ -40,13 +32,7 @@ class BattConf:
         assert self.max_discharge_power > 0
 
     def __str__(self):
-        return (
-            "\n"
-            f"\t\t- Capacity: {self.capacity}\n"
-            f"\t\t- Charge Efficiency: {self.charge_efficiency}\n"
-            f"\t\t- Max Charge Power: {self.max_charge_power}\n"
-            f"\t\t- Max Discharge Power: {self.max_discharge_power}"
-        )
+        return f"BatteryConf(capacity={self.capacity}, charge_efficiency={self.charge_efficiency}, max_charge_power={self.max_charge_power}, max_discharge_power={self.max_discharge_power})"
 
 
 class InverterMode(Enum):
@@ -81,14 +67,4 @@ class InverterConf:
         assert 0 < self.eta_inv_ovr <= 1
 
     def __str__(self):
-        return (
-            "\n"
-            f"\t\t- Inverter Mode: {self.mode}\n"
-            f"\t\t- Battery Charge Priority: {self.charge_priority}\n"
-            f"\t\t- AC Power Rating: {self.paco}\n"
-            f"\t\t- DC Power Rating: {self.pdco}\n"
-            f"\t\t- Night Consumption: {self.pnt}\n"
-            f"\t\t- Nominal Efficiency: {self.eta_inv_nom}\n"
-            f"\t\t- Reference Efficiency: {self.eta_inv_ref}\n"
-            f"\t\t- Overall Efficiency: {self.eta_inv_ovr}"
-        )
+        return f"InverterConf(mode={self.mode}, charge_priority={self.charge_priority}, paco={self.paco}, pdco={self.pdco}, pnt={self.pnt}, eta_inv_nom={self.eta_inv_nom}, eta_inv_ref={self.eta_inv_ref}, eta_inv_ovr={self.eta_inv_ovr})"

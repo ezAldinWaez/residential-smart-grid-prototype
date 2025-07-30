@@ -15,28 +15,27 @@ from ..remote_object import expose
 
 @expose
 class Panels:
-    """Solar system simulated panels."""
     conf: PanelsConf  #: PanelsConf: The panels configuration
     pv_loc: Location  #: Location: The `pvlib` location info from the NSRDB meta data
-
     # TODO: make that as data type in .data; an interface between panels and nsrdb data
     pv_data: pd.Series  #: Series: The data row from the NSRDB for the current timestamp
-
     total_power: float  #: float: The theoretical total power produced by the panels [Watt]
 
     def __init__(self):
-        self.pv_loc = Location(
-            latitude=nsrdb_location['latitude'],
-            longitude=nsrdb_location['longitude'],
-            tz=nsrdb_location['timezone'],
-        )
-        self.pv_data = None
-
         self.conf = PanelsConf(
             num_panels=settings.PANELS_NUM,
             panel_area=settings.PANEL_AREA,
             panel_efficiency=settings.PANEL_EFFICIENCY,
         )
+
+        self.pv_loc = Location(
+            latitude=nsrdb_location['latitude'],
+            longitude=nsrdb_location['longitude'],
+            tz=nsrdb_location['timezone'],
+        )
+
+        self.pv_data = None
+
         self.total_power = 0.0
 
     def calc_total_power(self, timestamp: datetime):
@@ -69,4 +68,4 @@ class Panels:
         return self.total_power
 
     def __str__(self):
-        return f"Panels(total_power={self.total_power:.2f}W)"
+        return f"Panels(total_power={self.total_power:.2f})"

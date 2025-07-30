@@ -11,14 +11,13 @@ def find_nearest_timestamp_row(
     """Find datetime row with timestamp closest to the target timestamp.
 
     Args:
-        dataframe (DataFrame): pandas dataframe with `Timestamp` column
-        target_timestamp (Timestamp): Timestamp to search for
+        * dataframe (DataFrame): pandas dataframe with `Timestamp` column
+        * target_timestamp (Timestamp): Timestamp to search for
 
     Returns:
         Series: The row from df with nearest timestamp
     """
-    time_diffs = (dataframe['Timestamp'] - target_timestamp).abs()
-    nearest_idx = time_diffs.idxmin()
+    nearest_idx = (dataframe['Timestamp'] - target_timestamp).abs().idxmin()
     return dataframe.loc[nearest_idx]
 
 
@@ -26,8 +25,8 @@ def log_record_into_csv(csv_file_path, /, **record: dict[str, str]) -> None:
     """Log a record into a CSV file.
 
     Args:
-        - csv_file_path (str): Path to the CSV file
-        - record (dict[str, Any]): ...
+        * csv_file_path (str): Path to the CSV file
+        * record (dict[str, Any]): ...
     """
     with open(csv_file_path, mode="a", encoding="utf-8") as f:
         if f.tell() == 0:

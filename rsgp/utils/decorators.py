@@ -9,7 +9,7 @@ def log_excution(func: callable) -> callable:
     """Decorator to log the execution of the function.
 
     Args:
-        func (callable): The function to log
+        * func (callable): The function to log
 
     Returns:
         callable: The decorated function
@@ -30,10 +30,9 @@ def log_start_end_error(start_msg: str = None, finish_msg: str = None, error_msg
     """Decorator generator to log when the function start and end and handle errors.
 
     Args:
-        start_msg (str, optional): The message to log when the function start
-        finish_msg (str, optional): The message to log when the function finish
-        error_msg (str, optional): The message to log when the function raise an error
-
+        * start_msg (str, optional): The message to log when the function start
+        * finish_msg (str, optional): The message to log when the function finish
+        * error_msg (str, optional): The message to log when the function raise an error
 
     Returns:
         callable: The generated decorator

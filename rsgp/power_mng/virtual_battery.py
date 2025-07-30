@@ -1,5 +1,3 @@
-"""Virtual Battery to be used for each house."""
-
 from ..remote_object import expose
 
 

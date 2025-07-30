@@ -6,13 +6,13 @@ from .power_mng.manager import PowerManager
 from .remote_object.server import RemoteObjectServer
 
 houses_sim = HousesSimulator()
-houses_sim.start(dt=100)
+houses_sim.start(dt=200)
 
 solar_system_sim = SolarSystemSimulator()
-solar_system_sim.start(dt=100)
+solar_system_sim.start(dt=200)
 
 power_manager = PowerManager(houses_sim, solar_system_sim)
-power_manager.start(dt=100)
+power_manager.start(dt=200)
 
 remote_object_server = RemoteObjectServer(houses_sim, solar_system_sim, power_manager)
 remote_object_server.start()

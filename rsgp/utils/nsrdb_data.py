@@ -56,7 +56,7 @@ def get_nsrdb_location(nsrdb_meta: pd.DataFrame) -> dict[str, Any]:
     """Get location basic info based on NSRDB dataset metadata.
 
     Args:
-        nsrdb_meta (pd.DataFrame): NSRDB dataset metadata
+        * nsrdb_meta (pd.DataFrame): NSRDB dataset metadata
 
     Returns:
         dict[str, Any]: Location basic info: 'latitude', 'longitude', and 'timezone'
@@ -70,6 +70,6 @@ def get_nsrdb_location(nsrdb_meta: pd.DataFrame) -> dict[str, Any]:
     return {'latitude': lat, 'longitude': lng, 'timezone': tz}
 
 
-nsrdb_meta, nsrdb_data = get_nsrdb_data()
-nsrdb_location = get_nsrdb_location(nsrdb_meta)
-nsrdb_start_point: datetime = nsrdb_data["Timestamp"].min()
+nsrdb_meta, nsrdb_data = get_nsrdb_data()  #: tuple[DataFrame, DataFrame]: NSRDB meta data and data
+nsrdb_location = get_nsrdb_location(nsrdb_meta)  #: dict[str, Any]: NSRDB location
+nsrdb_start_point: datetime = nsrdb_data["Timestamp"].min()  #: datetime: NSRDB start point

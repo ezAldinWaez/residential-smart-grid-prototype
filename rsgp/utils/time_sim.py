@@ -1,4 +1,4 @@
-"""Time simulator."""
+"""RSGP Time simulator."""
 
 # TODO: Document this module.
 
@@ -11,19 +11,12 @@ from .nsrdb_data import nsrdb_location, nsrdb_start_point
 
 @expose
 class TimeSimulator:
-    """Time simulator."""
-
-    tz: timezone  #: timezone: ...
-    start_point: datetime  #: datetime: ...
-
     def __init__(self):
         self._started = False
         self._start_at: float = None
         self._paused_at: float = None
         self._pause_duration = 0.0
-
-        self.tz = nsrdb_location["timezone"]
-        self.start_point = nsrdb_start_point
+        self._start_point = nsrdb_start_point
 
     def get_elapsed(self) -> float:
         assert self._started
@@ -39,11 +32,12 @@ class TimeSimulator:
         if not elapsed:
             elapsed = self.get_elapsed()
 
-        return self.start_point + timedelta(seconds=elapsed)
+        return self._start_point + timedelta(seconds=elapsed)
 
     def start(self) -> None:
-        self._started = True
-        self._start_at = datetime.now().timestamp()
+        if not self._started:
+            self._started = True
+            self._start_at = datetime.now().timestamp()
 
     def pause(self) -> None:
         if self._paused_at is None:

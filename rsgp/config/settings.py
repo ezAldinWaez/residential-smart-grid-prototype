@@ -3,16 +3,18 @@
 from datetime import datetime
 from pathlib import Path
 
-from .constants import SECONDS_IN_HOUR, BYTES_IN_MB
+from .constants import SECONDS_IN_MINUTE, BYTES_IN_MB
 from ..solar_system_sim.data import InverterMode, ChargePriority
+from ..remote_object import expose
 
 
+@expose
 class Settings:
     """Settings."""
     # =================================================================================================================
     # TIME SIMULATION SETTINGS
     # =================================================================================================================
-    TIME_FACTOR = SECONDS_IN_HOUR  # The time factor to multiply the simulation time with to get the real time
+    TIME_FACTOR = SECONDS_IN_MINUTE * 15  # The time factor to multiply the simulation time with to get the real time
 
     # =================================================================================================================
     # HOUSES SIMULATION SETTINGS

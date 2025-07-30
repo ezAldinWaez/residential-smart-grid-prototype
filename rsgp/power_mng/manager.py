@@ -1,7 +1,3 @@
-"""Power manager."""
-
-# TODO: Document this module.
-
 from __future__ import annotations
 from typing import TYPE_CHECKING
 from threading import Thread

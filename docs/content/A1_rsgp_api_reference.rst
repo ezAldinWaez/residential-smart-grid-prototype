@@ -4,13 +4,6 @@
 
 RSGP API Reference
 ==================
-Time Simulation
----------------
-.. automodule:: rsgp.time_sim.simulator
-  :members:
-  :undoc-members:
-  :show-inheritance:
-
 Houses Loads Simulation
 -----------------------
 .. automodule:: rsgp.houses_loads_sim.simulator
@@ -100,6 +93,11 @@ Utilities
   :show-inheritance:
 
 .. automodule:: rsgp.utils.helpers
+  :members:
+  :undoc-members:
+  :show-inheritance:
+
+.. automodule:: rsgp.utils.time_sim
   :members:
   :undoc-members:
   :show-inheritance:

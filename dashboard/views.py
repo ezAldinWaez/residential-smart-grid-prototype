@@ -9,7 +9,7 @@ import ttkbootstrap as ttk
 
 from .utils import build_scrollable_frame
 if TYPE_CHECKING:
-    from ..rsgp.time_sim.simulator import TimeSimulator
+    from ..rsgp.utils.time_sim import TimeSimulator
     from ..rsgp.houses_loads_sim.simulator import HousesLoadsSimulator
     from ..rsgp.solar_system_sim.simulator import SolarSystemSimulator
     from ..rsgp.power_mng.manager import PowerManager

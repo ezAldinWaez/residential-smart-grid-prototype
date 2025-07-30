@@ -6,7 +6,7 @@ from datetime import datetime, timedelta, timezone
 
 from ..remote_object import expose
 from ..config.settings import settings
-from ..utils.nsrdb_data import nsrdb_location, nsrdb_start_point
+from .nsrdb_data import nsrdb_location, nsrdb_start_point
 
 
 @expose
@@ -54,3 +54,6 @@ class TimeSimulator:
             last_pause_duration = datetime.now().timestamp() - self._paused_at
             self._pause_duration += last_pause_duration
             self._paused_at = None
+
+time_sim = TimeSimulator()
+time_sim.start()

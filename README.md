@@ -8,7 +8,7 @@ A comprehensive simulation system for modeling and managing energy distribution 
 
 -   **Time Simulation Engine** - Real-time simulation with configurable time acceleration
 -   **Solar System Modeling** - Realistic PV panels, battery storage, and inverter simulation
--   **Residential Load Simulation** - Device-level energy consumption modeling for multiple houses
+-   **Houses Simulation** - Device-level energy consumption modeling for multiple houses
 -   **Intelligent Power Management** - Priority-based energy distribution and load balancing
 -   **Remote Control Interface** - Distributed system control via Pyro5
 
@@ -37,7 +37,6 @@ graph TB
   end
 
   subgraph RSGP[RSGP]
-    RSGP_TS([Time Simulation])
     RSGP_SSS([Solar System Simulation])
     RSGP_PM([Power Management])
     RSGP_HLS([Houses Loads Simulation])
@@ -67,7 +66,6 @@ graph TB
   end
 
   subgraph RSGP[RSGP]
-    RSGP_TS([Time Simulation])
     subgraph RSGP_SSS[Solar System Simulation]
       subgraph  RSGP_SSS_I[Inverter]
         RSGP_SSS_I_IC([Inverter Controller])
@@ -225,7 +223,6 @@ Explore the Jupyter notebooks in `notebooks/` for:
 ```
 residential-smart-grid/
 ├── rsgp/                      # Main simulation package
-│   ├── time_sim/             # Time simulation engine
 │   ├── solar_system_sim/     # Solar PV system modeling
 │   ├── houses_loads_sim/     # Residential load simulation
 │   ├── power_mng/           # Power management algorithms

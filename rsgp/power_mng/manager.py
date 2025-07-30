@@ -12,16 +12,15 @@ from ..remote_object import expose
 from ..config.settings import settings
 from ..utils.decorators import log_start_end_error
 from ..utils.helpers import log_record_into_csv
+from ..utils.time_sim import time_sim
 if TYPE_CHECKING:
-    from ..time_sim.simulator import TimeSimulator
     from ..houses_loads_sim.simulator import HousesLoadsSimulator
     from ..solar_system_sim.simulator import SolarSystemSimulator
 
 
 @expose
 class PowerManager:
-    def __init__(self, time_sim: TimeSimulator, houses_loads_sim: HousesLoadsSimulator, solar_system_sim: SolarSystemSimulator):
-        self._time_sim = time_sim
+    def __init__(self, houses_loads_sim: HousesLoadsSimulator, solar_system_sim: SolarSystemSimulator):
         self._houses_loads_sim = houses_loads_sim
         self._solar_system_sim = solar_system_sim
         self._running = False
@@ -72,8 +71,8 @@ class PowerManager:
         while not self.switched:
             continue
 
-        elapsed = self._time_sim.get_elapsed()
-        timestamp = self._time_sim.get_timestamp(elapsed)
+        elapsed = time_sim.get_elapsed()
+        timestamp = time_sim.get_timestamp(elapsed)
 
         loads = [house.load for house in self._houses_loads_sim.houses]
         solar_power = self._solar_system_sim.inverter.cycle_used_solar

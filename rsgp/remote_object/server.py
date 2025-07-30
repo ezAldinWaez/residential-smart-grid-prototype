@@ -8,8 +8,8 @@ from Pyro5.api import Daemon
 
 from ..config.settings import settings
 from ..utils.logger import logger
+from ..utils.time_sim import time_sim
 if TYPE_CHECKING:
-    from ..time_sim.simulator import TimeSimulator
     from ..houses_loads_sim.simulator import HousesLoadsSimulator
     from ..solar_system_sim.simulator import SolarSystemSimulator
     from ..power_mng.manager import PowerManager
@@ -21,7 +21,7 @@ class RemoteObjectServer:
     daemon: Daemon  #: Daemon: ...
     thread: Thread  #: Thread: ...
 
-    def __init__(self, time_sim: TimeSimulator, houses_loads_sim: HousesLoadsSimulator,
+    def __init__(self, houses_loads_sim: HousesLoadsSimulator,
                  solar_system_sim: SolarSystemSimulator, power_manager: PowerManager):
         """Initialize the remote interface with simulation objects.
 
@@ -31,7 +31,6 @@ class RemoteObjectServer:
             solar_system_sim (SolarSystemSimulator): Solar system simulator.
             power_manager (PowerManager): Power manager.
         """
-        self._time_sim = time_sim
         self._houses_loads_sim = houses_loads_sim
         self._solar_system_sim = solar_system_sim
         self._power_manager = power_manager
@@ -47,7 +46,7 @@ class RemoteObjectServer:
         )
 
         # Register time simulator
-        self.daemon.register(self._time_sim, "time_sim")
+        self.daemon.register(time_sim, "time_sim")
 
         # Register houses loads simulator and its components
         self.daemon.register(self._houses_loads_sim, "houses_loads_sim")

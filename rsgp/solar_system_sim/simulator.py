@@ -2,8 +2,7 @@
 
 # TODO: Document this module.
 
-from __future__ import annotations
-from typing import Callable, TYPE_CHECKING
+from typing import Callable
 from threading import Thread
 import time
 
@@ -13,9 +12,8 @@ from .inverter import Inverter
 from ..config.settings import settings
 from ..utils.decorators import log_start_end_error
 from ..utils.helpers import log_record_into_csv
+from ..utils.time_sim import time_sim
 from ..remote_object import expose
-if TYPE_CHECKING:
-    from ..time_sim.simulator import TimeSimulator
 
 
 @expose
@@ -26,8 +24,7 @@ class SolarSystemSimulator:
 
     post_inverter_operate_hook: Callable[[], None]  #: Callable: ...
 
-    def __init__(self, time_sim: TimeSimulator):
-        self._time_sim = time_sim
+    def __init__(self):
 
         self.panels = Panels()
         self.battery = Battery()
@@ -66,7 +63,7 @@ class SolarSystemSimulator:
             time.sleep(self._dt / 1000.0)
 
     def _update_step(self) -> None:
-        timestamp = self._time_sim.get_timestamp()
+        timestamp = time_sim.get_timestamp()
 
         dt_seconds = (self._dt / 1000.0) * settings.TIME_FACTOR
 

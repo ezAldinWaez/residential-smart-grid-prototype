@@ -2,8 +2,6 @@
 
 # TODO: Document this module.
 
-from __future__ import annotations
-from typing import TYPE_CHECKING
 from threading import Thread
 import time
 
@@ -12,10 +10,8 @@ from rsgp.utils.helpers import log_record_into_csv
 from .house import House
 from ..config.settings import settings
 from ..utils.decorators import log_start_end_error
+from ..utils.time_sim import time_sim
 from ..remote_object import expose
-
-if TYPE_CHECKING:
-    from ..time_sim.simulator import TimeSimulator
 
 
 @expose
@@ -24,8 +20,7 @@ class HousesLoadsSimulator:
     load: float  #: float: Total load for the system
     houses: list[House]  #: list[House]: Houses in the system
 
-    def __init__(self, time_sim: TimeSimulator):
-        self._time_sim = time_sim
+    def __init__(self):
         self.num_houses = settings.HOUSES_NUM
         self.load = 0.0
         self.houses = [House(idx) for idx in range(self.num_houses)]
@@ -48,7 +43,7 @@ class HousesLoadsSimulator:
         return self.houses[idx]
 
     def get_time_sim_elapsed(self) -> float:
-        return self._time_sim.get_elapsed()
+        return time_sim.get_elapsed()
 
     def start(self, dt: int) -> None:
         self._running = True
@@ -74,8 +69,8 @@ class HousesLoadsSimulator:
             time.sleep(self._dt/1000)
 
     def _update_step(self) -> None:
-        elapsed = self._time_sim.get_elapsed()
-        timestamp = self._time_sim.get_timestamp(elapsed)
+        elapsed = time_sim.get_elapsed()
+        timestamp = time_sim.get_timestamp(elapsed)
 
         sl = 0.0
         for house in self.houses:

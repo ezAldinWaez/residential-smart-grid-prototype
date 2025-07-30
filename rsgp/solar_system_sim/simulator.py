@@ -2,7 +2,6 @@
 
 # TODO: Document this module.
 
-from typing import Callable
 from threading import Thread
 import time
 
@@ -21,8 +20,6 @@ class SolarSystemSimulator:
     panels: Panels  #: Panels: ...
     battery: Battery  #: Battery: ...
     inverter: Inverter  #: Inverter: ...
-
-    post_inverter_operate_hook: Callable[[], None]  #: Callable: ...
 
     def __init__(self):
 
@@ -69,17 +66,20 @@ class SolarSystemSimulator:
 
         self.inverter.operate(timestamp, dt_seconds)
 
-        # To ensure the power manager triggers only after the inverter has calculated the necessary variables needed
-        if self.post_inverter_operate_hook is not None:
-            self.post_inverter_operate_hook()
-
         # TODO: re-connect the load line after a set interval
 
         if settings.CSV_LOGGING:
             log_record_into_csv(
                 settings.CSV_SSS_LOG_PATH,
                 timestamp=f"{timestamp}",
-                batt_charge_level=f"{self.inverter._battery.charge_level:.2f}",
+                panels_total_power=f"{self.panels.total_power:.3f}",
+                battery_charge_level=f"{self.battery.charge_level:.3f}",
+                inverter_panels_power=f"{self.inverter.panels_power:.3f}",
+                inverter_battery_exchange_power=f"{self.inverter.battery_exchange_power:.3f}",
+                inverter_load_line=f"{self.inverter.load_line:d}",
+                inverter_load_power=f"{self.inverter.load_power:.3f}",
+                inverter_utility_line=f"{self.inverter.utility_line:d}",
+                inverter_utility_exchange_power=f"{self.inverter.utility_exchange_power:.3f}",
             )
 
     def summary(self) -> str:

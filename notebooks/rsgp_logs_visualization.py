@@ -46,7 +46,7 @@ def _(data, file_browser, mo):
 @app.cell
 def _(data, mo):
     field_options = (
-        [col for col in data.columns if col not in ["Time of Day", "Timestamp"]]
+        [col for col in data.columns if col not in ["timestamp"]]
         if data is not None
         else None
     )
@@ -68,7 +68,7 @@ def _(alt, data, field_selector, mo, pd):
     if data is None:
         chart = None
     else:
-        _time_start = data["Timestamp"].min()
+        _time_start = data["timestamp"].min()
         _time_end = _time_start + pd.Timedelta(weeks=1)
 
         _main_chart = (
@@ -76,7 +76,7 @@ def _(alt, data, field_selector, mo, pd):
             .mark_line(interpolate="basis")  # also try 'step'.
             .encode(
                 x=alt.X(
-                    "Timestamp:T",
+                    "timestamp:T",
                     scale=alt.Scale(
                         domain=[_time_start, _time_end],
                         type="utc",
@@ -86,14 +86,14 @@ def _(alt, data, field_selector, mo, pd):
                 ),
                 y=alt.Y(f"{field_selector.value}:Q",
                         title=field_selector.value),
-                tooltip=["Timestamp:T", field_selector.value],
+                tooltip=["timestamp:T", field_selector.value],
             )
             .properties(
                 width=850, height=400, title=f"{field_selector.value} over Time"
             )
         )
 
-        _timeline_df = data[["Timestamp", "Time of Day"]].copy()
+        _timeline_df = data[["timestamp"]].copy()
         _timeline_df["y"] = 0
 
         _mode_timeline = (
@@ -101,19 +101,14 @@ def _(alt, data, field_selector, mo, pd):
             .mark_rule()
             .encode(
                 x=alt.X(
-                    "Timestamp:T",
+                    "timestamp:T",
                     scale=alt.Scale(
                         domain=[_time_start, _time_end],
                         type="utc",
                     ),
                     axis=alt.Axis(format="%y-%m-%d"),
                 ),
-                color=alt.Color(
-                    "Time of Day:N",
-                    scale=alt.Scale(domain=["Night", "Day", "Unknown"]),
-                    legend=alt.Legend(title="Time of Day"),
-                ),
-                tooltip=["Timestamp:T", "Time of Day:N"],
+                tooltip=["timestamp:T"],
             )
             .properties(width=850, height=50)
             .interactive()
@@ -123,7 +118,7 @@ def _(alt, data, field_selector, mo, pd):
             _main_chart, _mode_timeline).resolve_scale(x="shared")
 
     mo.vstack(
-        [mo.md("## NSRDB Chart"), field_selector, chart]
+        [mo.md("## RSGP Logs Chart"), field_selector, chart]
     ) if data is not None else None
     return
 

@@ -6,20 +6,20 @@ A comprehensive simulation system for modeling and managing energy distribution 
 
 ### Core Simulation Components
 
--   **Time Simulation Engine** - Real-time simulation with configurable time acceleration
--   **Solar System Modeling** - Realistic PV panels, battery storage, and inverter simulation
--   **Houses Simulation** - Device-level energy consumption modeling for multiple houses
--   **Intelligent Power Management** - Priority-based energy distribution and load balancing
--   **Remote Control Interface** - Distributed system control via Pyro5
+- **Time Simulation Engine** - Real-time simulation with configurable time acceleration
+- **Solar System Modeling** - Realistic PV panels, battery storage, and inverter simulation
+- **Houses Simulation** - Device-level energy consumption modeling for multiple houses
+- **Intelligent Power Management** - Priority-based energy distribution and load balancing
+- **Remote Control Interface** - Distributed system control via Pyro5
 
 ### Key Capabilities
 
--   Multi-threaded concurrent simulation architecture
--   Real weather data integration (NSRDB)
--   Advanced inverter modeling with multiple operating modes
--   Dynamic load shedding and utility line management
--   Comprehensive logging and data export
--   Real-time dashboard for monitoring and control
+- Multi-threaded concurrent simulation architecture
+- Real weather data integration (NSRDB)
+- Advanced inverter modeling with multiple operating modes
+- Dynamic load shedding and utility line management
+- Comprehensive logging and data export
+- Real-time dashboard for monitoring and control
 
 ## 🏗️ Architecture
 
@@ -67,18 +67,12 @@ graph TB
 
   subgraph RSGP[RSGP]
     subgraph RSGP_SSS[Solar System Simulation]
-      subgraph  RSGP_SSS_I[Inverter]
-        RSGP_SSS_I_IC([Inverter Controller])
-        RSGP_SSS_I_UI([Utility Interface])
-        RSGP_SSS_I_LI([Load Interface])
-      end
+      RSGP_SSS_I([Inverter])
       RSGP_SSS_B([Battery])
       RSGP_SSS_P([Panels])
     end
     subgraph RSGP_PM[Power Management]
-      RSGP_PM_LM([Load Management])
-      RSGP_PM_UM([Utility Management])
-      RSGP_PM_C([Power Manager Controller])
+      RSGP_PM_([...])
     end
     subgraph RSGP_HS[Houses Simulation]
       subgraph RSGP_HS_H1[House 1]
@@ -100,10 +94,8 @@ graph TB
     D_V([Views])
   end
 
-  RSGP_SSS_P & RSGP_SSS_B <--Data--> RSGP_SSS_I_IC <--Data--> RSGP_SSS_I_UI & RSGP_SSS_I_LI
-  RSGP_PM_LM <--Data--> RSGP_PM_C <--Data--> RSGP_PM_UM
-  RSGP_SSS_I_UI <--Data--> RSGP_PM_UM <--Data--> RSGP_HS_H1 & RSGP_HS_H2 & RSGP_HS_H3
-  RSGP_SSS_I_LI <--Data--> RSGP_PM_LM <--Data--> RSGP_HS_H1 & RSGP_HS_H2 & RSGP_HS_H3
+  RSGP_SSS_P & RSGP_SSS_B <--Data--> RSGP_SSS_I
+  RSGP_SSS_I <--Data--> RSGP_PM_ <--Data--> RSGP_HS_H1 & RSGP_HS_H2 & RSGP_HS_H3
   RSGP_HS_H1 & RSGP_HS_H2 & RSGP_HS_H3 <--Data--> RSGP_IOT <--Electric Signals--> HHC_H1 & HHC_H2 & HHC_H3
   RSGP_RO <--Data--> D_A
 ```
@@ -112,34 +104,34 @@ graph TB
 
 ### Prerequisites
 
--   Python 3.8+
--   pip package manager
+- Python 3.8+
+- pip package manager
 
 ### Installation
 
 1. **Clone the repository**
 
-    ```bash
-    git clone <repository-url>
-    cd residential-smart-grid
-    ```
+   ```bash
+   git clone <repository-url>
+   cd residential-smart-grid
+   ```
 
 2. **Install dependencies**
 
-    ```bash
-    pip install -r requirements.txt
-    ```
+   ```bash
+   pip install -r requirements.txt
+   ```
 
 3. **Run the simulation**
 
-    ```bash
-    python -m rsgp
-    ```
+   ```bash
+   python -m rsgp
+   ```
 
 4. **Launch the dashboard** (in a separate terminal)
-    ```bash
-    python -m dashboard
-    ```
+   ```bash
+   python -m dashboard
+   ```
 
 ### First Run
 
@@ -188,33 +180,33 @@ TIME_FACTOR = 3600  # 1 hour simulation = 1 second real time
 
 Explore the Jupyter notebooks in `notebooks/` for:
 
--   Solar irradiance visualization
--   System performance analysis
--   Energy flow patterns
--   Inverter data analysis
+- Solar irradiance visualization
+- System performance analysis
+- Energy flow patterns
+- Inverter data analysis
 
 ## 📊 System Specifications
 
 ### Solar System
 
--   **Solar Panels**: 80 panels × 1.6m² × 15% efficiency
--   **Battery Storage**: 100 kWh capacity with 95% efficiency
--   **Inverter**: 15kW AC rating with multiple operating modes
--   **Weather Data**: NSRDB integration for realistic solar irradiance
+- **Solar Panels**: 80 panels × 1.6m² × 15% efficiency
+- **Battery Storage**: 100 kWh capacity with 95% efficiency
+- **Inverter**: 15kW AC rating with multiple operating modes
+- **Weather Data**: NSRDB integration for realistic solar irradiance
 
 ### Residential Loads
 
--   **Houses**: 12 residential units
--   **Load Modeling**: Device-level ADSR envelope patterns
--   **Power Control**: Individual load line and utility line management
--   **Load Range**: Dynamic consumption based on time-of-day patterns
+- **Houses**: 12 residential units
+- **Load Modeling**: Device-level ADSR envelope patterns
+- **Power Control**: Individual load line and utility line management
+- **Load Range**: Dynamic consumption based on time-of-day patterns
 
 ### Power Management
 
--   **Priority System**: Solar → Utility → Battery → Load Shedding
--   **Virtual Batteries**: Fair energy allocation per house
--   **Load Balancing**: Real-time distribution optimization
--   **Grid Interface**: Utility connection status management
+- **Priority System**: Solar → Utility → Battery → Load Shedding
+- **Virtual Batteries**: Fair energy allocation per house
+- **Load Balancing**: Real-time distribution optimization
+- **Grid Interface**: Utility connection status management
 
 ## 🔧 Development
 
@@ -237,25 +229,25 @@ residential-smart-grid/
 
 ### Key Dependencies
 
--   **pvlib**: Solar irradiance and PV modeling
--   **Pyro5**: Distributed object communication
--   **numpy/pandas**: Scientific computing
--   **tkinter/ttkbootstrap**: GUI framework
--   **sphinx**: Documentation generation
+- **pvlib**: Solar irradiance and PV modeling
+- **Pyro5**: Distributed object communication
+- **numpy/pandas**: Scientific computing
+- **tkinter/ttkbootstrap**: GUI framework
+- **sphinx**: Documentation generation
 
 ## 📚 Documentation
 
 Comprehensive documentation is available in the `docs/` directory:
 
--   **Build HTML docs**: `make --directory=docs html`
--   **View docs**: Open `docs/_build/html/index.html`
+- **Build HTML docs**: `make --directory=docs html`
+- **View docs**: Open `docs/_build/html/index.html`
 
 Documentation covers:
 
--   System architecture and design
--   API reference
--   Configuration options
--   Advanced usage examples
+- System architecture and design
+- API reference
+- Configuration options
+- Advanced usage examples
 
 ## 📈 Monitoring & Logging
 
@@ -263,54 +255,54 @@ Documentation covers:
 
 The dashboard provides:
 
--   System status overview
--   Energy flow visualization
--   House-level load monitoring
--   Solar generation tracking
--   Battery status and management
+- System status overview
+- Energy flow visualization
+- House-level load monitoring
+- Solar generation tracking
+- Battery status and management
 
 ### Data Logging
 
--   **Text Logs**: `rsgp/_logs/rsgp.log`
--   **CSV Data**: Timestamped simulation data in `rsgp/_logs/rsgp_YYYY-MM-DD_HH-MM/`
--   **Configurable**: Enable/disable logging in settings
+- **Text Logs**: `rsgp/_logs/rsgp.log`
+- **CSV Data**: Timestamped simulation data in `rsgp/_logs/rsgp_YYYY-MM-DD_HH-MM/`
+- **Configurable**: Enable/disable logging in settings
 
 ### Performance Metrics
 
 Monitor key performance indicators:
 
--   Energy self-sufficiency ratio
--   Battery utilization efficiency
--   Load balancing effectiveness
--   System stability metrics
+- Energy self-sufficiency ratio
+- Battery utilization efficiency
+- Load balancing effectiveness
+- System stability metrics
 
 ## 🤝 Use Cases
 
 ### Research & Education
 
--   Smart grid behavior analysis
--   Renewable energy integration studies
--   Load balancing algorithm development
--   Grid stability research
+- Smart grid behavior analysis
+- Renewable energy integration studies
+- Load balancing algorithm development
+- Grid stability research
 
 ### System Design
 
--   Residential microgrid sizing
--   Battery storage optimization
--   Energy management strategy evaluation
--   Grid integration planning
+- Residential microgrid sizing
+- Battery storage optimization
+- Energy management strategy evaluation
+- Grid integration planning
 
 ### Algorithm Development
 
--   Power management algorithms
--   Energy trading strategies
--   Demand response systems
--   Grid optimization algorithms
+- Power management algorithms
+- Energy trading strategies
+- Demand response systems
+- Grid optimization algorithms
 
 ## 🙏 Acknowledgments
 
--   NSRDB for solar irradiance data
--   PVLib community for solar modeling tools
+- NSRDB for solar irradiance data
+- PVLib community for solar modeling tools
 
 ---
 

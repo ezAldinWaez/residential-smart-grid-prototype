@@ -55,5 +55,6 @@ class TimeSimulator:
             self._pause_duration += last_pause_duration
             self._paused_at = None
 
+
 time_sim = TimeSimulator()
 time_sim.start()

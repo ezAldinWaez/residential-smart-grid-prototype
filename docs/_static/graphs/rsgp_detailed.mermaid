@@ -8,18 +8,12 @@ graph TB
 
   subgraph RSGP[RSGP]
     subgraph RSGP_SSS[Solar System Simulation]
-      subgraph  RSGP_SSS_I[Inverter]
-        RSGP_SSS_I_IC([Inverter Controller])
-        RSGP_SSS_I_UI([Utility Interface])
-        RSGP_SSS_I_LI([Load Interface])
-      end
+      RSGP_SSS_I([Inverter])
       RSGP_SSS_B([Battery])
       RSGP_SSS_P([Panels])
     end
     subgraph RSGP_PM[Power Management]
-      RSGP_PM_LM([Load Management])
-      RSGP_PM_UM([Utility Management])
-      RSGP_PM_C([Power Manager Controller])
+      RSGP_PM_([...])
     end
     subgraph RSGP_HS[Houses Simulation]
       subgraph RSGP_HS_H1[House 1]
@@ -40,11 +34,9 @@ graph TB
     D_A([App])
     D_V([Views])
   end
-  
-  RSGP_SSS_P & RSGP_SSS_B <--Data--> RSGP_SSS_I_IC <--Data--> RSGP_SSS_I_UI & RSGP_SSS_I_LI
-  RSGP_PM_LM <--Data--> RSGP_PM_C <--Data--> RSGP_PM_UM
-  RSGP_SSS_I_UI <--Data--> RSGP_PM_UM <--Data--> RSGP_HS_H1 & RSGP_HS_H2 & RSGP_HS_H3
-  RSGP_SSS_I_LI <--Data--> RSGP_PM_LM <--Data--> RSGP_HS_H1 & RSGP_HS_H2 & RSGP_HS_H3
+
+  RSGP_SSS_P & RSGP_SSS_B <--Data--> RSGP_SSS_I
+  RSGP_SSS_I <--Data--> RSGP_PM_ <--Data--> RSGP_HS_H1 & RSGP_HS_H2 & RSGP_HS_H3
   RSGP_HS_H1 & RSGP_HS_H2 & RSGP_HS_H3 <--Data--> RSGP_IOT <--Electric Signals--> HHC_H1 & HHC_H2 & HHC_H3
   RSGP_RO <--Data--> D_A
 

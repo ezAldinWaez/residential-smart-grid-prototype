@@ -13,8 +13,9 @@ class Battery:
     Args:
         init_charge_level (float): The initialized charge level for the battery [%]
     """
-    conf: BattConf  #: BattConf: The battery configuration.
-    charge_level: float  #: float: Current charge level of the battery. [Wh]
+    conf: BattConf  #: BattConf: The battery configuration
+
+    charge_level: float  #: float: Current charge level of the battery [Wh]
 
     def __init__(self):
 
@@ -72,8 +73,4 @@ class Battery:
         return actual_discharge_power
 
     def __str__(self):
-        return (
-            f"- Battery:\n"
-            f"\t- Configurations: {self.conf}\n"
-            f"\t- State: {self.charge_level:.2f} / {self.conf.capacity:.2f} Wh ({self.charge_level / self.conf.capacity:.2%})"
-        )
+        return f"Battery(charge_level={self.charge_level/self.conf.capacity:.2%})"

@@ -60,8 +60,6 @@ class RemoteObjectServer:
         self.daemon.register(self._solar_system_sim.inverter, "solar_system_sim.inverter")
         self.daemon.register(self._solar_system_sim.inverter._battery, "solar_system_sim.inverter.battery")
         self.daemon.register(self._solar_system_sim.inverter._panels, "solar_system_sim.inverter.panels")
-        self.daemon.register(self._solar_system_sim.inverter.load_interface, "solar_system_sim.inverter.load")
-        self.daemon.register(self._solar_system_sim.inverter.utility_interface, "solar_system_sim.inverter.utility")
 
         # Register power manager
         self.daemon.register(self._power_manager, "power_manager")

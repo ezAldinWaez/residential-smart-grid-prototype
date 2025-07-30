@@ -25,21 +25,15 @@ class PowerManager:
         self._solar_sim = solar_system_sim
         self._running = False
 
-        self.static_factor = 1 / self._houses_sim.num_houses
+        self.static_factor = 1 / self._houses_sim.get_num_houses()
 
         self.virtual_batteries = [
             VirtualBattery(
                 idx=idx,
                 capacity=self._solar_sim.inverter._battery.conf.capacity * self.static_factor,
                 init_charge_level=self._solar_sim.inverter._battery.charge_level * self.static_factor
-            ) for idx in range(self._houses_sim.num_houses)
+            ) for idx in range(self._houses_sim.get_num_houses())
         ]
-
-        self.switch(False)
-        self._solar_sim.post_inverter_operate_hook = lambda: self.switch(True)
-
-    def switch(self, state: bool) -> None:
-        self.switched = state
 
     def is_running(self) -> bool:
         return self._running
@@ -68,16 +62,14 @@ class PowerManager:
             time.sleep(self._dt/1000)
 
     def _update_step(self) -> None:
-        while not self.switched:
-            continue
 
         elapsed = time_sim.get_elapsed()
         timestamp = time_sim.get_timestamp(elapsed)
 
-        loads = [house.load for house in self._houses_sim.houses]
-        solar_power = self._solar_sim.inverter.cycle_used_solar
-        battery_exchange = self._solar_sim.inverter.cycle_battery_exchange
-        utility_power = self._solar_sim.inverter.utility_interface.exchange_power_ac
+        loads = [house.load_power for house in self._houses_sim.houses]
+        solar_power = self._solar_sim.inverter.panels_power
+        battery_exchange = self._solar_sim.inverter.battery_exchange_power
+        utility_power = self._solar_sim.inverter.utility_exchange_power
 
         # Using 0.0001 instead of 0 because a float number may reach 5.0e-12 and not 0; we thus use epsilon.
         while solar_power > 0.0001 and sum(loads) > 0.0001:
@@ -119,17 +111,17 @@ class PowerManager:
             if utility:
                 is_any_utility_on = True
                 break
-        self._solar_sim.inverter.utility_interface.set_connection_status(is_any_utility_on)
+        self._solar_sim.inverter.utility_line = is_any_utility_on
 
-        self._solar_sim.inverter.load_interface.set_system_load(self._houses_sim.get_system_load())
+        self._solar_sim.inverter.load_power = self._houses_sim.get_system_load()
 
         if settings.CSV_LOGGING:
             log_record_into_csv(
                 settings.CSV_PM_LOG_PATH,
                 timestamp=f"{timestamp}",
-            )
+                ** {f"virtual_battery_{vb.idx+1}_charge_level": f"{vb.charge_level:.3f}" for vb in self.virtual_batteries},
 
-        self.switch(False)
+            )
 
     def summary(self) -> str:
         return str((

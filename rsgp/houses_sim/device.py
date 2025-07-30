@@ -11,18 +11,18 @@ import numpy as np
 
 
 @expose
-class Device:
-    name: str  #: str: Device name
-    conf: DeviceConf  #: DeviceConf: Device static configuration
+class DeviceClass:
+    name: str  #: str: Device class name
+    conf: DeviceConf  #: DeviceConf: Device class static configuration
+
     load: float  #: float: Total load for all device instances
-    #: list[tuple[float, float, bool]]: Envelopes (elapsed_time, total_load, is_active)
-    envelopes: list[tuple[float, float, bool]]
 
     def __init__(self, device_name: str):
         self.name = RegularDevices[device_name].name
         self.conf = RegularDevices[device_name].value
         self.load = 0.0
-        self.envelopes = [
+
+        self._envelopes = [
             (0.0, 0.0, False)
             for _ in range(self.conf.max_count)
         ]
@@ -45,12 +45,15 @@ class Device:
     def get_envelopes(self) -> list[tuple[float, float, bool]]:
         return [
             (float(envelope[0]), float(envelope[1]), bool(envelope[2]))
-            for envelope in self.envelopes
+            for envelope in self._envelopes
         ]
 
+    def set_envelopes(self, envelopes: list[tuple[float, float, bool]]) -> None:
+        self._envelopes = envelopes
+
     def toggle_envelope_state(self, idx: int, elapsed: float) -> None:
-        prev_state = self.envelopes[idx][2]
-        self.envelopes[idx] = (elapsed, self.load, not prev_state)
+        prev_state = self._envelopes[idx][2]
+        self._envelopes[idx] = (elapsed, self.load, not prev_state)
 
     def calc_load(self, elapsed: float) -> float:
         not_idle_envelopes = self.filter_idle_envelopes(elapsed)
@@ -65,7 +68,7 @@ class Device:
     def filter_idle_envelopes(self, elapsed: float) -> None:
         not_idle_envelopes = list(filter(
             lambda envelope: (self.calc_adsr_multiplier(elapsed, envelope) > 0),
-            self.envelopes
+            self._envelopes
         ))
 
         return not_idle_envelopes
@@ -115,3 +118,6 @@ class Device:
             return (- s / r) * t + (llst)
         # IDLE Stage
         return 0.0
+
+    def __str__(self):
+        return f"DeviceClass(name='{self.name}', load={self.load:.2f})"

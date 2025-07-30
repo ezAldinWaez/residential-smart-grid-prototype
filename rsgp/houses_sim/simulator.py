@@ -16,22 +16,21 @@ from ..remote_object import expose
 
 @expose
 class HousesSimulator:
-    num_houses: int  #: int: Number of houses in the system
-    load: float  #: float: Total load for the system
     houses: list[House]  #: list[House]: Houses in the system
 
+    system_load: float  #: float: Total load for the system
+
     def __init__(self):
-        self.num_houses = settings.HOUSES_NUM
-        self.load = 0.0
-        self.houses = [House(idx) for idx in range(self.num_houses)]
+        self.houses = [House(idx) for idx in range(settings.HOUSES_NUM)]
+        self.system_load = 0.0
 
         self._running = False
 
     def get_num_houses(self) -> int:
-        return self.num_houses
+        return len(self.houses)
 
     def get_system_load(self) -> float:
-        return float(self.load)
+        return float(self.system_load)
 
     def is_running(self) -> bool:
         return self._running
@@ -79,25 +78,34 @@ class HousesSimulator:
                 for device in house.devices.values():
                     hl += device.calc_load(elapsed)
             else:
-                house.load = 0.0
+                house.load_power = 0.0
                 for device in house.devices.values():
                     device.load = 0.0
-                    device.envelopes = [
+                    device.set_envelopes([
                         (elapsed, 0.0, False)
                         for _ in range(device.conf.max_count)
-                    ]
-            house.load = hl
+                    ])
+            house.load_power = hl
             sl += hl
-        self.load = sl
+        self.system_load = sl
 
         if settings.CSV_LOGGING:
             log_record_into_csv(
                 settings.CSV_HS_LOG_PATH,
                 timestamp=f"{timestamp}",
-                system_load=f"{self.load:.3f}",
+                system_load=f"{self.system_load:.3f}",
+                **{
+                    ** {f"house_{h.idx+1}_load_line": f"{h.load_line:d}" for h in self.houses},
+                    ** {f"house_{h.idx+1}_load_power": f"{h.load_power}" for h in self.houses},
+                    ** {f"house_{h.idx+1}_utility_line": f"{h.utility_line:d}" for h in self.houses},
+                    ** {f"house_{h.idx+1}_utility_power": f"{h.utility_exchange_power}" for h in self.houses},
+                }
             )
 
     def summary(self) -> str:
         return str((
             f"Houses Loads Status: ..."
         ))
+
+    def __str__(self):
+        return f"HousesSimulator(houses={len(self.houses)}, system_load={self.system_load:.3f})"

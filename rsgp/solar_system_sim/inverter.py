@@ -12,66 +12,14 @@ from ..config.settings import settings
 
 
 @expose
-class UtilityInterface:
-    """Utility interface for the inverter."""
-    is_connected: bool  #: bool: The connection status of the utility
-    exchange_power_ac: float  #: float: The total power exchanged with the utility (+ === export, - === import) [Watt]
-
-    # TODO: do something with the exchange power; maybe to log and track it
+class PowerInterface:
+    """Power interface for the inverter."""
+    is_connected: bool  #: bool: The connection status
+    exchange_power: float  #: float: The total power exchanged (+ === export, - === import) [Watt]
 
     def __init__(self):
         self.is_connected = True
-        self.exchange_power_ac = 0.0
-
-    def get_connection_status(self) -> bool:
-        return self.is_connected
-
-    def set_connection_status(self, new_status: bool):
-        self.is_connected = new_status
-
-    def export_power(self, power_ac: float) -> None:
-        self.exchange_power_ac += power_ac
-
-    def import_power(self, power_ac: float) -> None:
-        self.exchange_power_ac -= power_ac
-
-    def clear_exchange_power(self) -> None:
-        self.exchange_power_ac = 0.0
-
-    def __str__(self):
-        if self.is_connected:
-            return "Utility interface is connected."
-        else:
-            return "Utility interface is disconnected."
-
-
-@expose
-class LoadInterface:
-    """Load interface for the inverter."""
-    is_connected: bool  #: bool: The connection status of the load
-    system_load: float  #: float: The current system load [Watt]
-
-    def __init__(self):
-        self.is_connected = True
-        self.system_load = 0.0
-
-    def get_system_load(self) -> float:
-        return self.system_load
-
-    def set_system_load(self, system_load):
-        self.system_load = system_load
-
-    def get_connection_status(self) -> bool:
-        return self.is_connected
-
-    def set_connection_status(self, new_status: bool):
-        self.is_connected = new_status
-
-    def __str__(self):
-        if self.is_connected:
-            return "Load interface is connected"
-        else:
-            return "Load interface is disconnected"
+        self.exchange_power = 0.0
 
 
 @expose
@@ -82,12 +30,14 @@ class Inverter:
         - battery (Battery): The battery object connected to the inverter
         - panels (Panels): The panels object connected to the inverter
     """
-
     conf: InverterConf  #: InverterConf: The inverter configuration
-    utility_interface: UtilityInterface  #: UtilityInterface: The inverter utility interface
-    load_interface: LoadInterface  #: LoadInterface: The inverter load interface
-    cycle_used_solar: float  #: float: The power used by the solar panels [Watt]
-    cycle_battery_exchange: float  #: float: The power exchanged with the battery (+ === charge, - === discharge) [Watt]
+
+    load_line: bool  #: bool: Flag for load line state (connected=1, disconnected=0)
+    load_power: float  #: float: Total load for the system
+    utility_line: bool  #: bool: Flag for utility line state (connected=1, disconnected=0)
+    utility_exchange_power: float  #: float: Total power from/to the utility for the system
+    panels_power: float  #: float: The power used by the solar panels [Watt]
+    battery_exchange_power: float  #: float: The power exchanged with the battery (+ === charge, - === discharge) [Watt]
 
     def __init__(self, battery: Battery, panels: Panels):
         self.conf = InverterConf(
@@ -104,11 +54,12 @@ class Inverter:
         self._battery = battery
         self._panels = panels
 
-        self.utility_interface = UtilityInterface()
-        self.load_interface = LoadInterface()
-
-        self.cycle_used_solar = 0.0
-        self.cycle_battery_exchange = 0.0
+        self.load_line = True
+        self.load_power = 0.0
+        self.utility_line = True
+        self.utility_exchange_power = 0.0
+        self.panels_power = 0.0
+        self.battery_exchange_power = 0.0
 
     def dc_to_ac(self, p_dc: float) -> float:
         """
@@ -160,7 +111,7 @@ class Inverter:
 
         initial_panels_dc_power = self._panels.calc_total_power(timestamp)
         required_load_dc_power = self.ac_to_needed_dc(
-            self.conf.pnt + (self.load_interface.system_load if self.load_interface.is_connected else 0))
+            self.conf.pnt + (self.load_power if self.load_line else 0))
         available_panels_dc_power = initial_panels_dc_power
 
         # Meet load from panels dc (S is for solar), convert it to ac, charge battery with the remaining
@@ -189,16 +140,15 @@ class Inverter:
 
         # Import from utility (U is for utility) to meet the demand
         def U(required_load_dc_power: float):
-            if required_load_dc_power > 0.0 and self.utility_interface.is_connected:
+            if required_load_dc_power > 0.0 and self.utility_line:
                 imported_power = self.dc_to_ac(required_load_dc_power)
-                self.utility_interface.import_power(imported_power)
+                self.utility_exchange_power = -1 * imported_power
                 required_load_dc_power = 0.0
             return required_load_dc_power
 
         # You have to call clear on each step; power accumulates in this to allow for multiple steps to calculate the
         # import or export
-        self.utility_interface.clear_exchange_power()
-
+        self.utility_exchange_power = 0.0
         battery_exchange_power = 0.0
 
         if self.conf.mode is InverterMode.SBU:
@@ -228,42 +178,33 @@ class Inverter:
         battery_exchange_power += battery_usage
 
         # Export remaining panels dc to utility after meeting all demands
-        if available_panels_dc_power > 0.0 and self.utility_interface.is_connected:
+        if available_panels_dc_power > 0.0 and self.utility_line:
             ac_power_exported_to_utility = self.dc_to_ac(available_panels_dc_power)
-            self.utility_interface.export_power(ac_power_exported_to_utility)
+            self.utility_exchange_power = ac_power_exported_to_utility
             available_panels_dc_power = 0.0
 
-        # Store the curtailed power and used power
-        # TODO: do something with the curtalied power; maybe to log and track it
-        self._panels.curtailed_power = available_panels_dc_power
-        self.cycle_used_solar = initial_panels_dc_power - self._panels.curtailed_power
+        # Store the actual power and used power
+        self.panels_power = self._panels.total_power - available_panels_dc_power
 
         # Disconnect load if demand not met
         if required_load_dc_power > 0.0:
-            self.load_interface.set_connection_status(False)
+            self.load_line = False
             required_load_dc_power = 0.0
 
         # Charge battery from utility after all is said and done and store the exchange power of the battrey
         # The condition seems complex, here it is: it enters when the priority is UTILITY_OR_SOLAR, or when SOLAR_FIRST and solar
         # failed to charge. Of course, the utility line has to be connected as well.
-        need_to_charge_from_utility = self.utility_interface.is_connected and (
+        need_to_charge_from_utility = self.utility_line and (
             self.conf.charge_priority is ChargePriority.UTILITY_AND_SOLAR or
             self.conf.charge_priority is ChargePriority.SOLAR_FIRST and battery_exchange_power <= 0.0
         )
 
         if need_to_charge_from_utility:
             imported_power = self.dc_to_ac(self._battery.conf.max_charge_power)
-            self.utility_interface.import_power(imported_power)
+            self.utility_exchange_power = -1 * imported_power
             battery_exchange_power += self._battery.charge(self._battery.conf.max_charge_power, dt_seconds)
 
-        self.cycle_battery_exchange = battery_exchange_power
+        self.battery_exchange_power = battery_exchange_power
 
     def __str__(self):
-        return (
-            f"- Inverter:\n"
-            f"\t- Configurations: {self.conf}\n"
-            f"\t- Utility interface: {self.utility_interface}\n"
-            f"\t- Load interface: {self.load_interface}\n"
-            f"\t- Cycle used solar: {self.cycle_used_solar:.3f} Watt\n"
-            f"\t- Cycle battery exchange: {self.cycle_battery_exchange:.3f} Watt"
-        )
+        return f"Inverter(load_power={self.load_power}, utility_exchange_power={self.utility_exchange_power}, panels_power={self.panels_power}, battery_exchange_power={self.battery_exchange_power})"

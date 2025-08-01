@@ -1,10 +1,13 @@
 """Dashboard app."""
 
+import os
+from dotenv import load_dotenv
+
+from .views import MainWindowView
+
 import tkinter as tk
 import ttkbootstrap as ttk
 from Pyro5.api import Proxy
-
-from .views import MainWindowView
 
 
 class DashboardApp:
@@ -16,8 +19,11 @@ class DashboardApp:
     rsgp_pm: Proxy  #: Proxy: Remote object proxy for `PowerManager` remote object.
 
     def __init__(self):
-        HOST = "localhost"
-        PORT = 41991
+        load_dotenv()
+
+        HOST = os.getenv("REMOTE_OBJECT_HOST")
+        PORT = int(os.getenv("REMOTE_OBJECT_PORT"))
+
         BASE = f"PYRO:{{name}}@{HOST}:{PORT}"
 
         self.rsgp_ts = Proxy(BASE.format(name="time_sim"))

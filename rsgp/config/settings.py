@@ -1,16 +1,22 @@
 """RSGP settings."""
 
 from datetime import datetime
+import os
 from pathlib import Path
 
 from .constants import SECONDS_IN_MINUTE, BYTES_IN_MB
 from ..solar_system_sim.data import InverterMode, ChargePriority
 from ..remote_object import expose
 
+from dotenv import load_dotenv
+
 
 @expose
 class Settings:
     """Settings."""
+
+    load_dotenv()
+
     # =================================================================================================================
     # TIME SIMULATION SETTINGS
     # =================================================================================================================
@@ -50,17 +56,17 @@ class Settings:
     # =================================================================================================================
     # REMOTE OBJECT SETTINGS
     # =================================================================================================================
-    REMOTE_OBJECT_HOST = 'localhost'
-    REMOTE_OBJECT_PORT = 41991
+    REMOTE_OBJECT_HOST = os.getenv("REMOTE_OBJECT_HOST", 'localhost')
+    REMOTE_OBJECT_PORT = int(os.getenv("REMOTE_OBJECT_PORT", 41991))
 
     # =================================================================================================================
     # LOGGING SETTINGS
     # =================================================================================================================
-    LOG_LEVEL = "DEBUG"  # It could be "DEBUG", "INFO", "WARNING", "ERROR", or "CRITICAL"
+    LOG_LEVEL = os.getenv("LOG_LEVEL", "INFO")
     LOG_MAX_BYTES = 5 * BYTES_IN_MB
     LOG_BACKUP_COUNT = 3
 
-    CSV_LOGGING = True
+    CSV_LOGGING = os.getenv("CSV_LOGGING", False)
 
     _ROOT_DIR = Path(__file__).parent.parent
 

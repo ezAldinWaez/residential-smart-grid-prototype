@@ -45,11 +45,15 @@ share/python-wheels/
 *.egg
 MANIFEST
 
-# Logs
+# Logs & Tmp
 logs/
 _logs/
+tmp/
+_tmp/
 *.log
 *.a
+*.tmp
+~*
 
 # Marimo
 marimo/_static/

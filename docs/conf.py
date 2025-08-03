@@ -90,11 +90,36 @@ latex_elements = {
     'fncychap': r'\usepackage[Rejne]{fncychap}',
     'preamble': r'\usepackage{custom_preamble}',
     'figure_align': 'H',
-    'atendofbody': r'''''',  # TODO: Include dedication and abstract here.
-    'extraclassoptions': 'oneside',
+    'atendofbody': r'''''',
+    'extraclassoptions': 'oneside,openany',
     'geometry': r'\usepackage{geometry} \geometry{outer=2.5cm}',
-    'maketitle': r'\sphinxmaketitle',  # TODO: Customize that.
-    'tableofcontents': r'\sphinxtableofcontents',  # TODO: Customize that.
-    'printindex': '',  # TODO: Override that to include EN abstract and title here.
+    'maketitle': r'''
+        \sphinxmaketitle
+        \cleardoublepage
+        \pagenumbering{roman}
+        \phantomsection
+        \addcontentsline{toc}{chapter}{Abstract}
+        \chapter*{Abstract}
+        \input{_abstract.tex.txt}
+
+        \cleardoublepage
+        \phantomsection
+        \addcontentsline{toc}{chapter}{Dedication}
+        \chapter*{Dedication}
+        \input{_dedication.tex.txt}
+    ''',
+    'atendofbody': r'''''',
+    'tableofcontents': r'''
+        \cleardoublepage
+        \sphinxtableofcontents
+        \cleardoublepage
+        \pagenumbering{arabic}
+    ''',
+    'printindex': '',
 }
-latex_additional_files = ["custom_preamble.sty"]
+
+latex_additional_files = [
+    "custom_preamble.sty",
+    "_abstract.tex.txt",
+    "_dedication.tex.txt"
+]

@@ -11,14 +11,12 @@ sys.path.insert(0, os.path.abspath('..'))
 
 # -- Project information -----------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#project-information
-
 project = 'Residential Smart Grid'
 copyright = '2025, RSG Team'
 author = 'RSG Team'
 
 # -- General configuration ---------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#general-configuration
-
 extensions = [
     'sphinx.ext.autodoc',
     'sphinx.ext.napoleon',
@@ -28,11 +26,10 @@ extensions = [
 ]
 
 templates_path = ['_templates']
-exclude_patterns = [
-    '_build',
-    'Thumbs.db',
-    '.DS_Store'
-]
+exclude_patterns = ['_build', 'Thumbs.db', '.DS_Store']
+
+# Language settings
+language = 'en'
 
 # Graphviz configuration
 graphviz_output_format = 'png'
@@ -51,53 +48,53 @@ napoleon_include_private_with_doc = False
 
 # -- Options for HTML output -------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#options-for-html-output
-
-html_theme = 'sphinx_rtd_theme'  # you can try 'sphinx_book_theme'.
-html_logo = '_static/images/logo.png'
+html_title = project
+html_short_title = project
+html_theme = 'sphinx_book_theme'
 html_static_path = ['_static']
-html_css_files = ['custom.css']
 html_use_index = False
 html_domain_indices = False
+html_theme_options = {
+    'repository_url': 'https://gitlab.com/ezAldinWaez/residential-smart-grid',
+    'use_repository_button': True,
+    'use_issues_button': False,
+    'use_edit_page_button': False,
+    'show_navbar_depth': 2,
+    'show_toc_level': 2,
+    'collapse_navigation': True,
+    'navigation_depth': 3,
+}
 
 # -- Options for LaTeX output ------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#options-for-latex-output
-
 latex_engine = 'pdflatex'
-
-latex_documents = [
-    (
-        'index',
-        'ResidentialSmartGrid.tex',
-        'Residential Smart Grid',
-        'RSG Team',
-        'manual'
-    ),
-]
-
+latex_logo = '_static/images/logo.png'
+latex_domain_indices = False
+latex_show_pagerefs = True
+latex_show_urls = 'footnote'
+latex_documents = [(
+    'index',  # startdocname
+    'RSG.tex',  # targetname
+    'Residential Smart Grid',  # title
+    'RSG Team',  # author
+    'manual',  # theme
+    True  # toctree_only
+)]
+latex_docclass = {'manual': 'book'}
 latex_elements = {
     'papersize': 'a4paper',
     'pointsize': '12pt',
-    'tableofcontents': '',
-    'fontpkg': r'''
-        \usepackage{helvet}
-        \renewcommand{\familydefault}{\sfdefault}
-    ''',
-    'preamble': r'''
-        \usepackage{etoolbox}
-        \usepackage{titlesec}
-        \usepackage[titles]{tocloft}
-        \makeatletter
-        \patchcmd{\@makechapterhead}{\thechapter\quad}{}{}{}
-        \patchcmd{\tableofcontents}{\chapter*}{\section*}{}{}
-        \patchcmd{\listoffigures}{\chapter*}{\section*}{}{}
-        \patchcmd{\listoftables}{\chapter*}{\section*}{}{}
-        \makeatother
-    ''',
-    'extraclassoptions': 'openany,oneside',
-    'sphinxsetup': 'TitleColor={rgb}{0.126,0.263,0.361}, HeaderFamily=\\sffamily',
-    'fncychap': r'\usepackage[Bjornstrup]{fncychap}',
-    'printindex': r'\footnotesize\raggedright\printindex',
-
+    'babel': '',
+    'fontpkg': r'\usepackage{tgtermes} \usepackage{tgheros} \renewcommand\ttdefault{txtt}',
+    # Some "fncychap" styles you can try are "Bjarne", "Sonny", "Lenny", "Glenn", "Conny", "Rejne" and "Bjornstrup". You can also set this to '' to disable fncychap.
+    'fncychap': r'\usepackage[Rejne]{fncychap}',
+    'preamble': r'\usepackage{custom_preamble}',
+    'figure_align': 'H',
+    'atendofbody': r'''''',  # TODO: Include dedication and abstract here.
+    'extraclassoptions': 'oneside',
+    'geometry': r'\usepackage{geometry} \geometry{outer=2.5cm}',
+    'maketitle': r'\sphinxmaketitle',  # TODO: Customize that.
+    'tableofcontents': r'\sphinxtableofcontents',  # TODO: Customize that.
+    'printindex': '',  # TODO: Override that to include EN abstract and title here.
 }
-
-latex_domain_indices = False
+latex_additional_files = ["custom_preamble.sty"]

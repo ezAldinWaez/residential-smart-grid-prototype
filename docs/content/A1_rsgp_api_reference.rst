@@ -5,7 +5,7 @@
 RSGP API Reference
 ==================
 Houses Simulation
------------------------
+-----------------
 .. automodule:: rsgp.houses_sim.simulator
   :members:
   :undoc-members:
@@ -68,46 +68,6 @@ Power Mangament
 Remote Object
 -------------
 .. automodule:: rsgp.remote_object.server
-  :members:
-  :undoc-members:
-  :show-inheritance:
-
-Configuration
--------------
-.. automodule:: rsgp.config.settings
-  :members:
-  :undoc-members:
-  :show-inheritance:
-
-.. automodule:: rsgp.config.constants
-  :members:
-  :undoc-members:
-  :show-inheritance:
-
-
-Utilities
----------
-.. automodule:: rsgp.utils.decorators
-  :members:
-  :undoc-members:
-  :show-inheritance:
-
-.. automodule:: rsgp.utils.helpers
-  :members:
-  :undoc-members:
-  :show-inheritance:
-
-.. automodule:: rsgp.utils.time_sim
-  :members:
-  :undoc-members:
-  :show-inheritance:
-
-.. automodule:: rsgp.utils.logger
-  :members:
-  :undoc-members:
-  :show-inheritance:
-
-.. automodule:: rsgp.utils.nsrdb_data
   :members:
   :undoc-members:
   :show-inheritance:

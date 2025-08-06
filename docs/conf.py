@@ -94,18 +94,18 @@ latex_elements = {
     'extraclassoptions': 'oneside,openany',
     'geometry': r'\usepackage{geometry} \geometry{outer=2.5cm}',
     'maketitle': r'''
-        \sphinxmaketitle
-        \cleardoublepage
         \pagenumbering{roman}
+
+        \input{_titlepage.tex.txt}
+
+        \cleardoublepage
         \phantomsection
-        \addcontentsline{toc}{chapter}{Abstract}
-        \chapter*{Abstract}
+
         \input{_abstract.tex.txt}
 
         \cleardoublepage
         \phantomsection
-        \addcontentsline{toc}{chapter}{Dedication}
-        \chapter*{Dedication}
+
         \input{_dedication.tex.txt}
     ''',
     'atendofbody': r'''''',
@@ -115,11 +115,13 @@ latex_elements = {
         \cleardoublepage
         \pagenumbering{arabic}
     ''',
-    'printindex': '',
+    'printindex': r'''
+    ''',
 }
 
 latex_additional_files = [
     "custom_preamble.sty",
+    "_titlepage.tex.txt",
     "_abstract.tex.txt",
     "_dedication.tex.txt"
 ]

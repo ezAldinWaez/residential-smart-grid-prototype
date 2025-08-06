@@ -1,3 +1,6 @@
+\addcontentsline{toc}{chapter}{Dedication}
+\chapter*{Dedication}
+
 This work is dedicated to the advancement of sustainable energy solutions and the pursuit of a greener future for our planet. We dedicate this research to all engineers, researchers, and innovators working tirelessly to develop technologies that harmonize human progress with environmental stewardship.
 
 To our families, mentors, and colleagues who provided unwavering support throughout this journey, and to the future generations who will inherit the world we are shaping today through our technological choices and environmental consciousness.

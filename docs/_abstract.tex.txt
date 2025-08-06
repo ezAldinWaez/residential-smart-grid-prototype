@@ -1,3 +1,6 @@
+\addcontentsline{toc}{chapter}{Abstract}
+\chapter*{Abstract}
+
 This document presents a comprehensive study and implementation of a Residential Smart Grid (RSG) system designed to optimize energy distribution and management across multiple households. The system integrates solar power generation, battery storage, and intelligent power management algorithms to create an efficient and sustainable energy ecosystem.
 
 The RSG platform encompasses several key components: a sophisticated house simulation engine that models real-world energy consumption patterns, a solar system simulation module that accurately calculates photovoltaic energy generation based on environmental factors, and an advanced power management system utilizing ADSR (Attack, Decay, Sustain, Release) envelope modeling for device control.

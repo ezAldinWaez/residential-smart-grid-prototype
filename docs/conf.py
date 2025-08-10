@@ -23,6 +23,8 @@ extensions = [
     'sphinx.ext.viewcode',
     'sphinx.ext.todo',
     'sphinx.ext.graphviz',
+    # 'matplotlib.sphinxext.plot_directive',
+    'sphinxcontrib.mermaid',
 ]
 
 templates_path = ['_templates']
@@ -111,8 +113,13 @@ latex_elements = {
     'atendofbody': r'''''',
     'tableofcontents': r'''
         \cleardoublepage
+        \phantomsection
+
         \sphinxtableofcontents
+
         \cleardoublepage
+        \phantomsection
+
         \pagenumbering{arabic}
     ''',
     'printindex': r'''

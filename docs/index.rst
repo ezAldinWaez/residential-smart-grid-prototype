@@ -25,3 +25,10 @@ Table of Contents
    content/_references
 
    content/A1_rsgp_api_reference
+
+Indices and tables
+------------------
+
+* :ref:`genindex`
+* :ref:`modindex`
+* :ref:`search`

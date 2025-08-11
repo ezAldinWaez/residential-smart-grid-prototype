@@ -10,31 +10,9 @@ Architecture Overview
 ---------------------
 The architecture separates simulation coordination, individual house modeling, and device-level power consumption calculations. 
 
-.. mermaid::
-
-   graph BT
-   subgraph RSGP_HS[Houses Simulation]
-      subgraph RSGP_HS_H1[House 1]
-         RSGP_HS_H1_D1([Device 1])
-         RSGP_HS_H1_D2([Device 2])
-         RSGP_HS_H1_DK([...])
-         RSGP_HS_H1_DN([Device N])
-      end
-      subgraph RSGP_HS_H2[House 2]
-         RSGP_HS_H2_D1([Device 1])
-         RSGP_HS_H2_D2([Device 2])
-         RSGP_HS_H2_DK([...])
-         RSGP_HS_H2_DN([Device N])
-      end
-      subgraph RSGP_HS_HK[...]
-      end
-      subgraph RSGP_HS_HN[House N]
-         RSGP_HS_H3_D1([Device 1])
-         RSGP_HS_H3_D2([Device 2])
-         RSGP_HS_H3_DK([...])
-         RSGP_HS_H3_DN([Device N])
-      end
-   end
+.. mermaid:: ../_static/graphs/rsgp_hs_arch.mmd
+   :align: center
+   :caption: Houses simulation architecture with hierarchical device organization
 
 - The ``HousesSimulator`` serves as the coordination layer; it manages the house instances and coordinates their execution. 
 - The ``House`` serves as the individual unit; it maintains state information about its devices and utility and load lines. 
@@ -46,15 +24,9 @@ The Houses Simulator
 --------------------
 The ``HousesSimulator`` coordinates the execution of individual house instances; it aggregates system-wide load calculations and provides the interface between the residential demand and the power management system. The simulator operates on its own thread to ensure that house load calculations proceed independently of the other components.
 
-.. mermaid::
-
-   graph TD
-      HS[HousesSimulator]
-      HS --> HS_H1[House 1] --> HS_H1_D[Device Collection]
-      HS --> HS_H2[House 2] --> HS_H2_D[Device Collection]
-      HS --> HS_HK[...]
-      HS --> HS_HN[House N] --> HS_HN_D[Device Collection]
-      HS --> TLC[Total Load Calculation] --> PMI[Power Management Interface]
+.. mermaid:: ../_static/graphs/rsgp_hs_workflow.mmd
+   :align: center
+   :caption: HousesSimulator coordination and load aggregation workflow
 
 The simulator implements a configurable update cycle usually set to 100-millisecond intervals. During each update cycle, the simulator queries all house instances for their current power consumption and aggregates these values. The system-wide total load is then made available to the power management system. 
 
@@ -70,9 +42,10 @@ Device Modeling Framework
 -------------------------
 The ``Device`` modeling framework implements a mathematical model that captures the dynamic behavior of residential electrical appliances. This framework borrows the **Attack-Decay-Sustain-Release envelope (ADSR)** from sound synthesis and uses it along wave modulation techniques to approximate the load profiles. These techniques generate realistic power consumption patterns that mimic real electrical devices.
 
-.. figure:: 
+.. figure:: ../_static/images/C3_adsr_envelope.png
+   :align: center
 
-   :alt: ADSR envelope
+   ADSR envelope
 
 The **ADSR envelope** provides the temporal structure for the device's power consumption. It models the startup spike, steady-state operation, and shutdown characteristics of the device. 
 

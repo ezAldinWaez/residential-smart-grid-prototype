@@ -13,6 +13,8 @@ Solar System Architecture Overview
 The solar system simulation architecture employs a three-component design pattern that models the essential elements of distributed photovoltaic installations. The architecture integrates photovoltaic panel arrays, battery energy storage systems, and power conditioning equipment within a coordinated simulation framework. This design separates concerns between energy generation, energy storage, and power conversion while maintaining the interdependencies that define actual solar system operation.
 
 .. mermaid::
+   :caption: Solar system simulation architecture with three-component design
+   :align: center
 
    graph TB
       A[SolarSystemSimulator] --> B[Panels]
@@ -50,6 +52,8 @@ The photovoltaic panel modeling component provides realistic solar power generat
 The panel modeling system addresses the fundamental challenge of accurately representing solar energy resource variability in simulation environments. Real photovoltaic installations experience significant power output variations due to cloud cover, atmospheric conditions, solar angle changes, and seasonal weather patterns. To achieve simulation fidelity, the panel model incorporates detailed meteorological data processing and sophisticated solar position calculations that account for these environmental factors.
 
 .. mermaid::
+   :caption: Photovoltaic panel modeling workflow and data processing pipeline
+   :align: center
 
    graph TD
       A[NSRDB Weather Data] --> B[Timestamp Synchronization]
@@ -82,6 +86,8 @@ The battery energy storage system provides the temporal energy balance mechanism
 The battery modeling system addresses several critical aspects of energy storage operation that significantly impact smart grid performance. Battery systems exhibit complex charging and discharging characteristics that vary with state of charge, temperature, age, and load conditions. The simulation model captures these characteristics through detailed energy balance calculations, power limitation enforcement, and efficiency modeling that reflect actual battery system behavior. This modeling approach enables realistic analysis of energy storage contributions to grid stability and renewable energy utilization.
 
 .. mermaid::
+   :caption: Battery energy storage system control and management flow
+   :align: center
 
    graph LR
       A[Solar Power Input] --> B[Charge Controller]
@@ -115,6 +121,8 @@ The inverter control system serves as the central coordination mechanism for sol
 The inverter control system addresses the complex challenge of coordinating multiple energy sources and storage systems within a unified control framework. Modern inverter systems must balance solar generation variability, battery charge state considerations, load requirements, and grid interaction constraints while optimizing for various objectives including energy efficiency, cost minimization, and grid support services. The simulation model captures these control complexities through multiple operating modes, priority management algorithms, and dynamic response capabilities.
 
 .. mermaid::
+   :caption: Inverter control system architecture and operating modes
+   :align: center
 
    graph TD
       A[Inverter Control System] --> B[Operating Mode Selection]
@@ -160,6 +168,8 @@ Weather data integration provides the meteorological foundation for realistic so
 The weather data integration system employs the National Solar Radiation Database as its primary data source for solar irradiance and atmospheric conditions. The NSRDB provides hourly measurements of solar radiation components, ambient temperature, wind speed, and other meteorological parameters collected at numerous locations across the United States. This database represents one of the most comprehensive sources of solar resource data available for renewable energy applications, providing the temporal and spatial resolution necessary for detailed photovoltaic system modeling.
 
 .. mermaid::
+   :caption: Weather data integration and processing workflow
+   :align: center
 
    graph TD
       A[NSRDB Database] --> B[Data Extraction]
@@ -204,6 +214,8 @@ The power management interface establishes the communication framework between t
 The power management interface addresses the complex requirements of distributed energy resource coordination within smart grid systems. Modern power management systems must coordinate multiple distributed generation sources, energy storage systems, and load resources to maintain grid stability while optimizing energy utilization and economic performance. The interface design accommodates these requirements through comprehensive status reporting, control command processing, and bidirectional communication capabilities that support advanced grid management functions.
 
 .. mermaid::
+   :caption: Power management interface communication and control flow
+   :align: center
 
    graph TD
       A[Solar System Simulation] --> B[Status Reporting]
@@ -253,6 +265,8 @@ The data collection and analysis framework provides comprehensive measurement, r
 The data collection framework addresses the critical requirement for detailed performance monitoring in distributed energy resource applications. Solar system performance exhibits significant temporal and environmental variability that requires high-resolution data collection to understand system behavior patterns and identify optimization opportunities. The framework design accommodates these requirements through configurable data collection parameters, multiple data export formats, and integration with external analysis tools that support comprehensive system evaluation.
 
 .. mermaid::
+   :caption: Data collection and analysis framework architecture
+   :align: center
 
    graph TD
       A[Solar System Components] --> B[Data Collection Engine]

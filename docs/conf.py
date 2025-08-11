@@ -33,7 +33,16 @@ exclude_patterns = ['_build', 'Thumbs.db', '.DS_Store']
 # Language settings
 language = 'en'
 
-# Graphviz configuration
+
+# Extensions configuration
+autodoc_typehints = "description"
+
+todo_include_todos = True
+
+napoleon_attr_annotations = True
+napoleon_include_special_with_doc = False
+napoleon_include_private_with_doc = False
+
 graphviz_output_format = 'png'
 graphviz_dot_args = [
     '-Gfontname=Helvetica',
@@ -41,12 +50,11 @@ graphviz_dot_args = [
     '-Efontname=Helvetica',
 ]
 
-# Autodoc configuration
-autodoc_typehints = "description"
-todo_include_todos = True
-napoleon_attr_annotations = True
-napoleon_include_special_with_doc = False
-napoleon_include_private_with_doc = False
+mermaid_output_format = 'svg'
+mermaid_pdfcrop = 'pdfcrop'
+
+numfig = True
+
 
 # -- Options for HTML output -------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#options-for-html-output
@@ -54,8 +62,8 @@ html_title = project
 html_short_title = project
 html_theme = 'sphinx_book_theme'
 html_static_path = ['_static']
-html_use_index = False
-html_domain_indices = False
+html_use_index = True
+html_domain_indices = True
 html_theme_options = {
     'repository_url': 'https://gitlab.com/ezAldinWaez/residential-smart-grid',
     'use_repository_button': True,
@@ -115,12 +123,18 @@ latex_elements = {
         \cleardoublepage
         \phantomsection
 
-        \sphinxtableofcontents
+        \tableofcontents
+
+        \cleardoublepage
+        \phantomsection
+
+        \listoffigures
 
         \cleardoublepage
         \phantomsection
 
         \pagenumbering{arabic}
+        \setcounter{page}{1}
     ''',
     'printindex': r'''
     ''',

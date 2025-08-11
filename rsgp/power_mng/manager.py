@@ -13,6 +13,7 @@ if TYPE_CHECKING:
     from ..houses_sim.simulator import HousesSimulator
     from ..solar_system_sim.simulator import SolarSystemSimulator
 
+# TODO: link utility_exchange_power between inverter and each house
 
 @expose
 class PowerManager:

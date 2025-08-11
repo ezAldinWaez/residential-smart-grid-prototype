@@ -11,11 +11,14 @@ class House:
     load_power: float  #: float: Total load for the house
     utility_line: bool = True  #: bool: Flag for utility line state (connected=1, disconnected=0)
     utility_exchange_power: float  #: float: Total power from/to the utility for the house
+    utility_exchange_power_aggregated: float  #: float: Aggregated total power from/to the utility for the house
 
     def __init__(self, idx: int):
         self.idx = idx
         self.load_power = 0.0
         self.utility_exchange_power = 0.0
+        self.utility_exchange_power_aggregated = 0.0
+
         self.devices = {
             device_name: DeviceClass(device_name)
             for device_name in RegularDevices.__members__

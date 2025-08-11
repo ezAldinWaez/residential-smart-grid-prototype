@@ -3,32 +3,30 @@
 \vspace*{.06\textheight}
 {\scshape\LARGE University of Aleppo\par}\vspace{0.5cm}
 {\scshape\large Faculty of Informatics Engineering\par}
-{\scshape\large Department of Computer Networks\par}\vspace{1.5cm}
+{\scshape\large Department of Computer Networks\par}\vspace{0.5cm}
 \textsc{\Large Bachelor Graduation Project}\\[0.5cm]
 \newcommand{\HRule}{\rule{\linewidth}{0.5mm}}
-\HRule \\[0.4cm]
+\HRule \\[0.5cm]
 {\huge \bfseries Residential Smart Grid\par}\vspace{0.2cm}
-{\Large An Intelligent Energy Management System\\
-for Sustainable Residential Communities\par}\vspace{0.4cm}
-\HRule \\[1.5cm]
+\HRule \\[0.5cm]
 \begin{minipage}[t]{0.4\textwidth}
 \begin{flushleft} \large
 \emph{Students:}\\
-Student Name 1\\
-Student Name 2\\
-Student Name 3\\
-Student Name 4\\
-Student Name 5
+Ez Aldin Waez\\
+Abdullah Naal\\
+Mohammad Labaniah\\
+Abdo Kialy\\
+Roby Alabasi
 \end{flushleft}
 \end{minipage}
 \begin{minipage}[t]{0.4\textwidth}
 \begin{flushright} \large
 \emph{Supervisor:} \\
-Dr. Supervisor Name\\[2cm]
+Dr. Fadi Farha\\[1cm]
 \emph{Academic Year:}\\
 2024-2025
 \end{flushright}
-\end{minipage}\\[2cm]
+\end{minipage}\\[1cm]
 \vfill
 \includegraphics[width=4cm]{logo.png}\\[1cm]
 \large \textit{A project submitted in fulfillment of the requirements\\ for the Bachelor's Degree in Computer Networks}\\[0.5cm]

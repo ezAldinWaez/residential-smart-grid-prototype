@@ -59,3 +59,6 @@ _tmp/
 marimo/_static/
 marimo/_lsp/
 __marimo__/
+
+# Sphinx
+*.mo

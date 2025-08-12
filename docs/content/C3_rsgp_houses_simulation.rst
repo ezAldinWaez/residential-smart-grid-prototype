@@ -56,9 +56,10 @@ The **ADSR envelope** provides the temporal structure for the device's power con
 
 Wave modulation introduces realistic variations in power consumption over the ADSR envelope. The framework supports multiple modulation types: sine waves, square waves, and random modulation. These modulation patterns operate at different frequencies and amplitudes to create complex power signatures that more closely match measured residential devices' behavior.
 
-.. .. plot::
+.. plot:: _static/plots/rsgp_hs_some_regular_devices_loads_over_time.py
+   :align: center
 
-..    Some plot for real device load over time
+   Some regular devices simulated loads over time
 
 The device modeling framework organizes electrical devices into categories. Each category implements specialized ADSR parameters and wave modulation to capture the unique behavior of the device.
 

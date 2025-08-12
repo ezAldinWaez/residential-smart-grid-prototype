@@ -68,16 +68,6 @@ html_theme = 'sphinx_book_theme'
 html_static_path = ['_static']
 html_use_index = True
 html_domain_indices = True
-
-# Language switching context
-html_context = {
-    'languages': [
-        ('en', 'English'),
-        ('ar', 'العربية'),
-    ],
-    'current_language': language,
-    'version_name': 'latest',
-}
 html_theme_options = {
     'repository_url': 'https://gitlab.com/ezAldinWaez/residential-smart-grid',
     'use_repository_button': True,

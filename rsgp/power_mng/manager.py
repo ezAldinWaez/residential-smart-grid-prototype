@@ -68,22 +68,43 @@ class PowerManager:
         battery_exchange = self._solar_sim.inverter.battery_exchange_power
         utility_power = self._solar_sim.inverter.utility_exchange_power
 
+        # Adjust the weights
+        loads_copy = [load for load in loads]
+        avg_load = sum(loads) / len(loads)
+        baselined_loads = [load - avg_load for load in loads]
+        for idx in range(len(baselined_loads)):
+            if self.virtual_batteries[idx].weight == 1.0 + (1.0 - settings.MINIMUM_GUARANTEED_WEIGHT):
+                baselined_loads[idx] = min(baselined_loads[idx], 0.0)
+                if baselined_loads[idx] == 0.0: 
+                    loads_copy[idx] = 0.0
+            elif self.virtual_batteries[idx].weight == settings.MINIMUM_GUARANTEED_WEIGHT:
+                baselined_loads[idx] = max(baselined_loads[idx], 0.0)
+                if baselined_loads[idx] == 0.0:
+                    loads_copy[idx] = 0.0
+        new_avg_load = sum(loads_copy) / len(loads_copy)
+        new_baselined_loads = [load - new_avg_load for load in loads_copy]   
+        max_baselined_load = max([abs(baselined_load) for baselined_load in new_baselined_loads])
+        normalized_baselined_loads = [baselined_load / max_baselined_load if max_baselined_load > 0 else 0 for baselined_load in baselined_loads]
+        weight_adjustments = [normalized_load * settings.LEARNING_RATE for normalized_load in normalized_baselined_loads]
+        for idx in range(len(loads)):
+            self.virtual_batteries[idx].adjust_weight(weight_adjustments[idx])
+        
         # Using 0.0001 instead of 0 because a float number may reach 5.0e-12 and not 0; we thus use epsilon.
         while solar_power > 0.0001 and sum(loads) > 0.0001:
             for idx in range(len(loads)):
-                new_load = max(loads[idx] - solar_power * self.static_factor, 0.0)
+                new_load = max(loads[idx] - solar_power * self.static_factor * self.virtual_batteries[idx].weight, 0.0)
                 solar_power -= loads[idx] - new_load
                 loads[idx] = new_load
 
         while utility_power > 0.0001 and sum(loads) > 0.0001:
             for idx in range(len(loads)):
-                new_load = max(loads[idx] - utility_power * self.static_factor, 0.0)
+                new_load = max(loads[idx] - utility_power * self.static_factor * self.virtual_batteries[idx].weight, 0.0)
                 utility_power -= loads[idx] - new_load
                 loads[idx] = new_load
 
         while battery_exchange < 0.0001 and sum(loads) > 0.0001:
             for idx in range(len(loads)):
-                taken_power = self.virtual_batteries[idx].discharge(-1 * battery_exchange * self.static_factor)
+                taken_power = self.virtual_batteries[idx].discharge(-1 * battery_exchange * self.static_factor * self.virtual_batteries[idx].weight)
                 if taken_power < 0.0001:
                     if loads[idx] > 0.0001:
                         self._houses_sim.get_house(idx).set_load_line(False)
@@ -99,7 +120,7 @@ class PowerManager:
             if all([bat.capacity - bat.charge_level < 0.0001 for bat in self.virtual_batteries]):
                 break
             for idx in range(len(loads)):
-                battery_exchange -= self.virtual_batteries[idx].charge(battery_exchange * self.static_factor)
+                battery_exchange -= self.virtual_batteries[idx].charge(battery_exchange * self.static_factor * self.virtual_batteries[idx].weight)
 
         # Set inverter utility line connection status
         is_any_utility_on = False

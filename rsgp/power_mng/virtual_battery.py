@@ -1,11 +1,13 @@
 from ..remote_object import expose
-
+from ..config.settings import settings
 
 @expose
 class VirtualBattery:
     def __init__(self, idx: int, capacity, init_charge_level):
         self.idx = idx
-        self.capacity = capacity
+        self.initial_capacity = capacity
+        self.weight = 1.0
+        self.capacity = self.initial_capacity * self.weight
         self.charge_level = init_charge_level
 
     def charge(self, power) -> float:
@@ -21,3 +23,10 @@ class VirtualBattery:
         discharged_power = self.charge_level - new_level
         self.charge_level = new_level
         return discharged_power
+    
+    def adjust_weight(self, amount):
+        self.weight += amount
+        self.weight = min(self.weight, 1.0 + (1.0 - settings.MINIMUM_GUARANTEED_WEIGHT))
+        self.weight = max(settings.MINIMUM_GUARANTEED_WEIGHT, self.weight)
+        self.capacity = self.initial_capacity * self.weight
+        self.charge_level = min(self.charge_level, self.capacity)

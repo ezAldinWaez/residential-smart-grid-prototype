@@ -69,22 +69,26 @@ class PowerManager:
         utility_power = self._solar_sim.inverter.utility_exchange_power
 
         # Adjust the weights
-        loads_copy = [load for load in loads]
         avg_load = sum(loads) / len(loads)
         baselined_loads = [load - avg_load for load in loads]
-        for idx in range(len(baselined_loads)):
-            if self.virtual_batteries[idx].weight == 1.0 + (1.0 - settings.MINIMUM_GUARANTEED_WEIGHT):
-                baselined_loads[idx] = min(baselined_loads[idx], 0.0)
-                if baselined_loads[idx] == 0.0: 
-                    loads_copy[idx] = 0.0
-            elif self.virtual_batteries[idx].weight == settings.MINIMUM_GUARANTEED_WEIGHT:
-                baselined_loads[idx] = max(baselined_loads[idx], 0.0)
-                if baselined_loads[idx] == 0.0:
-                    loads_copy[idx] = 0.0
-        new_avg_load = sum(loads_copy) / len(loads_copy)
-        new_baselined_loads = [load - new_avg_load for load in loads_copy]   
-        max_baselined_load = max([abs(baselined_load) for baselined_load in new_baselined_loads])
+        max_baselined_load = max([abs(baselined_load) for baselined_load in baselined_loads])
         normalized_baselined_loads = [baselined_load / max_baselined_load if max_baselined_load > 0 else 0 for baselined_load in baselined_loads]
+        is_at_minimum = [False for load in loads]
+        for idx in range(len(baselined_loads)):
+            if self.virtual_batteries[idx].weight == settings.GUARANTEED_MINIMUM_WEIGHT and baselined_loads[idx] < 0.0:
+                is_at_minimum[idx] = True
+        for idx in range(len(is_at_minimum)):
+            if not is_at_minimum[idx]: 
+                continue
+            total_positive_adjustment = sum([normalized_load if normalized_load > 0.0 else 0.0 for normalized_load in normalized_baselined_loads])
+            if total_positive_adjustment == 0.0:
+                break
+            loss = normalized_baselined_loads[idx]
+            normalized_baselined_loads[idx] = 0.0
+            new_total = total_positive_adjustment + loss
+            for j in range(len(normalized_baselined_loads)):
+                if normalized_baselined_loads[j] > 0.0:
+                    normalized_baselined_loads[j] = (normalized_baselined_loads[j] * new_total) / total_positive_adjustment
         weight_adjustments = [normalized_load * settings.LEARNING_RATE for normalized_load in normalized_baselined_loads]
         for idx in range(len(loads)):
             self.virtual_batteries[idx].adjust_weight(weight_adjustments[idx])

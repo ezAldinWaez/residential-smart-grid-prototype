@@ -26,7 +26,6 @@ class VirtualBattery:
     
     def adjust_weight(self, amount):
         self.weight += amount
-        self.weight = min(self.weight, 1.0 + (1.0 - settings.MINIMUM_GUARANTEED_WEIGHT))
-        self.weight = max(settings.MINIMUM_GUARANTEED_WEIGHT, self.weight)
+        self.weight = max(settings.GUARANTEED_MINIMUM_WEIGHT, self.weight)
         self.capacity = self.initial_capacity * self.weight
         self.charge_level = min(self.charge_level, self.capacity)

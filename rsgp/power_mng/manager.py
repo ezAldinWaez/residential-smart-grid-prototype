@@ -27,20 +27,21 @@ class PowerManager:
 
         self.static_factor = 1 / self._houses_sim.get_num_houses()
 
-        self.virtual_batteries = [
-            VirtualBattery(
-                idx=idx,
-                capacity=self._solar_sim.inverter._battery.conf.capacity * self.static_factor,
-                init_charge_level=self._solar_sim.inverter._battery.charge_level * self.static_factor
-            ) for idx in range(self._houses_sim.get_num_houses())
-        ]
-
     def is_running(self) -> bool:
         return self._running
 
     def start(self, dt: int = None) -> None:
         self._running = True
         self._dt = dt
+        self.virtual_batteries = [
+            VirtualBattery(
+                idx=idx,
+                init_capacity=self._solar_sim.inverter._battery.conf.capacity * self.static_factor,
+                init_charge_level=self._solar_sim.inverter._battery.charge_level * self.static_factor,
+                charge_efficiency=self._solar_sim.inverter._battery.conf.charge_efficiency,
+                time_interval=(self._dt / 1000) * settings.TIME_FACTOR,
+            ) for idx in range(self._houses_sim.get_num_houses())
+        ]
 
         Thread(
             target=self._update_loop,
@@ -66,7 +67,7 @@ class PowerManager:
         elapsed = time_sim.get_elapsed()
         timestamp = time_sim.get_timestamp(elapsed)
 
-        loads = [house.load_power for house in self._houses_sim.houses]
+        loads = [house.load_power if house.get_load_line else 0.0 for house in self._houses_sim.houses]
         solar_power = self._solar_sim.inverter.panels_power
         battery_exchange = self._solar_sim.inverter.battery_exchange_power
         utility_power = self._solar_sim.inverter.utility_exchange_power
@@ -109,43 +110,37 @@ class PowerManager:
         for idx, normalized_load in enumerate(normalized_baselined_loads):
             self.virtual_batteries[idx].adjust_weight(normalized_load * settings.LEARNING_STEP)
 
-        # Using 0.0001 instead of 0 because a float number may reach 5.0e-12 and not 0; we thus use epsilon.
-        solar_power_step = solar_power / 100
-        while solar_power > 0.0001 and sum(loads) > 0.0001:
-            for idx in range(len(loads)):
-                new_load = max(loads[idx] - solar_power_step, 0.0)
-                solar_power -= loads[idx] - new_load
-                loads[idx] = new_load
+        ordered_idx = [idx for idx, val in sorted(list(enumerate(loads)), key=lambda item: item[1])]
 
-        utility_power_step = utility_power / 100
-        while utility_power > 0.0001 and sum(loads) > 0.0001:
-            for idx in range(len(loads)):
-                new_load = max(loads[idx] - utility_power_step, 0.0)
-                utility_power -= loads[idx] - new_load
-                loads[idx] = new_load
+        equal_factor = 1 / (( 1/ self.static_factor) + 1)
+        for idx in ordered_idx:
+            equal_factor = 1 / ((1 / equal_factor) - 1)
+            new_load = max(loads[idx] - solar_power * equal_factor, 0.0)
+            solar_power -= loads[idx] - new_load
+            loads[idx] = new_load
 
-        battery_exchange_step = battery_exchange / 100
-        while battery_exchange < 0.0001 and sum(loads) > 0.0001:
-            for idx in range(len(loads)):
-                taken_power = self.virtual_batteries[idx].discharge(
-                    -1 * battery_exchange_step)
-                if taken_power < 0.0001:
-                    if loads[idx] > 0.0001:
-                        self._houses_sim.get_house(idx).set_load_line(False)
-                        # Reduce the demand from the battery by the amount remaining from the offending load
-                        battery_exchange += loads[idx]
-                        loads[idx] = 0.0
-                        continue
-                new_load = max(loads[idx] - taken_power, 0.0)
-                battery_exchange += taken_power
-                loads[idx] = new_load
+        equal_factor = 1 / (( 1/ self.static_factor) + 1)
+        for idx in ordered_idx:
+            equal_factor = 1 / ((1 / equal_factor) - 1)
+            new_load = max(loads[idx] - utility_power * equal_factor, 0.0)
+            utility_power -= loads[idx] - new_load
+            loads[idx] = new_load
+        
+        min_load, max_load = min(loads), max(loads)
+        factors = [(load - min_load) / (max_load - min_load) for load in loads] if (max_load - min_load) > 0 else [self.static_factor] * len(loads)
 
-        while battery_exchange > 0.0001:
-            if all([bat.capacity - bat.charge_level < 0.0001 for bat in self.virtual_batteries]):
-                break
+        if battery_exchange < 0.0:
             for idx in range(len(loads)):
-                battery_exchange -= self.virtual_batteries[idx].charge(
-                    battery_exchange_step)
+                taken_power = self.virtual_batteries[idx].discharge(-1 * battery_exchange * factors[idx])
+                if -1 * battery_exchange * factors[idx] - taken_power > 0.0001:
+                    self._houses_sim.get_house(idx).set_load_line(False)
+        
+        ordered_idx = [idx for idx, val in sorted(list(enumerate(self.virtual_batteries)), key= lambda item: (item[1].capacity - item[1].charge_level))]
+        equal_factor = 1 / (( 1/ self.static_factor) + 1)
+        if battery_exchange > 0.0001:
+            for idx in ordered_idx:
+                equal_factor = 1 / ((1 / equal_factor) - 1)
+                battery_exchange -= self.virtual_batteries[idx].charge(equal_factor * battery_exchange)
 
         # Set inverter utility line connection status
         is_any_utility_on = False

@@ -3,6 +3,8 @@ from typing import TYPE_CHECKING
 from threading import Thread
 import time
 
+import numpy as np
+
 from .virtual_battery import VirtualBattery
 from ..remote_object import expose
 from ..config.settings import settings
@@ -14,6 +16,7 @@ if TYPE_CHECKING:
     from ..solar_system_sim.simulator import SolarSystemSimulator
 
 # TODO: link utility_exchange_power between inverter and each house
+
 
 @expose
 class PowerManager:
@@ -72,43 +75,60 @@ class PowerManager:
         avg_load = sum(loads) / len(loads)
         baselined_loads = [load - avg_load for load in loads]
         max_baselined_load = max([abs(baselined_load) for baselined_load in baselined_loads])
-        normalized_baselined_loads = [baselined_load / max_baselined_load if max_baselined_load > 0 else 0 for baselined_load in baselined_loads]
-        is_at_minimum = [False for load in loads]
-        for idx in range(len(baselined_loads)):
-            if self.virtual_batteries[idx].weight == settings.GUARANTEED_MINIMUM_WEIGHT and baselined_loads[idx] < 0.0:
-                is_at_minimum[idx] = True
-        for idx in range(len(is_at_minimum)):
-            if not is_at_minimum[idx]: 
+
+        normalized_baselined_loads = [
+            baselined_load / max_baselined_load if max_baselined_load > 0 else 0
+            for baselined_load in baselined_loads
+        ]
+
+        is_at_minimum = [
+            self.virtual_batteries[idx].weight == settings.GUARANTEED_MINIMUM_WEIGHT and baselined_loads[idx] < 0.0
+            for idx in range(len(baselined_loads))
+        ]
+
+        for idx, at_minimum in enumerate(is_at_minimum):
+            if not at_minimum:
                 continue
-            total_positive_adjustment = sum([normalized_load if normalized_load > 0.0 else 0.0 for normalized_load in normalized_baselined_loads])
+
+            total_positive_adjustment = sum(
+                (normalized_load if normalized_load > 0.0 else 0.0)
+                for normalized_load in normalized_baselined_loads
+            )
+
             if total_positive_adjustment == 0.0:
                 break
+
             loss = normalized_baselined_loads[idx]
             normalized_baselined_loads[idx] = 0.0
             new_total = total_positive_adjustment + loss
             for j in range(len(normalized_baselined_loads)):
                 if normalized_baselined_loads[j] > 0.0:
-                    normalized_baselined_loads[j] = (normalized_baselined_loads[j] * new_total) / total_positive_adjustment
-        weight_adjustments = [normalized_load * settings.LEARNING_RATE for normalized_load in normalized_baselined_loads]
-        for idx in range(len(loads)):
-            self.virtual_batteries[idx].adjust_weight(weight_adjustments[idx])
-        
+                    normalized_baselined_loads[j] = normalized_baselined_loads[j] * \
+                        new_total / total_positive_adjustment
+
+        for idx, normalized_load in enumerate(normalized_baselined_loads):
+            self.virtual_batteries[idx].adjust_weight(normalized_load * settings.LEARNING_STEP)
+
         # Using 0.0001 instead of 0 because a float number may reach 5.0e-12 and not 0; we thus use epsilon.
+        solar_power_step = solar_power / 100
         while solar_power > 0.0001 and sum(loads) > 0.0001:
             for idx in range(len(loads)):
-                new_load = max(loads[idx] - solar_power * self.static_factor * self.virtual_batteries[idx].weight, 0.0)
+                new_load = max(loads[idx] - solar_power_step, 0.0)
                 solar_power -= loads[idx] - new_load
                 loads[idx] = new_load
 
+        utility_power_step = utility_power / 100
         while utility_power > 0.0001 and sum(loads) > 0.0001:
             for idx in range(len(loads)):
-                new_load = max(loads[idx] - utility_power * self.static_factor * self.virtual_batteries[idx].weight, 0.0)
+                new_load = max(loads[idx] - utility_power_step, 0.0)
                 utility_power -= loads[idx] - new_load
                 loads[idx] = new_load
 
+        battery_exchange_step = battery_exchange / 100
         while battery_exchange < 0.0001 and sum(loads) > 0.0001:
             for idx in range(len(loads)):
-                taken_power = self.virtual_batteries[idx].discharge(-1 * battery_exchange * self.static_factor * self.virtual_batteries[idx].weight)
+                taken_power = self.virtual_batteries[idx].discharge(
+                    -1 * battery_exchange_step)
                 if taken_power < 0.0001:
                     if loads[idx] > 0.0001:
                         self._houses_sim.get_house(idx).set_load_line(False)
@@ -124,7 +144,8 @@ class PowerManager:
             if all([bat.capacity - bat.charge_level < 0.0001 for bat in self.virtual_batteries]):
                 break
             for idx in range(len(loads)):
-                battery_exchange -= self.virtual_batteries[idx].charge(battery_exchange * self.static_factor * self.virtual_batteries[idx].weight)
+                battery_exchange -= self.virtual_batteries[idx].charge(
+                    battery_exchange_step)
 
         # Set inverter utility line connection status
         is_any_utility_on = False
@@ -146,6 +167,4 @@ class PowerManager:
             )
 
     def summary(self) -> str:
-        return str((
-            f"Power Manager Status: ..."
-        ))
+        return str('\n\n'.join(f"{vb}" for vb in self.virtual_batteries))

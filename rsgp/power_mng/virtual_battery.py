@@ -25,8 +25,10 @@ class VirtualBattery:
         return discharged_power
     
     def adjust_weight(self, amount):
-        charge_level_percentage = self.charge_level / self.capacity
         self.weight += amount
         self.weight = max(settings.GUARANTEED_MINIMUM_WEIGHT, self.weight)
         self.capacity = self.initial_capacity * self.weight
-        self.charge_level = charge_level_percentage * self.capacity
+        self.charge_level = min(self.charge_level, self.capacity)
+
+    def __str__(self):
+        return f"VirtualBattery(idx={self.idx}, weight={self.weight:.3f}, capacity={self.capacity:.3f}, charge_level={self.charge_level:.3f})"

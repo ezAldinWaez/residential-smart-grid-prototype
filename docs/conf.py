@@ -22,7 +22,6 @@ extensions = [
     'sphinx.ext.napoleon',
     'sphinx.ext.viewcode',
     'sphinx.ext.todo',
-    'sphinx.ext.graphviz',
     'sphinxcontrib.mermaid',
     'matplotlib.sphinxext.plot_directive',
 ]
@@ -46,13 +45,6 @@ todo_include_todos = True
 napoleon_attr_annotations = True
 napoleon_include_special_with_doc = False
 napoleon_include_private_with_doc = False
-
-graphviz_output_format = 'png'
-graphviz_dot_args = [
-    '-Gfontname=Helvetica',
-    '-Nfontname=Helvetica',
-    '-Efontname=Helvetica',
-]
 
 mermaid_output_format = 'svg'
 mermaid_pdfcrop = 'pdfcrop'

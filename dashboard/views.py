@@ -630,8 +630,8 @@ class PMSummeryTabView:
 
         self.output_text = ttk.Text(
             f_main,
-            height=5,
-            width=80,
+            height=30,
+            width=140,
             font=("Arial", 12),
         )
         self.output_text.pack(fill='both')

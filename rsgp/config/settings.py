@@ -52,6 +52,8 @@ class Settings:
     # =================================================================================================================
     # POWER MANAGEMENT SETTINGS
     # =================================================================================================================
+    GUARANTEED_MINIMUM_WEIGHT = 0.8 # The minimum share of each house; the algorithm will never assign them less
+    LEARNING_STEP = 0.002 # The rate of adjusting the weights in each update step
 
     # =================================================================================================================
     # REMOTE OBJECT SETTINGS

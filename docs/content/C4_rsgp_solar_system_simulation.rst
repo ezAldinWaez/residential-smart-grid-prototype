@@ -81,27 +81,6 @@ Inverter Control System
 -----------------------
 The inverter manages power flow between the photovoltaic panels, battery, and the power manager. It implements DC to AC conversion modeling to account for power losses that occur when converting direct current from the photovoltaic panels and the battery to alternating current for load consumption and utility export. The conversion is handled by the PVWatts library that follows established algorithms to accurately model the conversion. 
 
-.. mermaid::
-   :caption: Inverter control system architecture and operating modes
-   :align: center
-
-   graph TD
-      A[Inverter Control System] --> B[Operating Mode Selection]
-      B --> C[SBU Mode: Solar-Battery-Utility]
-      B --> D[SUB Mode: Solar-Utility-Battery] 
-      B --> E[USB Mode: Utility-Solar-Battery]
-      
-      F[Power Flow Manager] --> G[Solar Priority Control]
-      F --> H[Battery Management]
-      F --> I[Grid Interface Control]
-      F --> J[Load Shedding Control]
-      
-      A --> F
-      K[System Status] --> A
-      L[Load Requirements] --> A
-      M[Solar Generation] --> A
-      N[Battery State] --> A
-
 The inverter implements three operating modes for power flow priority.
 
 - **Solar-Battery-Utility (SBU) mode** prioritizes using the power available from the photovoltaic panels if present, and only when the panels by themselves do not meet the load that it draws from the battery. When the battery is empty, only then would the inverter draw from utility. This mode aims to reduce grid-dependency to a minimum. 
@@ -132,26 +111,6 @@ This component manages the interface between the simulation environment and the 
 
 The National Solar Radiation Database is the primary data source for solar irradiance and atmospheric conditions. The NSRDB provides hourly measurements of solar radiation components (DNI, DHI, and GHI), ambient temperature, wind speed, and other meteorological parameters collected at numerous locations across the United States. This database is one of the most comprehensive sources of solar data available for renewable energy applications, providing the data necessary for detailed photovoltaic system modeling. 
 
-.. mermaid::
-   :caption: Weather data integration and processing workflow
-   :align: center
-
-   graph TD
-      A[NSRDB Database] --> B[Data Extraction]
-      B --> C[Timestamp Processing]
-      C --> D[Timezone Conversion]
-      D --> E[Time Synchronization]
-      E --> F[Parameter Extraction]
-      
-      F --> G[Direct Normal Irradiance]
-      F --> H[Diffuse Horizontal Irradiance]
-      F --> I[Global Horizontal Irradiance]
-      F --> J[Ambient Temperature]
-      F --> K[Wind Speed]
-      
-      L[Simulation Time] --> E
-      M[Geographic Location] --> B
-
 The database used from NSRDB covers the aforementioned measurements taken in the Phoenix/Arizona for one full year; one record each half an hour. Data is extracted using the simulation time; the record with the timestamp closest to the current simulation timestamp is used for the calculations of the solar energy in that specific moment in the simulation. 
 
 Power Management Interface
@@ -163,25 +122,5 @@ Currently, the interface consists purely of the exchange of data; there is no ex
 Data Collection
 ---------------
 Data collection operates continuously throughout simulation to capture time-series data about solar generation, battery operation, and system-wide energy flows. The collected data can then be analyzed to pinpoint issues in the model and help refine both the simulation and the power management solutions. Utility import and export represent the most important metrics collected, as they are direct metrics of the effectiveness of the power management solution. 
-
-.. mermaid::
-   :caption: Data collection and analysis framework architecture
-   :align: center
-
-   graph TD
-      A[Solar System Components] --> B[Data Collection Engine]
-      B --> C[Real-time Monitoring]
-      B --> D[Time-series Storage]
-      B --> E[CSV Export]
-      B --> F[Performance Metrics]
-      
-      G[Solar Generation Data] --> B
-      H[Battery Operation Data] --> B
-      I[Inverter Performance Data] --> B
-      J[System Status Data] --> B
-      
-      D --> K[Post-simulation Analysis]
-      E --> L[External Tools Integration]
-      F --> M[Performance Evaluation]
 
 The system captures data from all the components to enable any form of analysis. The data collection is extensive: state-of-charge of the battery, power generated from the panels, the system-wide load, utility import and export, among other metrics. The data is logged to a CSV file continuously throughout the simulation. Along the data from NSRDB, the logged CSV files provide all the data needed to carry out analysis on the trends of power generation and consumption. Trend analysis might lead to improvements on the power management solutions. Additionally, AI techniques can be used to benefit from the data and extend the power manager with AI capabilities. This could be especially useful to predict shortages of power generation and thus switch the operation mode of the inverter to import from utility to keep the battery for that shortage and thus maintain long-term system stability. 

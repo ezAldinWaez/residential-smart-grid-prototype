@@ -33,7 +33,7 @@ exclude_patterns = ['_build', 'Thumbs.db', '.DS_Store']
 language = os.environ.get('SPHINX_LANG', 'en')
 
 # Internationalization settings
-locale_dirs = ['locale/']
+locale_dirs = ['_locale/']
 gettext_compact = True
 gettext_uuid = False
 
@@ -93,10 +93,14 @@ latex_elements = {
     'papersize': 'a4paper',
     'pointsize': '12pt',
     'babel': '',
-    'fncychap': r'\usepackage[Rejne]{fncychap}',
-    'preamble': r'\usepackage{custom_preamble}',
+    'fncychap': r'''
+        \usepackage[Rejne]{fncychap}
+    ''',
+    'preamble': r'''
+        \usepackage{etoolbox}
+    ''',
     'figure_align': 'H',
-    'atendofbody': r'''''',
+    'atendofbody': '',
     'extraclassoptions': 'oneside,openany',
     'geometry': r'\usepackage{geometry} \geometry{outer=2.5cm}',
     'maketitle': r'''
@@ -114,7 +118,7 @@ latex_elements = {
 
         \input{_dedication.tex.txt}
     ''',
-    'atendofbody': r'''''',
+    'atendofbody': '',
     'tableofcontents': r'''
         \cleardoublepage
         \phantomsection
@@ -132,12 +136,10 @@ latex_elements = {
         \pagenumbering{arabic}
         \setcounter{page}{1}
     ''',
-    'printindex': r'''
-    ''',
+    'printindex': '',
 }
 
 latex_additional_files = [
-    "custom_preamble.sty",
     "_titlepage.tex.txt",
     "_abstract.tex.txt",
     "_dedication.tex.txt"

@@ -3,4 +3,8 @@
 from .app import DashboardApp
 
 app = DashboardApp()
-app.mainloop()
+
+try:
+    app.mainloop()
+except KeyboardInterrupt:
+    app.destroy()

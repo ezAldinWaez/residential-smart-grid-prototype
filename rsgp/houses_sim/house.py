@@ -1,6 +1,6 @@
 from .data import RegularDevices
 from .device import DeviceClass
-from ..remote_object import expose
+from ..utils.remote_object import expose
 
 
 @expose

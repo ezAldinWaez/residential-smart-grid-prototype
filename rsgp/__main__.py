@@ -3,7 +3,7 @@
 from .houses_sim.simulator import HousesSimulator
 from .solar_system_sim.simulator import SolarSystemSimulator
 from .power_mng.manager import PowerManager
-from .remote_object.server import RemoteObjectServer
+from .utils.remote_object import RemoteObjectServer
 
 houses_sim = HousesSimulator()
 houses_sim.start(dt=200)

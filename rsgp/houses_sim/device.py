@@ -1,7 +1,7 @@
 import random
 
 from .data import DeviceConf, RegularDevices
-from ..remote_object import expose
+from ..utils.remote_object import expose
 
 import numpy as np
 

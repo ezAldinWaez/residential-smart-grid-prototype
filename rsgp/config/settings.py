@@ -6,7 +6,7 @@ from pathlib import Path
 
 from .constants import SECONDS_IN_MINUTE, BYTES_IN_MB
 from ..solar_system_sim.data import InverterMode, ChargePriority
-from ..remote_object import expose
+from ..utils.remote_object import expose
 
 from dotenv import load_dotenv
 
@@ -58,8 +58,8 @@ class Settings:
     # =================================================================================================================
     # REMOTE OBJECT SETTINGS
     # =================================================================================================================
-    REMOTE_OBJECT_HOST = os.getenv("REMOTE_OBJECT_HOST", 'localhost')
-    REMOTE_OBJECT_PORT = int(os.getenv("REMOTE_OBJECT_PORT", 41991))
+    RSGP_REMOTE_OBJECT_HOST = os.getenv("RSGP_REMOTE_OBJECT_HOST", 'localhost')
+    RSGP_REMOTE_OBJECT_PORT = int(os.getenv("RSGP_REMOTE_OBJECT_PORT", 41991))
 
     # =================================================================================================================
     # LOGGING SETTINGS

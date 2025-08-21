@@ -5,7 +5,7 @@ import pvlib
 from .data import InverterConf, InverterMode, ChargePriority
 from .panels import Panels
 from .battery import Battery
-from ..remote_object import expose
+from ..utils.remote_object import expose
 from ..config.settings import settings
 
 

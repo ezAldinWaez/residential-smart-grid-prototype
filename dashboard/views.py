@@ -4,9 +4,6 @@ from __future__ import annotations
 from typing import TYPE_CHECKING
 from datetime import datetime
 
-import tkinter as tk
-import ttkbootstrap as ttk
-
 from .utils import build_scrollable_frame
 if TYPE_CHECKING:
     from ..rsgp.utils.time_sim import TimeSimulator
@@ -14,6 +11,8 @@ if TYPE_CHECKING:
     from ..rsgp.solar_system_sim.simulator import SolarSystemSimulator
     from ..rsgp.power_mng.manager import PowerManager
 
+import tkinter as tk
+import ttkbootstrap as ttk
 
 class MainWindowView:
     """Main window view.

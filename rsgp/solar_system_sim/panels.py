@@ -6,7 +6,7 @@ from .data import PanelsConf
 from ..utils.nsrdb_data import nsrdb_data, nsrdb_location
 from ..utils.helpers import find_nearest_timestamp_row
 from ..config.settings import settings
-from ..remote_object import expose
+from ..utils.remote_object import expose
 
 from pvlib.location import Location
 from pvlib.irradiance import get_total_irradiance

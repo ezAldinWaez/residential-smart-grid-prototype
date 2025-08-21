@@ -1,5 +1,5 @@
 from .data import BatteryConf
-from ..remote_object import expose
+from ..utils.remote_object import expose
 from ..config.constants import SECONDS_IN_HOUR
 from ..config.settings import settings
 

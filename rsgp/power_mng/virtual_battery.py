@@ -1,4 +1,4 @@
-from ..remote_object import expose
+from ..utils.remote_object import expose
 from ..config.settings import settings
 from ..config.constants import SECONDS_IN_HOUR
 

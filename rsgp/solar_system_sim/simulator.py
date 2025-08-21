@@ -8,7 +8,7 @@ from ..config.settings import settings
 from ..utils.decorators import log_start_end_error
 from ..utils.helpers import log_record_into_csv
 from ..utils.time_sim import time_sim
-from ..remote_object import expose
+from ..utils.remote_object import expose
 
 
 @expose

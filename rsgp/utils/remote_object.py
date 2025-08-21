@@ -1,12 +1,16 @@
+"""Remote object interface for RSGP via Pyro5."""
+
+# TODO: Document this modul.
+
 from __future__ import annotations
 from threading import Thread
 from typing import TYPE_CHECKING
 
-from Pyro5.api import Daemon
+from Pyro5.api import Daemon, expose
 
 from ..config.settings import settings
-from ..utils.logger import logger
-from ..utils.time_sim import time_sim
+from .logger import logger
+from .time_sim import time_sim
 if TYPE_CHECKING:
     from ..houses_sim.simulator import HousesSimulator
     from ..solar_system_sim.simulator import SolarSystemSimulator
@@ -28,8 +32,8 @@ class RemoteObjectServer:
         logger.info("Starting remote object server.")
 
         self.daemon = Daemon(
-            host=settings.REMOTE_OBJECT_HOST,
-            port=settings.REMOTE_OBJECT_PORT,
+            host=settings.RSGP_REMOTE_OBJECT_HOST,
+            port=settings.RSGP_REMOTE_OBJECT_PORT,
         )
 
         self.daemon.register(settings, "settings")

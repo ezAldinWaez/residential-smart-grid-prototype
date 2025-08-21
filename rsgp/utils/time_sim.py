@@ -4,7 +4,7 @@
 
 from datetime import datetime, timedelta, timezone
 
-from ..remote_object import expose
+from .remote_object import expose
 from ..config.settings import settings
 from .nsrdb_data import nsrdb_location, nsrdb_start_point
 

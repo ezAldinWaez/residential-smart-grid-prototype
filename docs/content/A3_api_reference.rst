@@ -2,10 +2,12 @@
 
   \appendix
 
-RSGP API Reference
-==================
+API Reference
+=============
+RSGP
+----
 Houses Simulation
------------------
+~~~~~~~~~~~~~~~~~
 .. automodule:: rsgp.houses_sim.simulator
   :members:
   :undoc-members:
@@ -27,7 +29,7 @@ Houses Simulation
   :show-inheritance:
 
 Solar System Simulation
------------------------
+~~~~~~~~~~~~~~~~~~~~~~~
 .. automodule:: rsgp.solar_system_sim.simulator
   :members:
   :undoc-members:
@@ -54,7 +56,7 @@ Solar System Simulation
   :show-inheritance:
 
 Power Mangament
----------------
+~~~~~~~~~~~~~~~
 .. automodule:: rsgp.power_mng.manager
   :members:
   :undoc-members:
@@ -65,9 +67,56 @@ Power Mangament
   :undoc-members:
   :show-inheritance:
 
-Remote Object
--------------
-.. automodule:: rsgp.remote_object.server
+RSGP Utilities
+~~~~~~~~~~~~~~
+.. automodule:: rsgp.utils.time_sim
   :members:
   :undoc-members:
   :show-inheritance:
+
+.. automodule:: rsgp.utils.nsrdb_data
+  :members:
+  :undoc-members:
+  :show-inheritance:
+
+.. automodule:: rsgp.utils.remote_object
+  :members:
+  :undoc-members:
+  :show-inheritance:
+
+.. automodule:: rsgp.utils.logger
+  :members:
+  :undoc-members:
+  :show-inheritance:
+
+.. automodule:: rsgp.utils.helpers
+  :members:
+  :undoc-members:
+  :show-inheritance:
+
+.. automodule:: rsgp.utils.decorators
+  :members:
+  :undoc-members:
+  :show-inheritance:
+
+Dashboard
+---------
+.. automodule:: dashboard.app
+  :members:
+  :undoc-members:
+  :show-inheritance:
+
+.. automodule:: dashboard.views
+  :members:
+  :undoc-members:
+  :show-inheritance:
+
+.. automodule:: dashboard.utils
+  :members:
+  :undoc-members:
+  :show-inheritance:
+
+Raspberry Pi Controller
+-----------------------
+...
+

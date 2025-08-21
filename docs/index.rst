@@ -15,16 +15,17 @@ Table of Contents
    content/C3_rsgp_houses_simulation
    content/C4_rsgp_solar_system_simulation
    content/C5_rsgp_power_management
-   content/C6_power_management_solution
-   content/C7_remote_object_and_dashboard
-   content/C8_hardwares_and_io_tracker
-   content/C9_final_results
-   content/C10_conclusions_and_suggestions
+   content/C6_dashboard
+   content/C7_rasp_controller
+   content/C8_final_results
+   content/C9_conclusions_and_suggestions
 
    content/_thanks_and_appreciation
    content/_references
 
-   content/A1_rsgp_api_reference
+   content/A1_docs_workflow
+   content/A2_notebooks_workflow
+   content/A3_api_reference
 
 Indices and tables
 ------------------

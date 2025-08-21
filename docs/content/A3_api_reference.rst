@@ -1,7 +1,3 @@
-.. raw:: latex
-
-  \appendix
-
 API Reference
 =============
 RSGP

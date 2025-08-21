@@ -1,0 +1,109 @@
+/* Minimalist RTL CSS for Arabic language support with Sphinx Book Theme */
+
+html {
+  direction: rtl;
+}
+
+code,
+pre,
+.highlight {
+  direction: ltr;
+  text-align: left;
+}
+
+.header-article__inner .header-article-items__end {
+  margin-left: unset;
+  margin-right: auto;
+}
+
+.bd-header-article .dropdown-menu {
+  direction: ltr;
+  transform: translateX(75%);
+}
+
+.bd-main .bd-content {
+  justify-content: right;
+}
+
+.bd-sidebar-primary {
+  order: -1;
+}
+
+.bd-sidebar-primary nav.bd-links {
+  margin-right: unset;
+  margin-left: -1rem;
+}
+
+.bd-sidebar-primary .sidebar-primary-items__end {
+  margin-top: unset;
+}
+
+.bd-sidebar-secondary {
+  order: 1;
+}
+
+nav.bd-links .current > a,
+.toc-entry a.nav-link.active {
+  box-shadow: max(3px, 0.1875rem, 0.12em) 0 var(--pst-color-primary);
+}
+
+.toc-entry a.nav-link {
+  margin-left: unset;
+  margin-right: -1rem;
+  padding: 0.125rem 1rem 0.125rem 0;
+}
+
+div.admonition,
+div.deprecated,
+div.versionadded,
+div.versionchanged {
+  border-left: unset;
+  border-right: 0.2rem solid;
+}
+
+.bd-search .search-button__kbd-shortcut,
+.search-button-field .search-button__kbd-shortcut {
+  margin-left: unset;
+  margin-right: auto;
+  direction: ltr;
+  right: unset;
+  left: 0.5rem;
+}
+
+.bd-search {
+  padding-left: unset;
+  padding-right: 0.5rem;
+}
+
+aside.sidebar {
+  margin-right: 0.5rem;
+  float: left;
+  clear: left;
+}
+
+.prev-next-area .left-prev {
+  float: right !important;
+}
+
+.prev-next-area .right-next {
+  float: left !important;
+}
+
+.admonition > .admonition-title {
+  padding: 0.4rem 2rem 0.4rem 0.6rem !important;
+}
+
+.admonition > .admonition-title:after {
+  left: unset;
+  right: 0.5rem;
+}
+
+span.versionmodified:before {
+  margin-right: unset;
+  margin-left: 0.6rem;
+  display: inline-block;
+}
+
+.py.class {
+  direction: ltr;
+}

@@ -70,6 +70,8 @@ html_theme_options = {
     'collapse_navigation': True,
     'navigation_depth': 3,
 }
+html_css_files = ['css/rtl.css'] if language == 'ar' else []
+html_js_files = ['js/rtl.js'] if language == 'ar' else []
 
 # -- Options for LaTeX output ------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#options-for-latex-output
@@ -91,8 +93,6 @@ latex_elements = {
     'papersize': 'a4paper',
     'pointsize': '12pt',
     'babel': '',
-    'fontpkg': r'\usepackage{tgtermes} \usepackage{tgheros} \renewcommand\ttdefault{txtt}',
-    # Some "fncychap" styles you can try are "Bjarne", "Sonny", "Lenny", "Glenn", "Conny", "Rejne" and "Bjornstrup". You can also set this to '' to disable fncychap.
     'fncychap': r'\usepackage[Rejne]{fncychap}',
     'preamble': r'\usepackage{custom_preamble}',
     'figure_align': 'H',

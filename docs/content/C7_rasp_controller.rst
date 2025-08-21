@@ -1,3 +1,3 @@
-Hardwares & I/O Tracker
+Raspberry Pi Controller
 =======================
-some content for section: Hardwares & I/O Tracker
+some content for section: Raspberry Pi Controller

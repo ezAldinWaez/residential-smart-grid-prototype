@@ -17,7 +17,7 @@ def _(Path, mo):
 
     file_browser = mo.ui.file_browser(
         initial_path=_GRAPHS_DIR,
-        filetypes=[".mermaid"],
+        filetypes=[".mermaid", ".mmd"],
         multiple=False,
         restrict_navigation=True,
         label="## Mermaid File Browser",

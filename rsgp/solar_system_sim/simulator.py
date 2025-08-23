@@ -1,3 +1,4 @@
+"""Solar system simulator."""
 from threading import Thread
 import time
 
@@ -8,16 +9,19 @@ from ..config.settings import settings
 from ..utils.decorators import log_start_end_error
 from ..utils.helpers import log_record_into_csv
 from ..utils.time_sim import time_sim
-from ..utils.remote_object import expose
+
+from Pyro5.api import expose
 
 
 @expose
 class SolarSystemSimulator:
-    panels: Panels  #: Panels: ...
-    battery: Battery  #: Battery: ...
-    inverter: Inverter  #: Inverter: ...
+    """Solar system simulator."""
 
-    def __init__(self):
+    panels: Panels  #: Panels: The solar panels.
+    battery: Battery  #: Battery: The battery.
+    inverter: Inverter  #: Inverter: The inverter.
+
+    def __init__(self) -> None:
 
         self.panels = Panels()
         self.battery = Battery()
@@ -30,9 +34,21 @@ class SolarSystemSimulator:
         self._running = False
 
     def is_running(self) -> bool:
+        """Check if the solar system simulation is running.
+
+        Returns:
+            bool: True if the solar system simulation is running, False otherwise.
+
+        """
         return self._running
 
     def start(self, dt: int) -> None:
+        """Start the solar system simulation.
+
+        Args:
+            dt (int): Simulation time step in milliseconds.
+
+        """
         self._running = True
         self._dt = dt
 
@@ -42,10 +58,12 @@ class SolarSystemSimulator:
         ).start()
 
     def pause(self) -> None:
+        """Pause the solar system simulation."""
         if self._running:
             self._running = False
 
     def resume(self) -> None:
+        """Resume the solar system simulation."""
         if not self._running:
             self.start(self._dt)
 
@@ -79,6 +97,12 @@ class SolarSystemSimulator:
             )
 
     def summary(self) -> str:
+        """Get a summary of the solar system simulation.
+
+        Returns:
+            str: Summary of the solar system simulation.
+
+        """
         return str((
             f"{self.inverter.conf}\n\n"
             f"{self.inverter}\n\n"

@@ -6,7 +6,6 @@ import time
 import numpy as np
 
 from .virtual_battery import VirtualBattery
-from ..utils.remote_object import expose
 from ..config.settings import settings
 from ..utils.decorators import log_start_end_error
 from ..utils.helpers import log_record_into_csv
@@ -14,6 +13,8 @@ from ..utils.time_sim import time_sim
 if TYPE_CHECKING:
     from ..houses_sim.simulator import HousesSimulator
     from ..solar_system_sim.simulator import SolarSystemSimulator
+
+from Pyro5.api import expose
 
 # TODO: link utility_exchange_power between inverter and each house
 
@@ -112,31 +113,33 @@ class PowerManager:
 
         ordered_idx = [idx for idx, val in sorted(list(enumerate(loads)), key=lambda item: item[1])]
 
-        equal_factor = 1 / (( 1/ self.static_factor) + 1)
+        equal_factor = 1 / ((1 / self.static_factor) + 1)
         for idx in ordered_idx:
             equal_factor = 1 / ((1 / equal_factor) - 1)
             new_load = max(loads[idx] - solar_power * equal_factor, 0.0)
             solar_power -= loads[idx] - new_load
             loads[idx] = new_load
 
-        equal_factor = 1 / (( 1/ self.static_factor) + 1)
+        equal_factor = 1 / ((1 / self.static_factor) + 1)
         for idx in ordered_idx:
             equal_factor = 1 / ((1 / equal_factor) - 1)
             new_load = max(loads[idx] - utility_power * equal_factor, 0.0)
             utility_power -= loads[idx] - new_load
             loads[idx] = new_load
-        
+
         min_load, max_load = min(loads), max(loads)
-        factors = [(load - min_load) / (max_load - min_load) for load in loads] if (max_load - min_load) > 0 else [self.static_factor] * len(loads)
+        factors = [(load - min_load) / (max_load - min_load)
+                   for load in loads] if (max_load - min_load) > 0 else [self.static_factor] * len(loads)
 
         if battery_exchange < 0.0:
             for idx in range(len(loads)):
                 taken_power = self.virtual_batteries[idx].discharge(-1 * battery_exchange * factors[idx])
                 if -1 * battery_exchange * factors[idx] - taken_power > 0.0001:
                     self._houses_sim.get_house(idx).set_load_line(False)
-        
-        ordered_idx = [idx for idx, val in sorted(list(enumerate(self.virtual_batteries)), key= lambda item: (item[1].capacity - item[1].charge_level))]
-        equal_factor = 1 / (( 1/ self.static_factor) + 1)
+
+        ordered_idx = [idx for idx, val in sorted(
+            list(enumerate(self.virtual_batteries)), key=lambda item: (item[1].capacity - item[1].charge_level))]
+        equal_factor = 1 / ((1 / self.static_factor) + 1)
         if battery_exchange > 0.0001:
             for idx in ordered_idx:
                 equal_factor = 1 / ((1 / equal_factor) - 1)

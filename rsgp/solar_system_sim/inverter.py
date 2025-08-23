@@ -1,26 +1,37 @@
+"""Solar system simulation inverter."""
+
 from datetime import datetime
 
-import pvlib
 
 from .data import InverterConf, InverterMode, ChargePriority
 from .panels import Panels
 from .battery import Battery
-from ..utils.remote_object import expose
 from ..config.settings import settings
+
+from Pyro5.api import expose
+import pvlib
 
 
 @expose
 class Inverter:
-    conf: InverterConf  #: InverterConf: The inverter configuration
+    """Inverter.
 
-    load_line: bool  #: bool: Flag for load line state (connected=1, disconnected=0)
-    load_power: float  #: float: Total load for the system
-    utility_line: bool  #: bool: Flag for utility line state (connected=1, disconnected=0)
-    utility_exchange_power: float  #: float: Total power from/to the utility for the system
-    panels_power: float  #: float: The power used by the solar panels [Watt]
-    battery_exchange_power: float  #: float: The power exchanged with the battery (+ === charge, - === discharge) [Watt]
+    Args:
+        battery (Battery): The battery object.
+        panels (Panels): The panels object.
 
-    def __init__(self, battery: Battery, panels: Panels):
+    """
+
+    conf: InverterConf  #: InverterConf: The inverter configuration.
+    load_line: bool  #: bool: Flag for load line state (connected=1, disconnected=0).
+    load_power: float  #: float: Total load for the system.
+    utility_line: bool  #: bool: Flag for utility line state (connected=1, disconnected=0).
+    utility_exchange_power: float  #: float: Total power from/to the utility for the system.
+    panels_power: float  #: float: The power used by the solar panels [Watt].
+    #: float: The power exchanged with the battery (+ === charge, - === discharge) [Watt].
+    battery_exchange_power: float
+
+    def __init__(self, battery: Battery, panels: Panels) -> None:
         self.conf = InverterConf(
             paco=settings.INVERTER_NOMINAL_AC_POWER,
             pdco=settings.INVERTER_PDCO,
@@ -43,6 +54,15 @@ class Inverter:
         self.battery_exchange_power = 0.0
 
     def dc_to_ac(self, p_dc: float) -> float:
+        """Convert DC power to AC power using the inverter's characteristics.
+
+        Args:
+            p_dc (float): DC power input to the inverter [Watt].
+
+        Returns:
+            float: AC power output from the inverter [Watt]. 
+
+        """
         if p_dc <= 0:
             return 0.0
         ac_power_calculated = pvlib.inverter.pvwatts(pdc=p_dc, pdc0=self.conf.pdco)
@@ -50,20 +70,49 @@ class Inverter:
         return actual_ac_power
 
     def ac_to_needed_dc(self, p_ac_target: float) -> float:
+        """Convert a target AC power output to the required DC power input for the inverter.
+
+        Args:
+            p_ac_target (float): The target AC power output from the inverter [Watt].
+
+        Returns:
+            float: The required DC power input to the inverter [Watt].
+        """
+
         if p_ac_target <= 0:
             return 0.0
         p_ac_target_capped = min(p_ac_target, self.conf.paco)
         p_dc_required = p_ac_target_capped / self.conf.eta_inv_ovr
         return p_dc_required
 
-    def operate(self, timestamp: datetime, dt_seconds: float):
+    def operate(self, timestamp: datetime, dt_seconds: float) -> None:
+        """Calculate the power flow in the solar system for the given time interval.
+
+        Args:
+            timestamp (datetime): The current timestamp.
+            dt_seconds (float): The time interval in seconds.
+
+        """
         initial_panels_dc_power = self._panels.calc_total_power(timestamp)
         required_load_dc_power = self.ac_to_needed_dc(
             self.conf.pnt + (self.load_power if self.load_line else 0))
         available_panels_dc_power = initial_panels_dc_power
 
-        # Meet load from panels dc (S is for solar), convert it to ac, charge battery with the remaining
-        def S(available_panels_dc_power: float, required_load_dc_power: float):
+        def _S(available_panels_dc_power: float, required_load_dc_power: float) -> tuple[float, float, float]:
+            """Meet load from panels dc (S is for solar), convert it to ac, charge battery with the remaining.
+
+            Args:
+                available_panels_dc_power (float): The current DC power available from panels [Watt].
+                required_load_dc_power (float): The DC power required by the load [Watt].
+
+            Returns:
+                tuple[float, float, float]: A tuple containing:
+
+                    - remaining_panels_dc_power (float): Solar power left after meeting load and charging battery [Watt].
+                    - remaining_load_dc_power (float): Load power still needed after solar contribution [Watt].
+                    - battery_charge_power (float): Power used to charge the battery from solar [Watt].
+
+            """
             battery_exchange_power = 0.0
             if available_panels_dc_power > 0:
                 dc_to_inverter_for_load = min(available_panels_dc_power, required_load_dc_power)
@@ -77,8 +126,19 @@ class Inverter:
                     available_panels_dc_power -= battery_exchange_power
             return available_panels_dc_power, required_load_dc_power, battery_exchange_power
 
-        # Meet remaining load from battery (B is for battery)
-        def B(required_load_dc_power: float):
+        def _B(required_load_dc_power: float) -> tuple[float, float]:
+            """Meet remaining load from battery (B is for battery).
+
+            Args:
+                required_load_dc_power (float): The DC power required by the load [Watt].
+
+            Returns:
+                tuple[float, float]: A tuple containing:
+
+                    - required_load_dc_power (float): Load power still needed after battery contribution [Watt].
+                    - battery_exchange_power (float): Power used to discharge the battery to meet load [Watt].
+
+            """
             battery_exchange_power = 0.0
             if required_load_dc_power > 0.0:
                 battery_exchange_power = self._battery.discharge(required_load_dc_power, dt_seconds)
@@ -86,8 +146,16 @@ class Inverter:
                     required_load_dc_power -= battery_exchange_power
             return required_load_dc_power, -1 * battery_exchange_power
 
-        # Import from utility (U is for utility) to meet the demand
-        def U(required_load_dc_power: float):
+        def _U(required_load_dc_power: float) -> float:
+            """Import from utility (U is for utility) to meet the demand.
+
+            Args:
+                required_load_dc_power (float): The DC power required by the load [Watt].
+
+            Returns:
+                float: Load power still needed after utility contribution [Watt].
+
+            """
             if required_load_dc_power > 0.0 and self.utility_line:
                 imported_power = self.dc_to_ac(required_load_dc_power)
                 self.utility_exchange_power = -1 * imported_power
@@ -101,25 +169,25 @@ class Inverter:
 
         if self.conf.mode is InverterMode.SBU:
             available_panels_dc_power, required_load_dc_power, battery_exchange_power = \
-                S(available_panels_dc_power, required_load_dc_power)
+                _S(available_panels_dc_power, required_load_dc_power)
             required_load_dc_power, battery_usage = \
-                B(required_load_dc_power)
+                _B(required_load_dc_power)
             required_load_dc_power = \
-                U(required_load_dc_power)
+                _U(required_load_dc_power)
         elif self.conf.mode is InverterMode.SUB:
             available_panels_dc_power, required_load_dc_power, battery_exchange_power = \
-                S(available_panels_dc_power, required_load_dc_power)
+                _S(available_panels_dc_power, required_load_dc_power)
             required_load_dc_power = \
-                U(required_load_dc_power)
+                _U(required_load_dc_power)
             required_load_dc_power, battery_usage = \
-                B(required_load_dc_power)
+                _B(required_load_dc_power)
         elif self.conf.mode is InverterMode.USB:
             required_load_dc_power = \
-                U(required_load_dc_power)
+                _U(required_load_dc_power)
             available_panels_dc_power, required_load_dc_power, battery_exchange_power = \
-                S(available_panels_dc_power, required_load_dc_power)
+                _S(available_panels_dc_power, required_load_dc_power)
             required_load_dc_power, battery_usage = \
-                B(required_load_dc_power)
+                _B(required_load_dc_power)
         else:
             raise ValueError(f"Invalid inverter mode: {self.conf.mode}")
 
@@ -154,5 +222,5 @@ class Inverter:
 
         self.battery_exchange_power = battery_exchange_power
 
-    def __str__(self):
+    def __str__(self) -> str:
         return f"Inverter(load_power={self.load_power:.3f}, utility_exchange_power={self.utility_exchange_power:.3f}, panels_power={self.panels_power:.3f}, battery_exchange_power={self.battery_exchange_power:.3f})"

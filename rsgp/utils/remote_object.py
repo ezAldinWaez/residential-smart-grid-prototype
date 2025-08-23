@@ -1,12 +1,8 @@
 """Remote object interface for RSGP via Pyro5."""
 
-# TODO: Document this modul.
-
 from __future__ import annotations
 from threading import Thread
 from typing import TYPE_CHECKING
-
-from Pyro5.api import Daemon, expose
 
 from ..config.settings import settings
 from .logger import logger
@@ -16,19 +12,30 @@ if TYPE_CHECKING:
     from ..solar_system_sim.simulator import SolarSystemSimulator
     from ..power_mng.manager import PowerManager
 
+from Pyro5.api import Daemon
+
 
 class RemoteObjectServer:
+    """Remote object server for RSGP via Pyro5.
 
-    daemon: Daemon  #: Daemon: ...
-    thread: Thread  #: Thread: ...
+    Args:
+        houses_sim (HousesSimulator): `HousesSimulator` instance.
+        solar_system_sim (SolarSystemSimulator): `SolarSystemSimulator` instance.
+        power_manager (PowerManager): ``PowerManager` instance.
+
+    """
+
+    daemon: Daemon  #: Daemon: The Pyro5 daemon.
+    thread: Thread  #: Thread: The thread for the daemon.
 
     def __init__(self, houses_sim: HousesSimulator, solar_system_sim: SolarSystemSimulator,
-                 power_manager: PowerManager):
+                 power_manager: PowerManager) -> None:
         self._houses_sim = houses_sim
         self._solar_system_sim = solar_system_sim
         self._power_manager = power_manager
 
     def start(self) -> None:
+        """Start the remote object server."""
         logger.info("Starting remote object server.")
 
         self.daemon = Daemon(
@@ -62,6 +69,7 @@ class RemoteObjectServer:
         self.thread.start()
 
     def stop(self) -> None:
+        """Stop the remote object server."""
         logger.info("Stoping remote interface server.")
 
         if self.daemon:
@@ -71,4 +79,11 @@ class RemoteObjectServer:
             self.thread.join(timeout=1.0)
 
     def is_running(self) -> bool:
+        """Check if the remote object server is running.
+
+        Returns:
+            bool: True if the server is running, False otherwise.
+
+        """
+
         return self.thread is not None and self.thread.is_alive()

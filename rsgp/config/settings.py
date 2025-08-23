@@ -6,14 +6,14 @@ from pathlib import Path
 
 from .constants import SECONDS_IN_MINUTE, BYTES_IN_MB
 from ..solar_system_sim.data import InverterMode, ChargePriority
-from ..utils.remote_object import expose
 
+from Pyro5.api import expose
 from dotenv import load_dotenv
 
 
 @expose
 class Settings:
-    """Settings."""
+    """RSGP Settings."""
 
     load_dotenv()
 

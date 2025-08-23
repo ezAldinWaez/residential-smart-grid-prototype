@@ -13,7 +13,7 @@ from Pyro5.api import Proxy
 class DashboardApp:
     """Dashboard app to browse and control the system."""
 
-    def __init__(self):
+    def __init__(self) -> None:
         load_dotenv()
 
         HOST = os.getenv('RSGP_REMOTE_OBJECT_HOST', 'localhost')
@@ -39,11 +39,11 @@ class DashboardApp:
             rsgp_pm=self._rsgp_pm,
         )
 
-    def mainloop(self):
+    def mainloop(self) -> None:
         """Start tkinter app mainloop."""
         self._root.mainloop()
 
-    def destroy(self):
+    def destroy(self) -> None:
         """Destroy tkinter app release pyro proxies."""
         self._root.destroy()
         self._rsgp_ts._pyroRelease()

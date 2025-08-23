@@ -12,10 +12,11 @@ def configure_logger(name: str = "log") -> logging.Logger:
     """Configure and return a logger with console and optional file handlers.
 
     Args:
-        * name (str): Logger name
+        name (str): The name of the logger.
 
     Returns:
-        Logger: Logger object
+        Logger: The configured logger.
+
     """
     logger = logging.getLogger(name)
     logger.setLevel(settings.LOG_LEVEL)
@@ -51,4 +52,4 @@ def configure_logger(name: str = "log") -> logging.Logger:
     return logger
 
 
-logger = configure_logger(name="RSGP")  #: Logger: global RSGP logger instance
+logger = configure_logger(name="RSGP")  #: Logger: Global RSGP logger instance.

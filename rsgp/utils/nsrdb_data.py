@@ -1,6 +1,6 @@
 """NSRDB data handlers."""
 
-# TODO: Use `pvlib.iotools` to do that.
+# TODO: Use `pvlib.iotools` instead.
 
 from datetime import datetime, timedelta, timezone
 from typing import Any
@@ -15,7 +15,8 @@ def get_nsrdb_data() -> tuple[pd.DataFrame, pd.DataFrame]:
     """Read NSRDB dataset, manipulate it, and returen it as DataFrames.
 
     Returns:
-        tuple[pd.DataFrame, pd.DataFrame]: NSRDB metadata, and NSRDB data
+        tuple[DataFrame, DataFrame]: NSRDB metadata, and NSRDB data.
+
     """
     nsrdb_meta = pd.read_csv(settings.NSRDB_PATH, nrows=1)
     nsrdb_data = pd.read_csv(settings.NSRDB_PATH, header=2)
@@ -56,10 +57,11 @@ def get_nsrdb_location(nsrdb_meta: pd.DataFrame) -> dict[str, Any]:
     """Get location basic info based on NSRDB dataset metadata.
 
     Args:
-        * nsrdb_meta (pd.DataFrame): NSRDB dataset metadata
+        nsrdb_meta (DataFrame): `nsrdb_meta` from :func:`get_nsrdb_data`.
 
     Returns:
-        dict[str, Any]: Location basic info: 'latitude', 'longitude', and 'timezone'
+        dict[str, Any]: A dictionary of location info (`latitude`, `longitude`, `timezone`).
+
     """
     lat = float(nsrdb_meta["Latitude"][0])
     lng = float(nsrdb_meta["Longitude"][0])
@@ -70,6 +72,6 @@ def get_nsrdb_location(nsrdb_meta: pd.DataFrame) -> dict[str, Any]:
     return {'latitude': lat, 'longitude': lng, 'timezone': tz}
 
 
-nsrdb_meta, nsrdb_data = get_nsrdb_data()  #: tuple[DataFrame, DataFrame]: NSRDB meta data and data
-nsrdb_location = get_nsrdb_location(nsrdb_meta)  #: dict[str, Any]: NSRDB location
-nsrdb_start_point: datetime = nsrdb_data["Timestamp"].min()  #: datetime: NSRDB start point
+nsrdb_meta, nsrdb_data = get_nsrdb_data()  #: tuple[DataFrame, DataFrame]: NSRDB meta data and data.
+nsrdb_location = get_nsrdb_location(nsrdb_meta)  #: dict[str, Any]: NSRDB location.
+nsrdb_start_point: datetime = nsrdb_data["Timestamp"].min()  #: datetime: NSRDB start point.

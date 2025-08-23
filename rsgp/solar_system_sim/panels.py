@@ -1,4 +1,4 @@
-"""Solar system simulated panels."""
+"""Solar system simulation panels."""
 
 from datetime import datetime
 
@@ -6,8 +6,8 @@ from .data import PanelsConf
 from ..utils.nsrdb_data import nsrdb_data, nsrdb_location
 from ..utils.helpers import find_nearest_timestamp_row
 from ..config.settings import settings
-from ..utils.remote_object import expose
 
+from Pyro5.api import expose
 from pvlib.location import Location
 from pvlib.irradiance import get_total_irradiance
 import pandas as pd
@@ -15,13 +15,15 @@ import pandas as pd
 
 @expose
 class Panels:
-    conf: PanelsConf  #: PanelsConf: The panels configuration
-    pv_loc: Location  #: Location: The `pvlib` location info from the NSRDB meta data
-    # TODO: make that as data type in .data; an interface between panels and nsrdb data
-    pv_data: pd.Series  #: Series: The data row from the NSRDB for the current timestamp
-    total_power: float  #: float: The theoretical total power produced by the panels [Watt]
+    """Panels."""
 
-    def __init__(self):
+    conf: PanelsConf  #: PanelsConf: The panels configuration.
+    pv_loc: Location  #: Location: The `pvlib` location info from the NSRDB meta data.
+    # TODO: make that as data type in .data; an interface between panels and nsrdb data.
+    pv_data: pd.Series  #: Series: The data row from the NSRDB for the current timestamp.
+    total_power: float  #: float: The theoretical total power produced by the panels [Watt].
+
+    def __init__(self) -> None:
         self.conf = PanelsConf(
             num_panels=settings.PANELS_NUM,
             panel_area=settings.PANEL_AREA,
@@ -38,12 +40,15 @@ class Panels:
 
         self.total_power = 0.0
 
-    def calc_total_power(self, timestamp: datetime):
+    def calc_total_power(self, timestamp: datetime) -> float:
         """
         Calculate and return the total power that could be produced by the panels.
 
         Args:
-            - timestamp (datetime): The current timestamp in the same timezone as the NSRDB data
+            timestamp (datetime): The current timestamp in the same timezone as the NSRDB data.
+
+        Returns:
+            float: The total power that could be produced by the panels [Watt].
         """
 
         self.pv_data = find_nearest_timestamp_row(nsrdb_data, timestamp)
@@ -67,5 +72,5 @@ class Panels:
 
         return self.total_power
 
-    def __str__(self):
+    def __str__(self) -> str:
         return f"Panels(total_power={self.total_power:.2f})"

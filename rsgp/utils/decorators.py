@@ -9,12 +9,13 @@ def log_excution(func: callable) -> callable:
     """Decorator to log the execution of the function.
 
     Args:
-        * func (callable): The function to log
+        func (callable): The function to log.
 
     Returns:
-        callable: The decorated function
+        callable: The decorated function.
+
     """
-    def wrapper(*args, **kwargs):
+    def _wrapper(*args, **kwargs):
         logger.info(
             f"Start executing {func.__name__} with args: {args} and kwargs: {kwargs}")
         start_time = time.time()
@@ -23,19 +24,20 @@ def log_excution(func: callable) -> callable:
         logger.info(
             f"Finish executing {func.__name__} in {end_time - start_time} seconds")
         return result
-    return wrapper
+    return _wrapper
 
 
 def log_start_end_error(start_msg: str = None, finish_msg: str = None, error_msg: str = None) -> callable:
     """Decorator generator to log when the function start and end and handle errors.
 
     Args:
-        * start_msg (str, optional): The message to log when the function start
-        * finish_msg (str, optional): The message to log when the function finish
-        * error_msg (str, optional): The message to log when the function raise an error
+        start_msg (str, optional): The message to log when the function start.
+        finish_msg (str, optional): The message to log when the function finish.
+        error_msg (str, optional): The message to log when the function raise an error.
 
     Returns:
-        callable: The generated decorator
+        callable: The generated decorator.
+
     """
     def _decorator(func: callable) -> callable:
         def _wrapper(*args, **kwargs):

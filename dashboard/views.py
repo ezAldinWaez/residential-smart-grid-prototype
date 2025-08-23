@@ -14,20 +14,21 @@ if TYPE_CHECKING:
 import tkinter as tk
 import ttkbootstrap as ttk
 
+
 class MainWindowView:
     """Main window view.
 
     Args:
-        root (Tk): Tk window root
-        rsgp_ts (TimeSimulator): Time simulator instance
-        rsgp_hs (HousesSimulator): Houses simulator instance
-        rsgp_sss (SolarSystemSimulator): Solar system simulator instance
-        rsgp_pm (PowerManager): Power manager instance
+        root (Tk): Tk window root.
+        rsgp_ts (TimeSimulator): Time simulator instance.
+        rsgp_hs (HousesSimulator): Houses simulator instance.
+        rsgp_sss (SolarSystemSimulator): Solar system simulator instance.
+        rsgp_pm (PowerManager): Power manager instance.
 
     """
 
     def __init__(self, root: tk.Tk, rsgp_ts: TimeSimulator, rsgp_hs: HousesSimulator,
-                 rsgp_sss: SolarSystemSimulator, rsgp_pm: PowerManager):
+                 rsgp_sss: SolarSystemSimulator, rsgp_pm: PowerManager) -> None:
         self._root = root
         self._root.title("Residential Smart Grid Prototype")
         self._root.attributes('-fullscreen', True)
@@ -51,7 +52,7 @@ class MainWindowView:
 
         self._update_ui(dt=100)
 
-    def _build_header(self, f_parent: ttk.Frame):
+    def _build_header(self, f_parent: ttk.Frame) -> None:
         f_main = ttk.Frame(f_parent)
         f_main.pack(fill="x", pady=(0, 10))
 
@@ -105,7 +106,7 @@ class MainWindowView:
             width=10,
         ).pack(side='left')
 
-    def _build_body(self, f_parent: ttk.Frame):
+    def _build_body(self, f_parent: ttk.Frame) -> None:
         n_main = ttk.Notebook(
             f_parent,
             style="Primary.TNotebook",
@@ -148,44 +149,48 @@ class MainWindowView:
             rsgp_pm=self._rsgp_pm,
         )
 
-    def _on_closing(self):
+    def _on_closing(self) -> None:
         self.pause_sim()
+        self._rsgp_ts._pyroRelease()
+        self._rsgp_hs._pyroRelease()
+        self._rsgp_sss._pyroRelease()
+        self._rsgp_pm._pyroRelease()
         self._root.destroy()
 
-    def _update_ui(self, dt: int):
+    def _update_ui(self, dt: int) -> None:
         self._sv_time.set(f"Time: {datetime.fromisoformat(self._rsgp_ts.get_timestamp()).strftime('%H:%M:%S')}")
         self._sv_toggle_sim.set(
             "Pause" if self._rsgp_hs.is_running() or self._rsgp_sss.is_running() or self._rsgp_pm.is_running()
             else "Resume")
         self._root.after(dt, self._update_ui, dt)
 
-    def toggle_sim(self):
+    def toggle_sim(self) -> None:
         """Toggle simulation state."""
         if self._rsgp_hs.is_running() or self._rsgp_sss.is_running() or self._rsgp_pm.is_running():
             self.pause_sim()
         else:
             self.resume_sim()
 
-    def pause_sim(self):
+    def pause_sim(self) -> None:
         """Pause simulation."""
         self._rsgp_ts.pause()
         self._rsgp_hs.pause()
         self._rsgp_sss.pause()
         self._rsgp_pm.pause()
 
-    def resume_sim(self):
+    def resume_sim(self) -> None:
         """Resume simulation."""
         self._rsgp_ts.resume()
         self._rsgp_hs.resume()
         self._rsgp_sss.resume()
         self._rsgp_pm.resume()
 
-    def set_all_utilities(self, state: bool):
+    def set_all_utilities(self, state: bool) -> None:
         """Turn all utility lines for all houses to ``state``."""
         for house in self._rsgp_hs.get_houses():
             house.set_utility_line(state)
 
-    def set_all_loads(self, state: bool):
+    def set_all_loads(self, state: bool) -> None:
         """Turn all loads lines for all houses to ``state``."""
         for house in self._rsgp_hs.get_houses():
             house.set_load_line(state)
@@ -196,12 +201,12 @@ class HSTabView:
 
     Args:
         root (Tk): Tk window root.
-        f_parent (Frame): Parent fram, master of the main frame
-        rsgp_hs (HousesSimulator): Houses simulator instance
+        f_parent (Frame): Parent fram, master of the main frame.
+        rsgp_hs (HousesSimulator): Houses simulator instance.
 
     """
 
-    def __init__(self, root: tk.Tk, f_parent: ttk.Frame, rsgp_hs: HousesSimulator):
+    def __init__(self, root: tk.Tk, f_parent: ttk.Frame, rsgp_hs: HousesSimulator) -> None:
         self._root = root
         self._rsgp_hs = rsgp_hs
 
@@ -229,7 +234,7 @@ class HSTabView:
 
         self._update_ui(dt=100)
 
-    def _build_header(self, f_parent: ttk.Frame):
+    def _build_header(self, f_parent: ttk.Frame) -> None:
         f_main = ttk.Frame(f_parent)
         f_main.pack(fill="x", pady=(0, 10))
 
@@ -245,7 +250,7 @@ class HSTabView:
             font=("Arial", 12),
         ).pack(side="right")
 
-    def _build_body(self, f_parent: ttk.Frame):
+    def _build_body(self, f_parent: ttk.Frame) -> None:
         f_main = ttk.Frame(f_parent)
         f_main.pack(fill="both", expand=True)
         f_main.columnconfigure(list(range(5)), weight=1)
@@ -291,7 +296,7 @@ class HSTabView:
                 style="Primary.TButton",
             ).pack(fill='x')
 
-    def _update_ui(self, dt: int):
+    def _update_ui(self, dt: int) -> None:
         if self._rsgp_hs.is_running():
             self._sv_system_load.set(f"System Load: {self._rsgp_hs.get_system_load()/1000:,.3f} kW")
             for idx, load in enumerate(self._sv_houses_loads):
@@ -303,11 +308,11 @@ class HSTabView:
 
         self._root.after(dt, self._update_ui, dt)
 
-    def open_hc_window(self, idx: int):
+    def open_hc_window(self, idx: int) -> None:
         """Open house controls window.
 
         Args:
-            idx (int): House index
+            idx (int): House index.
 
         """
         if idx in self._hc_windows and self._hc_windows[idx]._root.winfo_exists():
@@ -329,21 +334,21 @@ class HouseControlsWindowView:
     """House controls window view.
 
     Args:
-        root (Tk): Tk window root
-        idx (int): House index
-        houses_sim (HousesSimulator): Houses simulator instance
+        root (Tk): Tk window root.
+        idx (int): House index.
+        houses_sim (HousesSimulator): Houses simulator instance.
         variables (dict[str, ttk.Variable]): Passed UI variables, including:
 
-                - "total_load" (StringVar): Total house load label text
-                - "utility_line" (IntVar): Utility line status (0 or 1)
-                - "load_line" (IntVar): Load line status (0 or 1)
+                - "total_load" (StringVar): Total house load label text.
+                - "utility_line" (IntVar): Utility line status (0 or 1).
+                - "load_line" (IntVar): Load line status (0 or 1).
 
     """
 
     idx: int  #: int: House index.
 
     def __init__(self, root: tk.Tk, idx: int, rsgp_hs: HousesSimulator,
-                 variables: dict[str, ttk.Variable]):
+                 variables: dict[str, ttk.Variable]) -> None:
         self.idx = idx
 
         self._root = root
@@ -378,7 +383,7 @@ class HouseControlsWindowView:
 
         self._update_ui(dt=100)
 
-    def _build_header(self, f_parent: ttk.Frame):
+    def _build_header(self, f_parent: ttk.Frame) -> None:
         f_main = ttk.Frame(f_parent)
         f_main.pack(fill="x", pady=(0, 10))
 
@@ -413,7 +418,7 @@ class HouseControlsWindowView:
             style="Primary.Roundtoggle.Toolbutton",
         ).pack(side="left", padx=(0, 10))
 
-    def _build_body(self, f_parent: ttk.Frame):
+    def _build_body(self, f_parent: ttk.Frame) -> None:
         f_main = ttk.Frame(f_parent)
         f_main.pack(fill="both")
 
@@ -459,7 +464,7 @@ class HouseControlsWindowView:
                 style="Secondary.TLabel",
             ).pack(fill="x", pady=(0, 10))
 
-    def _update_ui(self, dt):
+    def _update_ui(self, dt) -> None:
         if self._rsgp_hs.is_running():
             for device_name, load in self._sv_devices_loads.items():
                 load.set(f"Load: {self._rsgp_hs_house.get_device(device_name).get_load():,.1f} Watt")
@@ -473,13 +478,13 @@ class HSSummeryTabView:
     """Houses simulation summery tab view.
 
     Args:
-        root (Tk): Tk window root
-        f_parent (Frame): Parent fram, master of the main frame
-        rsgp_hs (HousesSimulator): Solar system simulator instance
+        root (Tk): Tk window root.
+        f_parent (Frame): Parent fram, master of the main frame.
+        rsgp_hs (HousesSimulator): Solar system simulator instance.
 
     """
 
-    def __init__(self, root: tk.Tk, f_parent: ttk.Frame, rsgp_hs: HousesSimulator):
+    def __init__(self, root: tk.Tk, f_parent: ttk.Frame, rsgp_hs: HousesSimulator) -> None:
         self._root = root
         self._rsgp_hs = rsgp_hs
 
@@ -491,7 +496,7 @@ class HSSummeryTabView:
 
         self._update_ui(100)
 
-    def _build_header(self, f_parent: ttk.Frame):
+    def _build_header(self, f_parent: ttk.Frame) -> None:
         f_main = ttk.Frame(f_parent)
         f_main.pack(fill="x", pady=(0, 10))
 
@@ -501,7 +506,7 @@ class HSSummeryTabView:
             font=("Arial", 18),
         ).pack(side="left")
 
-    def _build_body(self, f_parent: ttk.Frame):
+    def _build_body(self, f_parent: ttk.Frame) -> None:
         f_main = ttk.Frame(f_parent)
         f_main.pack(fill="both", expand=True, pady=20, padx=20)
         f_main.place(relx=.5, rely=.5, anchor='center')
@@ -514,7 +519,7 @@ class HSSummeryTabView:
         )
         self.output_text.pack(fill='both')
 
-    def _update_ui(self, dt: int):
+    def _update_ui(self, dt: int) -> None:
         if self._rsgp_hs.is_running():
             self.output_text.delete(1.0, ttk.END)
             self.output_text.insert(ttk.END, chars=self._rsgp_hs.summary())
@@ -525,13 +530,13 @@ class SSSSummeryTabView:
     """Solar system simulation summery tab view.
 
     Args:
-        root (Tk): Tk window root
-        f_parent (Frame): Parent fram, master of the main frame
-        rsgp_sss (SolarSystemSimulator): Solar system simulator instance
+        root (Tk): Tk window root.
+        f_parent (Frame): Parent fram, master of the main frame.
+        rsgp_sss (SolarSystemSimulator): Solar system simulator instance.
 
     """
 
-    def __init__(self, root: tk.Tk, f_parent: ttk.Frame, rsgp_sss: SolarSystemSimulator):
+    def __init__(self, root: tk.Tk, f_parent: ttk.Frame, rsgp_sss: SolarSystemSimulator) -> None:
         self._root = root
         self._rsgp_sss = rsgp_sss
 
@@ -543,7 +548,7 @@ class SSSSummeryTabView:
 
         self._update_ui(100)
 
-    def _build_header(self, f_parent: ttk.Frame):
+    def _build_header(self, f_parent: ttk.Frame) -> None:
         f_main = ttk.Frame(f_parent)
         f_main.pack(fill="x", pady=(0, 10))
 
@@ -553,7 +558,7 @@ class SSSSummeryTabView:
             font=("Arial", 18),
         ).pack(side="left")
 
-    def _build_body(self, f_parent: ttk.Frame):
+    def _build_body(self, f_parent: ttk.Frame) -> None:
         f_main = ttk.Frame(f_parent)
         f_main.pack(fill="both", expand=True, pady=20, padx=20)
         f_main.place(relx=.5, rely=.5, anchor='center')
@@ -566,7 +571,7 @@ class SSSSummeryTabView:
         )
         self.output_text.pack(fill='both')
 
-    def _update_ui(self, dt: int):
+    def _update_ui(self, dt: int) -> None:
         if self._rsgp_sss.is_running():
             self.output_text.delete(1.0, ttk.END)
             self.output_text.insert(ttk.END, chars=self._rsgp_sss.summary())
@@ -577,9 +582,9 @@ class PMSummeryTabView:
     """Power management summery tab view.
 
     Args:
-        root (Tk): Tk window root
-        f_parent (Frame): Parent fram, master of the main frame
-        rsgp_pm (PowerManager): Power manager instance
+        root (Tk): Tk window root.
+        f_parent (Frame): Parent fram, master of the main frame.
+        rsgp_pm (PowerManager): Power manager instance.
 
     """
 
@@ -595,7 +600,7 @@ class PMSummeryTabView:
 
         self._update_ui(100)
 
-    def _build_header(self, f_parent: ttk.Frame):
+    def _build_header(self, f_parent: ttk.Frame) -> None:
         f_main = ttk.Frame(f_parent)
         f_main.pack(fill="x", pady=(0, 10))
 
@@ -605,7 +610,7 @@ class PMSummeryTabView:
             font=("Arial", 18),
         ).pack(side="left")
 
-    def _build_body(self, f_parent: ttk.Frame):
+    def _build_body(self, f_parent: ttk.Frame) -> None:
         f_main = ttk.Frame(f_parent)
         f_main.pack(fill="both", expand=True, pady=20, padx=20)
         f_main.place(relx=.5, rely=.5, anchor='center')
@@ -618,7 +623,7 @@ class PMSummeryTabView:
         )
         self.output_text.pack(fill='both')
 
-    def _update_ui(self, dt: int):
+    def _update_ui(self, dt: int) -> None:
         if self._rsgp_pm.is_running():
             self.output_text.delete(1.0, ttk.END)
             self.output_text.insert(ttk.END, chars=self._rsgp_pm.summary())

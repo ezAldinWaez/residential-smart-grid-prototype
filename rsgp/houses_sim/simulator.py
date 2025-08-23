@@ -1,3 +1,5 @@
+"""Houses simulator."""
+
 from threading import Thread
 import time
 
@@ -6,39 +8,86 @@ from ..config.settings import settings
 from ..utils.decorators import log_start_end_error
 from ..utils.helpers import log_record_into_csv
 from ..utils.time_sim import time_sim
-from ..utils.remote_object import expose
 
+from Pyro5.api import expose
 
 @expose
 class HousesSimulator:
-    houses: list[House]  #: list[House]: Houses in the system
-    system_load: float  #: float: Total load for the system
+    """Houses simulator."""
 
-    def __init__(self):
+    houses: list[House]  #: list[House]: Houses in the system.
+    system_load: float  #: float: Total load for the system.
+
+    def __init__(self) -> None:
         self.houses = [House(idx) for idx in range(settings.HOUSES_NUM)]
         self.system_load = 0.0
 
         self._running = False
 
     def get_num_houses(self) -> int:
+        """Get number of houses in the system.
+
+        Returns:
+            int: Number of houses in the system.
+
+        """
         return len(self.houses)
 
     def get_system_load(self) -> float:
+        """Get total load for the system.
+
+        Returns:
+            float: Total load for the system.
+
+        """
         return float(self.system_load)
 
     def is_running(self) -> bool:
+        """Check if the houses simulation is running.
+
+        Returns:
+            bool: True if the houses simulation is running, False otherwise.
+
+        """
         return self._running
 
     def get_houses(self) -> list[House]:
+        """Get houses in the system.
+
+        Returns:
+            list[House]: Houses in the system.
+
+        """
         return self.houses
 
     def get_house(self, idx: int) -> House:
+        """Get a specific house in the system.
+
+        Args:
+            idx (int): House index.
+
+        Returns:
+            House: House object.
+
+        """
         return self.houses[idx]
 
     def get_time_sim_elapsed(self) -> float:
+        """Get elapsed time in the simulation.
+
+        Returns:
+            float: Elapsed time in the simulation.
+
+        """
         return time_sim.get_elapsed()
 
     def start(self, dt: int) -> None:
+        """Start the houses simulation.
+
+        Args:
+            dt (int): Simulation time step in milliseconds.
+
+        """
         self._running = True
         self._dt = dt
 
@@ -48,10 +97,12 @@ class HousesSimulator:
         ).start()
 
     def pause(self) -> None:
+        """Pause the houses simulation."""
         if self._running:
             self._running = False
 
     def resume(self) -> None:
+        """Resume the houses simulation."""
         if not self._running:
             self.start(self._dt)
 
@@ -97,4 +148,10 @@ class HousesSimulator:
             )
 
     def summary(self) -> str:
+        """Get a summary of the houses simulation.
+
+        Returns:
+            str: Summary of the houses simulation.
+
+        """
         return str('\n\n'.join(f"{house}" for house in self.houses))

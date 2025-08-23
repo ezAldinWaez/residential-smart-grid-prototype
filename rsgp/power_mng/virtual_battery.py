@@ -1,6 +1,8 @@
-from ..utils.remote_object import expose
 from ..config.settings import settings
 from ..config.constants import SECONDS_IN_HOUR
+
+from Pyro5.api import expose
+
 
 @expose
 class VirtualBattery:
@@ -35,7 +37,7 @@ class VirtualBattery:
         actual_discharge_power = actual_discharge_energy * (SECONDS_IN_HOUR / self.time_interval)
         actual_discharge_power *= self.charge_efficiency
         return actual_discharge_power
-    
+
     def adjust_weight(self, amount):
         self.weight += amount
         self.weight = max(settings.GUARANTEED_MINIMUM_WEIGHT, self.weight)

@@ -1,0 +1,13 @@
+graph LR
+  subgraph RSGP[RSGP]
+    RSGP_SSS([Solar System Simulation])
+    RSGP_PM([Power Management])
+    RSGP_HS([Houses Simulation])
+  end
+  D([Dashboard])
+  RC([Raspberry Pi Controller])
+  HHC([Hardware Houses Controls])
+
+  RSGP_SSS <--Data--> RSGP_PM <--Data--> RSGP_HS
+  RSGP <--Data--> D & RC
+  RC <--Electric Signals--> HHC

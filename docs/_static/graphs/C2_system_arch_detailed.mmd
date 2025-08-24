@@ -1,0 +1,72 @@
+graph LR
+  subgraph RSGP[RSGP]
+    subgraph RSGP_SSS[Solar System Simulation]
+      subgraph RSGP_SSS_P[Panels]
+        RSGP_SSS_P_D[NSRDB Dataset]
+        RSGP_SSS_P_C[PVLib Calculations]
+        RSGP_SSS_P_O[Solar Power Output]
+      end
+      subgraph RSGP_SSS_B[Battery]
+        RSGP_SSS_B_M[Charge State Management]
+      end
+      subgraph RSGP_SSS_I[Inverter]
+        RSGP_SSS_I_M[Power Flow Management] 
+        RSGP_SSS_I_LG[Load & Grid Interfaces]
+      end
+    end
+    subgraph RSGP_PM[Power Management]
+      RSGP_PM_([...])
+    end
+    subgraph RSGP_HS[Houses Simulation]
+      subgraph RSGP_HS_HN[House N]
+        RSGP_HS_H3_D1([Device 1])
+        RSGP_HS_H3_D2([Device 2])
+        RSGP_HS_H3_DK([...])
+        RSGP_HS_H3_DM([Device M])
+      end
+      RSGP_HS_HK[...]
+      subgraph RSGP_HS_H2[House 2]
+        RSGP_HS_H2_D1([Device 1])
+        RSGP_HS_H2_D2([Device 2])
+        RSGP_HS_H2_DK([...])
+        RSGP_HS_H2_DM([Device M])
+      end
+      subgraph RSGP_HS_H1[House 1]
+        RSGP_HS_H1_D1([Device 1])
+        RSGP_HS_H1_D2([Device 2])
+        RSGP_HS_H1_DK([...])
+        RSGP_HS_H1_DM([Device M])
+      end
+    end
+  end
+  D([Dashboard])
+  RC([Raspberry Pi Controller])
+  subgraph HHC[Hardware Houses Controls]
+    subgraph HHC_HN[House N]
+      HHC_HN_D1([Device 1])
+      HHC_HN_D2([Device 2])
+      HHC_HN_DK([...])
+      HHC_HN_DM([Device M])
+    end
+    subgraph HHC_HK[...]
+    end
+    subgraph HHC_H2[House 2]
+      HHC_H2_D1([Device 1])
+      HHC_H2_D2([Device 2])
+      HHC_H2_DK([...])
+      HHC_H2_DM([Device M])
+    end
+    subgraph HHC_H1[House 1]
+      HHC_H1_D1([Device 1])
+      HHC_H1_D2([Device 2])
+      HHC_H1_DK([...])
+      HHC_H1_DM([Device M])
+    end
+  end
+
+  RSGP_SSS_P_D --Data--> RSGP_SSS_P_C --Data--> RSGP_SSS_P_O --Data--> RSGP_SSS_I_M
+  RSGP_SSS_B_M <--Data--> RSGP_SSS_I_M <--Data--> RSGP_SSS_I_LG
+  RSGP_SSS_I_LG <--Data--> RSGP_PM
+  RSGP_PM <--Data--> RSGP_HS_H1 & RSGP_HS_H2 & RSGP_HS_HK & RSGP_HS_HN
+  RSGP <--Data--> D & RC
+  RC <--Electric Signals--> HHC_H1 & HHC_H2 & HHC_HK & HHC_HN

@@ -1,0 +1,13 @@
+graph TD
+  Data[NSRDB Dataset]
+  TimeSim[Time Simulation]
+  TimeSyc[Timestamp Synchronization]
+  SolPosCalc[Solar Position Calculation]
+  PvPowCalc[PVLib Power Calculation]
+  PanSpec[Panel Specifications]
+  SysConf[System Configuration]
+  PanConf[Panel Configuration]
+  ArrOut[Total Array Output]
+
+  Data & TimeSim --> TimeSyc --> SolPosCalc --> PvPowCalc
+  PvPowCalc & PanSpec & SysConf --> PanConf --> ArrOut

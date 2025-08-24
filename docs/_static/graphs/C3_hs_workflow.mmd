@@ -1,0 +1,15 @@
+graph TD
+  HS[Houses Simulator]
+  HS_H1[House 1]
+  HS_H2[House 2]
+  HS_HK[...]
+  HS_HN[House N]
+  HS_H1_D[Device Collection]
+  HS_H2_D[Device Collection]
+  HS_HN_D[Device Collection]
+  HS_TLC[Total Load Calculation]
+
+  HS --> HS_H1 & HS_H2 & HS_HK & HS_HN & HS_TLC
+  HS_H1 --> HS_H1_D
+  HS_H2 --> HS_H2_D
+  HS_HN --> HS_HN_D

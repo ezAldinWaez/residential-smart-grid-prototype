@@ -2,38 +2,17 @@ RSGP Solar System Simulation
 ============================
 Introduction
 ------------
-The solar system simulation serves as the source of power within the system. This chapter examines the implementation of photovoltaic panel modeling, battery energy storage systems, and inverter control mechanisms that enable realistic solar power generation and management. 
+The solar system simulation serves as the source of power within the system. This chapter examines the implementation of photovoltaic panel modeling, battery energy storage systems, and inverter control mechanisms that enable realistic solar power generation and management.
 
 While the houses simulation models energy consumption, the solar system simulation models energy production and storage. Together they form the fundamental supply-demand dynamic that defines smart grids. The power management system, discussed in later chapters, coordinates between these two to optimize energy usage.
 
 Solar System Architecture Overview
 ----------------------------------
-The solar system simulation architecture consists of photovoltaic panels, one battery, and an inverter connecting the elements. The inverter is then connected to the power manager through a load line and a utility line. This design separates concerns between energy generation, storage, and power conversion and enables more realistic modeling of each component. 
+The solar system simulation architecture consists of photovoltaic panels, one battery, and an inverter connecting the elements. The inverter is then connected to the power manager through a load line and a utility line. This design separates concerns between energy generation, storage, and power conversion and enables more realistic modeling of each component.
 
-.. mermaid::
-   :caption: Solar system simulation architecture with three-component design
+.. mermaid:: ../_static/graphs/C4_sss_arch.mmd
    :align: center
-
-   graph TB
-      A[SolarSystemSimulator] --> B[Panels]
-      A --> C[Battery]
-      A --> D[Inverter]
-      
-      B --> E[NSRDB Weather Data]
-      B --> F[PVLib Calculations]
-      B --> G[Solar Power Output]
-      
-      C --> H[Charge State Management]
-      C --> I[Power Limitations]
-      C --> J[Efficiency Modeling]
-      
-      D --> K[Operating Mode Control]
-      D --> L[Power Flow Management] 
-      D --> M[Grid Interface]
-      
-      G --> D
-      C <--> D
-      D --> N[Power Management System]
+   :caption: Solar system simulation architecture with three-component design
 
 The **Panels** handle solar irradiance calculations and power generation based on the data collected from the National Solar Radiation Database (NSRDB). The **Battery** manages charge state tracking. The **Inverter** adheres to its operational mode control and manages power distribution from and to the solar system components and the demands of the power manager. 
 
@@ -43,21 +22,9 @@ Photovoltaic Panel Modeling
 ---------------------------
 The photovoltaic panels integrate with the National Solar Radiation Database to obtain weather information and employs the PVLib photovoltaic modeling library to perform accurate solar calculations. The panel model accounts for solar position, atmospheric conditions, and system configuration parameters to generate power output that mirror actual photovoltaic system performance. 
 
-.. mermaid::
-   :caption: Photovoltaic panel modeling workflow and data processing pipeline
+.. mermaid:: ../_static/graphs/C4_sss_workflow.mmd
    :align: center
-
-   graph TD
-      A[NSRDB Weather Data] --> B[Timestamp Synchronization]
-      B --> C[Solar Position Calculation]
-      C --> D[Irradiance Processing]
-      D --> E[PVLib Power Calculation]
-      E --> F[Panel Configuration]
-      F --> G[Total Array Output]
-      
-      H[Time Simulation] --> B
-      I[Panel Specifications] --> F
-      J[System Configuration] --> F
+   :caption: Photovoltaic panel modeling workflow and data processing pipeline
 
 The NSRDB contains hourly solar irradiance measurements, temperature data, and atmospheric conditions for locations across the United States. In the simulation, only data local to Phoenix/Arizona was used. The simulation system processes this data to extract direct normal irradiance (DNI), diffuse horizontal irradiance (DHI), and global horizontal irradiance (GHI) values necessary for photovoltaic calculations. The database integration includes automatic timestamp conversion, timezone handling, and data interpolation to support accelerated simulation time.
 

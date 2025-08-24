@@ -1,0 +1,22 @@
+graph TB
+  subgraph RSGP_SSS[Solar System Simulation]
+    subgraph RSGP_SSS_P[Panels]
+      RSGP_SSS_P_D[NSRDB Dataset]
+      RSGP_SSS_P_C[PVLib Calculations]
+      RSGP_SSS_P_O[Solar Power Output]
+    end
+    subgraph RSGP_SSS_B[Battery]
+      RSGP_SSS_B_M[Charge State Management]
+    end
+    subgraph RSGP_SSS_I[Inverter]
+      RSGP_SSS_I_M[Power Flow Management] 
+      RSGP_SSS_I_LG[Load & Grid Interfaces]
+    end
+  end
+  RSGP_PM([Power Management])
+  RSGP_HS([Houses Simulation])
+
+  RSGP_SSS_P_D --Data--> RSGP_SSS_P_C --Data--> RSGP_SSS_P_O --Data--> RSGP_SSS_I_M
+  RSGP_SSS_B_M <--Data--> RSGP_SSS_I_M <--Data--> RSGP_SSS_I_LG
+
+  RSGP_SSS_I_LG <--Data--> RSGP_PM <--Data--> RSGP_HS

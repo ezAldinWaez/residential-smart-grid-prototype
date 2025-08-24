@@ -10,7 +10,7 @@ Architecture Overview
 ---------------------
 The architecture separates simulation coordination, individual house modeling, and device-level power consumption calculations. 
 
-.. mermaid:: ../_static/graphs/rsgp_hs_arch.mmd
+.. mermaid:: ../_static/graphs/C3_hs_arch.mmd
    :align: center
    :caption: Houses simulation architecture with hierarchical device organization
 
@@ -24,7 +24,7 @@ The Houses Simulator
 --------------------
 The ``HousesSimulator`` coordinates the execution of individual house instances; it aggregates system-wide load calculations and provides the interface between the residential demand and the power management system. The simulator operates on its own thread to ensure that house load calculations proceed independently of the other components.
 
-.. mermaid:: ../_static/graphs/rsgp_hs_workflow.mmd
+.. mermaid:: ../_static/graphs/C3_hs_workflow.mmd
    :align: center
    :caption: HousesSimulator coordination and load aggregation workflow
 
@@ -56,7 +56,7 @@ The **ADSR envelope** provides the temporal structure for the device's power con
 
 Wave modulation introduces realistic variations in power consumption over the ADSR envelope. The framework supports multiple modulation types: sine waves, square waves, and random modulation. These modulation patterns operate at different frequencies and amplitudes to create complex power signatures that more closely match measured residential devices' behavior.
 
-.. plot:: _static/plots/rsgp_hs_some_regular_devices_loads_over_time.py
+.. plot:: _static/plots/C3_some_regular_devices_loads_over_time.py
    :align: center
 
    Some regular devices simulated loads over time

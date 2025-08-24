@@ -21,7 +21,7 @@ class RemoteObjectServer:
     Args:
         houses_sim (HousesSimulator): `HousesSimulator` instance.
         solar_system_sim (SolarSystemSimulator): `SolarSystemSimulator` instance.
-        power_manager (PowerManager): ``PowerManager` instance.
+        power_manager (PowerManager): `PowerManager` instance.
 
     """
 

@@ -47,35 +47,35 @@ class DeviceConf:
 class RegularDevices(Enum):
     """Regular household devices with their configurations."""
 
-    TEST = DeviceConf(
-        base_watt=1000,
-        max_count=10,
-        adsr=ADSRConf(a=3600, d=7200, s=.8, r=1800),
-    )  #: DeviceConf: Test Device.
+    # TEST = DeviceConf(
+    #     base_watt=1000,
+    #     max_count=10,
+    #     adsr=ADSRConf(a=3600, d=7200, s=.8, r=1800),
+    # )  #: DeviceConf: Test Device.
 
-    LED_LIGHT = DeviceConf(
-        base_watt=10,
-        max_count=10,
-        adsr=ADSRConf(a=.01, d=2, s=.8, r=.01),
-    )  #: DeviceConf: LED Light.
+    # LED_LIGHT = DeviceConf(
+    #     base_watt=10,
+    #     max_count=10,
+    #     adsr=ADSRConf(a=.01, d=2, s=.8, r=.01),
+    # )  #: DeviceConf: LED Light.
 
-    TV = DeviceConf(
-        base_watt=120,
-        max_count=4,
-        adsr=ADSRConf(a=1, d=1, s=.8, r=1.5, wt="sine", wp=.5, wa=.1),
-    )  #: DeviceConf: TV.
+    # TV = DeviceConf(
+    #     base_watt=120,
+    #     max_count=4,
+    #     adsr=ADSRConf(a=1, d=1, s=.8, r=1.5, wt="sine", wp=.5, wa=.1),
+    # )  #: DeviceConf: TV.
 
     REFRIGERATOR = DeviceConf(
-        base_watt=150,
+        base_watt=350,
         max_count=2,
-        adsr=ADSRConf(a=1, d=1, s=.3, r=2, wt="square", wp=3, wa=.06),
+        adsr=ADSRConf(a=1, d=1, s=.6, r=2, wt="square", wp=3, wa=.06),
     )  #: DeviceConf: Refrigerator.
 
-    HVAC = DeviceConf(
-        base_watt=3500,
-        max_count=1,
-        adsr=ADSRConf(a=3, d=2, s=.8, r=.5, wt="sine", wp=2, wa=.07),
-    )  #: DeviceConf:   #: DeviceConf: HVAC (Heating, Ventilation, and Air Conditioning).
+    # HVAC = DeviceConf(
+    #     base_watt=3500,
+    #     max_count=1,
+    #     adsr=ADSRConf(a=3, d=2, s=.8, r=.5, wt="sine", wp=2, wa=.07),
+    # )  #: DeviceConf:   #: DeviceConf: HVAC (Heating, Ventilation, and Air Conditioning).
 
     WASHING_MACHINE = DeviceConf(
         base_watt=500,
@@ -83,17 +83,17 @@ class RegularDevices(Enum):
         adsr=ADSRConf(a=2, d=2, s=.7, r=.5, wt="sine", wp=.5, wa=.04),
     )  #: DeviceConf: Washing machine.
 
-    DRYER = DeviceConf(
-        base_watt=3000,
-        max_count=1,
-        adsr=ADSRConf(a=2, d=1, s=.9, r=2, wt="sine", wp=2, wa=.03),
-    )  #: DeviceConf: Dryer.
+    # DRYER = DeviceConf(
+    #     base_watt=3000,
+    #     max_count=1,
+    #     adsr=ADSRConf(a=2, d=1, s=.9, r=2, wt="sine", wp=2, wa=.03),
+    # )  #: DeviceConf: Dryer.
 
-    DISHWASHER = DeviceConf(
-        base_watt=1800,
-        max_count=1,
-        adsr=ADSRConf(a=3, d=1.5, s=.6, r=2, wt="sine", wp=1, wa=.05),
-    )  #: DeviceConf: Dish washer.
+    # DISHWASHER = DeviceConf(
+    #     base_watt=1800,
+    #     max_count=1,
+    #     adsr=ADSRConf(a=3, d=1.5, s=.6, r=2, wt="sine", wp=1, wa=.05),
+    # )  #: DeviceConf: Dish washer.
 
     WATER_HEATER = DeviceConf(
         base_watt=4500,
@@ -104,5 +104,5 @@ class RegularDevices(Enum):
     MICROWAVE = DeviceConf(
         base_watt=1100,
         max_count=1,
-        adsr=ADSRConf(a=.5, d=.2, s=1, r=.5),
+        adsr=ADSRConf(a=.5, d=.2, s=1, r=.5, wt='random', wp=.5, wa=.05),
     )  #: DeviceConf: Micro-wave.

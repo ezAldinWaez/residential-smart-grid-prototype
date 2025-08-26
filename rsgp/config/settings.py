@@ -4,7 +4,7 @@ from datetime import datetime
 import os
 from pathlib import Path
 
-from .constants import SECONDS_IN_MINUTE, BYTES_IN_MB
+from .constants import SECONDS_IN_HOUR, BYTES_IN_MB
 from ..solar_system_sim.data import InverterMode, ChargePriority
 
 from Pyro5.api import expose
@@ -20,40 +20,40 @@ class Settings:
     # =================================================================================================================
     # TIME SIMULATION SETTINGS
     # =================================================================================================================
-    TIME_FACTOR = SECONDS_IN_MINUTE * 15  # The time factor to multiply the simulation time with to get the real time
+    TIME_FACTOR = SECONDS_IN_HOUR  #: The time factor to multiply the simulation time with to get the real time.
 
     # =================================================================================================================
     # HOUSES SIMULATION SETTINGS
     # =================================================================================================================
-    HOUSES_NUM = 3  # The number of houses to simulate.
+    HOUSES_NUM = 3  #: The number of houses to simulate.
 
     # =================================================================================================================
     # SOLAR SYSTEM SIMULATION SETTINGS
     # =================================================================================================================
-    BATTERY_CAPACITY = 100_000  # The battery capacity in Watt-hours [Wh]
-    BATTERY_CHARGE_EFFICIENCY = 0.95  # The efficiency of charging and discharging [%]
-    BATTERY_MAX_CHARGE_POWER = 40_000  # The maximum charge power for the battery [Watt]
-    BATTERY_MAX_DISCHARGE_POWER = 10_000  # The maximum discharge power for the battery [Watt]
-    BATTERY_INIT_CHARGE_LEVEL = 0.5  # The initial charge level for the battery [%]
+    BATTERY_TOTAL_CAPACITY = 100_000  #: The battery capacity in Watt-hours [Wh].
+    BATTERY_INIT_RESIDUAL_CAPACITY = 50_000  #: The initial charge level of the battery [Wh].
+    BATTERY_CHARGE_EFFICIENCY = 0.95  #: The efficiency of charging and discharging for the battery [%].
+    BATTERY_MAX_CHARGE_POWER = 40_000  #: The maximum charge power for the battery [Watt].
+    BATTERY_MAX_DISCHARGE_POWER = 10_000  #: The maximum discharge power for the battery [Watt].
 
-    PANELS_NUM = 80  # The number of panels in the system.
-    PANEL_AREA = 1.6  # The area of a single solar panel in square meters [m^2]
-    PANEL_EFFICIENCY = 0.15  # The efficiency of a single solar panel as a multiplier [%]
+    PANELS_NUM = 80  #: The number of panels in the system.
+    PANEL_AREA = 1.6  #: The area of a single solar panel in square meters [m^2].
+    PANEL_EFFICIENCY = 0.15  #: The efficiency of a single solar panel as a multiplier [%].
 
-    INVERTER_NOMINAL_AC_POWER = 15000.0  # AC power rating of the inverter [Watt]
-    INVERTER_PDCO = 16000.0  # DC power rating of the inverter [Watt]
-    INVERTER_ETA_INV_NOM = 0.96  # Nominal inverter efficiency [%] (e.g., 0.96)
-    INVERTER_ETA_INV_REF = 0.9637  # Reference inverter efficiency [%] (e.g., 0.9637)
-    INVERTER_PNT = 20.0  # AC power consumed by inverter at night [Watt]
-    INVERTER_ETA_OVR = INVERTER_ETA_INV_NOM  # Simplified overall nominal efficiency for reverse calculation [%]
-    INVERTER_INIT_MODE = InverterMode.SBU  # Initial mode the inverter is set to use
-    INVERTER_INIT_CHARGE_PRIORITY = ChargePriority.SOLAR_ONLY  # Initial charge priority the inverter is set to use
+    INVERTER_NOMINAL_AC_POWER = 15000.0  #: AC power rating of the inverter [Watt].
+    INVERTER_PDCO = 16000.0  #: DC power rating of the inverter [Watt].
+    INVERTER_ETA_INV_NOM = 0.96  #: Nominal inverter efficiency [%] (e.g., 0.96).
+    INVERTER_ETA_INV_REF = 0.9637  #: Reference inverter efficiency [%] (e.g., 0.9637).
+    INVERTER_PNT = 20.0  #: AC power consumed by inverter at night [Watt].
+    INVERTER_ETA_OVR = INVERTER_ETA_INV_NOM  #: Simplified overall nominal efficiency for reverse calculation [%].
+    INVERTER_INIT_MODE = InverterMode.SBU  #: Initial mode the inverter is set to use.
+    INVERTER_INIT_CHARGE_PRIORITY = ChargePriority.SOLAR_ONLY  #: Initial charge priority the inverter is set to use.
 
     # =================================================================================================================
     # POWER MANAGEMENT SETTINGS
     # =================================================================================================================
-    GUARANTEED_MINIMUM_WEIGHT = 0.8 # The minimum share of each house; the algorithm will never assign them less
-    LEARNING_STEP = 0.002 # The rate of adjusting the weights in each update step
+    GUARANTEED_MINIMUM_WEIGHT = 0.8  #: The minimum share of each house; the algorithm will never assign them less.
+    LEARNING_STEP = 0.002  #: The rate of adjusting the weights in each update step.
 
     # =================================================================================================================
     # REMOTE OBJECT SETTINGS

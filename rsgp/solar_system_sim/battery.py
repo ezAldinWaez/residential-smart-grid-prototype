@@ -12,17 +12,17 @@ class Battery:
     """Battery."""
 
     conf: BatteryConf  #: BattConf: The battery configuration.
-    charge_level: float  #: float: Current charge level of the battery [Wh].
+    residual_capacity: float  #: float: Current charge level of the battery [Wh].
 
     def __init__(self) -> None:
         self.conf = BatteryConf(
-            capacity=settings.BATTERY_CAPACITY,
+            total_capacity=settings.BATTERY_TOTAL_CAPACITY,
             charge_efficiency=settings.BATTERY_CHARGE_EFFICIENCY,
             max_charge_power=settings.BATTERY_MAX_CHARGE_POWER,
             max_discharge_power=settings.BATTERY_MAX_DISCHARGE_POWER,
         )
 
-        self.charge_level = self.conf.capacity * settings.BATTERY_INIT_CHARGE_LEVEL
+        self.residual_capacity = settings.BATTERY_INIT_RESIDUAL_CAPACITY
 
     def charge(self, power: float, time_interval: float) -> float:
         """Charge the battery with a given power for a given time interval.
@@ -38,9 +38,9 @@ class Battery:
         charge_power *= self.conf.charge_efficiency
         charge_energy = charge_power * (time_interval / SECONDS_IN_HOUR)
 
-        energy_to_full = self.conf.capacity - self.charge_level
+        energy_to_full = self.conf.total_capacity - self.residual_capacity
         actual_charge_energy = min(charge_energy, energy_to_full)
-        self.charge_level += actual_charge_energy
+        self.residual_capacity += actual_charge_energy
 
         actual_charge_power = actual_charge_energy * (SECONDS_IN_HOUR / time_interval)
         actual_charge_power /= self.conf.charge_efficiency
@@ -60,12 +60,12 @@ class Battery:
         discharge_power /= self.conf.charge_efficiency
         discharge_energy = discharge_power * (time_interval / SECONDS_IN_HOUR)
 
-        actual_discharge_energy = min(discharge_energy, self.charge_level)
-        self.charge_level -= actual_discharge_energy
+        actual_discharge_energy = min(discharge_energy, self.residual_capacity)
+        self.residual_capacity -= actual_discharge_energy
 
         actual_discharge_power = actual_discharge_energy * (SECONDS_IN_HOUR / time_interval)
         actual_discharge_power *= self.conf.charge_efficiency
         return actual_discharge_power
 
     def __str__(self) -> str:
-        return f"Battery(charge_level={self.charge_level/self.conf.capacity:.2%})"
+        return f"Battery(SoC={self.residual_capacity/self.conf.total_capacity:.2%})"

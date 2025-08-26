@@ -171,7 +171,7 @@ class Inverter:
                 battery_exchange_power = self._battery.discharge(required_load_dc_power, dt_seconds)
                 if battery_exchange_power > 0.0:
                     required_load_dc_power -= battery_exchange_power
-            return required_load_dc_power, -1 * battery_exchange_power
+            return required_load_dc_power, -battery_exchange_power
 
         def _U(required_load_dc_power: float) -> float:
             """Import from utility (U is for utility) to meet the demand.
@@ -185,7 +185,7 @@ class Inverter:
             """
             if required_load_dc_power > 0.0 and self.utility_line:
                 imported_power = self.dc_to_ac(required_load_dc_power)
-                self.utility_exchange_power = -1 * imported_power
+                self.utility_exchange_power = -imported_power
                 required_load_dc_power = 0.0
             return required_load_dc_power
 
@@ -244,7 +244,7 @@ class Inverter:
 
         if need_to_charge_from_utility:
             imported_power = self.dc_to_ac(self._battery.conf.max_charge_power)
-            self.utility_exchange_power = -1 * imported_power
+            self.utility_exchange_power = -imported_power
             battery_exchange_power += self._battery.charge(self._battery.conf.max_charge_power, dt_seconds)
 
         self.battery_exchange_power = battery_exchange_power

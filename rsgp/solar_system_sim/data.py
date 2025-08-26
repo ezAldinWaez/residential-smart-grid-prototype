@@ -24,19 +24,19 @@ class PanelsConf:
 @dataclass
 class BatteryConf:
     """Battery configuration data type."""
-    capacity: float  #: float: Total capacity of the battery [Wh].
+    total_capacity: float  #: float: Total capacity of the battery [Wh].
     charge_efficiency: float  #: float: Efficiency of charging [%].
     max_charge_power: float  #: float: Maximum charge rate [Watt].
     max_discharge_power: float  #: float: Maximum discharge rate [Watt].
 
     def __post_init__(self) -> None:
-        assert self.capacity > 0
+        assert self.total_capacity > 0
         assert 0 < self.charge_efficiency <= 1
         assert self.max_charge_power > 0
         assert self.max_discharge_power > 0
 
     def __str__(self) -> str:
-        return f"BatteryConf(capacity={self.capacity}, charge_efficiency={self.charge_efficiency}, max_charge_power={self.max_charge_power}, max_discharge_power={self.max_discharge_power})"
+        return f"BatteryConf(capacity={self.total_capacity}, charge_efficiency={self.charge_efficiency}, max_charge_power={self.max_charge_power}, max_discharge_power={self.max_discharge_power})"
 
 
 class InverterMode(Enum):

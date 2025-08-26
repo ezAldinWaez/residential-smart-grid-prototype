@@ -87,7 +87,7 @@ class SolarSystemSimulator:
                 settings.CSV_SSS_LOG_PATH,
                 timestamp=f"{timestamp}",
                 panels_total_power=f"{self.panels.total_power:.3f}",
-                battery_charge_level=f"{self.battery.charge_level:.3f}",
+                battery_residual_capacity=f"{self.battery.residual_capacity:.3f}",
                 inverter_panels_power=f"{self.inverter.panels_power:.3f}",
                 inverter_battery_exchange_power=f"{self.inverter.battery_exchange_power:.3f}",
                 inverter_load_line=f"{self.inverter.load_line:d}",

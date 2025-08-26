@@ -44,7 +44,7 @@ class DashboardApp:
         self._root.mainloop()
 
     def destroy(self) -> None:
-        """Destroy tkinter app release pyro proxies."""
+        """Destroy tkinter app and release pyro proxies."""
         self._root.destroy()
         self._rsgp_ts._pyroRelease()
         self._rsgp_hs._pyroRelease()

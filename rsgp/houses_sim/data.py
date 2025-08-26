@@ -71,17 +71,17 @@ class RegularDevices(Enum):
         adsr=ADSRConf(a=1, d=1, s=.6, r=2, wt="square", wp=3, wa=.06),
     )  #: DeviceConf: Refrigerator.
 
-    # HVAC = DeviceConf(
-    #     base_watt=3500,
-    #     max_count=1,
-    #     adsr=ADSRConf(a=3, d=2, s=.8, r=.5, wt="sine", wp=2, wa=.07),
-    # )  #: DeviceConf:   #: DeviceConf: HVAC (Heating, Ventilation, and Air Conditioning).
-
-    WASHING_MACHINE = DeviceConf(
-        base_watt=500,
+    HVAC = DeviceConf(
+        base_watt=3500,
         max_count=1,
-        adsr=ADSRConf(a=2, d=2, s=.7, r=.5, wt="sine", wp=.5, wa=.04),
-    )  #: DeviceConf: Washing machine.
+        adsr=ADSRConf(a=3, d=2, s=.8, r=.5, wt="sine", wp=2, wa=.07),
+    )  #: DeviceConf:   #: DeviceConf: HVAC (Heating, Ventilation, and Air Conditioning).
+
+    # WASHING_MACHINE = DeviceConf(
+    #     base_watt=500,
+    #     max_count=1,
+    #     adsr=ADSRConf(a=2, d=2, s=.7, r=.5, wt="sine", wp=.5, wa=.04),
+    # )  #: DeviceConf: Washing machine.
 
     # DRYER = DeviceConf(
     #     base_watt=3000,

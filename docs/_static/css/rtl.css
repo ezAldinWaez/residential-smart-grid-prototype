@@ -107,3 +107,7 @@ span.versionmodified:before {
 .py.class {
   direction: ltr;
 }
+
+span.section-number {
+  unicode-bidi: isolate-override;
+}

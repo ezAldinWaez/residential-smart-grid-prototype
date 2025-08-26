@@ -186,12 +186,22 @@ class MainWindowView:
         self._rsgp_pm.resume()
 
     def set_all_utilities(self, state: bool) -> None:
-        """Turn all utility lines for all houses to ``state``."""
+        """Turn all utility lines for all houses to ``state``.
+
+        Args:
+            state (bool): True to turn on, False to turn off.
+
+        """
         for house in self._rsgp_hs.get_houses():
             house.set_utility_line(state)
 
     def set_all_loads(self, state: bool) -> None:
-        """Turn all loads lines for all houses to ``state``."""
+        """Turn all loads lines for all houses to ``state``.
+
+        Args:
+            state (bool): True to turn on, False to turn off.
+
+        """
         for house in self._rsgp_hs.get_houses():
             house.set_load_line(state)
 
@@ -339,9 +349,9 @@ class HouseControlsWindowView:
         houses_sim (HousesSimulator): Houses simulator instance.
         variables (dict[str, ttk.Variable]): Passed UI variables, including:
 
-                - "total_load" (StringVar): Total house load label text.
-                - "utility_line" (IntVar): Utility line status (0 or 1).
-                - "load_line" (IntVar): Load line status (0 or 1).
+                - **total_load** (*StringVar*): Total house load label text.
+                - **utility_line** (*IntVar*): Utility line status (0 or 1).
+                - **load_line** (*IntVar*): Load line status (0 or 1).
 
     """
 

@@ -95,8 +95,10 @@ RSGP Utilities
   :undoc-members:
   :show-inheritance:
 
+Other Packages
+--------------
 Dashboard
----------
+~~~~~~~~~
 .. automodule:: dashboard.app
   :members:
   :undoc-members:
@@ -113,6 +115,6 @@ Dashboard
   :show-inheritance:
 
 Raspberry Pi Controller
------------------------
+~~~~~~~~~~~~~~~~~~~~~~~
 ...
 

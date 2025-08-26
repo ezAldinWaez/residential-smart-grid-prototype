@@ -3,13 +3,13 @@
 import ttkbootstrap as ttk
 
 
-def build_scrollable_frame(f_parent: ttk.Frame, width=None, **kwargs) -> ttk.Frame:
+def build_scrollable_frame(f_parent: ttk.Frame, width: int = None, **kwargs) -> ttk.Frame:
     """Build and return a scrollable frame.
 
     Args:
         f_parent (Frame): Parent fram, master of the main frame.
-        width (int): Minimum width for the scrollable frame.
-        **kwargs: Keyword arguments to pass to scrollable frame when init.
+        width (int, optional): Minimum width for the scrollable frame. Defaults to None.
+        kwargs (dict[str, Any]): Keyword arguments to pass to scrollable frame when init.
 
     Returns:
         Frame: The scrollable frame.

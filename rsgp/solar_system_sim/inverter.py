@@ -2,7 +2,6 @@
 
 from datetime import datetime
 
-
 from .data import InverterConf, InverterMode, ChargePriority
 from .panels import Panels
 from .battery import Battery
@@ -26,7 +25,8 @@ class Inverter:
     load_line: bool  #: bool: Flag for load line state (connected=1, disconnected=0).
     load_power: float  #: float: Total load for the system.
     utility_line: bool  #: bool: Flag for utility line state (connected=1, disconnected=0).
-    utility_exchange_power: float  #: float: Total power from/to the utility for the system.
+    #: float: Total power from/to the utility for the system (+ === export, - === import).
+    utility_exchange_power: float
     panels_power: float  #: float: The power used by the solar panels [Watt].
     #: float: The power exchanged with the battery (+ === charge, - === discharge) [Watt].
     battery_exchange_power: float
@@ -88,6 +88,33 @@ class Inverter:
     def operate(self, timestamp: datetime, dt_seconds: float) -> None:
         """Calculate the power flow in the solar system for the given time interval.
 
+        It calculates the power flow in the solar system based on the current timestamp and time
+        interval. It determines how power is distributed among the load, battery, solar panels,
+        and utility grid, adhering to the inverter's operational mode and charge priority
+        settings.
+
+        The power flow is calculated in DC, then converted to AC where needed, with the inverter's
+        efficiency taken into account.
+
+        The :func:`_S`, :func:`_B`, and :func:`_U` helper functions encapsulate the logic for sourcing power from
+        solar, battery, and utility respectively. They return the remaining power needs or
+        surpluses after their operation.
+
+        The ``battery_exchange_power`` and ``utility_exchange_power`` are reset at the beginning of
+        each :func:`operate` call to ensure calculations are based on the current time step. The final
+        ``battery_exchange_power`` is the sum of all battery charge/discharge events during the
+        current operational cycle.
+
+        If there's any remaining ``available_panels_dc_power`` after meeting all demands and the
+        utility line is connected, this surplus power is exported to the utility.
+
+        If ``required_load_dc_power`` is still greater than zero after all power sources have been
+        considered, it means the load could not be fully met, and the ``load_line`` is
+        disconnected.
+
+        Finally, if the battery needs charging from the utility based on the ``charge_priority``
+        settings, it charges the battery from the utility.
+
         Args:
             timestamp (datetime): The current timestamp.
             dt_seconds (float): The time interval in seconds.
@@ -108,9 +135,9 @@ class Inverter:
             Returns:
                 tuple[float, float, float]: A tuple containing:
 
-                    - remaining_panels_dc_power (float): Solar power left after meeting load and charging battery [Watt].
-                    - remaining_load_dc_power (float): Load power still needed after solar contribution [Watt].
-                    - battery_charge_power (float): Power used to charge the battery from solar [Watt].
+                    - **remaining_panels_dc_power** (*float*): Solar power left after meeting load and charging battery [Watt].
+                    - **remaining_load_dc_power** (*float*): Load power still needed after solar contribution [Watt].
+                    - **battery_charge_power** (*float*): Power used to charge the battery from solar [Watt].
 
             """
             battery_exchange_power = 0.0

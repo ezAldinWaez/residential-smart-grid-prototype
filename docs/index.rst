@@ -7,7 +7,7 @@ Table of Contents
 -----------------
 
 .. toctree::
-   :maxdepth: 3
+   :maxdepth: 2
    :numbered:
 
    content/C1_introduction
@@ -20,8 +20,15 @@ Table of Contents
    content/C8_final_results
    content/C9_conclusions_and_suggestions
 
+.. toctree::
+   :maxdepth: 2
+
    content/_thanks_and_appreciation
    content/_references
+
+.. toctree::
+   :maxdepth: 2
+   :numbered:
 
    content/A1_docs_workflow
    content/A2_notebooks_workflow

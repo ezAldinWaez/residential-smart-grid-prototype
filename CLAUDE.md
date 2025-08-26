@@ -29,3 +29,17 @@
 - If at any point you embed a graph, write as a mermaid graph
 - Use sphinx extensions when needed
 - If you see it fit to include a figure at any point, describe what the figure graphics (like the alt for imgs) and keep a placeholder figure using the sphinx-provided example-image
+
+## Arabic Translation Instructions
+
+- Translate technical concepts accurately while preserving their precise meaning
+- Keep the original English technical terms in parentheses after their Arabic translation on first mention
+- Never translate code snippets, variable names, function names, or file paths
+- Keep API names, library names, and framework names in English
+- Preserve all code formatting, indentation, and syntax exactly as is
+- For well-established technical terms with accepted Arabic equivalents, use the Arabic term followed by English in parentheses: "قاعدة البيانات (Database)"
+- For newer or specialized terms without established Arabic equivalents, provide a descriptive Arabic phrase followed by the English term: "إطار العمل (Framework)"- 
+- Maintain a formal, technical register appropriate for documentation
+- Keep all reStructuredText (rST) markup syntax unchanged: **bold**, *italic*, `code`, etc.
+- Don't translate Sphinx role names: :class:, :func:, :meth:, :mod:, etc.
+- 

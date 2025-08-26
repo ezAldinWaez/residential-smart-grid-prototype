@@ -1,14 +1,15 @@
-# Arabic translations for RSG package.
+# SOME DESCRIPTIVE TITLE.
 # Copyright (C) 2025, RSG Team
-# This file is distributed under the same license as the RSG package.
-# Ez Aldin Waez <ez.aldin.waez@gmail.com>, 2025.
+# This file is distributed under the same license as the Residential Smart
+# Grid package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2025.
 #
 #, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: Residential Smart Grid \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-08-21 23:28+0300\n"
+"POT-Creation-Date: 2025-08-26 20:48+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: ar\n"
@@ -20,35 +21,486 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 2.17.0\n"
 
-#: ../../content/A1_docs_workflow.rst:2
+#: ../../content/A1_docs_workflow.rst:6
 msgid "Documentation Workflow"
 msgstr ""
 
-#: ../../content/A1_docs_workflow.rst:3
-#, fuzzy
+#: ../../content/A1_docs_workflow.rst:7
 msgid "some content for section: Documentation Workflow"
-msgstr "بعض المحتوى لقسم: المقدمة"
+msgstr ""
 
 #: ../../content/A2_notebooks_workflow.rst:2
 msgid "Notebooks Workflow"
 msgstr ""
 
-#: ../../content/A2_notebooks_workflow.rst:3
-#, fuzzy
-msgid "some content for section: Notebooks Workflow"
-msgstr "بعض المحتوى لقسم: المقدمة"
+#: ../../content/A2_notebooks_workflow.rst:5
+#: ../../content/C1_introduction.rst:2
+#: ../../content/C3_rsgp_houses_simulation.rst:4
+#: ../../content/C4_rsgp_solar_system_simulation.rst:4
+#: ../../content/C6_dashboard.rst:4
+msgid "Introduction"
+msgstr ""
 
-#: ../../content/A3_api_reference.rst:6
-#, fuzzy
+#: ../../content/A2_notebooks_workflow.rst:6
+msgid ""
+"The notebook ecosystem within the residential smart grid project provides"
+" comprehensive data analysis and visualization capabilities through a "
+"collection of reactive marimo-based applications. These notebooks serve "
+"as interactive tools for exploring system performance, examining "
+"experimental data, and creating visual documentation elements that "
+"support both development and research activities."
+msgstr ""
+
+#: ../../content/A2_notebooks_workflow.rst:8
+msgid ""
+"The notebooks fulfill multiple roles within the project workflow; they "
+"function as data exploration environments, visualization generators, and "
+"collaborative analysis tools. Each notebook targets specific aspects of "
+"the system data, ranging from external weather datasets to internal "
+"simulation outputs and hardware monitoring logs. This modular approach "
+"ensures that researchers and developers can examine different system "
+"components independently while maintaining the ability to correlate "
+"findings across multiple data sources."
+msgstr ""
+
+#: ../../content/A2_notebooks_workflow.rst:10
+msgid ""
+"The integration of marimo as the notebook framework brings reactive "
+"programming capabilities to the analysis workflow. This choice provides "
+"automatic dependency tracking, reproducible execution environments, and "
+"seamless deployment as interactive web applications. The reactive nature "
+"eliminates the hidden state problems commonly encountered in traditional "
+"notebook environments and ensures that analysis results remain consistent"
+" and reliable."
+msgstr ""
+
+#: ../../content/A2_notebooks_workflow.rst:13
+msgid "marimo Framework Overview"
+msgstr ""
+
+#: ../../content/A2_notebooks_workflow.rst:14
+msgid ""
+"The notebooks employ marimo, a next-generation Python notebook framework "
+"that transforms traditional notebook limitations through reactive "
+"programming principles. marimo stores notebooks as pure Python files "
+"rather than JSON structures, enabling proper version control integration "
+"and collaborative development workflows. The framework automatically "
+"manages cell dependencies; when variables change in one cell, all "
+"dependent cells execute automatically to maintain consistency."
+msgstr ""
+
+#: ../../content/A2_notebooks_workflow.rst:16
+msgid ""
+"The choice of marimo over traditional Jupyter notebooks addresses "
+"reproducibility concerns while providing enhanced collaboration "
+"capabilities through Git-friendly storage formats."
+msgstr ""
+
+#: ../../content/A2_notebooks_workflow.rst:18
+msgid ""
+"The reactive execution model ensures that notebook state remains "
+"synchronized with code changes. This eliminates the common problem of "
+"stale outputs that occur when cells execute out of order in traditional "
+"notebook environments. Additionally, marimo provides built-in support for"
+" modern Python tooling, including code formatting, AI-powered assistance,"
+" and interactive user interface components that enhance the analysis "
+"experience."
+msgstr ""
+
+#: ../../content/A2_notebooks_workflow.rst:20
+msgid ""
+"The framework supports deployment of notebooks as standalone web "
+"applications, enabling researchers to share interactive analysis tools "
+"without requiring recipient systems to install development environments. "
+"This capability proves particularly valuable for demonstrating system "
+"behavior to stakeholders who may not possess technical backgrounds."
+msgstr ""
+
+#: ../../content/A2_notebooks_workflow.rst:23
+msgid "Notebook Applications"
+msgstr ""
+
+#: ../../content/A2_notebooks_workflow.rst:24
+msgid ""
+"The project includes four specialized notebook applications, each "
+"addressing distinct analysis requirements within the residential smart "
+"grid ecosystem. These applications provide targeted functionality for "
+"different data sources and analysis objectives."
+msgstr ""
+
+#: ../../content/A2_notebooks_workflow.rst:27
+msgid "Graph Editor"
+msgstr ""
+
+#: ../../content/A2_notebooks_workflow.rst:28
+msgid ""
+"The graph editor notebook (`graphs_editor.py`) provides an interactive "
+"environment for creating and modifying Mermaid diagrams used throughout "
+"the project documentation. This application bridges the gap between "
+"technical documentation requirements and visual design workflows."
+msgstr ""
+
+#: ../../content/A2_notebooks_workflow.rst:33
+msgid "Graph editor interface showing file browser, code editor, and live preview"
+msgstr ""
+
+#: ../../content/A2_notebooks_workflow.rst:35
+msgid ""
+"The application implements a three-panel interface that combines file "
+"management, code editing, and live preview capabilities. The file browser"
+" restricts navigation to the documentation graphics directory "
+"(`docs/_static/graphs/`) and filters for Mermaid files, ensuring that "
+"users work within the appropriate project structure. The code editor "
+"provides syntax highlighting specifically for Mermaid diagram syntax, "
+"reducing errors and improving productivity."
+msgstr ""
+
+#: ../../content/A2_notebooks_workflow.rst:37
+msgid ""
+"The live preview functionality renders Mermaid diagrams immediately as "
+"code changes occur, providing instant visual feedback during the design "
+"process. This reactive behavior eliminates the traditional edit-compile-"
+"view cycle commonly associated with diagram creation. The application "
+"also includes file persistence capabilities, allowing users to save "
+"modifications directly to the project documentation structure."
+msgstr ""
+
+#: ../../content/A2_notebooks_workflow.rst:39
+msgid ""
+"The graph editor modifies files within the documentation structure. Users"
+" should ensure proper backup procedures and coordinate with other team "
+"members to avoid conflicting modifications."
+msgstr ""
+
+#: ../../content/A2_notebooks_workflow.rst:42
+msgid "NSRDB Visualization"
+msgstr ""
+
+#: ../../content/A2_notebooks_workflow.rst:43
+msgid ""
+"The NSRDB visualization notebook (`nsrdb_visualization.py`) provides "
+"comprehensive analysis capabilities for National Solar Radiation Database"
+" weather data. This application enables researchers to examine solar "
+"irradiance patterns, atmospheric conditions, and seasonal variations that"
+" affect photovoltaic system performance."
+msgstr ""
+
+#: ../../content/A2_notebooks_workflow.rst:60
+msgid ""
+"The application processes CSV files containing hourly solar radiation "
+"measurements from the Phoenix, Arizona region. Data processing includes "
+"timezone conversion from UTC to local time using metadata embedded within"
+" the NSRDB files. The system automatically extracts timezone offset "
+"information and applies appropriate corrections to ensure accurate "
+"temporal alignment with simulation data."
+msgstr ""
+
+#: ../../content/A2_notebooks_workflow.rst:62
+msgid ""
+"The visualization interface provides interactive field selection "
+"capabilities, allowing users to examine different atmospheric parameters "
+"including Direct Normal Irradiance (DNI), Diffuse Horizontal Irradiance "
+"(DHI), Global Horizontal Irradiance (GHI), temperature, and wind "
+"conditions. The chart rendering employs a dual-panel approach; the "
+"primary panel displays time-series data for the selected parameter, while"
+" the secondary panel provides a day-night classification timeline that "
+"helps correlate solar generation potential with time periods."
+msgstr ""
+
+#: ../../content/A2_notebooks_workflow.rst:64
+msgid ""
+"Data exploration features include zoom capabilities, tooltip information "
+"display, and configurable time window selection. Users can focus on "
+"specific time periods ranging from daily patterns to seasonal trends, "
+"supporting both short-term operational analysis and long-term planning "
+"activities."
+msgstr ""
+
+#: ../../content/A2_notebooks_workflow.rst:67
+msgid "Inverter Logs Visualization"
+msgstr ""
+
+#: ../../content/A2_notebooks_workflow.rst:68
+msgid ""
+"The inverter logs visualization notebook "
+"(`inverter_logs_visualization.py`) processes and displays operational "
+"data from physical inverter hardware deployed within the system. This "
+"application bridges the gap between simulation results and real-world "
+"hardware performance, enabling validation of theoretical models against "
+"actual device behavior."
+msgstr ""
+
+#: ../../content/A2_notebooks_workflow.rst:70
+msgid ""
+"The application reads Excel files containing inverter telemetry data "
+"captured through the WatchPower monitoring system. Data fields include "
+"power generation levels, battery charge status, load consumption "
+"measurements, and operational mode indicators. The time-series processing"
+" converts raw timestamps into pandas datetime objects, enabling "
+"sophisticated temporal analysis capabilities."
+msgstr ""
+
+#: ../../content/A2_notebooks_workflow.rst:72
+msgid ""
+"The inverter data represents actual hardware measurements rather than "
+"simulation outputs, providing ground truth for model validation and "
+"system performance assessment."
+msgstr ""
+
+#: ../../content/A2_notebooks_workflow.rst:74
+msgid ""
+"The visualization interface mirrors the NSRDB application structure while"
+" adapting to inverter-specific data characteristics. Users can select "
+"from available telemetry fields to examine different aspects of inverter "
+"operation. The dual-panel chart configuration displays the selected "
+"parameter over time in the primary panel, while the secondary panel shows"
+" device operational mode transitions as color-coded timeline indicators."
+msgstr ""
+
+#: ../../content/A2_notebooks_workflow.rst:76
+msgid ""
+"The application supports analysis of inverter efficiency, load-following "
+"behavior, and mode-switching patterns. This information proves essential "
+"for understanding how physical hardware responds to varying load "
+"conditions and optimizing control algorithms implemented within the "
+"simulation environment."
+msgstr ""
+
+#: ../../content/A2_notebooks_workflow.rst:79
+msgid "RSGP Logs Visualization"
+msgstr ""
+
+#: ../../content/A2_notebooks_workflow.rst:80
+msgid ""
+"The RSGP logs visualization notebook (`rsgp_logs_visualization.py`) "
+"provides analysis capabilities for simulation output data generated by "
+"the residential smart grid platform. This application enables researchers"
+" to examine system-wide behavior, validate power management algorithms, "
+"and identify performance optimization opportunities."
+msgstr ""
+
+#: ../../content/A2_notebooks_workflow.rst:82
+msgid ""
+"The application processes CSV files containing time-series data from "
+"simulation runs, including house-level load profiles, solar generation "
+"patterns, battery charge cycles, and power management decisions. The data"
+" processing pipeline converts timestamps to proper datetime objects and "
+"provides field selection capabilities for examining different system "
+"metrics."
+msgstr ""
+
+#: ../../content/A2_notebooks_workflow.rst:97
+msgid ""
+"The visualization capabilities focus on system-level metrics that "
+"indicate power management effectiveness. Key parameters include total "
+"system load, renewable energy utilization ratios, grid import-export "
+"balances, and battery state-of-charge patterns. The analysis interface "
+"supports examination of these metrics across different temporal scales, "
+"from minute-by-minute operational behavior to long-term performance "
+"trends."
+msgstr ""
+
+#: ../../content/A2_notebooks_workflow.rst:99
+msgid ""
+"The application provides essential feedback for power management "
+"algorithm development; researchers can examine how control decisions "
+"affect system stability, efficiency, and grid interaction patterns. This "
+"analysis capability directly supports the iterative refinement of power "
+"management strategies and validation of simulation accuracy."
+msgstr ""
+
+#: ../../content/A2_notebooks_workflow.rst:102
+msgid "Data Integration and Workflow"
+msgstr ""
+
+#: ../../content/A2_notebooks_workflow.rst:103
+msgid ""
+"The notebook applications work together to provide comprehensive system "
+"analysis capabilities that span from external environmental conditions "
+"through simulation results to actual hardware performance. This "
+"integrated approach enables correlation analysis across multiple data "
+"sources and validation of simulation accuracy against real-world "
+"measurements."
+msgstr ""
+
+#: ../../content/A2_notebooks_workflow.rst:105
+msgid ""
+"The workflow typically begins with NSRDB data analysis to understand "
+"environmental conditions during specific time periods. Researchers then "
+"examine simulation results using the RSGP logs visualization to "
+"understand how the system responds to those conditions. Finally, inverter"
+" logs provide validation data to confirm that physical hardware behavior "
+"aligns with simulation predictions."
+msgstr ""
+
+#: ../../content/A2_notebooks_workflow.rst:107
+msgid ""
+"The reactive nature of marimo notebooks enables researchers to modify "
+"analysis parameters in one notebook and immediately observe corresponding"
+" changes in dependent visualizations, supporting iterative hypothesis "
+"testing and parameter optimization."
+msgstr ""
+
+#: ../../content/A2_notebooks_workflow.rst:109
+msgid ""
+"The graph editor supports this analytical workflow by providing tools for"
+" creating visual documentation that communicates findings to broader "
+"audiences. Diagrams created through the graph editor integrate directly "
+"into project documentation, ensuring that visual representations remain "
+"synchronized with analytical discoveries."
+msgstr ""
+
+#: ../../content/A2_notebooks_workflow.rst:112
+msgid "Deployment and Collaboration"
+msgstr ""
+
+#: ../../content/A2_notebooks_workflow.rst:113
+msgid ""
+"The marimo framework enables deployment of notebooks as interactive web "
+"applications, supporting collaboration scenarios where team members "
+"require access to analysis tools without installing complete development "
+"environments. This capability proves particularly valuable for sharing "
+"results with stakeholders who need to examine system behavior but may not"
+" possess technical expertise required for traditional analysis tools."
+msgstr ""
+
+#: ../../content/A2_notebooks_workflow.rst:115
+msgid ""
+"The pure Python storage format facilitates version control integration "
+"and collaborative development. Multiple researchers can work on different"
+" aspects of the analysis simultaneously while maintaining proper merge "
+"capabilities through standard Git workflows. Changes to analysis code "
+"generate meaningful diffs that enable code review processes and "
+"collaborative improvement of analysis methodologies."
+msgstr ""
+
+#: ../../content/A2_notebooks_workflow.rst:117
+msgid ""
+"When deploying notebooks as web applications, ensure that data access "
+"permissions align with project security requirements. Sensitive "
+"operational data should remain within controlled environments."
+msgstr ""
+
+#: ../../content/A2_notebooks_workflow.rst:119
+msgid ""
+"The notebook applications support export capabilities for generating "
+"static visualizations suitable for inclusion in reports, presentations, "
+"and publications. This export functionality ensures that analytical "
+"discoveries can be communicated through traditional documentation "
+"channels while maintaining access to interactive analysis capabilities "
+"during development phases."
+msgstr ""
+
+#: ../../content/A2_notebooks_workflow.rst:122
+msgid "Development Guidelines"
+msgstr ""
+
+#: ../../content/A2_notebooks_workflow.rst:123
+msgid ""
+"Notebook development within the project follows established patterns that"
+" ensure consistency, maintainability, and collaborative effectiveness. "
+"These guidelines address both technical implementation details and "
+"workflow integration requirements."
+msgstr ""
+
+#: ../../content/A2_notebooks_workflow.rst:125
+msgid ""
+"Code organization within notebooks prioritizes modularity and "
+"reusability. Data processing functions implement clear separation between"
+" data loading, transformation, and visualization responsibilities. This "
+"separation enables testing of individual components and reuse of "
+"processing logic across multiple notebooks."
+msgstr ""
+
+#: ../../content/A2_notebooks_workflow.rst:127
+msgid ""
+"User interface design emphasizes clarity and accessibility. Interactive "
+"controls provide meaningful labels and appropriate default values that "
+"guide users toward productive analysis workflows. Error handling includes"
+" informative messages that help users understand data requirements and "
+"troubleshoot common issues."
+msgstr ""
+
+#: ../../content/A2_notebooks_workflow.rst:129
+msgid ""
+"Documentation within notebooks includes both inline comments and markdown"
+" cells that explain analytical approaches, data interpretation "
+"guidelines, and known limitations. This documentation ensures that other "
+"researchers can understand and extend analysis capabilities without "
+"requiring extensive consultation with original developers."
+msgstr ""
+
+#: ../../content/A2_notebooks_workflow.rst:131
+msgid ""
+"The reactive execution model of marimo requires careful consideration of "
+"computational dependencies. Expensive operations should be structured to "
+"minimize unnecessary recalculation while maintaining result accuracy."
+msgstr ""
+
+#: ../../content/A2_notebooks_workflow.rst:133
+msgid ""
+"Performance considerations include efficient data loading strategies, "
+"appropriate use of caching for expensive computations, and responsive "
+"user interface design that provides feedback during long-running "
+"operations. These considerations ensure that notebooks remain usable as "
+"data volumes increase and analysis complexity grows."
+msgstr ""
+
+#: ../../content/A2_notebooks_workflow.rst:136
+msgid "Future Enhancements"
+msgstr ""
+
+#: ../../content/A2_notebooks_workflow.rst:137
+msgid ""
+"The notebook ecosystem provides a foundation for expanding analytical "
+"capabilities as project requirements evolve. Planned enhancements include"
+" integration with advanced machine learning frameworks for predictive "
+"analysis, automated report generation capabilities, and enhanced "
+"collaboration features for distributed research teams."
+msgstr ""
+
+#: ../../content/A2_notebooks_workflow.rst:139
+msgid ""
+"Machine learning integration would enable development of predictive "
+"models for solar generation forecasting, load pattern recognition, and "
+"optimal power management strategy selection. The reactive notebook "
+"environment provides an ideal platform for iterative model development "
+"and parameter tuning workflows."
+msgstr ""
+
+#: ../../content/A2_notebooks_workflow.rst:141
+msgid ""
+"Automated reporting capabilities would generate periodic system "
+"performance summaries based on ongoing simulation results and hardware "
+"measurements. These reports would integrate visualizations created "
+"through the notebook applications and provide standardized documentation "
+"for stakeholder communication."
+msgstr ""
+
+#: ../../content/A2_notebooks_workflow.rst:143
+msgid ""
+"Enhanced collaboration features include real-time notebook sharing, "
+"integrated communication tools, and automated notification systems for "
+"significant analytical discoveries. These features would support "
+"distributed research teams and enable more effective coordination of "
+"analytical activities across multiple project participants."
+msgstr ""
+
+#: ../../content/A3_api_reference.rst:2
 msgid "API Reference"
-msgstr "المراجع"
+msgstr ""
 
-#: ../../content/A3_api_reference.rst:8
+#: ../../content/A3_api_reference.rst:4
 msgid "RSGP"
 msgstr ""
 
-#: ../../content/A3_api_reference.rst:10
+#: ../../content/A3_api_reference.rst:6
 msgid "Houses Simulation"
+msgstr ""
+
+#: of rsgp.houses_sim.simulator:1 rsgp.houses_sim.simulator.HousesSimulator:1
+#: rsgp.power_mng.manager.PowerManager:3
+msgid "Houses simulator."
 msgstr ""
 
 #: dashboard.app.DashboardApp:1 dashboard.views.HSSummeryTabView:1
@@ -71,18 +523,93 @@ msgstr ""
 msgid "Bases: :py:class:`object`"
 msgstr ""
 
-#: ../../content/A3_api_reference.rst
-#: dashboard.views.MainWindowView.set_all_loads
-#: dashboard.views.MainWindowView.set_all_utilities of
+#: of rsgp.houses_sim.simulator.HousesSimulator.get_house:1
+msgid "Get a specific house in the system."
+msgstr ""
+
+#: ../../content/A3_api_reference.rst of
+#: rsgp.power_mng.manager.PowerManager.calc_houses_vb_usage
+#: rsgp.power_mng.manager.PowerManager.charge_all_vb
+#: rsgp.power_mng.manager.PowerManager.learn_step
+#: rsgp.power_mng.virtual_battery.VirtualBattery.adjust
 msgid "Parameters"
 msgstr ""
 
+#: ../../docstring dashboard.views.HSTabView.open_hc_window:3
+#: dashboard.views.HouseControlsWindowView:5
+#: dashboard.views.HouseControlsWindowView.idx:1 of
+#: rsgp.houses_sim.house.House:3 rsgp.houses_sim.house.House.get_idx:3
+#: rsgp.houses_sim.house.House.idx:1
+#: rsgp.houses_sim.simulator.HousesSimulator.get_house:3
+msgid "House index."
+msgstr ""
+
 #: ../../content/A3_api_reference.rst
+msgid "Returns"
+msgstr ""
+
+#: of rsgp.houses_sim.simulator.HousesSimulator.get_house:6
+msgid "House object."
+msgstr ""
+
+#: ../../content/A3_api_reference.rst dashboard.app.DashboardApp.destroy
+#: dashboard.app.DashboardApp.mainloop dashboard.views.MainWindowView.pause_sim
+#: dashboard.views.MainWindowView.resume_sim
+#: dashboard.views.MainWindowView.toggle_sim of
+#: rsgp.houses_sim.house.House.toggle_load_line
+#: rsgp.houses_sim.house.House.toggle_utility_line
+#: rsgp.houses_sim.simulator.HousesSimulator.pause
+#: rsgp.houses_sim.simulator.HousesSimulator.resume
+#: rsgp.power_mng.manager.PowerManager.calc_houses_vb_usage
+#: rsgp.power_mng.manager.PowerManager.charge_all_vb
+#: rsgp.power_mng.manager.PowerManager.learn_step
+#: rsgp.power_mng.manager.PowerManager.pause
+#: rsgp.power_mng.manager.PowerManager.resume
+#: rsgp.power_mng.virtual_battery.VirtualBattery.adjust
+#: rsgp.solar_system_sim.simulator.SolarSystemSimulator.pause
+#: rsgp.solar_system_sim.simulator.SolarSystemSimulator.resume
+#: rsgp.utils.remote_object.RemoteObjectServer.start
+#: rsgp.utils.remote_object.RemoteObjectServer.stop
+#: rsgp.utils.time_sim.TimeSimulator.pause
+#: rsgp.utils.time_sim.TimeSimulator.resume
+#: rsgp.utils.time_sim.TimeSimulator.start
 msgid "Return type"
 msgstr ""
 
-#: ../../docstring of rsgp.houses_sim.simulator.HousesSimulator.houses:1
-msgid "Houses in the system"
+#: of rsgp.houses_sim.simulator.HousesSimulator.get_houses:1
+msgid "Get houses in the system."
+msgstr ""
+
+#: ../../docstring of rsgp.houses_sim.simulator.HousesSimulator.get_houses:3
+#: rsgp.houses_sim.simulator.HousesSimulator.houses:1
+msgid "Houses in the system."
+msgstr ""
+
+#: of rsgp.houses_sim.simulator.HousesSimulator.get_num_houses:1
+msgid "Get number of houses in the system."
+msgstr ""
+
+#: of rsgp.houses_sim.simulator.HousesSimulator.get_num_houses:3
+msgid "Number of houses in the system."
+msgstr ""
+
+#: of rsgp.houses_sim.simulator.HousesSimulator.get_system_load:1
+msgid "Get total load for the system."
+msgstr ""
+
+#: ../../docstring of
+#: rsgp.houses_sim.simulator.HousesSimulator.get_system_load:3
+#: rsgp.houses_sim.simulator.HousesSimulator.system_load:1
+#: rsgp.solar_system_sim.inverter.Inverter.load_power:1
+msgid "Total load for the system."
+msgstr ""
+
+#: of rsgp.houses_sim.simulator.HousesSimulator.get_time_sim_elapsed:1
+msgid "Get elapsed time in the simulation."
+msgstr ""
+
+#: of rsgp.houses_sim.simulator.HousesSimulator.get_time_sim_elapsed:3
+msgid "Elapsed time in the simulation."
 msgstr ""
 
 #: ../../docstring dashboard.views.HouseControlsWindowView.idx of
@@ -92,6 +619,10 @@ msgstr ""
 #: rsgp.houses_sim.data.ADSRConf.wt rsgp.houses_sim.data.DeviceConf.adsr
 #: rsgp.houses_sim.data.DeviceConf.base_watt
 #: rsgp.houses_sim.data.DeviceConf.max_count
+#: rsgp.houses_sim.data.RegularDevices.HVAC
+#: rsgp.houses_sim.data.RegularDevices.MICROWAVE
+#: rsgp.houses_sim.data.RegularDevices.REFRIGERATOR
+#: rsgp.houses_sim.data.RegularDevices.WATER_HEATER
 #: rsgp.houses_sim.device.DeviceClass.conf
 #: rsgp.houses_sim.device.DeviceClass.load
 #: rsgp.houses_sim.device.DeviceClass.name rsgp.houses_sim.house.House.devices
@@ -102,12 +633,18 @@ msgstr ""
 #: rsgp.houses_sim.house.House.utility_line
 #: rsgp.houses_sim.simulator.HousesSimulator.houses
 #: rsgp.houses_sim.simulator.HousesSimulator.system_load
-#: rsgp.solar_system_sim.battery.Battery.charge_level
+#: rsgp.power_mng.manager.PowerManager.vb_static_ratio
+#: rsgp.power_mng.manager.PowerManager.virtual_batteries
+#: rsgp.power_mng.virtual_battery.VirtualBattery.charge_efficiency
+#: rsgp.power_mng.virtual_battery.VirtualBattery.residual_capacity
+#: rsgp.power_mng.virtual_battery.VirtualBattery.total_capacity
+#: rsgp.power_mng.virtual_battery.VirtualBattery.weight
 #: rsgp.solar_system_sim.battery.Battery.conf
-#: rsgp.solar_system_sim.data.BatteryConf.capacity
+#: rsgp.solar_system_sim.battery.Battery.residual_capacity
 #: rsgp.solar_system_sim.data.BatteryConf.charge_efficiency
 #: rsgp.solar_system_sim.data.BatteryConf.max_charge_power
 #: rsgp.solar_system_sim.data.BatteryConf.max_discharge_power
+#: rsgp.solar_system_sim.data.BatteryConf.total_capacity
 #: rsgp.solar_system_sim.data.InverterConf.charge_priority
 #: rsgp.solar_system_sim.data.InverterConf.eta_inv_nom
 #: rsgp.solar_system_sim.data.InverterConf.eta_inv_ovr
@@ -137,6 +674,7 @@ msgstr ""
 #: rsgp.utils.nsrdb_data.nsrdb_start_point
 #: rsgp.utils.remote_object.RemoteObjectServer.daemon
 #: rsgp.utils.remote_object.RemoteObjectServer.thread
+#: rsgp.utils.time_sim.time_sim
 msgid "type"
 msgstr ""
 
@@ -144,9 +682,40 @@ msgstr ""
 msgid "list[House]"
 msgstr ""
 
-#: ../../docstring of rsgp.houses_sim.simulator.HousesSimulator.system_load:1
-#: rsgp.solar_system_sim.inverter.Inverter.load_power:1
-msgid "Total load for the system"
+#: of rsgp.houses_sim.simulator.HousesSimulator.is_running:1
+msgid "Check if the houses simulation is running."
+msgstr ""
+
+#: of rsgp.houses_sim.simulator.HousesSimulator.is_running:3
+msgid "True if the houses simulation is running, False otherwise."
+msgstr ""
+
+#: of rsgp.houses_sim.simulator.HousesSimulator.pause:1
+msgid "Pause the houses simulation."
+msgstr ""
+
+#: of rsgp.houses_sim.simulator.HousesSimulator.resume:1
+msgid "Resume the houses simulation."
+msgstr ""
+
+#: of rsgp.houses_sim.simulator.HousesSimulator.start:1
+msgid "Start the houses simulation."
+msgstr ""
+
+#: of rsgp.houses_sim.simulator.HousesSimulator.start:3
+#: rsgp.power_mng.manager.PowerManager.start:3
+#: rsgp.solar_system_sim.simulator.SolarSystemSimulator.start:3
+msgid "Simulation time step in milliseconds."
+msgstr ""
+
+#: of rsgp.houses_sim.simulator.HousesSimulator.summary:1
+#: rsgp.power_mng.manager.PowerManager.summary:1
+msgid "Get a summary of the houses simulation."
+msgstr ""
+
+#: of rsgp.houses_sim.simulator.HousesSimulator.summary:3
+#: rsgp.power_mng.manager.PowerManager.summary:3
+msgid "Summary of the houses simulation."
 msgstr ""
 
 #: ../../docstring of rsgp.houses_sim.data.ADSRConf.a:3
@@ -159,11 +728,16 @@ msgstr ""
 #: rsgp.houses_sim.house.House.utility_exchange_power:3
 #: rsgp.houses_sim.house.House.utility_exchange_power_aggregated:3
 #: rsgp.houses_sim.simulator.HousesSimulator.system_load:3
-#: rsgp.solar_system_sim.battery.Battery.charge_level:3
-#: rsgp.solar_system_sim.data.BatteryConf.capacity:3
+#: rsgp.power_mng.manager.PowerManager.vb_static_ratio:3
+#: rsgp.power_mng.virtual_battery.VirtualBattery.charge_efficiency:3
+#: rsgp.power_mng.virtual_battery.VirtualBattery.residual_capacity:3
+#: rsgp.power_mng.virtual_battery.VirtualBattery.total_capacity:3
+#: rsgp.power_mng.virtual_battery.VirtualBattery.weight:3
+#: rsgp.solar_system_sim.battery.Battery.residual_capacity:3
 #: rsgp.solar_system_sim.data.BatteryConf.charge_efficiency:3
 #: rsgp.solar_system_sim.data.BatteryConf.max_charge_power:3
 #: rsgp.solar_system_sim.data.BatteryConf.max_discharge_power:3
+#: rsgp.solar_system_sim.data.BatteryConf.total_capacity:3
 #: rsgp.solar_system_sim.data.InverterConf.eta_inv_nom:3
 #: rsgp.solar_system_sim.data.InverterConf.eta_inv_ovr:3
 #: rsgp.solar_system_sim.data.InverterConf.eta_inv_ref:3
@@ -179,17 +753,67 @@ msgstr ""
 msgid "float"
 msgstr ""
 
+#: of rsgp.houses_sim.house:1
+msgid "Houses simulation house."
+msgstr ""
+
+#: of rsgp.houses_sim.house.House:1
+msgid "House."
+msgstr ""
+
 #: ../../docstring of rsgp.houses_sim.house.House.devices:1
-msgid "Devices in the house"
+#: rsgp.houses_sim.house.House.get_devices:3
+msgid "Devices in the house."
 msgstr ""
 
 #: ../../docstring of rsgp.houses_sim.house.House.devices:3
 msgid "dict[str, Device]"
 msgstr ""
 
-#: ../../docstring dashboard.views.HouseControlsWindowView.idx:1 of
-#: rsgp.houses_sim.house.House.idx:1
-msgid "House index."
+#: of rsgp.houses_sim.house.House.get_device:1
+msgid "Get a specific device in the house."
+msgstr ""
+
+#: of rsgp.houses_sim.device.DeviceClass.get_name:3
+#: rsgp.houses_sim.house.House.get_device:3
+msgid "Device name."
+msgstr ""
+
+#: of rsgp.houses_sim.house.House.get_device:6
+msgid "Device object."
+msgstr ""
+
+#: of rsgp.houses_sim.house.House.get_devices:1
+msgid "Get devices in the house."
+msgstr ""
+
+#: of rsgp.houses_sim.house.House.get_idx:1
+msgid "Get house index."
+msgstr ""
+
+#: of rsgp.houses_sim.house.House.get_load:1
+msgid "Get total load for the house."
+msgstr ""
+
+#: ../../docstring of rsgp.houses_sim.house.House.get_load:3
+#: rsgp.houses_sim.house.House.load_power:1
+msgid "Total load for the house."
+msgstr ""
+
+#: of rsgp.houses_sim.house.House.get_load_line:1
+msgid "Get load line state."
+msgstr ""
+
+#: of rsgp.houses_sim.house.House.get_load_line:3
+msgid "Load line state (connected=1, disconnected=0)."
+msgstr ""
+
+#: of rsgp.houses_sim.house.House.get_utility_line:1
+msgid "Get utility line state."
+msgstr ""
+
+#: of rsgp.houses_sim.house.House.get_utility_line:3
+msgid "Utility line state (connected=1, disconnected=0)."
 msgstr ""
 
 #: ../../docstring dashboard.views.HouseControlsWindowView.idx:3 of
@@ -201,7 +825,7 @@ msgstr ""
 
 #: ../../docstring of rsgp.houses_sim.house.House.load_line:1
 #: rsgp.solar_system_sim.inverter.Inverter.load_line:1
-msgid "Flag for load line state (connected=1, disconnected=0)"
+msgid "Flag for load line state (connected=1, disconnected=0)."
 msgstr ""
 
 #: ../../docstring of rsgp.houses_sim.house.House.load_line:3
@@ -211,78 +835,224 @@ msgstr ""
 msgid "bool"
 msgstr ""
 
-#: ../../docstring of rsgp.houses_sim.house.House.load_power:1
-msgid "Total load for the house"
+#: of rsgp.houses_sim.house.House.set_load_line:1
+msgid "Set load line state."
+msgstr ""
+
+#: of rsgp.houses_sim.house.House.set_load_line:3
+msgid "New load line state."
+msgstr ""
+
+#: of rsgp.houses_sim.house.House.set_utility_line:1
+msgid "Set utility line state."
+msgstr ""
+
+#: of rsgp.houses_sim.house.House.set_utility_line:3
+msgid "New utility line state."
+msgstr ""
+
+#: of rsgp.houses_sim.house.House.toggle_load_line:1
+msgid "Toggle the load line state."
+msgstr ""
+
+#: of rsgp.houses_sim.house.House.toggle_utility_line:1
+msgid "Toggle the utility line state."
 msgstr ""
 
 #: ../../docstring of rsgp.houses_sim.house.House.utility_exchange_power:1
-msgid "Total power from/to the utility for the house"
+msgid "Total power from/to the utility for the house."
 msgstr ""
 
 #: ../../docstring of
 #: rsgp.houses_sim.house.House.utility_exchange_power_aggregated:1
-msgid "Aggregated total power from/to the utility for the house"
+msgid "Aggregated total power from/to the utility for the house."
 msgstr ""
 
 #: ../../docstring of rsgp.houses_sim.house.House.utility_line:1
 #: rsgp.solar_system_sim.inverter.Inverter.utility_line:1
-msgid "Flag for utility line state (connected=1, disconnected=0)"
+msgid "Flag for utility line state (connected=1, disconnected=0)."
+msgstr ""
+
+#: of rsgp.houses_sim.device:1
+msgid "Houses simulation device class."
+msgstr ""
+
+#: of rsgp.houses_sim.device.DeviceClass:1
+msgid "Device class."
+msgstr ""
+
+#: of rsgp.houses_sim.device.DeviceClass.calc_adsr_multiplier:1
+msgid "Calculate the ADSR (Attack-Decay-Sustain-Release) multiplier."
+msgstr ""
+
+#: of rsgp.houses_sim.device.DeviceClass.calc_adsr_multiplier:3
+#: rsgp.houses_sim.device.DeviceClass.calc_load:3
+#: rsgp.houses_sim.device.DeviceClass.calc_wave_multiplier:3
+#: rsgp.houses_sim.device.DeviceClass.filter_idle_envelopes:3
+#: rsgp.houses_sim.device.DeviceClass.toggle_envelope_state:5
+msgid "Current elapsed time in the simulation."
+msgstr ""
+
+#: of rsgp.houses_sim.device.DeviceClass.calc_adsr_multiplier:5
+msgid ""
+"A tuple containing the state toggle time, the load at the state toggle, "
+"and the active status of the envelope."
+msgstr ""
+
+#: of rsgp.houses_sim.device.DeviceClass.calc_adsr_multiplier:9
+msgid "ADSR multiplier."
+msgstr ""
+
+#: of rsgp.houses_sim.device.DeviceClass.calc_load:1
+msgid ""
+"Calculate the total load for the device class based on the ADSR envelope "
+"and wave type."
+msgstr ""
+
+#: of rsgp.houses_sim.device.DeviceClass.calc_load:6
+#: rsgp.houses_sim.device.DeviceClass.get_load:3
+msgid "Total load for the device class."
+msgstr ""
+
+#: of rsgp.houses_sim.device.DeviceClass.calc_wave_multiplier:1
+msgid "Calculate the wave multiplier based on the wave type and elapsed time."
+msgstr ""
+
+#: of rsgp.houses_sim.device.DeviceClass.calc_wave_multiplier:6
+msgid "Wave multiplier."
 msgstr ""
 
 #: ../../docstring of rsgp.houses_sim.device.DeviceClass.conf:1
-msgid "Device class static configuration"
+msgid "Device class static configuration."
 msgstr ""
 
-#: ../../docstring of rsgp.houses_sim.device.DeviceClass.conf:3
+#: ../../docstring of rsgp.houses_sim.data.RegularDevices.HVAC:3
+#: rsgp.houses_sim.data.RegularDevices.MICROWAVE:3
+#: rsgp.houses_sim.data.RegularDevices.REFRIGERATOR:3
+#: rsgp.houses_sim.data.RegularDevices.WATER_HEATER:3
+#: rsgp.houses_sim.device.DeviceClass.conf:3
 msgid "DeviceConf"
 msgstr ""
 
+#: of rsgp.houses_sim.device.DeviceClass.filter_idle_envelopes:1
+msgid "Filter out idle envelopes."
+msgstr ""
+
+#: of rsgp.houses_sim.device.DeviceClass.filter_idle_envelopes:6
+msgid "List of non-idle envelopes."
+msgstr ""
+
+#: of rsgp.houses_sim.device.DeviceClass.get_conf_base_watt:1
+msgid "Get device class base wattage."
+msgstr ""
+
+#: of rsgp.houses_sim.device.DeviceClass.get_conf_base_watt:3
+msgid "Device class base wattage."
+msgstr ""
+
+#: of rsgp.houses_sim.device.DeviceClass.get_conf_max_count:1
+msgid "Get maximum count for the device class."
+msgstr ""
+
+#: of rsgp.houses_sim.device.DeviceClass.get_conf_max_count:3
+msgid "Maximum count for the device class."
+msgstr ""
+
+#: of rsgp.houses_sim.device.DeviceClass.get_conf_summary:1
+msgid "Get device class configuration summary."
+msgstr ""
+
+#: of rsgp.houses_sim.device.DeviceClass.get_conf_summary:3
+msgid "Device class configuration summary."
+msgstr ""
+
+#: of rsgp.houses_sim.device.DeviceClass.get_envelopes:1
+msgid "Get device class envelopes."
+msgstr ""
+
+#: of rsgp.houses_sim.device.DeviceClass.get_envelopes:3
+#: rsgp.houses_sim.device.DeviceClass.set_envelopes:3
+msgid "Device class envelopes."
+msgstr ""
+
+#: of rsgp.houses_sim.device.DeviceClass.get_load:1
+msgid "Get total load for the device class."
+msgstr ""
+
+#: of rsgp.houses_sim.device.DeviceClass.get_name:1
+msgid "Get device name."
+msgstr ""
+
 #: ../../docstring of rsgp.houses_sim.device.DeviceClass.load:1
-msgid "Total load for all device instances"
+msgid "Total load for all device instances."
 msgstr ""
 
 #: ../../docstring of rsgp.houses_sim.device.DeviceClass.name:1
-msgid "Device class name"
+msgid "Device class name."
 msgstr ""
 
 #: ../../docstring of rsgp.houses_sim.device.DeviceClass.name:3
 msgid "str"
 msgstr ""
 
+#: of rsgp.houses_sim.device.DeviceClass.set_envelopes:1
+msgid "Set device class envelopes."
+msgstr ""
+
+#: of rsgp.houses_sim.device.DeviceClass.toggle_envelope_state:1
+msgid "Toggle the state of a specific device instance envelope."
+msgstr ""
+
+#: of rsgp.houses_sim.device.DeviceClass.toggle_envelope_state:3
+msgid "Index of the device instance envelope to toggle."
+msgstr ""
+
+#: of rsgp.houses_sim.data:1
+msgid "Houses simulation data and data types."
+msgstr ""
+
+#: of rsgp.houses_sim.data.ADSRConf:1
+msgid "ADSR (Attack-Decay-Sustain-Release) envelope configuration."
+msgstr ""
+
 #: ../../docstring of rsgp.houses_sim.data.ADSRConf.a:1
-msgid "Attack time [sec]"
+msgid "Attack time [sec]."
 msgstr ""
 
 #: ../../docstring of rsgp.houses_sim.data.ADSRConf.d:1
-msgid "Decay time [sec]"
+msgid "Decay time [sec]."
 msgstr ""
 
 #: ../../docstring of rsgp.houses_sim.data.ADSRConf.r:1
-msgid "Release time [sec]"
+msgid "Release time [sec]."
 msgstr ""
 
 #: ../../docstring of rsgp.houses_sim.data.ADSRConf.s:1
-msgid "Sustain level multiplier"
+msgid "Sustain level multiplier."
 msgstr ""
 
 #: ../../docstring of rsgp.houses_sim.data.ADSRConf.wa:1
-msgid "Wave amplitude multiplier"
+msgid "Wave amplitude multiplier."
 msgstr ""
 
 #: ../../docstring of rsgp.houses_sim.data.ADSRConf.wp:1
-msgid "Wave period [sec]"
+msgid "Wave period [sec]."
 msgstr ""
 
 #: ../../docstring of rsgp.houses_sim.data.ADSRConf.wt:1
-msgid "Wave type"
+msgid "Wave type."
 msgstr ""
 
 #: ../../docstring of rsgp.houses_sim.data.ADSRConf.wt:3
 msgid "Literal['none', 'sine', 'square', 'random']"
 msgstr ""
 
+#: of rsgp.houses_sim.data.DeviceConf:1
+msgid "Device configuration."
+msgstr ""
+
 #: ../../docstring of rsgp.houses_sim.data.DeviceConf.adsr:1
-msgid "Device ADSR configuration"
+msgid "Device ADSR configuration."
 msgstr ""
 
 #: ../../docstring of rsgp.houses_sim.data.DeviceConf.adsr:3
@@ -290,11 +1060,11 @@ msgid "ADSRConf"
 msgstr ""
 
 #: ../../docstring of rsgp.houses_sim.data.DeviceConf.base_watt:1
-msgid "Device base wattage (maximum amplitude) [Watt]"
+msgid "Device base wattage (maximum amplitude) [Watt]."
 msgstr ""
 
 #: ../../docstring of rsgp.houses_sim.data.DeviceConf.max_count:1
-msgid "Device maximum count a regular house could have"
+msgid "Device maximum count a regular house could have."
 msgstr ""
 
 #: of rsgp.houses_sim.data.RegularDevices:1
@@ -303,18 +1073,42 @@ msgstr ""
 msgid "Bases: :py:class:`~enum.Enum`"
 msgstr ""
 
-#: ../../content/A3_api_reference.rst:32
+#: of rsgp.houses_sim.data.RegularDevices:1
+msgid "Regular household devices with their configurations."
+msgstr ""
+
+#: ../../docstring of rsgp.houses_sim.data.RegularDevices.HVAC:1
+msgid "DeviceConf: HVAC (Heating, Ventilation, and Air Conditioning)."
+msgstr ""
+
+#: ../../docstring of rsgp.houses_sim.data.RegularDevices.HVAC:5
+msgid "#"
+msgstr ""
+
+#: ../../docstring of rsgp.houses_sim.data.RegularDevices.MICROWAVE:1
+msgid "Micro-wave."
+msgstr ""
+
+#: ../../docstring of rsgp.houses_sim.data.RegularDevices.REFRIGERATOR:1
+msgid "Refrigerator."
+msgstr ""
+
+#: ../../docstring of rsgp.houses_sim.data.RegularDevices.WATER_HEATER:1
+msgid "Water Heater."
+msgstr ""
+
+#: ../../content/A3_api_reference.rst:28
 msgid "Solar System Simulation"
 msgstr ""
 
-#: ../../content/A3_api_reference.rst:121 ../../docstring of
+#: of rsgp.power_mng.manager.PowerManager:5 rsgp.solar_system_sim.simulator:1
+#: rsgp.solar_system_sim.simulator.SolarSystemSimulator:1
+msgid "Solar system simulator."
+msgstr ""
+
+#: ../../docstring of
 #: rsgp.solar_system_sim.simulator.SolarSystemSimulator.battery:1
-#: rsgp.solar_system_sim.simulator.SolarSystemSimulator.inverter:1
-#: rsgp.solar_system_sim.simulator.SolarSystemSimulator.panels:1
-#: rsgp.utils.helpers.log_record_into_csv:5
-#: rsgp.utils.remote_object.RemoteObjectServer.daemon:1
-#: rsgp.utils.remote_object.RemoteObjectServer.thread:1
-msgid "..."
+msgid "The battery."
 msgstr ""
 
 #: ../../docstring of
@@ -323,8 +1117,26 @@ msgid "Battery"
 msgstr ""
 
 #: ../../docstring of
+#: rsgp.solar_system_sim.simulator.SolarSystemSimulator.inverter:1
+msgid "The inverter."
+msgstr ""
+
+#: ../../docstring of
 #: rsgp.solar_system_sim.simulator.SolarSystemSimulator.inverter:3
 msgid "Inverter"
+msgstr ""
+
+#: of rsgp.solar_system_sim.simulator.SolarSystemSimulator.is_running:1
+msgid "Check if the solar system simulation is running."
+msgstr ""
+
+#: of rsgp.solar_system_sim.simulator.SolarSystemSimulator.is_running:3
+msgid "True if the solar system simulation is running, False otherwise."
+msgstr ""
+
+#: ../../docstring of
+#: rsgp.solar_system_sim.simulator.SolarSystemSimulator.panels:1
+msgid "The solar panels."
 msgstr ""
 
 #: ../../docstring of
@@ -332,8 +1144,32 @@ msgstr ""
 msgid "Panels"
 msgstr ""
 
+#: of rsgp.solar_system_sim.simulator.SolarSystemSimulator.pause:1
+msgid "Pause the solar system simulation."
+msgstr ""
+
+#: of rsgp.solar_system_sim.simulator.SolarSystemSimulator.resume:1
+msgid "Resume the solar system simulation."
+msgstr ""
+
+#: of rsgp.solar_system_sim.simulator.SolarSystemSimulator.start:1
+msgid "Start the solar system simulation."
+msgstr ""
+
+#: of rsgp.solar_system_sim.simulator.SolarSystemSimulator.summary:1
+msgid "Get a summary of the solar system simulation."
+msgstr ""
+
+#: of rsgp.solar_system_sim.simulator.SolarSystemSimulator.summary:3
+msgid "Summary of the solar system simulation."
+msgstr ""
+
 #: of rsgp.solar_system_sim.panels:1
-msgid "Solar system simulated panels."
+msgid "Solar system simulation panels."
+msgstr ""
+
+#: of rsgp.solar_system_sim.panels.Panels:1
+msgid "Panels."
 msgstr ""
 
 #: of rsgp.solar_system_sim.panels.Panels.calc_total_power:1
@@ -341,11 +1177,15 @@ msgid "Calculate and return the total power that could be produced by the panels
 msgstr ""
 
 #: of rsgp.solar_system_sim.panels.Panels.calc_total_power:3
-msgid "The current timestamp in the same timezone as the NSRDB data"
+msgid "The current timestamp in the same timezone as the NSRDB data."
+msgstr ""
+
+#: of rsgp.solar_system_sim.panels.Panels.calc_total_power:6
+msgid "The total power that could be produced by the panels [Watt]."
 msgstr ""
 
 #: ../../docstring of rsgp.solar_system_sim.panels.Panels.conf:1
-msgid "The panels configuration"
+msgid "The panels configuration."
 msgstr ""
 
 #: ../../docstring of rsgp.solar_system_sim.panels.Panels.conf:3
@@ -353,7 +1193,7 @@ msgid "PanelsConf"
 msgstr ""
 
 #: ../../docstring of rsgp.solar_system_sim.panels.Panels.pv_data:1
-msgid "The data row from the NSRDB for the current timestamp"
+msgid "The data row from the NSRDB for the current timestamp."
 msgstr ""
 
 #: ../../docstring of rsgp.solar_system_sim.panels.Panels.pv_data:3
@@ -361,7 +1201,7 @@ msgid "Series"
 msgstr ""
 
 #: ../../docstring of rsgp.solar_system_sim.panels.Panels.pv_loc:1
-msgid "The `pvlib` location info from the NSRDB meta data"
+msgid "The `pvlib` location info from the NSRDB meta data."
 msgstr ""
 
 #: ../../docstring of rsgp.solar_system_sim.panels.Panels.pv_loc:3
@@ -369,65 +1209,222 @@ msgid "Location"
 msgstr ""
 
 #: ../../docstring of rsgp.solar_system_sim.panels.Panels.total_power:1
-msgid "The theoretical total power produced by the panels [Watt]"
+msgid "The theoretical total power produced by the panels [Watt]."
 msgstr ""
 
-#: ../../docstring of rsgp.solar_system_sim.battery.Battery.charge_level:1
-msgid "Current charge level of the battery [Wh]"
+#: of rsgp.solar_system_sim.battery:1
+msgid "Solar system simulation battery."
+msgstr ""
+
+#: of rsgp.solar_system_sim.battery.Battery:1
+msgid "Battery."
+msgstr ""
+
+#: of rsgp.solar_system_sim.battery.Battery.charge:1
+msgid "Charge the battery with a given power for a given time interval."
+msgstr ""
+
+#: of rsgp.power_mng.virtual_battery.VirtualBattery.charge:3
+#: rsgp.solar_system_sim.battery.Battery.charge:3
+msgid "The power to charge with [Watt]."
+msgstr ""
+
+#: of rsgp.power_mng.virtual_battery.VirtualBattery.charge:5
+#: rsgp.power_mng.virtual_battery.VirtualBattery.discharge:5
+#: rsgp.solar_system_sim.battery.Battery.charge:5
+#: rsgp.solar_system_sim.battery.Battery.discharge:5
+#: rsgp.solar_system_sim.inverter.Inverter.operate:32
+msgid "The time interval in seconds."
+msgstr ""
+
+#: of rsgp.power_mng.virtual_battery.VirtualBattery.charge:8
+#: rsgp.solar_system_sim.battery.Battery.charge:8
+msgid "The actual power used for charging [Watt]."
 msgstr ""
 
 #: ../../docstring of rsgp.solar_system_sim.battery.Battery.conf:1
-msgid "The battery configuration"
+msgid "The battery configuration."
 msgstr ""
 
 #: ../../docstring of rsgp.solar_system_sim.battery.Battery.conf:3
 msgid "BattConf"
 msgstr ""
 
+#: of rsgp.solar_system_sim.battery.Battery.discharge:1
+msgid "Discharge the battery with a given power for a given time interval."
+msgstr ""
+
+#: of rsgp.power_mng.manager.PowerManager.discharge_all_vb:4
+#: rsgp.power_mng.virtual_battery.VirtualBattery.discharge:3
+#: rsgp.solar_system_sim.battery.Battery.discharge:3
+msgid "The power to discharge with [Watt]."
+msgstr ""
+
+#: of rsgp.power_mng.virtual_battery.VirtualBattery.discharge:8
+#: rsgp.solar_system_sim.battery.Battery.discharge:8
+msgid "The actual power discharged [Watt]."
+msgstr ""
+
+#: ../../docstring of rsgp.solar_system_sim.battery.Battery.residual_capacity:1
+msgid "Current charge level of the battery [Wh]."
+msgstr ""
+
+#: of rsgp.solar_system_sim.inverter:1
+msgid "Solar system simulation inverter."
+msgstr ""
+
+#: of rsgp.solar_system_sim.inverter.Inverter:1
+msgid "Inverter."
+msgstr ""
+
+#: of rsgp.solar_system_sim.inverter.Inverter:3
+msgid "The battery object."
+msgstr ""
+
+#: of rsgp.solar_system_sim.inverter.Inverter:5
+msgid "The panels object."
+msgstr ""
+
+#: of rsgp.solar_system_sim.inverter.Inverter.ac_to_needed_dc:1
+msgid ""
+"Convert a target AC power output to the required DC power input for the "
+"inverter."
+msgstr ""
+
+#: of rsgp.solar_system_sim.inverter.Inverter.ac_to_needed_dc:3
+msgid "The target AC power output from the inverter [Watt]."
+msgstr ""
+
+#: of rsgp.solar_system_sim.inverter.Inverter.ac_to_needed_dc:6
+msgid "The required DC power input to the inverter [Watt]."
+msgstr ""
+
 #: ../../docstring of
 #: rsgp.solar_system_sim.inverter.Inverter.battery_exchange_power:1
 msgid ""
 "The power exchanged with the battery (+ === charge, - === discharge) "
-"[Watt]"
+"[Watt]."
 msgstr ""
 
 #: ../../docstring of rsgp.solar_system_sim.inverter.Inverter.conf:1
-msgid "The inverter configuration"
+msgid "The inverter configuration."
 msgstr ""
 
 #: ../../docstring of rsgp.solar_system_sim.inverter.Inverter.conf:3
 msgid "InverterConf"
 msgstr ""
 
+#: of rsgp.solar_system_sim.inverter.Inverter.dc_to_ac:1
+msgid "Convert DC power to AC power using the inverter's characteristics."
+msgstr ""
+
+#: of rsgp.solar_system_sim.inverter.Inverter.dc_to_ac:3
+msgid "DC power input to the inverter [Watt]."
+msgstr ""
+
+#: of rsgp.solar_system_sim.inverter.Inverter.dc_to_ac:6
+msgid "AC power output from the inverter [Watt]."
+msgstr ""
+
+#: of rsgp.solar_system_sim.inverter.Inverter.operate:1
+msgid "Calculate the power flow in the solar system for the given time interval."
+msgstr ""
+
+#: of rsgp.solar_system_sim.inverter.Inverter.operate:3
+msgid ""
+"It calculates the power flow in the solar system based on the current "
+"timestamp and time interval. It determines how power is distributed among"
+" the load, battery, solar panels, and utility grid, adhering to the "
+"inverter's operational mode and charge priority settings."
+msgstr ""
+
+#: of rsgp.solar_system_sim.inverter.Inverter.operate:8
+msgid ""
+"The power flow is calculated in DC, then converted to AC where needed, "
+"with the inverter's efficiency taken into account."
+msgstr ""
+
+#: of rsgp.solar_system_sim.inverter.Inverter.operate:11
+msgid ""
+"The :func:`_S`, :func:`_B`, and :func:`_U` helper functions encapsulate "
+"the logic for sourcing power from solar, battery, and utility "
+"respectively. They return the remaining power needs or surpluses after "
+"their operation."
+msgstr ""
+
+#: of rsgp.solar_system_sim.inverter.Inverter.operate:15
+msgid ""
+"The ``battery_exchange_power`` and ``utility_exchange_power`` are reset "
+"at the beginning of each :func:`operate` call to ensure calculations are "
+"based on the current time step. The final ``battery_exchange_power`` is "
+"the sum of all battery charge/discharge events during the current "
+"operational cycle."
+msgstr ""
+
+#: of rsgp.solar_system_sim.inverter.Inverter.operate:20
+msgid ""
+"If there's any remaining ``available_panels_dc_power`` after meeting all "
+"demands and the utility line is connected, this surplus power is exported"
+" to the utility."
+msgstr ""
+
+#: of rsgp.solar_system_sim.inverter.Inverter.operate:23
+msgid ""
+"If ``required_load_dc_power`` is still greater than zero after all power "
+"sources have been considered, it means the load could not be fully met, "
+"and the ``load_line`` is disconnected."
+msgstr ""
+
+#: of rsgp.solar_system_sim.inverter.Inverter.operate:27
+msgid ""
+"Finally, if the battery needs charging from the utility based on the "
+"``charge_priority`` settings, it charges the battery from the utility."
+msgstr ""
+
+#: of rsgp.solar_system_sim.inverter.Inverter.operate:30
+#: rsgp.utils.time_sim.TimeSimulator.get_timestamp:7
+msgid "The current timestamp."
+msgstr ""
+
 #: ../../docstring of rsgp.solar_system_sim.inverter.Inverter.panels_power:1
-msgid "The power used by the solar panels [Watt]"
+msgid "The power used by the solar panels [Watt]."
 msgstr ""
 
 #: ../../docstring of
 #: rsgp.solar_system_sim.inverter.Inverter.utility_exchange_power:1
-msgid "Total power from/to the utility for the system"
+msgid ""
+"Total power from/to the utility for the system (+ === export, - === "
+"import)."
+msgstr ""
+
+#: of rsgp.solar_system_sim.data:1
+msgid "Solar system simulation data types."
 msgstr ""
 
 #: of rsgp.solar_system_sim.data.BatteryConf:1
 msgid "Battery configuration data type."
 msgstr ""
 
-#: ../../docstring of rsgp.solar_system_sim.data.BatteryConf.capacity:1
-msgid "Total capacity of the battery [Wh]"
-msgstr ""
-
 #: ../../docstring of
 #: rsgp.solar_system_sim.data.BatteryConf.charge_efficiency:1
-msgid "Efficiency of charging [%]"
+msgid "Efficiency of charging [%]."
 msgstr ""
 
 #: ../../docstring of rsgp.solar_system_sim.data.BatteryConf.max_charge_power:1
-msgid "Maximum charge rate [Watt]"
+msgid "Maximum charge rate [Watt]."
 msgstr ""
 
 #: ../../docstring of
 #: rsgp.solar_system_sim.data.BatteryConf.max_discharge_power:1
-msgid "Maximum discharge rate [Watt]"
+msgid "Maximum discharge rate [Watt]."
+msgstr ""
+
+#: ../../docstring of rsgp.solar_system_sim.data.BatteryConf.total_capacity:1
+msgid "Total capacity of the battery [Wh]."
+msgstr ""
+
+#: of rsgp.solar_system_sim.data.ChargePriority:1
+msgid "Inverter charge priority."
 msgstr ""
 
 #: of rsgp.solar_system_sim.data.InverterConf:1
@@ -435,7 +1432,7 @@ msgid "Inverter configuration data type."
 msgstr ""
 
 #: ../../docstring of rsgp.solar_system_sim.data.InverterConf.charge_priority:1
-msgid "The current charge priority of the inverter"
+msgid "The current charge priority of the inverter."
 msgstr ""
 
 #: ../../docstring of rsgp.solar_system_sim.data.InverterConf.charge_priority:3
@@ -443,19 +1440,19 @@ msgid "ChargePriority"
 msgstr ""
 
 #: ../../docstring of rsgp.solar_system_sim.data.InverterConf.eta_inv_nom:1
-msgid "Nominal efficiency of the inverter [%]"
+msgid "Nominal efficiency of the inverter [%]."
 msgstr ""
 
 #: ../../docstring of rsgp.solar_system_sim.data.InverterConf.eta_inv_ovr:1
-msgid "Overall efficiency of the inverter [%]"
+msgid "Overall efficiency of the inverter [%]."
 msgstr ""
 
 #: ../../docstring of rsgp.solar_system_sim.data.InverterConf.eta_inv_ref:1
-msgid "Reference efficiency of the inverter [%]"
+msgid "Reference efficiency of the inverter [%]."
 msgstr ""
 
 #: ../../docstring of rsgp.solar_system_sim.data.InverterConf.mode:1
-msgid "The current operating mode of the inverter"
+msgid "The current operating mode of the inverter."
 msgstr ""
 
 #: ../../docstring of rsgp.solar_system_sim.data.InverterConf.mode:3
@@ -463,37 +1460,176 @@ msgid "InverterMode"
 msgstr ""
 
 #: ../../docstring of rsgp.solar_system_sim.data.InverterConf.paco:1
-msgid "AC Power rating of the inverter [Watt]"
+msgid "AC Power rating of the inverter [Watt]."
 msgstr ""
 
 #: ../../docstring of rsgp.solar_system_sim.data.InverterConf.pnt:1
-msgid "AC power consumed by the inverter at night [Watt]"
+msgid "AC power consumed by the inverter at night [Watt]."
+msgstr ""
+
+#: of rsgp.solar_system_sim.data.InverterMode:1
+msgid "Inverter operating modes."
+msgstr ""
+
+#: of rsgp.solar_system_sim.data.PanelsConf:1
+msgid "Panels configuration data type."
 msgstr ""
 
 #: ../../docstring of rsgp.solar_system_sim.data.PanelsConf.num_panels:1
-msgid "Panels count"
+msgid "Panels count."
 msgstr ""
 
 #: ../../docstring of rsgp.solar_system_sim.data.PanelsConf.panel_area:1
-msgid "Panel area [m^2]"
+msgid "Panel area [m^2]."
 msgstr ""
 
 #: ../../docstring of rsgp.solar_system_sim.data.PanelsConf.panel_efficiency:1
-msgid "Panel efficiency multiplier"
+msgid "Panel efficiency multiplier."
 msgstr ""
 
-#: ../../content/A3_api_reference.rst:59
+#: ../../content/A3_api_reference.rst:55
 msgid "Power Mangament"
 msgstr ""
 
-#: ../../content/A3_api_reference.rst:71
+#: of rsgp.power_mng.manager.PowerManager:1
+msgid "Power manager."
+msgstr ""
+
+#: ../../content/A3_api_reference.rst:119 ../../docstring of
+#: rsgp.power_mng.manager.PowerManager.calc_houses_vb_usage:1
+#: rsgp.power_mng.manager.PowerManager.charge_all_vb:1
+#: rsgp.power_mng.manager.PowerManager.learn_step:1
+#: rsgp.power_mng.virtual_battery.VirtualBattery.adjust:1
+#: rsgp.power_mng.virtual_battery.VirtualBattery.charge_efficiency:1
+#: rsgp.power_mng.virtual_battery.VirtualBattery.residual_capacity:1
+#: rsgp.power_mng.virtual_battery.VirtualBattery.total_capacity:1
+#: rsgp.power_mng.virtual_battery.VirtualBattery.weight:1
+msgid "..."
+msgstr ""
+
+#: of rsgp.power_mng.manager.PowerManager.discharge_all_vb:1
+msgid ""
+"Discharge all virtual batteries by the given discharging power given "
+"their discharging weights."
+msgstr ""
+
+#: of rsgp.power_mng.manager.PowerManager.discharge_all_vb:6
+msgid "The weights for each virtual battery."
+msgstr ""
+
+#: of rsgp.power_mng.manager.PowerManager.discharge_all_vb:9
+msgid ""
+"A boolean array indicating whether the usage was met fully for each "
+"virtual battery."
+msgstr ""
+
+#: of rsgp.power_mng.manager.PowerManager.is_running:1
+msgid "Check if the power manager is running."
+msgstr ""
+
+#: of rsgp.power_mng.manager.PowerManager.is_running:3
+msgid "True if the power manager is running, False otherwise."
+msgstr ""
+
+#: of rsgp.power_mng.manager.PowerManager.pause:1
+msgid "Pause the power manager."
+msgstr ""
+
+#: of rsgp.power_mng.manager.PowerManager.resume:1
+msgid "Resume the power manager."
+msgstr ""
+
+#: of rsgp.power_mng.manager.PowerManager.start:1
+msgid "Start the power manager."
+msgstr ""
+
+#: ../../docstring of rsgp.power_mng.manager.PowerManager.vb_static_ratio:1
+msgid "Static ratio for virtual battery capacity."
+msgstr ""
+
+#: ../../docstring of rsgp.power_mng.manager.PowerManager.virtual_batteries:1
+msgid "list of virtual batteries."
+msgstr ""
+
+#: ../../docstring of rsgp.power_mng.manager.PowerManager.virtual_batteries:3
+msgid "list[VirtualBattery]"
+msgstr ""
+
+#: of rsgp.power_mng.virtual_battery.VirtualBattery:1
+msgid "Virtual battery."
+msgstr ""
+
+#: of rsgp.power_mng.virtual_battery.VirtualBattery:3
+msgid "The index of the virtual battery."
+msgstr ""
+
+#: of rsgp.power_mng.virtual_battery.VirtualBattery:5
+msgid "The initial total capacity of the virtual battery [Wh]."
+msgstr ""
+
+#: of rsgp.power_mng.virtual_battery.VirtualBattery:7
+msgid "The initial residual capacity of the virtual battery [Wh]."
+msgstr ""
+
+#: of rsgp.power_mng.virtual_battery.VirtualBattery.charge:1
+msgid "Charge the virtual battery with a given power for a given time interval."
+msgstr ""
+
+#: of rsgp.power_mng.virtual_battery.VirtualBattery.discharge:1
+msgid ""
+"Discharge the virtual battery with a given power for a given time "
+"interval."
+msgstr ""
+
+#: ../../content/A3_api_reference.rst:67
 msgid "RSGP Utilities"
 msgstr ""
 
 #: of rsgp.utils.time_sim:1
-#, fuzzy
 msgid "RSGP Time simulator."
-msgstr "محاكاة المنازل في نظام الشبكة الذكية السكنية"
+msgstr ""
+
+#: of rsgp.utils.time_sim.TimeSimulator:1
+msgid "Time simulator for RSGP."
+msgstr ""
+
+#: of rsgp.utils.time_sim.TimeSimulator.get_elapsed:1
+msgid "Get the elapsed time in seconds."
+msgstr ""
+
+#: of rsgp.utils.time_sim.TimeSimulator.get_elapsed:3
+msgid "The elapsed time in seconds."
+msgstr ""
+
+#: of rsgp.utils.time_sim.TimeSimulator.get_timestamp:1
+msgid "Get the current timestamp."
+msgstr ""
+
+#: of rsgp.utils.time_sim.TimeSimulator.get_timestamp:3
+msgid ""
+"The elapsed time in seconds. Defaults to None, if so, it will be "
+"calculated automatically."
+msgstr ""
+
+#: of rsgp.utils.time_sim.TimeSimulator.pause:1
+msgid "Pause the time simulation."
+msgstr ""
+
+#: of rsgp.utils.time_sim.TimeSimulator.resume:1
+msgid "Resume the time simulation."
+msgstr ""
+
+#: of rsgp.utils.time_sim.TimeSimulator.start:1
+msgid "Start the time simulation."
+msgstr ""
+
+#: ../../docstring of rsgp.utils.time_sim.time_sim:1
+msgid "Global time simulator instance."
+msgstr ""
+
+#: ../../docstring of rsgp.utils.time_sim.time_sim:3
+msgid "TimeSimulator"
+msgstr ""
 
 #: of rsgp.utils.nsrdb_data:1
 msgid "NSRDB data handlers."
@@ -503,12 +1639,8 @@ msgstr ""
 msgid "Read NSRDB dataset, manipulate it, and returen it as DataFrames."
 msgstr ""
 
-#: ../../content/A3_api_reference.rst
-msgid "Returns"
-msgstr ""
-
 #: of rsgp.utils.nsrdb_data.get_nsrdb_data:3
-msgid "NSRDB metadata, and NSRDB data"
+msgid "NSRDB metadata, and NSRDB data."
 msgstr ""
 
 #: of rsgp.utils.nsrdb_data.get_nsrdb_location:1
@@ -516,16 +1648,16 @@ msgid "Get location basic info based on NSRDB dataset metadata."
 msgstr ""
 
 #: of rsgp.utils.nsrdb_data.get_nsrdb_location:3
-msgid "NSRDB dataset metadata"
+msgid "`nsrdb_meta` from :func:`get_nsrdb_data`."
 msgstr ""
 
 #: of rsgp.utils.nsrdb_data.get_nsrdb_location:6
-msgid "Location basic info: 'latitude', 'longitude', and 'timezone'"
+msgid "A dictionary of location info (`latitude`, `longitude`, `timezone`)."
 msgstr ""
 
 #: ../../docstring of rsgp.utils.nsrdb_data.nsrdb_data:1
 #: rsgp.utils.nsrdb_data.nsrdb_meta:1
-msgid "NSRDB meta data and data"
+msgid "NSRDB meta data and data."
 msgstr ""
 
 #: ../../docstring of rsgp.utils.nsrdb_data.nsrdb_data:3
@@ -534,16 +1666,15 @@ msgid "tuple[DataFrame, DataFrame]"
 msgstr ""
 
 #: ../../docstring of rsgp.utils.nsrdb_data.nsrdb_location:1
-#, fuzzy
-msgid "NSRDB location"
-msgstr "المقدمة"
+msgid "NSRDB location."
+msgstr ""
 
 #: ../../docstring of rsgp.utils.nsrdb_data.nsrdb_location:3
 msgid "dict[str, Any]"
 msgstr ""
 
 #: ../../docstring of rsgp.utils.nsrdb_data.nsrdb_start_point:1
-msgid "NSRDB start point"
+msgid "NSRDB start point."
 msgstr ""
 
 #: ../../docstring of rsgp.utils.nsrdb_data.nsrdb_start_point:3
@@ -554,8 +1685,48 @@ msgstr ""
 msgid "Remote object interface for RSGP via Pyro5."
 msgstr ""
 
+#: of rsgp.utils.remote_object.RemoteObjectServer:1
+msgid "Remote object server for RSGP via Pyro5."
+msgstr ""
+
+#: of rsgp.utils.remote_object.RemoteObjectServer:3
+msgid "`HousesSimulator` instance."
+msgstr ""
+
+#: of rsgp.utils.remote_object.RemoteObjectServer:5
+msgid "`SolarSystemSimulator` instance."
+msgstr ""
+
+#: of rsgp.utils.remote_object.RemoteObjectServer:7
+msgid "`PowerManager` instance."
+msgstr ""
+
+#: ../../docstring of rsgp.utils.remote_object.RemoteObjectServer.daemon:1
+msgid "The Pyro5 daemon."
+msgstr ""
+
 #: ../../docstring of rsgp.utils.remote_object.RemoteObjectServer.daemon:3
 msgid "Daemon"
+msgstr ""
+
+#: of rsgp.utils.remote_object.RemoteObjectServer.is_running:1
+msgid "Check if the remote object server is running."
+msgstr ""
+
+#: of rsgp.utils.remote_object.RemoteObjectServer.is_running:3
+msgid "True if the server is running, False otherwise."
+msgstr ""
+
+#: of rsgp.utils.remote_object.RemoteObjectServer.start:1
+msgid "Start the remote object server."
+msgstr ""
+
+#: of rsgp.utils.remote_object.RemoteObjectServer.stop:1
+msgid "Stop the remote object server."
+msgstr ""
+
+#: ../../docstring of rsgp.utils.remote_object.RemoteObjectServer.thread:1
+msgid "The thread for the daemon."
 msgstr ""
 
 #: ../../docstring of rsgp.utils.remote_object.RemoteObjectServer.thread:3
@@ -571,15 +1742,15 @@ msgid "Configure and return a logger with console and optional file handlers."
 msgstr ""
 
 #: of rsgp.utils.logger.configure_logger:3
-msgid "Logger name"
+msgid "The name of the logger."
 msgstr ""
 
 #: of rsgp.utils.logger.configure_logger:6
-msgid "Logger object"
+msgid "The configured logger."
 msgstr ""
 
 #: ../../docstring of rsgp.utils.logger.logger:1
-msgid "global RSGP logger instance"
+msgid "Global RSGP logger instance."
 msgstr ""
 
 #: ../../docstring of rsgp.utils.logger.logger:3
@@ -595,15 +1766,15 @@ msgid "Find datetime row with timestamp closest to the target timestamp."
 msgstr ""
 
 #: of rsgp.utils.helpers.find_nearest_timestamp_row:3
-msgid "pandas dataframe with `Timestamp` column"
+msgid "pandas dataframe with `Timestamp` column."
 msgstr ""
 
 #: of rsgp.utils.helpers.find_nearest_timestamp_row:5
-msgid "Timestamp to search for"
+msgid "Timestamp to search for."
 msgstr ""
 
 #: of rsgp.utils.helpers.find_nearest_timestamp_row:8
-msgid "The row from df with nearest timestamp"
+msgid "The row from df with nearest timestamp."
 msgstr ""
 
 #: of rsgp.utils.helpers.log_record_into_csv:1
@@ -611,7 +1782,13 @@ msgid "Log a record into a CSV file."
 msgstr ""
 
 #: of rsgp.utils.helpers.log_record_into_csv:3
-msgid "Path to the CSV file"
+msgid "Path to the CSV file."
+msgstr ""
+
+#: of rsgp.utils.helpers.log_record_into_csv:5
+msgid ""
+"The record to log. The keys are the column names and the values are the "
+"record values."
 msgstr ""
 
 #: of rsgp.utils.decorators:1
@@ -623,11 +1800,11 @@ msgid "Decorator to log the execution of the function."
 msgstr ""
 
 #: of rsgp.utils.decorators.log_excution:3
-msgid "The function to log"
+msgid "The function to log."
 msgstr ""
 
 #: of rsgp.utils.decorators.log_excution:6
-msgid "The decorated function"
+msgid "The decorated function."
 msgstr ""
 
 #: of rsgp.utils.decorators.log_start_end_error:1
@@ -637,22 +1814,26 @@ msgid ""
 msgstr ""
 
 #: of rsgp.utils.decorators.log_start_end_error:3
-msgid "The message to log when the function start"
+msgid "The message to log when the function start."
 msgstr ""
 
 #: of rsgp.utils.decorators.log_start_end_error:5
-msgid "The message to log when the function finish"
+msgid "The message to log when the function finish."
 msgstr ""
 
 #: of rsgp.utils.decorators.log_start_end_error:7
-msgid "The message to log when the function raise an error"
+msgid "The message to log when the function raise an error."
 msgstr ""
 
 #: of rsgp.utils.decorators.log_start_end_error:10
-msgid "The generated decorator"
+msgid "The generated decorator."
 msgstr ""
 
-#: ../../content/A3_api_reference.rst:103
+#: ../../content/A3_api_reference.rst:99
+msgid "Other Packages"
+msgstr ""
+
+#: ../../content/A3_api_reference.rst:101 ../../content/C6_dashboard.rst:2
 msgid "Dashboard"
 msgstr ""
 
@@ -665,7 +1846,7 @@ msgid "Dashboard app to browse and control the system."
 msgstr ""
 
 #: dashboard.app.DashboardApp.destroy:1 of
-msgid "Destroy tkinter app release pyro proxies."
+msgid "Destroy tkinter app and release pyro proxies."
 msgstr ""
 
 #: dashboard.app.DashboardApp.mainloop:1 of
@@ -680,45 +1861,34 @@ msgstr ""
 msgid "Houses simulation summery tab view."
 msgstr ""
 
-#: dashboard.views.HSSummeryTabView:3 dashboard.views.HouseControlsWindowView:3
-#: dashboard.views.MainWindowView:3 dashboard.views.PMSummeryTabView:3
-#: dashboard.views.SSSSummeryTabView:3 of
-msgid "Tk window root"
+#: dashboard.views.HSSummeryTabView:3 dashboard.views.HSTabView:3
+#: dashboard.views.HouseControlsWindowView:3 dashboard.views.MainWindowView:3
+#: dashboard.views.PMSummeryTabView:3 dashboard.views.SSSSummeryTabView:3 of
+msgid "Tk window root."
 msgstr ""
 
 #: dashboard.utils.build_scrollable_frame:3 dashboard.views.HSSummeryTabView:5
 #: dashboard.views.HSTabView:5 dashboard.views.PMSummeryTabView:5
 #: dashboard.views.SSSSummeryTabView:5 of
-msgid "Parent fram, master of the main frame"
+msgid "Parent fram, master of the main frame."
 msgstr ""
 
 #: dashboard.views.HSSummeryTabView:7 dashboard.views.MainWindowView:9
 #: dashboard.views.SSSSummeryTabView:7 of
-msgid "Solar system simulator instance"
+msgid "Solar system simulator instance."
 msgstr ""
 
 #: dashboard.views.HSTabView:1 of
-#, fuzzy
 msgid "Houses simulation tab view."
-msgstr "محاكاة المنازل في نظام الشبكة الذكية السكنية"
-
-#: dashboard.views.HSTabView:3 of
-msgid "Tk window root."
 msgstr ""
 
 #: dashboard.views.HSTabView:7 dashboard.views.HouseControlsWindowView:7
 #: dashboard.views.MainWindowView:7 of
-#, fuzzy
-msgid "Houses simulator instance"
-msgstr "محاكي المنازل"
+msgid "Houses simulator instance."
+msgstr ""
 
 #: dashboard.views.HSTabView.open_hc_window:1 of
 msgid "Open house controls window."
-msgstr ""
-
-#: dashboard.views.HSTabView.open_hc_window:3
-#: dashboard.views.HouseControlsWindowView:5 of
-msgid "House index"
 msgstr ""
 
 #: dashboard.views.HouseControlsWindowView:1 of
@@ -727,9 +1897,9 @@ msgstr ""
 
 #: dashboard.views.HouseControlsWindowView:9 of
 msgid ""
-"Passed UI variables, including:  - \"total_load\" (StringVar): Total "
-"house load label text - \"utility_line\" (IntVar): Utility line status (0"
-" or 1) - \"load_line\" (IntVar): Load line status (0 or 1)"
+"Passed UI variables, including:  - **total_load** (*StringVar*): Total "
+"house load label text. - **utility_line** (*IntVar*): Utility line status"
+" (0 or 1). - **load_line** (*IntVar*): Load line status (0 or 1)."
 msgstr ""
 
 #: dashboard.views.HouseControlsWindowView:9 of
@@ -737,15 +1907,15 @@ msgid "Passed UI variables, including:"
 msgstr ""
 
 #: dashboard.views.HouseControlsWindowView:11 of
-msgid "\"total_load\" (StringVar): Total house load label text"
+msgid "**total_load** (*StringVar*): Total house load label text."
 msgstr ""
 
 #: dashboard.views.HouseControlsWindowView:12 of
-msgid "\"utility_line\" (IntVar): Utility line status (0 or 1)"
+msgid "**utility_line** (*IntVar*): Utility line status (0 or 1)."
 msgstr ""
 
 #: dashboard.views.HouseControlsWindowView:13 of
-msgid "\"load_line\" (IntVar): Load line status (0 or 1)"
+msgid "**load_line** (*IntVar*): Load line status (0 or 1)."
 msgstr ""
 
 #: dashboard.views.MainWindowView:1 of
@@ -753,26 +1923,28 @@ msgid "Main window view."
 msgstr ""
 
 #: dashboard.views.MainWindowView:5 of
-msgid "Time simulator instance"
+msgid "Time simulator instance."
 msgstr ""
 
 #: dashboard.views.MainWindowView:11 dashboard.views.PMSummeryTabView:7 of
-#, fuzzy
-msgid "Power manager instance"
-msgstr "إدارة الطاقة في نظام الشبكة الذكية السكنية"
+msgid "Power manager instance."
+msgstr ""
 
 #: dashboard.views.MainWindowView.pause_sim:1 of
-#, fuzzy
 msgid "Pause simulation."
-msgstr "محاكاة المنازل في نظام الشبكة الذكية السكنية"
+msgstr ""
 
 #: dashboard.views.MainWindowView.resume_sim:1 of
-#, fuzzy
 msgid "Resume simulation."
-msgstr "محاكاة المنازل في نظام الشبكة الذكية السكنية"
+msgstr ""
 
 #: dashboard.views.MainWindowView.set_all_loads:1 of
 msgid "Turn all loads lines for all houses to ``state``."
+msgstr ""
+
+#: dashboard.views.MainWindowView.set_all_loads:3
+#: dashboard.views.MainWindowView.set_all_utilities:3 of
+msgid "True to turn on, False to turn off."
 msgstr ""
 
 #: dashboard.views.MainWindowView.set_all_utilities:1 of
@@ -784,9 +1956,8 @@ msgid "Toggle simulation state."
 msgstr ""
 
 #: dashboard.views.PMSummeryTabView:1 of
-#, fuzzy
 msgid "Power management summery tab view."
-msgstr "حل إدارة الطاقة"
+msgstr ""
 
 #: dashboard.views.SSSSummeryTabView:1 of
 msgid "Solar system simulation summery tab view."
@@ -801,42 +1972,37 @@ msgid "Build and return a scrollable frame."
 msgstr ""
 
 #: dashboard.utils.build_scrollable_frame:5 of
-msgid "Minimum width for the scrollable frame"
+msgid "Minimum width for the scrollable frame. Defaults to None."
 msgstr ""
 
 #: dashboard.utils.build_scrollable_frame:7 of
-msgid "Keyword arguments to pass to scrollable frame when init"
+msgid "Keyword arguments to pass to scrollable frame when init."
 msgstr ""
 
-#: dashboard.utils.build_scrollable_frame:9 of
-msgid "The scrollable frame"
+#: dashboard.utils.build_scrollable_frame:10 of
+msgid "The scrollable frame."
 msgstr ""
 
-#: ../../content/A3_api_reference.rst:120
+#: ../../content/A3_api_reference.rst:118
+#: ../../content/C7_rasp_controller.rst:2
 msgid "Raspberry Pi Controller"
 msgstr ""
 
-#: ../../content/C1_introduction.rst:2
-#: ../../content/C3_rsgp_houses_simulation.rst:4
-#: ../../content/C4_rsgp_solar_system_simulation.rst:4
-msgid "Introduction"
-msgstr "المقدمة"
-
 #: ../../content/C1_introduction.rst:3
 msgid "some content for section: Introduction"
-msgstr "بعض المحتوى لقسم: المقدمة"
+msgstr ""
 
 #: ../../content/C2_project_preview.rst:2
 msgid "Project Preview"
-msgstr "نظرة عامة على المشروع"
+msgstr ""
 
 #: ../../content/C2_project_preview.rst:3
 msgid "some content for section: Project Preview"
-msgstr "بعض المحتوى لقسم: نظرة عامة على المشروع"
+msgstr ""
 
 #: ../../content/C3_rsgp_houses_simulation.rst:2
 msgid "RSGP Houses Simulation"
-msgstr "محاكاة المنازل في نظام الشبكة الذكية السكنية"
+msgstr ""
 
 #: ../../content/C3_rsgp_houses_simulation.rst:5
 msgid ""
@@ -845,9 +2011,6 @@ msgid ""
 "model, the device modeling framework, and the coordination mechanisms "
 "between the components of the house simulation."
 msgstr ""
-"تعمل محاكاة المنازل كمولد الأحمال الأساسي في النظام. يفحص هذا الفصل تطبيق"
-" نموذج المنزل السكني، وإطار عمل نمذجة الأجهزة، وآليات التنسيق بين مكونات "
-"محاكاة المنزل."
 
 #: ../../content/C3_rsgp_houses_simulation.rst:7
 msgid ""
@@ -858,37 +2021,28 @@ msgid ""
 "multiple devices with different consumption patterns. This aims to mirror"
 " real world residential demand."
 msgstr ""
-"تمتد أهمية محاكاة المنازل إلى ما هو أبعد من نمذجة الأحمال البسيطة. فهي "
-"توفر البيئة الاختبارية لتقييم خوارزميات إدارة الطاقة تحت سيناريوهات "
-"استهلاك متنوعة. تتبع المحاكاة **N** منزلاً تطبق نفس النموذج. يحتوي كل "
-"منزل على أجهزة متعددة بأنماط استهلاك مختلفة. يهدف هذا إلى عكس الطلب "
-"السكني في العالم الحقيقي."
 
 #: ../../content/C3_rsgp_houses_simulation.rst:10
 msgid "Architecture Overview"
-msgstr "نظرة عامة على المعمارية"
+msgstr ""
 
 #: ../../content/C3_rsgp_houses_simulation.rst:11
 msgid ""
 "The architecture separates simulation coordination, individual house "
 "modeling, and device-level power consumption calculations."
 msgstr ""
-"تفصل المعمارية بين تنسيق المحاكاة، ونمذجة المنزل الفردي، وحسابات استهلاك "
-"الطاقة على مستوى الجهاز."
 
 #: ../../content/C3_rsgp_houses_simulation.rst:17
 msgid ""
 "The ``HousesSimulator`` serves as the coordination layer; it manages the "
 "house instances and coordinates their execution."
-msgstr "يعمل ``محاكي المنازل`` كطبقة التنسيق؛ حيث يدير نسخ المنازل وينسق تشغيلها."
+msgstr ""
 
 #: ../../content/C3_rsgp_houses_simulation.rst:18
 msgid ""
 "The ``House`` serves as the individual unit; it maintains state "
 "information about its devices and utility and load lines."
 msgstr ""
-"يعمل ``المنزل`` كوحدة فردية؛ حيث يحتفظ بمعلومات حالة أجهزته وخطوط المرافق"
-" والأحمال."
 
 #: ../../content/C3_rsgp_houses_simulation.rst:19
 msgid ""
@@ -896,8 +2050,6 @@ msgid ""
 "calculations per each device's parameters to simulate realistic load "
 "consumption patterns."
 msgstr ""
-"لمحاكاة أنماط استهلاك الأحمال الواقعية.تعمل ``فئة الجهاز`` كأساس للأحمال؛"
-" حيث تقوم بالحسابات لكل معايير الجهاز "
 
 #: ../../content/C3_rsgp_houses_simulation.rst:21
 msgid ""
@@ -905,13 +2057,10 @@ msgid ""
 "device types without modification to the core simulation. This makes it "
 "easier to craft testing scenarios."
 msgstr ""
-"يعطي التصميم الأولوية للنمطية ويسمح بالإضافة الديناميكية لأنواع الأجهزة "
-"الجديدة دون تعديل المحاكاة الأساسية. هذا يجعل من السهل وضع سيناريوهات "
-"الاختبار."
 
 #: ../../content/C3_rsgp_houses_simulation.rst:24
 msgid "The Houses Simulator"
-msgstr "محاكي المنازل"
+msgstr ""
 
 #: ../../content/C3_rsgp_houses_simulation.rst:25
 msgid ""
@@ -921,10 +2070,6 @@ msgid ""
 " The simulator operates on its own thread to ensure that house load "
 "calculations proceed independently of the other components."
 msgstr ""
-"ينسق ``محاكي المنازل`` تشغيل نسخ المنازل الفردية؛ حيث يجمع حسابات الأحمال"
-" على مستوى النظام ويوفر الواجهة بين الطلب السكني ونظام إدارة الطاقة. يعمل"
-" المحاكي في خيطه الخاص لضمان أن حسابات أحمال المنازل تسير بشكل مستقل عن "
-"المكونات الأخرى."
 
 #: ../../content/C3_rsgp_houses_simulation.rst:31
 msgid ""
@@ -934,10 +2079,6 @@ msgid ""
 "aggregates these values. The system-wide total load is then made "
 "available to the power management system."
 msgstr ""
-"يطبق المحاكي دورة تحديث قابلة للتكوين عادة ما تكون محددة بفواصل زمنية 100"
-" ملي ثانية. خلال كل دورة تحديث، يستعلم المحاكي جميع نسخ المنازل عن "
-"استهلاكها الحالي للطاقة ويجمع هذه القيم. يتم بعد ذلك إتاحة الحمل الإجمالي"
-" على مستوى النظام لنظام إدارة الطاقة."
 
 #: ../../content/C3_rsgp_houses_simulation.rst:33
 msgid ""
@@ -945,12 +2086,10 @@ msgid ""
 "the power providers; internal house simulations continue to maintain "
 "realistic behavior on reconnection."
 msgstr ""
-"يؤثر قطع خط الحمل فقط على الاتصال بين المنازل ومزودي الطاقة؛ حيث تستمر "
-"محاكاات المنازل الداخلية في الحفاظ على السلوك الواقعي عند إعادة الاتصال."
 
 #: ../../content/C3_rsgp_houses_simulation.rst:36
 msgid "Individual House Modeling"
-msgstr "نمذجة المنزل الفردي"
+msgstr ""
 
 #: ../../content/C3_rsgp_houses_simulation.rst:37
 msgid ""
@@ -960,10 +2099,6 @@ msgid ""
 "include heating and cooling systems, lighting, major appliances, and "
 "miscellaneous electrical loads."
 msgstr ""
-"يحتفظ نموذج ``المنزل`` بمعلومات حالة الاتصال والأجهزة. تتعايش نسخ متعددة "
-"من الأجهزة وتسهم في الحمل الإجمالي للمنزل. يحتوي كل منزل على مجموعة محددة"
-" مسبقًا من أنواع الأجهزة، والتي تشمل أنظمة التدفئة والتبريد، والإضاءة، "
-"والأجهزة الرئيسية، والأحمال الكهربائية المتنوعة."
 
 #: ../../content/C3_rsgp_houses_simulation.rst:39
 msgid ""
@@ -972,13 +2107,10 @@ msgid ""
 "exports excess renewable energy or imports power when that renewable "
 "energy is insufficient."
 msgstr ""
-"يجمع النموذج أحمال الأجهزة الفردية ويتبع تبادل الطاقة مع المرفق. هذا يدعم"
-" كلا السيناريوهين حيث يصدر المنزل الطاقة المتجددة الفائضة أو يستورد "
-"الطاقة عندما تكون هذه الطاقة المتجددة غير كافية."
 
 #: ../../content/C3_rsgp_houses_simulation.rst:42
 msgid "Device Modeling Framework"
-msgstr "إطار عمل نمذجة الأجهزة"
+msgstr ""
 
 #: ../../content/C3_rsgp_houses_simulation.rst:43
 msgid ""
@@ -989,15 +2121,10 @@ msgid ""
 "approximate the load profiles. These techniques generate realistic power "
 "consumption patterns that mimic real electrical devices."
 msgstr ""
-"يطبق إطار عمل نمذجة ``الجهاز`` نموذجًا رياضيًا يلتقط السلوك الديناميكي "
-"للأجهزة الكهربائية السكنية. يستعير هذا الإطار **مغلف "
-"الهجوم-الانحدار-الحفاظ-الإطلاق (ADSR)** من تركيب الصوت ويستخدمه مع تقنيات"
-" تعديل الموجة لتقريب ملفات الأحمال. تولد هذه التقنيات أنماط استهلاك طاقة "
-"واقعية تحاكي الأجهزة الكهربائية الحقيقية."
 
 #: ../../content/C3_rsgp_houses_simulation.rst:48
 msgid "ADSR envelope"
-msgstr "مغلف ADSR"
+msgstr ""
 
 #: ../../content/C3_rsgp_houses_simulation.rst:50
 msgid ""
@@ -1005,8 +2132,6 @@ msgid ""
 "power consumption. It models the startup spike, steady-state operation, "
 "and shutdown characteristics of the device."
 msgstr ""
-"يوفر **مغلف ADSR** الهيكل الزمني لاستهلاك الجهاز للطاقة. ينمذج زيادة بدء "
-"التشغيل، وعملية الحالة المستقرة، وخصائص إيقاف التشغيل للجهاز."
 
 #: ../../content/C3_rsgp_houses_simulation.rst:52
 msgid ""
@@ -1014,17 +2139,12 @@ msgid ""
 "device activates. This typically involves inrush currents for motor-"
 "driven appliances or heating element activation for thermal devices."
 msgstr ""
-"تنمذج مرحلة **الهجوم** ارتفاع الطاقة الأولي الذي يحدث عند تنشيط الجهاز. "
-"يشمل هذا عادة تيارات التدفق للأجهزة المحركة بالمحرك أو تنشيط عنصر التسخين"
-" للأجهزة الحرارية."
 
 #: ../../content/C3_rsgp_houses_simulation.rst:53
 msgid ""
 "The **Decay** phase models the transition from that startup spike to "
 "normal operation as the device's components stabilize."
 msgstr ""
-"تنمذج مرحلة **الانحدار** الانتقال من ارتفاع بدء التشغيل إلى العملية "
-"العادية عندما تستقر مكونات الجهاز."
 
 #: ../../content/C3_rsgp_houses_simulation.rst:54
 msgid ""
@@ -1032,9 +2152,6 @@ msgid ""
 "maintains its power consumption level. This phase also uses wave "
 "modulation to model load variations due to changing conditions."
 msgstr ""
-"تنمذج مرحلة **الحفاظ** العملية في الحالة المستقرة حيث يحافظ الجهاز على "
-"مستوى استهلاك طاقته. تستخدم هذه المرحلة أيضاً تعديل الموجة لنمذجة تغيرات "
-"الحمل بسبب الظروف المتغيرة."
 
 #: ../../content/C3_rsgp_houses_simulation.rst:55
 msgid ""
@@ -1042,9 +2159,6 @@ msgid ""
 "in motor systems and thermal cool-down periods that continue to consume "
 "power for a short while until complete shutdown."
 msgstr ""
-"تنمذج مرحلة **الإطلاق** الإغلاق. يشمل هذا تأثيرات الكبح في أنظمة المحرك "
-"وفترات التبريد الحراري التي تستمر في استهلاك الطاقة لفترة قصيرة حتى "
-"الإغلاق الكامل."
 
 #: ../../content/C3_rsgp_houses_simulation.rst:57
 msgid ""
@@ -1055,25 +2169,21 @@ msgid ""
 "complex power signatures that more closely match measured residential "
 "devices' behavior."
 msgstr ""
-"يقدم تعديل الموجة تغيرات واقعية في استهلاك الطاقة على مغلف ADSR. يدعم "
-"الإطار أنواع تعديل متعددة: الموجات الجيبية، والموجات المربعة، والتعديل "
-"العشوائي. تعمل هذه الأنماط التعديلية بترددات وسعات مختلفة لإنشاء توقيعات "
-"طاقة معقدة تطابق بشكل أوثق سلوك الأجهزة السكنية المقاسة."
 
-#: ../../_static/plots/rsgp_hs_some_regular_devices_loads_over_time.py:7
+#: ../../_static/plots/C3_some_regular_devices_loads_over_time.py:7
 msgid ""
 "(:download:`Source code "
-"<../_build/gettext/plot_directive/_static/plots/rsgp_hs_some_regular_devices_loads_over_time.py>`,"
+"<../_build/gettext/plot_directive/_static/plots/C3_some_regular_devices_loads_over_time.py>`,"
 " :download:`png "
-"<../_build/gettext/plot_directive/_static/plots/rsgp_hs_some_regular_devices_loads_over_time.png>`,"
+"<../_build/gettext/plot_directive/_static/plots/C3_some_regular_devices_loads_over_time.png>`,"
 " :download:`hires.png "
-"<../_build/gettext/plot_directive/_static/plots/rsgp_hs_some_regular_devices_loads_over_time.hires.png>`,"
+"<../_build/gettext/plot_directive/_static/plots/C3_some_regular_devices_loads_over_time.hires.png>`,"
 " :download:`pdf "
-"<../_build/gettext/plot_directive/_static/plots/rsgp_hs_some_regular_devices_loads_over_time.pdf>`)"
+"<../_build/gettext/plot_directive/_static/plots/C3_some_regular_devices_loads_over_time.pdf>`)"
 msgstr ""
 
-#: ../../_static/plots/rsgp_hs_some_regular_devices_loads_over_time.py:18
-#: ../../_static/plots/rsgp_hs_some_regular_devices_loads_over_time.py:28
+#: ../../_static/plots/C3_some_regular_devices_loads_over_time.py:18
+#: ../../_static/plots/C3_some_regular_devices_loads_over_time.py:28
 msgid "Some regular devices simulated loads over time"
 msgstr ""
 
@@ -1083,12 +2193,10 @@ msgid ""
 "categories. Each category implements specialized ADSR parameters and wave"
 " modulation to capture the unique behavior of the device."
 msgstr ""
-"ينظم إطار عمل نمذجة الأجهزة الأجهزة الكهربائية في فئات. تطبق كل فئة "
-"معايير ADSR متخصصة وتعديل الموجة لالتقاط السلوك الفريد للجهاز."
 
 #: ../../content/C3_rsgp_houses_simulation.rst:67
 msgid "Integration with Power Management"
-msgstr "التكامل مع إدارة الطاقة"
+msgstr ""
 
 #: ../../content/C3_rsgp_houses_simulation.rst:68
 msgid ""
@@ -1100,23 +2208,16 @@ msgid ""
 "interface for the ``PowerManager`` to read the data it needs and modify "
 "the simulation per its judgment."
 msgstr ""
-"يقدم ``محاكي المنازل`` الحمل المجمع للنظام إلى ``مدير الطاقة``، مع الحمل "
-"المحدد لكل منزل في المحاكاة. يقوم ``مدير الطاقة`` بعد ذلك بحساباته ويمكن "
-"أن يتواصل مع المحاكاة، يربط أو يفصل بعض خطوط حمل المنازل أو خطوط المرافق."
-" بهذا يقدم ``محاكي المنزل`` واجهة ل``مدير الطاقة`` لقراءة البيانات التي "
-"يحتاجها وتعديل المحاكاة حسب رأيه."
 
 #: ../../content/C3_rsgp_houses_simulation.rst:70
 msgid ""
 "The interface maintains loose coupling between the ``HouseSimulator`` and"
 " the ``PowerManager`` to enable independent development and testing."
 msgstr ""
-"تحافظ الواجهة على الاقتران الرخو بين ``محاكي المنزل`` و``مدير الطاقة`` "
-"لتمكين التطوير والاختبار المستقل."
 
 #: ../../content/C3_rsgp_houses_simulation.rst:73
 msgid "Data Collection and Analysis"
-msgstr "جمع وتحليل البيانات"
+msgstr ""
 
 #: ../../content/C3_rsgp_houses_simulation.rst:74
 msgid ""
@@ -1125,9 +2226,6 @@ msgid ""
 "series dataset (in a CSV file) to enable examination of the effectiveness"
 " of power management solutions."
 msgstr ""
-"تلتقط محاكاة المنازل إحصائيات تشغيل الأجهزة ومقاييس أداء النظام للتحليل "
-"اللاحق. يتم تخزين البيانات كمجموعة بيانات زمنية (في ملف CSV) لتمكين فحص "
-"فعالية حلول إدارة الطاقة."
 
 #: ../../content/C3_rsgp_houses_simulation.rst:76
 msgid ""
@@ -1137,10 +2235,6 @@ msgid ""
 "throughout the simulation. The goal is to track the utility exchange "
 "power and minimize it through an effective power management solution."
 msgstr ""
-"يعمل تسجيل CSV في دورة التحديث (عادة مرة كل 100 ملي ثانية). يسجل إجمالي "
-"أحمال المنزل، وأحمال الأجهزة الفردية، وحالات الاتصال، وقيم تبادل المرافق "
-"لكل منزل عبر المحاكاة. الهدف هو تتبع طاقة تبادل المرافق وتقليلها من خلال "
-"حل فعال لإدارة الطاقة."
 
 #: ../../content/C4_rsgp_solar_system_simulation.rst:2
 msgid "RSGP Solar System Simulation"
@@ -1177,7 +2271,7 @@ msgid ""
 "component."
 msgstr ""
 
-#: ../../content/C4_rsgp_solar_system_simulation.rst:38
+#: ../../content/C4_rsgp_solar_system_simulation.rst:17
 msgid ""
 "The **Panels** handle solar irradiance calculations and power generation "
 "based on the data collected from the National Solar Radiation Database "
@@ -1187,17 +2281,17 @@ msgid ""
 "manager."
 msgstr ""
 
-#: ../../content/C4_rsgp_solar_system_simulation.rst:40
+#: ../../content/C4_rsgp_solar_system_simulation.rst:19
 msgid ""
 "The three-component architecture enables independent development and "
 "testing of solar generation, energy storage, and power distribution."
 msgstr ""
 
-#: ../../content/C4_rsgp_solar_system_simulation.rst:43
+#: ../../content/C4_rsgp_solar_system_simulation.rst:22
 msgid "Photovoltaic Panel Modeling"
 msgstr ""
 
-#: ../../content/C4_rsgp_solar_system_simulation.rst:44
+#: ../../content/C4_rsgp_solar_system_simulation.rst:23
 msgid ""
 "The photovoltaic panels integrate with the National Solar Radiation "
 "Database to obtain weather information and employs the PVLib photovoltaic"
@@ -1207,7 +2301,7 @@ msgid ""
 "photovoltaic system performance."
 msgstr ""
 
-#: ../../content/C4_rsgp_solar_system_simulation.rst:62
+#: ../../content/C4_rsgp_solar_system_simulation.rst:29
 msgid ""
 "The NSRDB contains hourly solar irradiance measurements, temperature "
 "data, and atmospheric conditions for locations across the United States. "
@@ -1219,7 +2313,7 @@ msgid ""
 "handling, and data interpolation to support accelerated simulation time."
 msgstr ""
 
-#: ../../content/C4_rsgp_solar_system_simulation.rst:64
+#: ../../content/C4_rsgp_solar_system_simulation.rst:31
 msgid ""
 "Solar position calculations account for latitude, longitude, time of "
 "year, and time of day to determine solar azimuth and elevation angles. "
@@ -1229,38 +2323,38 @@ msgid ""
 "Below is an overview of the parameters of that calculation."
 msgstr ""
 
-#: ../../content/C4_rsgp_solar_system_simulation.rst:66
+#: ../../content/C4_rsgp_solar_system_simulation.rst:33
 msgid ""
 "**Direct Normal Irradiance (DNI)** represents the irradiance directly "
 "from the sun to the surface of the photovoltaic panels."
 msgstr ""
 
-#: ../../content/C4_rsgp_solar_system_simulation.rst:68
+#: ../../content/C4_rsgp_solar_system_simulation.rst:35
 msgid ""
 "**Diffuse Horizontal Irradiance(DHI)** represents the irradiance "
 "indirectly reaching the surface of the photovoltaic panels through the "
 "rays scattered by the sky dome."
 msgstr ""
 
-#: ../../content/C4_rsgp_solar_system_simulation.rst:70
+#: ../../content/C4_rsgp_solar_system_simulation.rst:37
 msgid ""
 "**Global Horizontal Irradiance(GHI)** represents the total irradiance, "
 "calculated by the following formula: GHI = DNI * cos(θ) + DHI, where θ is"
 " the solar zenith angle."
 msgstr ""
 
-#: ../../content/C4_rsgp_solar_system_simulation.rst:72
+#: ../../content/C4_rsgp_solar_system_simulation.rst:39
 msgid ""
 "The simulation supports configurable panel count, individual panel area, "
 "and conversion efficiency specifications that determine total array "
 "capacity."
 msgstr ""
 
-#: ../../content/C4_rsgp_solar_system_simulation.rst:75
+#: ../../content/C4_rsgp_solar_system_simulation.rst:42
 msgid "Battery Energy Storage System"
 msgstr ""
 
-#: ../../content/C4_rsgp_solar_system_simulation.rst:76
+#: ../../content/C4_rsgp_solar_system_simulation.rst:43
 msgid ""
 "The battery system implement lithium-ion battery characteristics "
 "including charge acceptance, storage capacity, and charge efficiency. The"
@@ -1270,7 +2364,7 @@ msgid ""
 "efficiency and limitations."
 msgstr ""
 
-#: ../../content/C4_rsgp_solar_system_simulation.rst:78
+#: ../../content/C4_rsgp_solar_system_simulation.rst:45
 msgid ""
 "The battery can alse be configured on the maximum charge current it can "
 "accept, and the maximum discharge. This models the safety considerations "
@@ -1278,11 +2372,11 @@ msgid ""
 "level."
 msgstr ""
 
-#: ../../content/C4_rsgp_solar_system_simulation.rst:81
+#: ../../content/C4_rsgp_solar_system_simulation.rst:48
 msgid "Inverter Control System"
 msgstr ""
 
-#: ../../content/C4_rsgp_solar_system_simulation.rst:82
+#: ../../content/C4_rsgp_solar_system_simulation.rst:49
 msgid ""
 "The inverter manages power flow between the photovoltaic panels, battery,"
 " and the power manager. It implements DC to AC conversion modeling to "
@@ -1293,11 +2387,11 @@ msgid ""
 "conversion."
 msgstr ""
 
-#: ../../content/C4_rsgp_solar_system_simulation.rst:84
+#: ../../content/C4_rsgp_solar_system_simulation.rst:51
 msgid "The inverter implements three operating modes for power flow priority."
 msgstr ""
 
-#: ../../content/C4_rsgp_solar_system_simulation.rst:86
+#: ../../content/C4_rsgp_solar_system_simulation.rst:53
 msgid ""
 "**Solar-Battery-Utility (SBU) mode** prioritizes using the power "
 "available from the photovoltaic panels if present, and only when the "
@@ -1306,7 +2400,7 @@ msgid ""
 "utility. This mode aims to reduce grid-dependency to a minimum."
 msgstr ""
 
-#: ../../content/C4_rsgp_solar_system_simulation.rst:88
+#: ../../content/C4_rsgp_solar_system_simulation.rst:55
 msgid ""
 "**Solar-Utility-Battery (SUB) mode** prioritizes using the power "
 "available from the photovoltaic panels--just like the previous mode. "
@@ -1316,14 +2410,14 @@ msgid ""
 "prepare to meet emergencies."
 msgstr ""
 
-#: ../../content/C4_rsgp_solar_system_simulation.rst:90
+#: ../../content/C4_rsgp_solar_system_simulation.rst:57
 msgid ""
 "**Utility-Solar-Battery (USB) mode** prioritizes drawing from utility. It"
 " uses the solar system as only a back-up in case the utility is out of "
 "service."
 msgstr ""
 
-#: ../../content/C4_rsgp_solar_system_simulation.rst:92
+#: ../../content/C4_rsgp_solar_system_simulation.rst:59
 msgid ""
 "The power manager can switch the operation mode of the inverter. This may"
 " prove useful in scenarios where the battery should be reserved for a "
@@ -1334,7 +2428,7 @@ msgid ""
 "switches as it currently lacks the ability to predict emergencies."
 msgstr ""
 
-#: ../../content/C4_rsgp_solar_system_simulation.rst:94
+#: ../../content/C4_rsgp_solar_system_simulation.rst:61
 msgid ""
 "Additionally, the inverter implements a charge priority, which determines"
 " how excess solar power gets allocated between battery charging and "
@@ -1343,31 +2437,31 @@ msgid ""
 " charging modes."
 msgstr ""
 
-#: ../../content/C4_rsgp_solar_system_simulation.rst:96
+#: ../../content/C4_rsgp_solar_system_simulation.rst:63
 msgid ""
 "**Solar-only** directs all excess solar power to battery charging before "
 "any utility export occurs."
 msgstr ""
 
-#: ../../content/C4_rsgp_solar_system_simulation.rst:98
+#: ../../content/C4_rsgp_solar_system_simulation.rst:65
 msgid ""
 "**Solar-first** uses the excess solar power to charge the battery when "
 "present. When not present, it uses the utility to charge the battery."
 msgstr ""
 
-#: ../../content/C4_rsgp_solar_system_simulation.rst:100
+#: ../../content/C4_rsgp_solar_system_simulation.rst:67
 msgid ""
 "**Utility-assisted** enables battery charging from utility power even "
 "when some excess solar power is present."
 msgstr ""
 
-#: ../../content/C4_rsgp_solar_system_simulation.rst:102
+#: ../../content/C4_rsgp_solar_system_simulation.rst:69
 msgid ""
 "In all charge priorities, the inverter will export to utility only when "
 "the battery is full."
 msgstr ""
 
-#: ../../content/C4_rsgp_solar_system_simulation.rst:104
+#: ../../content/C4_rsgp_solar_system_simulation.rst:71
 msgid ""
 "The inverter implements load shedding as a protective measure that "
 "prevents system overload. It disconnects the load when available power "
@@ -1376,7 +2470,7 @@ msgid ""
 "taken care of the issue."
 msgstr ""
 
-#: ../../content/C4_rsgp_solar_system_simulation.rst:106
+#: ../../content/C4_rsgp_solar_system_simulation.rst:73
 msgid ""
 "The power manager ensures that load shedding may not happen as it "
 "automatically disconnects loads from the specific houses that are "
@@ -1384,18 +2478,18 @@ msgid ""
 "situations where the power manager fails."
 msgstr ""
 
-#: ../../content/C4_rsgp_solar_system_simulation.rst:109
+#: ../../content/C4_rsgp_solar_system_simulation.rst:76
 msgid "Weather Data Integration"
 msgstr ""
 
-#: ../../content/C4_rsgp_solar_system_simulation.rst:110
+#: ../../content/C4_rsgp_solar_system_simulation.rst:77
 msgid ""
 "This component manages the interface between the simulation environment "
 "and the external weather database, ensuring that solar calculations "
 "reflect actual atmospheric conditions."
 msgstr ""
 
-#: ../../content/C4_rsgp_solar_system_simulation.rst:112
+#: ../../content/C4_rsgp_solar_system_simulation.rst:79
 msgid ""
 "The National Solar Radiation Database is the primary data source for "
 "solar irradiance and atmospheric conditions. The NSRDB provides hourly "
@@ -1407,7 +2501,7 @@ msgid ""
 "system modeling."
 msgstr ""
 
-#: ../../content/C4_rsgp_solar_system_simulation.rst:114
+#: ../../content/C4_rsgp_solar_system_simulation.rst:81
 msgid ""
 "The database used from NSRDB covers the aforementioned measurements taken"
 " in the Phoenix/Arizona for one full year; one record each half an hour. "
@@ -1417,11 +2511,11 @@ msgid ""
 "simulation."
 msgstr ""
 
-#: ../../content/C4_rsgp_solar_system_simulation.rst:117
+#: ../../content/C4_rsgp_solar_system_simulation.rst:84
 msgid "Power Management Interface"
 msgstr ""
 
-#: ../../content/C4_rsgp_solar_system_simulation.rst:118
+#: ../../content/C4_rsgp_solar_system_simulation.rst:85
 msgid ""
 "The solar system takes in the load from the power manager and gives back "
 "the solar panel power used, battery discharged, and grid import or "
@@ -1431,18 +2525,17 @@ msgid ""
 "is being met."
 msgstr ""
 
-#: ../../content/C4_rsgp_solar_system_simulation.rst:120
+#: ../../content/C4_rsgp_solar_system_simulation.rst:87
 msgid ""
 "Currently, the interface consists purely of the exchange of data; there "
 "is no exchange of commands or requests between the components."
 msgstr ""
 
-#: ../../content/C4_rsgp_solar_system_simulation.rst:123
-#, fuzzy
+#: ../../content/C4_rsgp_solar_system_simulation.rst:90
 msgid "Data Collection"
-msgstr "جمع وتحليل البيانات"
+msgstr ""
 
-#: ../../content/C4_rsgp_solar_system_simulation.rst:124
+#: ../../content/C4_rsgp_solar_system_simulation.rst:91
 msgid ""
 "Data collection operates continuously throughout simulation to capture "
 "time-series data about solar generation, battery operation, and system-"
@@ -1453,7 +2546,7 @@ msgid ""
 "effectiveness of the power management solution."
 msgstr ""
 
-#: ../../content/C4_rsgp_solar_system_simulation.rst:126
+#: ../../content/C4_rsgp_solar_system_simulation.rst:93
 msgid ""
 "The system captures data from all the components to enable any form of "
 "analysis. The data collection is extensive: state-of-charge of the "
@@ -1472,57 +2565,190 @@ msgstr ""
 
 #: ../../content/C5_rsgp_power_management.rst:2
 msgid "RSGP Power Management"
-msgstr "إدارة الطاقة في نظام الشبكة الذكية السكنية"
+msgstr ""
 
 #: ../../content/C5_rsgp_power_management.rst:3
 msgid "some content for section: RSGP Power Management"
-msgstr "بعض المحتوى لقسم: إدارة الطاقة في نظام الشبكة الذكية السكنية"
+msgstr ""
 
-#: ../../content/C6_dashboard.rst:2
-msgid "Remote Object & Dashboard"
-msgstr "الكائن البعيد ولوحة المعلومات"
+#: ../../content/C6_dashboard.rst:5
+msgid ""
+"The dashboard serves as the human-machine interface for the residential "
+"smart grid prototype, providing real-time monitoring and control. This "
+"chapter examines the implementation of the graphical user interface and "
+"the remote object communication architecture that enable operators to "
+"interact with the simulation."
+msgstr ""
 
-#: ../../content/C6_dashboard.rst:3
-msgid "some content for section: Remote Object & Dashboard"
-msgstr "بعض المحتوى لقسم: الكائن البعيد ولوحة المعلومات"
+#: ../../content/C6_dashboard.rst:8
+msgid "Remote Object Architecture"
+msgstr ""
 
-#: ../../content/C7_rasp_controller.rst:2
-msgid "Hardwares & I/O Tracker"
-msgstr "العتاد ومتابع الإدخال والإخراج"
+#: ../../content/C6_dashboard.rst:9
+msgid ""
+"The dashboard implements a distributed architecture using Pyro5 remote "
+"objects to communicate with the simulation components. This design "
+"separates the user interface from the computation-intensive simulation "
+"processes, enabling the dashboard to run independently while maintaining "
+"synchronized access to system state and control functions."
+msgstr ""
+
+#: ../../content/C6_dashboard.rst:11
+msgid ""
+"The system uses environment variables to configure connection parameters,"
+" allowing deployment flexibility across different network configurations "
+"and development environments."
+msgstr ""
+
+#: ../../content/C6_dashboard.rst:13
+msgid ""
+"The Pyro5 remote object framework provides transparent network "
+"communication, enabling the dashboard to treat remote simulation "
+"components as local objects while maintaining network resilience and "
+"error handling."
+msgstr ""
+
+#: ../../content/C6_dashboard.rst:16
+msgid "Dashboard Application Framework"
+msgstr ""
+
+#: ../../content/C6_dashboard.rst:17
+msgid ""
+"The dashboard application builds upon the Tkinter GUI framework enhanced "
+"with ttkbootstrap styling to provide a modern, responsive user interface."
+msgstr ""
+
+#: ../../content/C6_dashboard.rst:23
+msgid ""
+"The application implements a hierarchical view structure that scales to "
+"accommodate varying numbers of houses and devices within the simulation. "
+"The framework provides scrollable interfaces for scenarios with large "
+"numbers of components, ensuring usability regardless of simulation scale."
+msgstr ""
+
+#: ../../content/C6_dashboard.rst:26
+msgid "Houses Simulation Interface"
+msgstr ""
+
+#: ../../content/C6_dashboard.rst:27
+msgid ""
+"The houses simulation interface provides monitoring and control "
+"capabilities for individual houses. Each house panel displays current "
+"power consumption, connectivity status, and provides access to control "
+"the house's load. The utility line and load line toggles enable operators"
+" to simulate grid disconnections to support testing of power management "
+"response mechanisms."
+msgstr ""
+
+#: ../../content/C6_dashboard.rst:29
+msgid ""
+"The house control window provides access to individual device operations "
+"within each house. These windows display device-specific information "
+"including current load and configuration parameters."
+msgstr ""
+
+#: ../../content/C6_dashboard.rst:32
+msgid "Summary and Monitoring Views"
+msgstr ""
+
+#: ../../content/C6_dashboard.rst:33
+msgid ""
+"The dashboard implements dedicated summary views for each major "
+"simulation component, providing comprehensive real-time status "
+"information and operational metrics. These views serve as primary "
+"monitoring interfaces for system analysis and troubleshooting activities."
+msgstr ""
+
+#: ../../content/C6_dashboard.rst:35
+msgid ""
+"The houses simulation summary displays system-wide statistics including "
+"total load, individual house contributions, and connectivity states. The "
+"information updates continuously during simulation execution and provides"
+" formatted output that facilitates rapid assessment of system state."
+msgstr ""
+
+#: ../../content/C6_dashboard.rst:37
+msgid ""
+"The solar system simulation summary provides detailed information about "
+"photovoltaic generation, battery state, and inverter operations."
+msgstr ""
+
+#: ../../content/C6_dashboard.rst:39
+msgid ""
+"The power management summary displays algorithm performance metrics and "
+"decision-making status. This information proves essential for evaluating "
+"power management effectiveness and identifying areas for algorithm "
+"improvement."
+msgstr ""
+
+#: ../../content/C6_dashboard.rst:42
+msgid "Real-time Update Architecture"
+msgstr ""
+
+#: ../../content/C6_dashboard.rst:43
+msgid ""
+"The dashboard implements a real-time update system that maintains "
+"synchronization between the user interface and the underlying simulation."
+" The length of the update cycle can be set to balance between maintaining"
+" real-time connection and minimizing overhead. As such, the default of "
+"100-milliseconds was chosen as a middle between responsiveness and low "
+"overhead."
+msgstr ""
+
+#: ../../content/C6_dashboard.rst:46
+msgid "Data Collection and Analysis Support"
+msgstr ""
+
+#: ../../content/C6_dashboard.rst:47
+msgid ""
+"The dashboard provides access to simulation data through its summary "
+"views and component monitoring interfaces. This information supports both"
+" real-time system analysis and post-simulation evaluation of system "
+"performance and algorithm effectiveness."
+msgstr ""
+
+#: ../../content/C6_dashboard.rst:49
+msgid ""
+"The data is currently displayed only as summaries, lacking any "
+"visualization, as the goal of the dashboard was to debug the simulation "
+"and power management solutions. However, the data exported to CSV files "
+"from the various simulation components can be imported into a third party"
+" tool for visualization and statistical analysis."
+msgstr ""
 
 #: ../../content/C7_rasp_controller.rst:3
-msgid "some content for section: Hardwares & I/O Tracker"
-msgstr "بعض المحتوى لقسم: العتاد ومتابع الإدخال والإخراج"
+msgid "some content for section: Raspberry Pi Controller"
+msgstr ""
 
 #: ../../content/C8_final_results.rst:2
 msgid "Final Results"
-msgstr "النتائج النهائية"
+msgstr ""
 
 #: ../../content/C8_final_results.rst:3
 msgid "some content for section: Final Results"
-msgstr "بعض المحتوى لقسم: النتائج النهائية"
+msgstr ""
 
 #: ../../content/C9_conclusions_and_suggestions.rst:2
 msgid "Conclusions and Suggestions"
-msgstr "الاستنتاجات والاقتراحات"
+msgstr ""
 
 #: ../../content/C9_conclusions_and_suggestions.rst:3
 msgid "some content for section: Conclusions and Suggestions"
-msgstr "بعض المحتوى لقسم: الاستنتاجات والاقتراحات"
+msgstr ""
 
 #: ../../content/_references.rst:9
 msgid "References"
-msgstr "المراجع"
+msgstr ""
 
 #: ../../content/_references.rst:11
 msgid "some content for section: References"
-msgstr "بعض المحتوى لقسم: المراجع"
+msgstr ""
 
 #: ../../content/_thanks_and_appreciation.rst:9
 msgid "Thanks and Appreciation"
-msgstr "الشكر والتقدير"
+msgstr ""
 
 #: ../../content/_thanks_and_appreciation.rst:11
 msgid "some content for section: Thanks and Appreciation"
-msgstr "بعض المحتوى لقسم: الشكر والتقدير"
+msgstr ""
 

@@ -38,8 +38,9 @@
 - Keep API names, library names, and framework names in English
 - Preserve all code formatting, indentation, and syntax exactly as is
 - For well-established technical terms with accepted Arabic equivalents, use the Arabic term followed by English in parentheses: "قاعدة البيانات (Database)"
-- For newer or specialized terms without established Arabic equivalents, provide a descriptive Arabic phrase followed by the English term: "إطار العمل (Framework)"- 
+- For newer or specialized terms without established Arabic equivalents, provide a descriptive Arabic phrase followed by the English term: "إطار العمل (Framework)"
+- For common computing and technical terms, always supplement the Arabic translation with the English term in parentheses: "خيط التنفيذ (Thread)", "واجهة (Interface)", "مثيل (Instance)", "قاعدة البيانات (Database)"
+- When translating compound technical terms where individual components are also technical terms, include the English for the entire term: "مغلف الهجوم-الانحدار-الاستمرار-التحرير (Attack-Decay-Sustain-Release Envelope)" where "envelope" itself is a technical term
 - Maintain a formal, technical register appropriate for documentation
 - Keep all reStructuredText (rST) markup syntax unchanged: **bold**, *italic*, `code`, etc.
-- Don't translate Sphinx role names: :class:, :func:, :meth:, :mod:, etc.
-- 
+- Don't translate Sphinx role names: :class:, :func:, :meth:, :mod:, etc. 

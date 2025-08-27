@@ -39,7 +39,7 @@ msgstr ""
 #: ../../content/C4_rsgp_solar_system_simulation.rst:4
 #: ../../content/C6_dashboard.rst:4
 msgid "Introduction"
-msgstr ""
+msgstr "المقدمة"
 
 #: ../../content/A2_notebooks_workflow.rst:6
 msgid ""
@@ -2002,7 +2002,7 @@ msgstr ""
 
 #: ../../content/C3_rsgp_houses_simulation.rst:2
 msgid "RSGP Houses Simulation"
-msgstr ""
+msgstr "محاكاة المنازل في النظام الذكي السكني (RSGP Houses Simulation)"
 
 #: ../../content/C3_rsgp_houses_simulation.rst:5
 msgid ""
@@ -2011,6 +2011,9 @@ msgid ""
 "model, the device modeling framework, and the coordination mechanisms "
 "between the components of the house simulation."
 msgstr ""
+"تعمل محاكاة المنازل كمولد الأحمال الأساسي داخل النظام. يتناول هذا الفصل "
+"تنفيذ نموذج المنزل السكني، وإطار النمذجة للأجهزة، وآليات التنسيق بين "
+"مكونات محاكاة المنزل."
 
 #: ../../content/C3_rsgp_houses_simulation.rst:7
 msgid ""
@@ -2021,28 +2024,37 @@ msgid ""
 "multiple devices with different consumption patterns. This aims to mirror"
 " real world residential demand."
 msgstr ""
+"تتجاوز أهمية محاكاة المنازل النمذجة البسيطة للأحمال، إذ أنها توفر بيئة الاختبار "
+"لتقييم خوارزميات إدارة الطاقة تحت سيناريوهات استهلاك متغيرة. تتتبع المحاكاة "
+"**N** من المنازل التي تنفذ نفس النموذج. يحتوي كل منزل على أجهزة متعددة بأنماط "
+"استهلاك مختلفة. يهدف هذا إلى محاكاة الطلب السكني في العالم الحقيقي."
 
 #: ../../content/C3_rsgp_houses_simulation.rst:10
 msgid "Architecture Overview"
-msgstr ""
+msgstr "نظرة عامة على البنية المعمارية"
 
 #: ../../content/C3_rsgp_houses_simulation.rst:11
 msgid ""
 "The architecture separates simulation coordination, individual house "
 "modeling, and device-level power consumption calculations."
 msgstr ""
+"تفصل البنية المعمارية بين تنسيق المحاكاة، ونمذجة المنازل الفردية، وحسابات "
+"استهلاك الطاقة على مستوى الأجهزة."
 
 #: ../../content/C3_rsgp_houses_simulation.rst:17
 msgid ""
 "The ``HousesSimulator`` serves as the coordination layer; it manages the "
 "house instances and coordinates their execution."
 msgstr ""
+"يعمل ``HousesSimulator`` كطبقة التنسيق؛ فهو يدير مثيلات المنازل وينسق تنفيذها."
 
 #: ../../content/C3_rsgp_houses_simulation.rst:18
 msgid ""
 "The ``House`` serves as the individual unit; it maintains state "
 "information about its devices and utility and load lines."
 msgstr ""
+"يعمل ``House`` كوحدة فردية؛ يحتفظ بمعلومات الحالة حول أجهزته وخطوط المرافق "
+"والأحمال."
 
 #: ../../content/C3_rsgp_houses_simulation.rst:19
 msgid ""
@@ -2050,6 +2062,8 @@ msgid ""
 "calculations per each device's parameters to simulate realistic load "
 "consumption patterns."
 msgstr ""
+"يعمل ``DeviceClass`` كقاعدة للأحمال؛ يقوم بالحسابات لكل جهاز وفقاً لمعاييره "
+"لمحاكاة أنماط استهلاك أحمال واقعية."
 
 #: ../../content/C3_rsgp_houses_simulation.rst:21
 msgid ""
@@ -2057,10 +2071,12 @@ msgid ""
 "device types without modification to the core simulation. This makes it "
 "easier to craft testing scenarios."
 msgstr ""
+"يعطي التصميم الأولوية للنمطية ويسمح بإضافة أنواع جديدة من الأجهزة ديناميكياً "
+"دون تعديل المحاكاة الأساسية. هذا يجعل من السهل صياغة سيناريوهات الاختبار."
 
 #: ../../content/C3_rsgp_houses_simulation.rst:24
 msgid "The Houses Simulator"
-msgstr ""
+msgstr "محاكي المنازل"
 
 #: ../../content/C3_rsgp_houses_simulation.rst:25
 msgid ""
@@ -2070,6 +2086,10 @@ msgid ""
 " The simulator operates on its own thread to ensure that house load "
 "calculations proceed independently of the other components."
 msgstr ""
+"ينسق ``HousesSimulator`` تنفيذ مثيلات (Instances) المنازل الفردية؛ يجمع حسابات الأحمال على "
+"مستوى النظام ويوفر الواجهة (Interface) بين الطلب السكني ونظام إدارة الطاقة. يعمل "
+"المحاكي على خيط تنفيذ منفرد (Thread) لضمان أن حسابات أحمال المنازل تتم "
+"بشكل مستقل عن المكونات الأخرى."
 
 #: ../../content/C3_rsgp_houses_simulation.rst:31
 msgid ""
@@ -2079,6 +2099,10 @@ msgid ""
 "aggregates these values. The system-wide total load is then made "
 "available to the power management system."
 msgstr ""
+"ينفذ المحاكي دورة تحديث قابلة للتكوين مضبوطة عادة على فترات 100 مللي ثانية. "
+"خلال كل دورة تحديث، يستعلم المحاكي جميع مثيلات (Instances) المنازل عن استهلاكها "
+"الحالي للطاقة ويجمع هذه القيم. ثم يتم توفير إجمالي الأحمال على مستوى "
+"النظام لنظام إدارة الطاقة."
 
 #: ../../content/C3_rsgp_houses_simulation.rst:33
 msgid ""
@@ -2086,10 +2110,12 @@ msgid ""
 "the power providers; internal house simulations continue to maintain "
 "realistic behavior on reconnection."
 msgstr ""
+"يؤثر قطع خط الحمل فقط على الاتصال بين المنازل ومزودي الطاقة؛ تستمر "
+"محاكاة المنزل الداخلية في الحفاظ على سلوك واقعي عند إعادة الاتصال."
 
 #: ../../content/C3_rsgp_houses_simulation.rst:36
 msgid "Individual House Modeling"
-msgstr ""
+msgstr "نمذجة المنزل الفردي"
 
 #: ../../content/C3_rsgp_houses_simulation.rst:37
 msgid ""
@@ -2099,6 +2125,10 @@ msgid ""
 "include heating and cooling systems, lighting, major appliances, and "
 "miscellaneous electrical loads."
 msgstr ""
+"يحتفظ نموذج ``House`` بمعلومات الحالة حول الاتصال والأجهزة. تتعايش مثيلات أجهزة "
+"متعددة وتساهم في الحمل الإجمالي للمنزل. يحتوي كل منزل على مجموعة "
+"محددة من أنواع الأجهزة، وتشمل أنظمة التدفئة والتبريد، والإضاءة، والأجهزة "
+"الكبيرة، والأحمال الكهربائية المتنوعة."
 
 #: ../../content/C3_rsgp_houses_simulation.rst:39
 msgid ""
@@ -2107,10 +2137,13 @@ msgid ""
 "exports excess renewable energy or imports power when that renewable "
 "energy is insufficient."
 msgstr ""
+"يجمع النموذج أحمال الأجهزة الفردية ويتتبع تبادل الطاقة مع المرافق. هذا يدعم "
+"السيناريوهين حيث يصدر المنزل فائض الطاقة المتجددة أو يستورد الطاقة عندما "
+"تكون هذه الطاقة المتجددة غير كافية."
 
 #: ../../content/C3_rsgp_houses_simulation.rst:42
 msgid "Device Modeling Framework"
-msgstr ""
+msgstr "إطار نمذجة الأجهزة"
 
 #: ../../content/C3_rsgp_houses_simulation.rst:43
 msgid ""
@@ -2121,10 +2154,15 @@ msgid ""
 "approximate the load profiles. These techniques generate realistic power "
 "consumption patterns that mimic real electrical devices."
 msgstr ""
+"ينفذ إطار نمذجة ``Device`` نموذجاً رياضياً يلتقط السلوك الديناميكي للأجهزة "
+"الكهربائية المنزلية. يستعير هذا الإطار مغلف الهجوم-الانحدار-الاستمرار-التحرير "
+"**(Attack-Decay-Sustain-Release envelope - ADSR)** من تركيب الصوت ويستخدمه مع "
+"تقنيات تعديل الموجات لتقريب ملفات الأحمال. تولد هذه التقنيات أنماط استهلاك "
+"طاقة واقعية تحاكي الأجهزة الكهربائية الحقيقية."
 
 #: ../../content/C3_rsgp_houses_simulation.rst:48
 msgid "ADSR envelope"
-msgstr ""
+msgstr "مغلف ADSR"
 
 #: ../../content/C3_rsgp_houses_simulation.rst:50
 msgid ""
@@ -2132,6 +2170,8 @@ msgid ""
 "power consumption. It models the startup spike, steady-state operation, "
 "and shutdown characteristics of the device."
 msgstr ""
+"يوفر **مغلف ADSR** البنية الزمنية لاستهلاك الطاقة في الجهاز. ينمذج قمة بدء "
+"التشغيل، وعملية الحالة المستقرة، وخصائص إغلاق الجهاز."
 
 #: ../../content/C3_rsgp_houses_simulation.rst:52
 msgid ""
@@ -2139,12 +2179,17 @@ msgid ""
 "device activates. This typically involves inrush currents for motor-"
 "driven appliances or heating element activation for thermal devices."
 msgstr ""
+"تنمذج مرحلة **الهجوم (Attack)** قمة الطاقة الأولية التي تحدث عند تفعيل الجهاز. "
+"يتضمن هذا عادة تيارات الاندفاع للأجهزة المحركة بواسطة محرك أو تفعيل عنصر "
+"التسخين للأجهزة الحرارية."
 
 #: ../../content/C3_rsgp_houses_simulation.rst:53
 msgid ""
 "The **Decay** phase models the transition from that startup spike to "
 "normal operation as the device's components stabilize."
 msgstr ""
+"تنمذج مرحلة **الانحدار (Decay)** الانتقال من قمة بدء التشغيل إلى العمل العادي "
+"مع استقرار مكونات الجهاز."
 
 #: ../../content/C3_rsgp_houses_simulation.rst:54
 msgid ""
@@ -2152,6 +2197,9 @@ msgid ""
 "maintains its power consumption level. This phase also uses wave "
 "modulation to model load variations due to changing conditions."
 msgstr ""
+"تنمذج مرحلة **الاستمرار (Sustain)** عملية الحالة المستقرة حيث يحتفظ الجهاز "
+"بمستوى استهلاك الطاقة. تستخدم هذه المرحلة أيضاً تعديل الموجات لنمذجة "
+"تغييرات الأحمال بسبب الظروف المتغيرة."
 
 #: ../../content/C3_rsgp_houses_simulation.rst:55
 msgid ""
@@ -2159,6 +2207,9 @@ msgid ""
 "in motor systems and thermal cool-down periods that continue to consume "
 "power for a short while until complete shutdown."
 msgstr ""
+"تنمذج مرحلة **التحرير (Release)** عملية الإغلاق. يتضمن هذا تأثيرات الكبح في "
+"أنظمة المحركات وفترات التبريد الحراري التي تستمر في استهلاك الطاقة "
+"لفترة قصيرة حتى الإغلاق الكامل."
 
 #: ../../content/C3_rsgp_houses_simulation.rst:57
 msgid ""
@@ -2169,6 +2220,10 @@ msgid ""
 "complex power signatures that more closely match measured residential "
 "devices' behavior."
 msgstr ""
+"يقدم تعديل الموجات تغييرات واقعية في استهلاك الطاقة عبر مغلف ADSR. يدعم "
+"الإطار أنواع تعديل متعددة: الموجات الجيبية، والموجات المربعة، والتعديل "
+"العشوائي. تعمل أنماط التعديل هذه بترددات وسعات مختلفة لإنشاء توقيعات "
+"طاقة معقدة تطابق بشكل أوثق سلوك الأجهزة السكنية المقيس."
 
 #: ../../_static/plots/C3_some_regular_devices_loads_over_time.py:7
 msgid ""
@@ -2181,11 +2236,19 @@ msgid ""
 " :download:`pdf "
 "<../_build/gettext/plot_directive/_static/plots/C3_some_regular_devices_loads_over_time.pdf>`)"
 msgstr ""
+"(:download:`الكود المصدري "
+"<../_build/gettext/plot_directive/_static/plots/C3_some_regular_devices_loads_over_time.py>`،"
+" :download:`png "
+"<../_build/gettext/plot_directive/_static/plots/C3_some_regular_devices_loads_over_time.png>`،"
+" :download:`hires.png "
+"<../_build/gettext/plot_directive/_static/plots/C3_some_regular_devices_loads_over_time.hires.png>`،"
+" :download:`pdf "
+"<../_build/gettext/plot_directive/_static/plots/C3_some_regular_devices_loads_over_time.pdf>`)"
 
 #: ../../_static/plots/C3_some_regular_devices_loads_over_time.py:18
 #: ../../_static/plots/C3_some_regular_devices_loads_over_time.py:28
 msgid "Some regular devices simulated loads over time"
-msgstr ""
+msgstr "أحمال بعض الأجهزة العادية المحاكاة عبر الزمن"
 
 #: ../../content/C3_rsgp_houses_simulation.rst:64
 msgid ""
@@ -2193,10 +2256,12 @@ msgid ""
 "categories. Each category implements specialized ADSR parameters and wave"
 " modulation to capture the unique behavior of the device."
 msgstr ""
+"ينظم إطار نمذجة الأجهزة الأجهزة الكهربائية في فئات. تنفذ كل فئة معايير ADSR "
+"متخصصة وتعديل موجي لالتقاط السلوك الفريد للجهاز."
 
 #: ../../content/C3_rsgp_houses_simulation.rst:67
 msgid "Integration with Power Management"
-msgstr ""
+msgstr "التكامل مع إدارة الطاقة"
 
 #: ../../content/C3_rsgp_houses_simulation.rst:68
 msgid ""
@@ -2208,16 +2273,23 @@ msgid ""
 "interface for the ``PowerManager`` to read the data it needs and modify "
 "the simulation per its judgment."
 msgstr ""
+"يوفر ``HousesSimulator`` الحمل المجمع للنظام للـ ``PowerManager``، إلى جانب "
+"الحمل المحدد لكل منزل في المحاكاة. يقوم ``PowerManager`` بعد ذلك بحساباته وقد "
+"يتواصل مرة أخرى مع المحاكاة، واصلاً أو قاطعاً بعض خطوط أحمال المنازل أو "
+"خطوط المرافق. وبالتالي يوفر ``HouseSimulator`` واجهة (Interface) للـ ``PowerManager`` "
+"لقراءة البيانات التي يحتاجها وتعديل المحاكاة وفقاً لحكمه."
 
 #: ../../content/C3_rsgp_houses_simulation.rst:70
 msgid ""
 "The interface maintains loose coupling between the ``HouseSimulator`` and"
 " the ``PowerManager`` to enable independent development and testing."
 msgstr ""
+"تحافظ الواجهة على اقتران رخو بين ``HouseSimulator`` و ``PowerManager`` "
+"لتمكين التطوير والاختبار المستقل."
 
 #: ../../content/C3_rsgp_houses_simulation.rst:73
 msgid "Data Collection and Analysis"
-msgstr ""
+msgstr "جمع وتحليل البيانات"
 
 #: ../../content/C3_rsgp_houses_simulation.rst:74
 msgid ""
@@ -2226,6 +2298,9 @@ msgid ""
 "series dataset (in a CSV file) to enable examination of the effectiveness"
 " of power management solutions."
 msgstr ""
+"تلتقط محاكاة المنازل إحصائيات تشغيل الأجهزة ومقاييس أداء النظام للتحليل اللاحق. "
+"تُخزَّن البيانات كمجموعة بيانات سلاسل زمنية (في ملف CSV) لتمكين "
+"فحص فعالية حلول إدارة الطاقة."
 
 #: ../../content/C3_rsgp_houses_simulation.rst:76
 msgid ""
@@ -2235,6 +2310,10 @@ msgid ""
 "throughout the simulation. The goal is to track the utility exchange "
 "power and minimize it through an effective power management solution."
 msgstr ""
+"يعمل تسجيل CSV في دورة التحديث (عادة مرة واحدة كل 100 مللي ثانية). يسجل "
+"إجمالي أحمال المنازل، وأحمال الأجهزة الفردية، وحالات الاتصال، وقيم "
+"تبادل المرافق لكل منزل طوال فترة المحاكاة. الهدف هو تتبع طاقة تبادل "
+"المرافق وتقليلها من خلال حل إدارة طاقة فعال."
 
 #: ../../content/C4_rsgp_solar_system_simulation.rst:2
 msgid "RSGP Solar System Simulation"

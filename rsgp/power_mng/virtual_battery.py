@@ -1,4 +1,5 @@
-from ..config.settings import settings
+"""Power management virtual battery."""
+
 from ..config.constants import SECONDS_IN_HOUR
 
 from Pyro5.api import expose
@@ -15,10 +16,10 @@ class VirtualBattery:
 
     """
 
-    total_capacity: float  #: float: ...
-    residual_capacity: float  #: float: ...
-    charge_efficiency: float  #: float: ...
-    weight: float  #: float: ...
+    total_capacity: float  #: float: The total capacity of the virtual battery [Wh].
+    residual_capacity: float  #: float: The residual capacity of the virtual battery [Wh].
+    charge_efficiency: float  #: float: The charge efficiency of the virtual battery.
+    weight: float  #: float: The weight of the virtual battery.
 
     def __init__(self, idx: int, init_total_capacity: float, init_residual_capacity: float, charge_efficiency: float, min_weight: float, max_weight: float) -> None:
         self.idx = idx
@@ -76,7 +77,15 @@ class VirtualBattery:
         return actual_discharge_power
 
     def adjust(self, amount: float) -> float:
-        """..."""
+        """Adjust the weight of the virtual battery.
+
+        Args:
+            amount (float): The amount to adjust the weight by.
+
+        Returns:
+            float: The excess capacity after adjustment.
+
+        """
         self.weight += amount
         self.weight = max(self.weight, self._min_weight)
         self.weight = min(self.weight, self._max_weight)

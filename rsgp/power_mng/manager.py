@@ -1,3 +1,5 @@
+"""Power management manager."""
+
 from __future__ import annotations
 from typing import TYPE_CHECKING
 from threading import Thread
@@ -28,19 +30,18 @@ class PowerManager:
     """
 
     virtual_batteries: list[VirtualBattery]  #: list[VirtualBattery]: list of virtual batteries.
-    vb_static_ratio: float  #: float: Static ratio for virtual battery capacity.
 
     def __init__(self, houses_sim: HousesSimulator, solar_system_sim: SolarSystemSimulator) -> None:
         self._houses_sim = houses_sim
         self._solar_system_sim = solar_system_sim
         self._running = False
 
-        self.vb_static_ratio = 1 / self._houses_sim.get_num_houses()
+        self._vb_static_ratio = 1 / self._houses_sim.get_num_houses()
 
         self.virtual_batteries = [VirtualBattery(
             idx=idx,
-            init_total_capacity=self._solar_system_sim.battery.conf.total_capacity * self.vb_static_ratio,
-            init_residual_capacity=self._solar_system_sim.battery.residual_capacity * self.vb_static_ratio,
+            init_total_capacity=self._solar_system_sim.battery.conf.total_capacity * self._vb_static_ratio,
+            init_residual_capacity=self._solar_system_sim.battery.residual_capacity * self._vb_static_ratio,
             charge_efficiency=self._solar_system_sim.battery.conf.charge_efficiency,
             min_weight=settings.GUARANTEED_MINIMUM_WEIGHT,
             max_weight=1+(1-settings.GUARANTEED_MINIMUM_WEIGHT) * self._houses_sim.get_num_houses(),
@@ -81,7 +82,15 @@ class PowerManager:
             self.start(self._dt)
 
     def learn_step(self, houses_load_powers: np.ndarray) -> float:
-        """..."""
+        """Learn a step for the virtual batteries.
+
+        Args:
+            houses_load_powers (ndarray): The load powers of the houses.
+
+        Returns:
+            float: The total excess capacity.
+
+        """
         # Calculate normalized baseline for houses load powers
         hlp_baselined = houses_load_powers - houses_load_powers.mean()
         hlp_baselined_max = abs(hlp_baselined).max()
@@ -124,7 +133,17 @@ class PowerManager:
         return total_excess_capacity
 
     def calc_houses_vb_usage(self, houses_load_powers: np.ndarray, inverter_panels_power: float, inverter_utility_exchange_power: float) -> np.ndarray:
-        """..."""
+        """Calculate virtual batteries usage of each house.
+
+        Args:
+            houses_load_powers (ndarray): The load powers of the houses.
+            inverter_panels_power (float): The power from the panels.
+            inverter_utility_exchange_power (float): The power exchanged with the utility.
+
+        Returns:
+            ndarray: The virtual batteries usage of each house.
+
+        """
         # Calculate virtual batteries usage of each house
         houses_vb_usage = np.zeros_like(houses_load_powers)
         for idx, num_houses_remaining in zip(houses_load_powers.argsort(), range(self._houses_sim.get_num_houses(), 0, -1)):
@@ -146,7 +165,12 @@ class PowerManager:
         return houses_vb_usage
 
     def charge_all_vb(self, charging_power: float) -> None:
-        """..."""
+        """Charge all virtual batteries by the given charging power.
+
+        Args:
+            charging_power (float): The power to charge with [Watt].
+
+        """
         # Charge equally, sharing houses excesses
         for idx, num_houses_remaining in zip(np.argsort([vb.total_capacity - vb.residual_capacity for vb in self.virtual_batteries]), range(self._houses_sim.get_num_houses(), 0, -1)):
             charging_power -= self.virtual_batteries[int(idx)].charge(
@@ -189,12 +213,13 @@ class PowerManager:
                 house.set_load_line(False)
             return
 
+        # Get houses and inverter stuff
         houses_load_powers = np.array([house.load_power for house in self._houses_sim.houses])
-
         inverter_panels_power = self._solar_system_sim.inverter.panels_power
         inverter_battery_exchange_power = self._solar_system_sim.inverter.battery_exchange_power
         inverter_utility_exchange_power = self._solar_system_sim.inverter.utility_exchange_power
 
+        # Learn step
         excess_capacity = self.learn_step(houses_load_powers)
 
         # Charging/discharging
@@ -209,7 +234,7 @@ class PowerManager:
 
             hvbu_max, hvbu_min = houses_vb_usage.max(), houses_vb_usage.min()
             hvbu_norm = (houses_vb_usage - hvbu_min) / (hvbu_max - hvbu_min) if (hvbu_max - hvbu_min) > 0 \
-                else np.full_like(houses_vb_usage, self.vb_static_ratio)
+                else np.full_like(houses_vb_usage, self._vb_static_ratio)
 
             discharging_power = -inverter_battery_exchange_power
             usage_met_fully_mask = self.discharge_all_vb(discharging_power, hvbu_norm)

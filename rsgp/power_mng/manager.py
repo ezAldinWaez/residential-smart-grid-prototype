@@ -139,6 +139,8 @@ class PowerManager:
             inverter_panels_power -= used_panels_power
             inverter_utility_exchange_power -= used_utility_power
 
+            self._houses_sim.get_house(idx).utility_exchange_power = used_utility_power
+
             houses_vb_usage[idx] = load_power
 
         return houses_vb_usage
@@ -215,6 +217,15 @@ class PowerManager:
             for idx, usage_met_fully in enumerate(usage_met_fully_mask):
                 if not usage_met_fully:
                     self._houses_sim.get_house(idx).set_load_line(False)
+
+        # Export utility power
+        if inverter_utility_exchange_power > EPSILON:
+            exporting_houses = [house for house in self._houses_sim.houses if house.utility_line]
+            exporting_vbs = [self.virtual_batteries[house.idx] for house in exporting_houses]
+            vb_weight_sum = sum((1 / vb.weight) for vb in exporting_vbs)
+            exporting_norm = [(1 / vb.weight) / vb_weight_sum for vb in exporting_vbs]
+            for idx, house in enumerate(exporting_houses):
+                house.utility_exchange_power = inverter_utility_exchange_power * exporting_norm[idx]
 
         # Set inverter stuff
         self._solar_system_sim.inverter.utility_line = any([h.utility_line for h in self._houses_sim.houses])

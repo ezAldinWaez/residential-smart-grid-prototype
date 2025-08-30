@@ -4,7 +4,7 @@ from datetime import datetime
 import os
 from pathlib import Path
 
-from .constants import SECONDS_IN_HOUR, BYTES_IN_MB
+from .constants import SECONDS_IN_MINUTE, BYTES_IN_MB
 from ..solar_system_sim.data import InverterMode, ChargePriority
 
 from Pyro5.api import expose
@@ -20,7 +20,7 @@ class Settings:
     # =================================================================================================================
     # TIME SIMULATION SETTINGS
     # =================================================================================================================
-    TIME_FACTOR = SECONDS_IN_HOUR  #: The time factor to multiply the simulation time with to get the real time.
+    TIME_FACTOR = 10 * SECONDS_IN_MINUTE  #: The time factor to multiply the simulation time with to get the real time.
 
     # =================================================================================================================
     # HOUSES SIMULATION SETTINGS
@@ -88,6 +88,16 @@ class Settings:
     CSV_HS_LOG_PATH = _CSV_Log_DIR / "houses_simulation.csv"
     CSV_SSS_LOG_PATH = _CSV_Log_DIR / "solar_system_simulation.csv"
     CSV_PM_LOG_PATH = _CSV_Log_DIR / "power_management.csv"
+
+    @classmethod
+    def get_setting(cls, name):
+        """Remote access a static attribute by its name."""
+        if hasattr(cls, name) and not name.startswith('_'):
+            value = getattr(cls, name)
+            if isinstance(value, Path):
+                value = str(value)
+            return value
+        raise AttributeError(f"'{cls.__name__}' object has no public attribute '{name}'")
 
 
 settings = Settings()

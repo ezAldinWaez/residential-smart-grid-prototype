@@ -29,7 +29,7 @@ class DashboardApp:
         self._root = tk.Tk()
 
         style = ttk.Style()
-        style.theme_use('solar')  # try 'darkly', 'superhero', 'solar', 'simplex'.
+        style.theme_use('yeti')  # try 'darkly', 'superhero', 'solar', 'simplex'.
 
         MainWindowView(
             root=self._root,

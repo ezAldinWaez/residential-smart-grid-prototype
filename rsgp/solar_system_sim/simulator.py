@@ -80,8 +80,6 @@ class SolarSystemSimulator:
 
         self.inverter.operate(timestamp, dt_seconds)
 
-        # TODO: Re-connect the load line after a set interval
-
         if settings.CSV_LOGGING:
             log_record_into_csv(
                 settings.CSV_SSS_LOG_PATH,

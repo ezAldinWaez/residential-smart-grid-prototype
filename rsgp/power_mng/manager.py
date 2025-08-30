@@ -181,6 +181,12 @@ class PowerManager:
             time.sleep(self._dt/1000)
 
     def _update_step(self) -> None:
+        # If the inverter has disconnected the load line, then all houses are disconnected and nothing else to do
+        if self._solar_system_sim.inverter.load_line is False:
+            for house in self._houses_sim.houses:
+                house.set_load_line(False)
+            return
+
         houses_load_powers = np.array([house.load_power for house in self._houses_sim.houses])
 
         inverter_panels_power = self._solar_system_sim.inverter.panels_power

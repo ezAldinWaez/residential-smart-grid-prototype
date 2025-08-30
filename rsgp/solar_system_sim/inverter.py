@@ -1,6 +1,6 @@
 """Solar system simulation inverter."""
 
-from datetime import datetime
+from datetime import datetime, timedelta
 
 from .data import InverterConf, InverterMode, ChargePriority
 from .panels import Panels
@@ -52,6 +52,8 @@ class Inverter:
         self.utility_exchange_power = 0.0
         self.panels_power = 0.0
         self.battery_exchange_power = 0.0
+
+        self._load_reconnection_time = None
 
     def dc_to_ac(self, p_dc: float) -> float:
         """Convert DC power to AC power using the inverter's characteristics.
@@ -233,6 +235,7 @@ class Inverter:
         if required_load_dc_power > 0.0:
             self.load_line = False
             required_load_dc_power = 0.0
+            self._load_reconnection_time = timestamp + timedelta(seconds=settings.INVERTER_LOAD_RECONNECTION_INTERVAL)
 
         # Charge battery from utility after all is said and done and store the exchange power of the battrey
         # The condition seems complex, here it is: it enters when the priority is UTILITY_OR_SOLAR, or when SOLAR_FIRST and solar
@@ -249,5 +252,9 @@ class Inverter:
 
         self.battery_exchange_power = battery_exchange_power
 
+        if self._load_reconnection_time and timestamp > self._load_reconnection_time:
+            self._load_reconnection_time = None
+            self.load_line = True
+
     def __str__(self) -> str:
-        return f"Inverter(load_power={self.load_power:.3f}, utility_exchange_power={self.utility_exchange_power:.3f}, panels_power={self.panels_power:.3f}, battery_exchange_power={self.battery_exchange_power:.3f})"
+        return f"Inverter(load_line={self.load_line}, load_power={self.load_power:.3f}, utility_line={self.utility_line}, utility_exchange_power={self.utility_exchange_power:.3f}, panels_power={self.panels_power:.3f}, battery_exchange_power={self.battery_exchange_power:.3f})"

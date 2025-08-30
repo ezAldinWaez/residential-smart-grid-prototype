@@ -48,6 +48,7 @@ class Settings:
     INVERTER_ETA_OVR = INVERTER_ETA_INV_NOM  #: Simplified overall nominal efficiency for reverse calculation [%].
     INVERTER_INIT_MODE = InverterMode.SBU  #: Initial mode the inverter is set to use.
     INVERTER_INIT_CHARGE_PRIORITY = ChargePriority.SOLAR_ONLY  #: Initial charge priority the inverter is set to use.
+    INVERTER_LOAD_RECONNECTION_INTERVAL = 30.0  #: float: Interval to reconnect the load line after disconnection [sec].
 
     # =================================================================================================================
     # POWER MANAGEMENT SETTINGS

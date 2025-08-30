@@ -34,19 +34,71 @@ Solar position calculations account for latitude, longitude, time of year, and t
 
 - **Diffuse Horizontal Irradiance(DHI)** represents the irradiance indirectly reaching the surface of the photovoltaic panels through the rays scattered by the sky dome. 
 
-- **Global Horizontal Irradiance(GHI)** represents the total irradiance, calculated by the following formula: GHI = DNI * cos(θ) + DHI, where θ is the solar zenith angle. 
+- **Global Horizontal Irradiance(GHI)** represents the total irradiance, calculated by the following formula:
 
-The simulation supports configurable panel count, individual panel area, and conversion efficiency specifications that determine total array capacity. 
+.. math::
+
+   GHI = DNI \times \cos(\theta) + DHI
+
+where :math:`\theta` is the solar zenith angle. 
+
+The simulation supports configurable panel count, individual panel area, and conversion efficiency specifications that determine total array capacity. The total photovoltaic power generation follows:
+
+.. math::
+
+   P_{total} = POA_{irradiance} \times A_{panel} \times \eta_{panel} \times N_{panels}
+
+where :math:`POA_{irradiance}` represents plane-of-array irradiance, :math:`A_{panel}` represents individual panel area, :math:`\eta_{panel}` represents panel efficiency, and :math:`N_{panels}` represents the number of panels. 
 
 Battery Energy Storage System
 -----------------------------
-The battery system implement lithium-ion battery characteristics including charge acceptance, storage capacity, and charge efficiency. The model provides an interface to the inverter to charge and discharge from the battery as per its calculations. As such, the battery component itself is devoid of any calculations beside implementing its charge efficiency and limitations. 
+The battery system implement lithium-ion battery characteristics including charge acceptance, storage capacity, and charge efficiency. The model provides an interface to the inverter to charge and discharge from the battery as per its calculations. As such, the battery component itself is devoid of any calculations beside implementing its charge efficiency and limitations.
 
-The battery can alse be configured on the maximum charge current it can accept, and the maximum discharge. This models the safety considerations present in actual batteries as they reject currents above a certain level. 
+The battery charge operation follows:
+
+.. math::
+
+   P_{charge,actual} = \min(P_{charge,requested}, P_{max,charge}) \times \eta_{charge}
+
+.. math::
+
+   E_{charge} = P_{charge,actual} \times \frac{\Delta t}{3600}
+
+.. math::
+
+   SoC_{new} = \min(SoC_{current} + E_{charge}, C_{total})
+
+where :math:`\eta_{charge}` represents charging efficiency, :math:`\Delta t` represents time interval in seconds, and :math:`SoC` represents state-of-charge. 
+
+The battery can also be configured on the maximum charge current it can accept, and the maximum discharge. This models the safety considerations present in actual batteries as they reject currents above a certain level. The discharge operation implements:
+
+.. math::
+
+   P_{discharge,actual} = \min(P_{discharge,requested}, P_{max,discharge}) / \eta_{charge}
+
+.. math::
+
+   E_{discharge} = \min(P_{discharge,actual} \times \frac{\Delta t}{3600}, SoC_{current})
+
+.. math::
+
+   SoC_{new} = SoC_{current} - E_{discharge} 
 
 Inverter Control System
 -----------------------
-The inverter manages power flow between the photovoltaic panels, battery, and the power manager. It implements DC to AC conversion modeling to account for power losses that occur when converting direct current from the photovoltaic panels and the battery to alternating current for load consumption and utility export. The conversion is handled by the PVWatts library that follows established algorithms to accurately model the conversion. 
+The inverter manages power flow between the photovoltaic panels, battery, and the power manager. It implements DC to AC conversion modeling to account for power losses that occur when converting direct current from the photovoltaic panels and the battery to alternating current for load consumption and utility export. The conversion is handled by the PVWatts library that follows established algorithms to accurately model the conversion.
+
+The DC to AC conversion follows the PVWatts model:
+
+.. math::
+
+   P_{ac} = \min\left(\eta_{inv} \times P_{dc} \times \left(1 - \frac{P_{dc}}{P_{dc0}}\right), P_{ac0}\right)
+
+where :math:`\eta_{inv}` represents inverter efficiency, :math:`P_{dc0}` represents DC power rating, and :math:`P_{ac0}` represents AC power rating. The reverse calculation for required DC power uses:
+
+.. math::
+
+   P_{dc,required} = \frac{P_{ac,target}}{\eta_{inv,overall}} 
 
 The inverter implements three operating modes for power flow priority.
 
@@ -66,7 +118,13 @@ Additionally, the inverter implements a charge priority, which determines how ex
 
 - **Utility-assisted** enables battery charging from utility power even when some excess solar power is present. 
 
-In all charge priorities, the inverter will export to utility only when the battery is full. 
+In all charge priorities, the inverter will export to utility only when the battery is full. The power flow priority algorithms implement sequential decision trees:
+
+.. math::
+
+   P_{remaining} = P_{load} - \sum_{source} P_{source,allocated}
+
+where power sources are allocated according to the configured priority mode, and any remaining unmet load triggers load line disconnection. 
 
 The inverter implements load shedding as a protective measure that prevents system overload. It disconnects the load when available power sources prove insufficient. The load is then automatically reconnected after a set period of time, during which the power manager should have taken care of the issue. 
 

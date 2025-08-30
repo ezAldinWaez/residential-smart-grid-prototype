@@ -22,6 +22,8 @@
 - Prefer shorter, more numerous sentences to lengthier, fewer sentences. Sentences should not exceed 25 words; break sentences down. Sentences may exceed 25 words in one case: if you break into independent clauses that can be comprehended easily. Prefer using clauses than breaking into new sentences if the sentence is below 26 words. 
 - Vary sentence length and structure; use causal structures (like "Due to X," or "To ahieve Y,"), infromative structures ("X is Y"), and so on. 
 - **Keep in mind your mission in writing the documentation: to generate a lot of *relevant* content so we can review it ourselves later and heavily edit it. Prefer to include as much as you can *while still keeping it relevant* so we have more material to work with.**
+- Always include mathematical formulas and equations where algorithms, calculations, or mathematical relationships are implemented in the code. Extract these from the code implementation and present them in proper mathematical notation using LaTeX/MathJax syntax
+- Include detailed algorithm flowcharts using mermaid diagrams to illustrate complex processes, decision trees, and system workflows wherever they clarify the implementation logic
 
 ## ReStructured Text Technical Instructions
 

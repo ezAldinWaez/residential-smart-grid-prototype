@@ -232,8 +232,8 @@ class PowerManager:
                 inverter_utility_exchange_power
             )
 
-            hvbu_max, hvbu_min = houses_vb_usage.max(), houses_vb_usage.min()
-            hvbu_norm = (houses_vb_usage - hvbu_min) / (hvbu_max - hvbu_min) if (hvbu_max - hvbu_min) > 0 \
+            hvbu_sum = houses_vb_usage.sum()
+            hvbu_norm = houses_vb_usage / hvbu_sum if hvbu_sum > 0 \
                 else np.full_like(houses_vb_usage, self._vb_static_ratio)
 
             discharging_power = -inverter_battery_exchange_power

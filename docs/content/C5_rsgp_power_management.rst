@@ -1,19 +1,17 @@
+.. default-role:: math
+
 RSGP Power Management
 =====================
 
 Introduction
 ------------
-The power management system serves as the intelligent coordination layer within the residential smart grid prototype, implementing sophisticated algorithms to optimize energy distribution between solar generation, battery storage, and residential demand. This chapter examines the mathematical foundations, algorithmic implementations, and coordination mechanisms that enable the power manager to achieve efficient energy utilization while maintaining system stability.
+The power management system serves as the intelligent coordination layer. This chapter examines the algorithms and mathematical foundation that enable the power manager to achieve efficient energy utilization. 
 
-The power management system addresses the fundamental challenge of balancing supply and demand in distributed energy systems. Unlike traditional centralized power systems, the residential smart grid requires dynamic allocation decisions that account for varying solar generation, battery state-of-charge, and individual house consumption patterns. The power manager implements adaptive algorithms that learn from consumption patterns and adjust distribution weights to minimize utility grid dependence while ensuring reliable power delivery to all connected houses.
+The power manager implements an adaptive algorithm that learns from the consumption patterns and adjusts distribution weights as to minimize utility grid dependence. The system operates through two primary components: the central ``PowerManager`` that coordinates system-wide decisions, and individual ``VirtualBattery`` instances that represent each house's allocation within the shared battery. 
 
-The system operates through two primary components: the central ``PowerManager`` that coordinates system-wide decisions, and individual ``VirtualBattery`` instances that represent each house's allocation within the shared battery system. This architecture enables distributed decision-making while maintaining centralized coordination, providing both flexibility and system-wide optimization capabilities.
-
-.. note:: The power management algorithms prioritize long-term system efficiency over short-term optimization, implementing learning mechanisms that adapt to changing consumption patterns and improve performance over time.
-
-System Architecture and Coordination
-------------------------------------
-The power management system integrates with both the houses simulation and solar system simulation through well-defined interfaces that enable real-time coordination and control. The architecture implements a threaded execution model that ensures power management decisions occur independently of other system components while maintaining synchronized access to shared resources.
+System Architecture
+-------------------
+The power management system integrates with both the houses simulation and solar system simulation through well-defined interfaces that enable real-time coordination and control. 
 
 .. mermaid::
 
@@ -56,11 +54,11 @@ The power management system integrates with both the houses simulation and solar
 
 The power manager operates on a configurable update cycle, typically set to match the houses simulation update interval of 100 milliseconds. During each update cycle, the manager executes a sequence of coordinated algorithms that process current system state, update virtual battery parameters, and make power distribution decisions.
 
-The coordination interface provides bidirectional communication between components. The houses simulation provides current load demands and accepts load line control commands. The solar system simulation provides generation data, battery state information, and accepts load requirements while returning actual power delivery capabilities.
+The coordination interface provides bidirectional communication between components. The houses simulation provides current load demands and accepts load line control commands. The solar system simulation provides generation data, battery state information, and accepts load requirements while returning actual power delivery.
 
 Virtual Battery System
------------------------
-The virtual battery system implements a distributed energy allocation mechanism that partitions the shared physical battery among individual houses based on their consumption patterns and system optimization requirements. Each house receives a dedicated ``VirtualBattery`` instance that tracks its allocated capacity, manages charge and discharge operations, and maintains dynamic weight parameters that determine its share of the total system capacity.
+----------------------
+The virtual battery system partitions the shared physical battery among individual houses based on their consumption patterns. Each house receives a dedicated ``VirtualBattery`` instance that tracks its allocated capacity, manages charge and discharge, and tracks the house's weight that determines its share of the total system capacity.
 
 Mathematical Foundation
 ~~~~~~~~~~~~~~~~~~~~~~~
@@ -68,12 +66,17 @@ The virtual battery allocation system employs several mathematical relationships
 
 .. math::
 
-   C_{vb,i} = C_{total} \times w_i
+   C_{vb,i} = \frac {C_{total}}{N} \times w_i
 
 where:
-- :math:`C_{vb,i}` represents the total capacity of virtual battery *i*
-- :math:`C_{total}` represents the total physical battery capacity  
-- :math:`w_i` represents the weight assigned to house *i*
+
+- `C_{vb,i}` represents the total capacity of virtual battery *i*
+
+- `C_{total}` represents the total capacity of the physical battery  
+
+- `N` represents the number of houses in the system
+
+- `w_i` represents the weight assigned to house *i*
 
 The weight constraint ensures that the sum of all virtual capacities equals the total physical capacity:
 
@@ -81,7 +84,7 @@ The weight constraint ensures that the sum of all virtual capacities equals the 
 
    \sum_{i=1}^{N} w_i = N
 
-where *N* represents the number of houses in the system. This constraint maintains energy conservation while allowing dynamic reallocation based on consumption patterns.
+where *N* represents the number of houses in the system. This constraint ensures energy conservation between the physical battery and the virtual batteries. 
 
 The system implements weight boundaries to ensure fairness and prevent extreme allocations:
 
@@ -90,125 +93,144 @@ The system implements weight boundaries to ensure fairness and prevent extreme a
    w_{min} \leq w_i \leq w_{max}
 
 where:
-- :math:`w_{min} = \alpha` (guaranteed minimum weight, typically 0.8)
-- :math:`w_{max} = 1 + (1 - \alpha) \times N`
+
+- `w_{min} = \alpha` (guaranteed minimum weight, typically 0.8)
+
+- `w_{max} = 1 + (1 - \alpha) \times (N - 1)`
 
 Virtual Battery Operations
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
-The virtual battery implements charge and discharge operations that model realistic battery behavior while maintaining energy conservation across the distributed system. The charge operation accounts for charging efficiency and capacity constraints:
+The virtual battery implements charge and discharge operations that maintain energy conservation across the distributed system. The charge operation accounts for charging efficiency and capacity constraints:
 
 .. math::
 
-   P_{charge,actual} = \min\left(\frac{P_{charge} \times \eta_{charge} \times \Delta t}{3600}, C_{total} - C_{residual}\right) \times \frac{3600}{\Delta t \times \eta_{charge}}
+   P_{charge,actual} = \min\left(P_{charge} \times \eta_{charge} \times \Delta t, C_{total} - C_{residual}\right) \times \frac{1}{\Delta t \times \eta_{charge}}
 
 where:
-- :math:`P_{charge,actual}` represents the actual power consumed for charging
-- :math:`P_{charge}` represents the requested charging power
-- :math:`\eta_{charge}` represents the charging efficiency
-- :math:`\Delta t` represents the time interval in seconds
-- :math:`C_{residual}` represents the current residual capacity
+
+- `P_{charge,actual}` represents the actual power consumed for charging
+
+- `P_{charge}` represents the requested charging power
+
+- `\eta_{charge}` represents the charging efficiency
+
+- `\Delta t` represents the time interval in hours: `\Delta t = \frac{\Delta t_{s}}{3600}` where `\Delta t_{s}` represents the time interval in seconds
+
+- `C_{total}` represents the maximum capacity
+
+- `C_{residual}` represents the current residual capacity
 
 The discharge operation implements efficiency losses and capacity limitations:
 
 .. math::
 
-   P_{discharge,actual} = \min\left(\frac{P_{discharge} \times \Delta t}{\eta_{charge} \times 3600}, C_{residual}\right) \times \frac{3600 \times \eta_{charge}}{\Delta t}
+   P_{discharge,actual} = \min\left(\frac{P_{discharge} \times \Delta t}{\eta_{charge}}, C_{residual}\right) \times \frac{\eta_{charge}}{\Delta t}
 
 The energy conversion between power and capacity uses the relationship:
 
 .. math::
 
-   E = P \times \frac{\Delta t}{3600}
+   E = P \times \Delta t
 
 where energy is measured in watt-hours and power in watts.
 
 Weight Adjustment Algorithm
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
-The virtual battery weight adjustment mechanism implements the core learning algorithm that adapts capacity allocation based on consumption patterns. The adjustment function modifies weights while maintaining system constraints:
+The adjustment function modifies weights while maintaining system constraints:
 
 .. math::
 
-   w_i^{new} = \max(w_{min}, \min(w_{max}, w_i^{old} + \Delta w_i))
+   w_{i}^{t+1} = \text{clamp}(w_{i}^{t} + \Delta w_{i}, w_{min}, w_{max})
 
-When weight adjustment reduces total capacity below current residual capacity, the excess energy is calculated and returned to the system:
+After adjusting the weights, the new capacity for the virtual battery is calculated: 
 
 .. math::
 
-   E_{excess} = \max(0, C_{residual} - C_{total}^{new})
+   C_{vb,i}^{t+1} = \frac {C_{total}}{N} \times w_{i}^{t+1}
 
-This excess energy redistribution mechanism ensures energy conservation during dynamic capacity reallocation while preventing energy loss during system optimization.
+When weight adjustment reduces total capacity `C_{vb,i}^{t+1}` below current residual capacity `C_{vb,i}^{residual}`, the excess energy is calculated and returned to the system:
+
+.. math::
+
+   E_{excess} = \max(0, C_{vb,i}^{residual} - C_{vb,i}^{t+1})
+
+This excess energy is then redistributed among the other virtual batteries to conserve the energy during system optimization.
 
 Adaptive Learning Algorithm
-----------------------------
-The power management system implements an adaptive learning algorithm that continuously adjusts virtual battery weights based on consumption patterns. This algorithm enables the system to optimize energy allocation over time, improving efficiency as it learns individual house consumption characteristics.
+---------------------------
+The power management system implements an adaptive learning algorithm that continuously adjusts virtual battery weights based on consumption. This algorithm enables the system to optimize energy allocation over time, improving efficiency as it learns each house's consumption patterns.
 
-Load Baseline Calculation
+Load Deviation Calculation
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
-The learning algorithm begins by calculating baseline deviations from average consumption to identify houses with above-average and below-average demand:
+The learning algorithm employs statistical analysis of houses consumption to make decisions regarding their weights. It begins by calculating deviations from the mean consumption to identify houses with above-average and below-average demand:
 
 .. math::
 
-   L_{baseline,i} = L_i - \bar{L}
+   \mu_{L} = \frac{1}{N} \sum_{i=1}^{N} L_{i}
+
+.. math::
+
+   \sigma_{i} = L_i - \mu_{L}
 
 where:
-- :math:`L_{baseline,i}` represents the baseline deviation for house *i*
-- :math:`L_i` represents the current load for house *i*  
-- :math:`\bar{L} = \frac{1}{N}\sum_{i=1}^{N} L_i` represents the average load across all houses
 
-The baseline values undergo normalization to ensure consistent scaling across different load magnitudes:
+- `L_{i}` represents the current load for the i-th house
+
+The deviation values undergo normalization to ensure consistent scaling across different load magnitudes:
 
 .. math::
 
-   L_{norm,i} = \frac{L_{baseline,i}}{\max_j |L_{baseline,j}|}
+   \sigma_{norm,i} = \frac{\sigma_{i}}{\max_j |\sigma_{j}|}
 
-This normalization prevents large absolute load values from overwhelming the learning algorithm and ensures that weight adjustments respond proportionally to relative consumption differences rather than absolute values.
+This normalization prevents large load values from overwhelming the learning algorithm and ensures that weight adjustments respond proportionally to relative consumption differences rather than absolute values. 
 
 Load Redistribution for Minimum Weight Houses
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-The algorithm implements a sophisticated redistribution mechanism for houses operating at minimum weight thresholds. When a house reaches its minimum weight constraint and exhibits below-average consumption, the algorithm redistributes its negative baseline to houses with above-average consumption:
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+The algorithm implements a redistribution mechanism for houses operating at a minimum weight. When a house reaches its minimum weight and exhibits below-average consumption, the algorithm redistributes its negative deviation to houses with above-average consumption:
 
 .. math::
 
-   L_{norm,j}^{adjusted} = L_{norm,j} + L_{norm,i} \times \frac{L_{norm,j}}{\sum_{k \in S_{pos}} L_{norm,k}}
+   S_{pos} = \{i \mid \sigma_{i} > 0 \}
 
-where:
-- :math:`S_{pos}` represents the set of houses with positive baseline values
-- :math:`i` represents a house at minimum weight with negative baseline
-- :math:`j` represents a house with positive baseline
+.. math::
 
-This redistribution ensures that houses at minimum weight do not continue to lose capacity allocation while their unused allocation benefits houses with higher demand. The redistribution maintains proportional sharing among above-average consumers.
+   S_{neg} = \{i \mid \sigma_{i} < 0 \}
+
+.. math::
+
+   S_{min} = \{i \mid w_{i} = w_{min} \}
+
+.. math::
+
+   \sigma_{norm,j}^{adjusted} = \sigma_{norm,j} + \sigma_{norm,i} \times \frac{\sigma_{norm,j}}{\sum_{k \in S_{pos}} \sigma_{norm,k}}, \quad i \in S_{min} \cap S_{neg}, \; j \in S_{pos}
+
+This redistribution maintains energy conservation and ensures that houses at minimum weight do not continue to lose capacity allocation.
 
 Weight Update and Learning Step
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-The weight adjustment applies the calculated baseline adjustments scaled by the learning step parameter:
+The calculated adjustments are then scaled by the learning rate and sent to the virtual battery to calculate its new weight:
 
 .. math::
 
-   \Delta w_i = L_{norm,i}^{adjusted} \times \alpha_{learning}
+   \Delta w_{i}^{t+1} = \sigma_{norm,i}^{adjusted} \times \alpha_{learning}
 
-where :math:`\alpha_{learning}` represents the learning step size (typically 0.002). The learning step parameter controls the adaptation rate, balancing between rapid response to consumption changes and system stability.
+where `\alpha_{learning}` represents the learning rate (typically 0.002). The learning rate parameter controls the convergence speed and system stability. Smaller values provide more stable convergence at the cost of slower adaptation, while larger values enable rapid adaptation but may introduce oscillatory behavior. 
 
-The total excess capacity calculation aggregates capacity releases from all weight adjustments:
+The total excess capacity released from all weight adjustments is then aggregated:
 
 .. math::
 
-   E_{excess,total} = \sum_{i=1}^{N} E_{excess,i}
+   E_{excess} = \sum_{i=1}^{N} E_{excess,i}
 
-This excess capacity becomes available for redistribution during the charging phase, ensuring that energy released through weight reductions contributes to overall system efficiency.
+This excess capacity becomes available for redistribution during the charging phase, ensuring that energy released through weight reductions does not disappear, thus maintaining energy conservation.
 
 Power Distribution Algorithms
 -----------------------------
-The power management system implements sophisticated algorithms for distributing available power sources among connected houses while maintaining fairness and system efficiency. These algorithms coordinate solar panel output, utility grid power, and virtual battery discharge to meet residential demand.
+The power management system implements algorithms for distributing available power sources among connected houses while maintaining fairness and system efficiency. These algorithms coordinate solar panel output, utility grid power, and virtual battery discharge to meet residential demand.
 
 Houses Virtual Battery Usage Calculation
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-The virtual battery usage calculation determines how much energy each house should draw from their virtual battery allocation after accounting for solar and utility power availability. The algorithm implements a priority-based allocation system that serves houses in order of their current load demand:
-
-.. math::
-
-   \text{For house } i \text{ with load } L_i: \quad P_{vb,i} = L_i - P_{panels,used} - P_{utility,used}
-
-The algorithm processes houses in ascending order of load demand to ensure fair distribution:
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+The virtual battery usage calculation determines how much energy each house should draw from their virtual battery after accounting for the solar and utility power available. The algorithm implements a priority-based allocation system that processes houses in ascending order of load demand to ensure fair distribution:
 
 .. math::
 
@@ -218,16 +240,27 @@ The algorithm processes houses in ascending order of load demand to ensure fair 
 
    P_{utility,used,i} = \min\left(L_i - P_{panels,used,i}, \frac{P_{utility,available}}{N_{remaining}}\right)
 
-where:
-- :math:`P_{panels,available}` represents remaining solar panel power
-- :math:`P_{utility,available}` represents remaining utility power
-- :math:`N_{remaining}` represents the number of houses not yet processed
+.. math::
 
-This sequential allocation ensures that houses with lower demand receive priority access to available solar and utility power, reducing the burden on virtual battery resources for the entire system.
+   P_{vb,i} = L_i - P_{panels,used,i} - P_{utility,used,i}
+
+where:
+
+- `L_{i}` represents the load of the i-th house
+
+- `P_{panels,available}` represents remaining solar panel power
+
+- `P_{utility,available}` represents remaining utility power
+
+- `N_{remaining}` represents the number of houses not yet processed
+
+- `P_{vb,i}` represents the i-th house power demand from its virtual battery
+
+This sequential allocation ensures that houses with lower demand receive priority access to available solar and utility power, as they might not use their full share, thus allowing for efficient redistribution of the remainder equally among the remaining houses.
 
 Virtual Battery Charging Algorithm
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-When excess power becomes available from solar generation, the charging algorithm distributes this power among virtual batteries based on their remaining capacity and charging capabilities. The algorithm implements priority charging for batteries with the highest capacity deficit:
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+When excess power becomes available from solar generation, the charging algorithm distributes this power among virtual batteries based on their remaining capacity and charging capabilities. The algorithm implements priority charging for batteries with the lowest capacity deficit:
 
 .. math::
 
@@ -239,21 +272,17 @@ The charging power allocation follows:
 
    P_{charge,i} = \frac{P_{charge,available}}{N_{remaining}}
 
-where virtual batteries are processed in order of their capacity deficit, ensuring that batteries with the most available space receive charging priority. This approach maximizes overall system energy storage utilization.
+where virtual batteries are processed in order of their capacity deficit, ensuring that batteries with the least available space receive charging priority as they might not need their full share, thus allowing for efficient redistribution of the remainder of their share equally among the remaining virtual batteries.
 
 Virtual Battery Discharging with Weighted Distribution
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-The discharging algorithm implements weighted power distribution based on normalized virtual battery usage requirements. The algorithm calculates discharge weights using min-max normalization:
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+The discharging algorithm implements weighted power distribution based on the normalized power demands from the virtual batteries. The algorithm calculates discharge weights using sum normalization:
 
 .. math::
 
-   w_{discharge,i} = \frac{P_{vb,i} - \min_j P_{vb,j}}{\max_j P_{vb,j} - \min_j P_{vb,j}}
+   w_{discharge,i} = \begin{cases} \dfrac{P_{vb,i}}{\sum_{j=1}^{N} P_{vb,j}} & \sum_{j=1}^{N} P_{vb,j} > \epsilon \\[2ex] \dfrac{1}{N} & \text{otherwise} \end{cases}
 
-When the denominator approaches zero (all houses have similar virtual battery requirements), the algorithm defaults to equal distribution:
-
-.. math::
-
-   w_{discharge,i} = \frac{1}{N} \quad \text{if } \max_j P_{vb,j} - \min_j P_{vb,j} < \epsilon
+When the denominator approaches zero (no house demands discharging of its virtual battery), the algorithm defaults to equal distribution.
 
 The actual discharge power for each virtual battery follows:
 
@@ -269,45 +298,39 @@ The algorithm tracks whether each virtual battery can fully meet its required di
 
 Houses whose virtual batteries cannot meet their full energy requirements trigger load line disconnection to prevent system instability.
 
-Load Line Management and House Disconnection
----------------------------------------------
-The power management system implements dynamic load line control to maintain system stability when available energy sources prove insufficient to meet residential demand. This mechanism prevents system overload while providing graceful degradation of service during energy shortage conditions.
-
-Load Line Control Logic
-~~~~~~~~~~~~~~~~~~~~~~~~
-The load line management algorithm operates on a house-by-house basis, making individual disconnection decisions based on virtual battery performance and system capacity constraints. The decision-making process follows a clear mathematical criterion:
-
-.. math::
-
-   \text{Disconnect house } i \text{ if: } \frac{P_{actual,discharge,i}}{P_{required,discharge,i}} < \frac{\epsilon}{P_{required,discharge,i}}
-
-This criterion ensures that houses whose virtual batteries cannot provide their required power allocation experience load line disconnection, preventing them from drawing more energy than the system can sustainably provide.
-
-The disconnection mechanism implements immediate action when virtual battery discharge proves insufficient. Houses experience load line disconnection during the same update cycle where their energy requirements exceed available virtual battery capacity. This immediate response prevents cascading failures and maintains system stability for remaining connected houses.
-
 System-Wide Load Line Coordination
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-The power manager coordinates load line states between individual houses and the solar system inverter. When the inverter implements load shedding due to extreme power shortage conditions, the power manager propagates this state to all connected houses:
+----------------------------------
+The power manager coordinates load line states between individual houses and the solar system inverter. When the inverter implements load shedding due to extreme power shortage, the power manager propagates this state to all connected houses:
 
 .. math::
 
-   \text{If } \text{Inverter Load Line} = \text{False, then } \forall i: \text{House}_i.\text{Load Line} = \text{False}
+   \neg LL_{inverter} \rightarrow \neg LL_{i}, \quad \forall i
 
-This coordination ensures that individual house load line states remain consistent with overall system capacity and prevents conflicts between local and system-wide load management decisions.
+where 
 
-The restoration mechanism operates automatically when system conditions improve. Houses whose virtual batteries regain the ability to meet their energy requirements experience automatic load line reconnection during subsequent update cycles, enabling gradual system recovery from power shortage conditions.
+- `LL_{inverter}` represents the state of the inverter load line connection
+
+- `LL_{i}` represents the state of the load line connection of the i-th house 
+
+This ensures individual house load line states remain consistent with overall system capacity and prevents conflicts between local and system-wide load management decisions.
+
+Restoration operates automatically after a configurable set interval (typically 30 seconds). 
 
 Utility Power Export Distribution
 ---------------------------------
-The power management system implements sophisticated algorithms for distributing utility export power among houses when excess energy becomes available for grid export. This mechanism ensures fair distribution of export benefits while accounting for individual house contributions to system efficiency.
+The power management system implements an algorithm for distributing utility export power among houses when excess energy becomes available for grid export. The algorithm ensures fair distribution of export benefits while accounting for individual house contributions to system efficiency.
 
 Export Eligibility and Weight Calculation
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-The utility export distribution algorithm operates exclusively on houses that maintain active utility line connections. Houses with disconnected utility lines receive no export allocation, ensuring that only properly connected houses participate in grid export operations:
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+The utility export distribution algorithm operates exclusively on houses that maintain active utility line connections:
 
 .. math::
 
-   S_{export} = \{i : \text{House}_i.\text{utility\_line} = \text{True}\}
+   S_{export} = \{i \mid UL_{i} \}
+
+where 
+
+- `UL_{i}` represents the utility line connection state of the i-th house
 
 The export weight calculation employs inverse virtual battery weights to provide higher export allocation to houses with lower virtual battery weights, creating incentives for efficient energy usage:
 
@@ -315,11 +338,11 @@ The export weight calculation employs inverse virtual battery weights to provide
 
    w_{export,i} = \frac{1}{w_{vb,i}}
 
-The normalized export distribution calculates each house's share of total export power:
+The normalized export distribution calculates each house's share of total export power using sum normalization:
 
 .. math::
 
-   d_{export,i} = \frac{w_{export,i}}{\sum_{j \in S_{export}} w_{export,j}}
+   w_{export,norm,i} = \frac{w_{export,i}}{\sum_{j \in S_{export}} w_{export,j}}, \quad \forall i \in S_{export}
 
 Export Power Allocation
 ~~~~~~~~~~~~~~~~~~~~~~~
@@ -327,83 +350,24 @@ The final export power allocation for each eligible house follows:
 
 .. math::
 
-   P_{export,i} = P_{export,total} \times d_{export,i}
+   P_{export,i} = P_{export,total} \times w_{export,norm,i}
 
-where :math:`P_{export,total}` represents the total power available for utility export from the solar system. This allocation mechanism ensures that houses with more efficient virtual battery utilization (lower weights) receive proportionally higher export benefits, creating economic incentives for optimal energy usage patterns.
+where `P_{export,total}` represents the total power available for utility export from the solar system. 
 
-The export allocation algorithm updates house utility exchange power values directly, enabling immediate integration with utility billing and compensation systems. Houses that maintain lower virtual battery weights through efficient energy management receive enhanced export benefits, promoting system-wide efficiency improvements.
-
-Mathematical Learning Framework
--------------------------------
-The power management learning framework implements mathematical models that enable continuous adaptation to changing consumption patterns and system conditions. The learning algorithms optimize virtual battery weight allocation through gradient-based adjustments that minimize system-wide utility grid dependence over time.
-
-Baseline Deviation Analysis
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-The learning framework employs statistical analysis of load patterns to identify optimization opportunities. The baseline calculation establishes a reference point for evaluating individual house performance relative to system average:
-
-.. math::
-
-   \mu_L = \frac{1}{N} \sum_{i=1}^{N} L_i
-
-.. math::
-
-   \sigma_{baseline,i} = L_i - \mu_L
-
-The normalization process ensures consistent weight adjustment scaling regardless of absolute load magnitudes:
-
-.. math::
-
-   \sigma_{norm,i} = \frac{\sigma_{baseline,i}}{\max_j |\sigma_{baseline,j}|}
-
-This normalization prevents large absolute load differences from causing excessive weight adjustments while maintaining proportional response to relative consumption variations.
-
-Load Redistribution Mathematics
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-The load redistribution algorithm implements mathematical fairness principles for houses operating at minimum weight constraints. The redistribution mechanism calculates proportional sharing among houses with above-average consumption:
-
-.. math::
-
-   \text{For } i \in S_{min\_weight} \cap S_{negative\_baseline}:
-
-.. math::
-
-   \Delta L_{norm,j} = \sigma_{norm,i} \times \frac{\sigma_{norm,j}}{\sum_{k \in S_{positive\_baseline}} \sigma_{norm,k}}
-
-where:
-- :math:`S_{min\_weight}` represents houses at minimum weight
-- :math:`S_{negative\_baseline}` represents houses with below-average consumption  
-- :math:`S_{positive\_baseline}` represents houses with above-average consumption
-
-The redistribution maintains energy conservation while ensuring that houses at minimum weight do not experience further capacity reduction despite their efficient usage patterns.
-
-Convergence and Stability Analysis
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-The learning algorithm implements convergence mechanisms that ensure system stability over extended operation periods. The weight update process employs bounded adjustments that prevent oscillatory behavior:
-
-.. math::
-
-   w_i^{t+1} = \text{clamp}(w_i^t + \alpha \times \sigma_{norm,i}^{adjusted}, w_{min}, w_{max})
-
-The learning rate parameter :math:`\alpha` (typically 0.002) controls convergence speed and system stability. Smaller values provide more stable convergence at the cost of slower adaptation to changing conditions, while larger values enable rapid adaptation but may introduce oscillatory behavior.
+This ensures that houses with more efficient virtual battery utilization (lower weights) receive proportionally higher export benefits, creating economic incentives for optimal energy usage.
 
 System Integration and Real-Time Control
------------------------------------------
-The power management system maintains continuous coordination with simulation components through real-time interfaces that enable immediate response to changing system conditions. The integration architecture ensures that power management decisions reflect current system state while maintaining performance requirements for interactive simulation control.
+----------------------------------------
+The power management system maintains continuous coordination with simulation components through real-time interfaces. The integration architecture ensures that power management decisions reflect current system state.
 
 Real-Time Update Cycle Implementation
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-The power manager executes its core algorithm within a threaded update loop that operates independently of other system components. The update cycle duration matches the simulation time step, typically configured to 100-millisecond intervals:
-
-.. math::
-
-   t_{update} = \frac{\Delta t_{sim}}{1000} \text{ seconds}
-
-where :math:`\Delta t_{sim}` represents the simulation time step in milliseconds. This synchronization ensures that power management decisions occur at the same temporal resolution as houses simulation and solar system simulation updates.
+The power manager executes its core algorithm within a threaded update loop that operates independently of other system components. The update cycle duration matches the simulation time step, typically configured to 100-millisecond intervals. This synchronization ensures that power management decisions occur at the same time as houses simulation and solar system simulation updates.
 
 The update sequence implements a structured workflow that processes system state, executes learning algorithms, performs power distribution calculations, and updates component states within each cycle:
 
 .. mermaid::
-   :caption: Power manager real-time update cycle with detailed learning algorithm workflow
+   :caption: Power manager real-time update cycle with detailed learning algorithm flowchart
 
    graph TD
        A[Read System State] --> B[Calculate Load Baseline Deviations]
@@ -440,37 +404,31 @@ The update sequence implements a structured workflow that processes system state
 
 Inverter Synchronization
 ~~~~~~~~~~~~~~~~~~~~~~~~
-The power manager maintains synchronization with the solar system inverter through bidirectional communication that coordinates load requirements and power delivery capabilities. The synchronization algorithm updates inverter state based on aggregated house demands and virtual battery requirements:
+The power manager maintains synchronization with the solar system inverter through bidirectional communication that coordinates load requirements and power delivery capabilities. The synchronization algorithm updates inverter state based on aggregated house demands:
 
 .. math::
 
-   P_{load,inverter} = \sum_{i=1}^{N} L_i \times \text{LoadLine}_i
+   P_{load,inverter} = \sum_{i=1}^{N} L_{i} \times LL_{i}
 
-where :math:`\text{LoadLine}_i` represents the binary load line state for house *i*. The utility line state coordination ensures that the inverter maintains proper grid connection based on house connectivity:
+where `LL_{i}` represents the binary load line state for the i-th house. 
+
+The utility line state coordination ensures that the inverter maintains proper grid connection based on house connectivity:
 
 .. math::
 
-   \text{UtilityLine}_{inverter} = \bigvee_{i=1}^{N} \text{UtilityLine}_i
+   UL_{inverter} = \bigvee_{i=1}^{N} UL_{i}
 
-This coordination maintains consistency between individual house utility connections and overall system grid interface requirements.
+where `UL_{i}` represents the binary utility line state for the i-th house. This coordination maintains consistency between individual house utility connections and overall system grid interface requirements. 
+
+.. note:: The current model for setting the inverter's utility line is not representative of the real world and thus must be changed to one more closely reflective of reality. It was set as this for now for the lack of a better idea, and further analysis of the problem was precluded by approaching deadlines. 
 
 Performance Monitoring and Data Collection
--------------------------------------------
-The power management system implements comprehensive data collection mechanisms that capture system performance metrics, algorithm behavior, and optimization effectiveness. The monitoring system enables both real-time performance assessment and historical analysis of power management effectiveness.
+------------------------------------------
+The power management system implements data collection that captures system performance metrics and algorithm behavior. The monitoring system enables both real-time performance assessment and historical analysis of power management effectiveness.
 
-Metrics Collection Framework
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-The system collects time-series data for all virtual battery states, capturing capacity utilization, weight evolution, and energy flow patterns throughout simulation execution. The data collection operates at the same frequency as the update cycle, ensuring complete coverage of system behavior:
+The system collects time-series data for all virtual battery states, capturing capacity utilization, weight evolution, and energy flow throughout simulation execution. The collected data enables statistical analysis of algorithm convergence, weight distribution evolution, and system efficiency improvements over time. Performance metrics derived from this data include average utility grid dependence, battery utilization efficiency, and load balancing effectiveness.
 
-.. math::
-
-   \text{Data Point}_{t} = \{t, w_1, w_2, \ldots, w_N, C_{res,1}, C_{res,2}, \ldots, C_{res,N}\}
-
-The collected data enables statistical analysis of algorithm convergence, weight distribution evolution, and system efficiency improvements over time. Performance metrics derived from this data include average utility grid dependence, battery utilization efficiency, and load balancing effectiveness.
-
-Algorithm Performance Analysis
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-The monitoring system tracks key performance indicators that measure power management effectiveness and system optimization success. Primary metrics include utility grid import minimization, battery capacity utilization, and load balancing fairness:
+The collected data allows for the calculation of key performance metrics that measure power management effectiveness and system optimization success. Primary metrics include utility grid import minimization and battery capacity utilization:
 
 .. math::
 
@@ -478,14 +436,8 @@ The monitoring system tracks key performance indicators that measure power manag
 
 .. math::
 
-   \text{Battery Utilization} = \frac{\sum_t C_{used,t}}{\sum_t C_{available,t}}
-
-.. math:
-
-   \text{Load Balance Coefficient} = \frac{\sigma_{loads}}{\mu_{loads}}
+   \text{Battery Utilization} = \frac{\sum_t C_{discharge,t}}{\sum_t C_{residual,t}}
 
 These metrics provide quantitative assessment of power management performance and enable comparison between different algorithm configurations and parameter settings.
 
-The performance data supports both immediate system tuning and long-term algorithm development. Real-time metrics enable operators to assess current system efficiency, while historical data analysis supports algorithm improvement and parameter optimization activities.
-
-.. note:: The extensive data collection enables machine learning approaches to enhance power management capabilities, supporting future integration of predictive algorithms and advanced optimization techniques.
+.. note:: The extensive data collection enables future integration of machine learning for predictive algorithms and advanced optimization techniques.

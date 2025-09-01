@@ -38,10 +38,35 @@ class RemoteObjectServer:
         """Start the remote object server."""
         logger.info("Starting remote object server.")
 
+        import socket
+        
+        # Get NAT host before creating daemon
+        nathost = None
+        natport = None
+        
+        if settings.RSGP_REMOTE_OBJECT_HOST == "0.0.0.0":
+            s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+            try:
+                s.connect(("8.8.8.8", 80))
+                nathost = s.getsockname()[0]
+                natport = settings.RSGP_REMOTE_OBJECT_PORT
+                s.close()
+                logger.info(f"NAT host will be set to: {nathost}")
+            except Exception:
+                nathost = socket.getfqdn()
+                natport = settings.RSGP_REMOTE_OBJECT_PORT
+                logger.info(f"NAT host will be set to: {nathost}")
+
         self.daemon = Daemon(
             host=settings.RSGP_REMOTE_OBJECT_HOST,
             port=settings.RSGP_REMOTE_OBJECT_PORT,
+            nathost=nathost,
+            natport=natport,
         )
+        
+        self.daemon._pyroHmacKey = None
+
+        logger.info(f"Daemon started on {settings.RSGP_REMOTE_OBJECT_HOST}:{settings.RSGP_REMOTE_OBJECT_PORT}")
 
         self.daemon.register(settings, "settings")
         self.daemon.register(time_sim, "time_sim")

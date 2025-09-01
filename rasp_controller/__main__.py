@@ -4,12 +4,12 @@ from __future__ import annotations
 from typing import TYPE_CHECKING
 from dotenv import load_dotenv
 import os
-import time
 
 if TYPE_CHECKING:
     from ..rsgp.houses_sim.simulator import HousesSimulator
 
 from Pyro5.api import Proxy
+from .gpio_controller import GPIOController
 
 load_dotenv()
 
@@ -20,30 +20,29 @@ BASE = f'PYRO:{{name}}@{HOST}:{PORT}'
 
 rsgp_hs: 'HousesSimulator' = Proxy(BASE.format(name='houses_sim'))
 
+gpio_controller = GPIOController(rsgp_hs)
 
 try:
+    print("Starting Raspberry Pi GPIO controller...")
+    print("Hardware mapping:")
+    print("  House 1: Buttons 2-5,  LEDs 15-18")
+    print("  House 2: Buttons 6-9,  LEDs 19-22") 
+    print("  House 3: Buttons 10-13, LEDs 23-26")
+    print("  Utility: Button 14,     LED 27")
+    print("Press Ctrl+C to exit")
+    
+    gpio_controller.start()
+    
     while True:
-        print((
-            "-------------------------------------------------------------------------\n"
-            f"{rsgp_hs.get_house(0).get_device('HVAC').get_envelopes()[0][2]=}\n"
-            f"{rsgp_hs.get_house(0).get_device('MICROWAVE').get_envelopes()[0][2]=}\n"
-            f"{rsgp_hs.get_house(0).get_device('REFRIGERATOR').get_envelopes()[0][2]=}\n"
-            f"{rsgp_hs.get_house(0).get_device('WATER_HEATER').get_envelopes()[0][2]=}\n"
-            "\n"
-            f"{rsgp_hs.get_house(1).get_device('HVAC').get_envelopes()[0][2]=}\n"
-            f"{rsgp_hs.get_house(1).get_device('MICROWAVE').get_envelopes()[0][2]=}\n"
-            f"{rsgp_hs.get_house(1).get_device('REFRIGERATOR').get_envelopes()[0][2]=}\n"
-            f"{rsgp_hs.get_house(1).get_device('WATER_HEATER').get_envelopes()[0][2]=}\n"
-            "\n"
-            f"{rsgp_hs.get_house(2).get_device('HVAC').get_envelopes()[0][2]=}\n"
-            f"{rsgp_hs.get_house(2).get_device('MICROWAVE').get_envelopes()[0][2]=}\n"
-            f"{rsgp_hs.get_house(2).get_device('REFRIGERATOR').get_envelopes()[0][2]=}\n"
-            f"{rsgp_hs.get_house(2).get_device('WATER_HEATER').get_envelopes()[0][2]=}\n"
-            "\n"
-        ))
-
-        time.sleep(.5)
-
+        try:
+            gpio_controller._update_thread.join(timeout=1.0)
+            if not gpio_controller._update_thread.is_alive():
+                break
+        except KeyboardInterrupt:
+            break
 
 except KeyboardInterrupt:
+    print("\nShutting down GPIO controller...")
+finally:
+    gpio_controller.stop()
     rsgp_hs._pyroRelease()

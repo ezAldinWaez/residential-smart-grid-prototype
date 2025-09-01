@@ -73,13 +73,13 @@ The battery charge operation follows:
 
 .. math::
 
-   E_{charge} = P_{charge,actual} \times \frac{\Delta t}{3600}
+   E_{charge} = P_{charge,actual} \times \Delta t
 
 .. math::
 
    SoC_{new} = \min(SoC_{current} + E_{charge}, C_{total})
 
-where :math:`\eta_{charge}` represents charging efficiency, :math:`\Delta t` represents time interval in seconds, and :math:`SoC` represents state-of-charge. 
+where :math:`\eta_{charge}` represents charging efficiency, :math:`\Delta t` time interval in hours (:math:`\Delta t = \frac{\Delta t_{s}}{3600}` where :math:`\Delta t_{s}` is the interval in seconds), and :math:`SoC` state-of-charge. 
 
 The battery can also be configured on the maximum charge current it can accept, and the maximum discharge. This models the safety considerations present in actual batteries as they reject currents above a certain level. The discharge operation implements:
 
@@ -89,7 +89,7 @@ The battery can also be configured on the maximum charge current it can accept, 
 
 .. math::
 
-   E_{discharge} = \min(P_{discharge,actual} \times \frac{\Delta t}{3600}, SoC_{current})
+   E_{discharge} = \min(P_{discharge,actual} \times \Delta t, SoC_{current})
 
 .. math::
 

@@ -30,6 +30,12 @@ The NSRDB contains hourly solar irradiance measurements, temperature data, and a
 
 Solar position calculations account for latitude, longitude, time of year, and time of day to determine solar azimuth and elevation angles. The solar position information combines with irradiance data (DNI, DHI, and GHI) to calculate the effective solar energy. The PVLib library performs these calculations using established solar position algorithms. Below is an overview of the parameters of that calculation. 
 
+.. figure:: ../_static/images/C4_components_of_solar_radiation.png
+   :align: center
+   :scale: 50%
+
+   Components of solar radiation 
+
 - **Direct Normal Irradiance (DNI)** represents the irradiance directly from the sun to the surface of the photovoltaic panels. 
 
 - **Diffuse Horizontal Irradiance(DHI)** represents the irradiance indirectly reaching the surface of the photovoltaic panels through the rays scattered by the sky dome. 
@@ -41,6 +47,11 @@ Solar position calculations account for latitude, longitude, time of year, and t
    GHI = DNI \times \cos(\theta) + DHI
 
 where :math:`\theta` is the solar zenith angle. 
+
+.. figure:: ../_static/images/C4_zenith_angle.jpg
+   :align: center
+
+   Solar zenith angle
 
 The simulation supports configurable panel count, individual panel area, and conversion efficiency specifications that determine total array capacity. The total photovoltaic power generation follows:
 
@@ -62,13 +73,13 @@ The battery charge operation follows:
 
 .. math::
 
-   E_{charge} = P_{charge,actual} \times \frac{\Delta t}{3600}
+   E_{charge} = P_{charge,actual} \times \Delta t
 
 .. math::
 
    SoC_{new} = \min(SoC_{current} + E_{charge}, C_{total})
 
-where :math:`\eta_{charge}` represents charging efficiency, :math:`\Delta t` represents time interval in seconds, and :math:`SoC` represents state-of-charge. 
+where :math:`\eta_{charge}` represents charging efficiency, :math:`\Delta t` time interval in hours (:math:`\Delta t = \frac{\Delta t_{s}}{3600}` where :math:`\Delta t_{s}` is the interval in seconds), and :math:`SoC` state-of-charge. 
 
 The battery can also be configured on the maximum charge current it can accept, and the maximum discharge. This models the safety considerations present in actual batteries as they reject currents above a certain level. The discharge operation implements:
 
@@ -78,7 +89,7 @@ The battery can also be configured on the maximum charge current it can accept, 
 
 .. math::
 
-   E_{discharge} = \min(P_{discharge,actual} \times \frac{\Delta t}{3600}, SoC_{current})
+   E_{discharge} = \min(P_{discharge,actual} \times \Delta t, SoC_{current})
 
 .. math::
 
@@ -136,7 +147,12 @@ This component manages the interface between the simulation environment and the 
 
 The National Solar Radiation Database is the primary data source for solar irradiance and atmospheric conditions. The NSRDB provides hourly measurements of solar radiation components (DNI, DHI, and GHI), ambient temperature, wind speed, and other meteorological parameters collected at numerous locations across the United States. This database is one of the most comprehensive sources of solar data available for renewable energy applications, providing the data necessary for detailed photovoltaic system modeling. 
 
-The database used from NSRDB covers the aforementioned measurements taken in the Phoenix/Arizona for one full year; one record each half an hour. Data is extracted using the simulation time; the record with the timestamp closest to the current simulation timestamp is used for the calculations of the solar energy in that specific moment in the simulation. 
+The dataset used from NSRDB covers the aforementioned measurements taken in the Phoenix/Arizona for one full year; one record each half an hour. Data is extracted using the simulation time; the record with the timestamp closest to the current simulation timestamp is used for the calculations of the solar energy in that specific moment in the simulation.
+
+.. figure:: ../_static/images/C4_nsrdb_snapshot.png
+   :align: center
+
+   Snapshot of the NSRDB dataset used
 
 Power Management Interface
 --------------------------
@@ -148,4 +164,11 @@ Data Collection
 ---------------
 Data collection operates continuously throughout simulation to capture time-series data about solar generation, battery operation, and system-wide energy flows. The collected data can then be analyzed to pinpoint issues in the model and help refine both the simulation and the power management solutions. Utility import and export represent the most important metrics collected, as they are direct metrics of the effectiveness of the power management solution. 
 
-The system captures data from all the components to enable any form of analysis. The data collection is extensive: state-of-charge of the battery, power generated from the panels, the system-wide load, utility import and export, among other metrics. The data is logged to a CSV file continuously throughout the simulation. Along the data from NSRDB, the logged CSV files provide all the data needed to carry out analysis on the trends of power generation and consumption. Trend analysis might lead to improvements on the power management solutions. Additionally, AI techniques can be used to benefit from the data and extend the power manager with AI capabilities. This could be especially useful to predict shortages of power generation and thus switch the operation mode of the inverter to import from utility to keep the battery for that shortage and thus maintain long-term system stability. 
+The system captures data from all the components to enable any form of analysis. The data collection is extensive: state-of-charge of the battery, power generated from the panels, the system-wide load, utility import and export, among other metrics. The data is logged to a CSV file continuously throughout the simulation. 
+
+.. figure:: ../_static/images/C4_solar_system_simulation_visualization.png
+   :align: center
+
+   Plot of solar power generated over time using data collected from the simulation
+
+Along the data from NSRDB, the logged CSV files provide all the data needed to carry out analysis on the trends of power generation and consumption. Trend analysis might lead to improvements on the power management solutions. Additionally, AI techniques can be used to benefit from the data and extend the power manager with AI capabilities. This could be especially useful to predict shortages of power generation and thus switch the operation mode of the inverter to import from utility to keep the battery for that shortage and thus maintain long-term system stability. 

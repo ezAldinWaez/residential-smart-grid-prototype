@@ -26,9 +26,9 @@ The ``HousesSimulator`` coordinates the execution of individual house instances;
 
 .. math::
 
-   L_{system} = \sum_{h=1}^{N_{houses}} L_{house,h} \times \text{LoadLine}_h
+   L_{system} = \sum_{i=1}^{N} L_{i} \times LL_{i}
 
-where :math:`\text{LoadLine}_h` represents the binary connection state for house *h*.
+where :math:`N` represents the number of the houses, :math:`L_{i}` the load of the i-th house, and :math:`LL_{i}` the binary connection state for the i-th house.
 
 .. mermaid:: ../_static/graphs/C3_hs_workflow.mmd
    :align: center

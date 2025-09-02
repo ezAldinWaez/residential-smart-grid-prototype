@@ -16,9 +16,10 @@ Dashboard Application Framework
 -------------------------------
 The dashboard application builds upon the Tkinter GUI framework enhanced with ttkbootstrap styling to provide a modern, responsive user interface.
 
-.. mermaid:: ../_static/graphs/C6_dashboard_data_flow.mmd
-   :caption: Dashboard application component hierarchy and data flow
+.. figure:: ../_static/images/C6_dashboard_snapshot.png
    :align: center
+
+   Dashboard snapshot
 
 The application implements a hierarchical view structure that scales to accommodate varying numbers of houses and devices within the simulation. The framework provides scrollable interfaces for scenarios with large numbers of components, ensuring usability regardless of simulation scale.
 

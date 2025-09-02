@@ -70,19 +70,19 @@ The virtual battery allocation system employs several mathematical relationships
 
 where:
 
-- `C_{vb,i}` represents the total capacity of virtual battery *i*
+- `C_{vb,i}` represents the total capacity of the i-th virtual battery
 
 - `C_{total}` represents the total capacity of the physical battery  
 
 - `N` represents the number of houses in the system
 
-- `w_i` represents the weight assigned to house *i*
+- `w_{i}` represents the weight assigned to the i-th house
 
 The weight constraint ensures that the sum of all virtual capacities equals the total physical capacity:
 
 .. math::
 
-   \sum_{i=1}^{N} w_i = N
+   \sum_{i=1}^{N} w_{i} = N
 
 where *N* represents the number of houses in the system. This constraint ensures energy conservation between the physical battery and the virtual batteries. 
 

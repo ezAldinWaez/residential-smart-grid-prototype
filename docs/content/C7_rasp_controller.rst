@@ -249,6 +249,11 @@ The controller implementation requires a Raspberry Pi single-board computer with
 - Breadboard or custom PCB for component mounting
 - Power supply suitable for Raspberry Pi and connected components
 
+.. figure:: ../_static/images/C7_hardware_parts.png
+   :align: center
+
+   Hardware parts required by the system
+
 Physical Hardware Layout and Wiring Specifications
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 The hardware configuration implements a comprehensive physical layout that maps logical device controls to specific GPIO pins. 

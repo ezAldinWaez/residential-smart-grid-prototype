@@ -11,7 +11,7 @@ from dotenv import load_dotenv
 # Start RSGP simulation as subprocess
 rsgp_process = subprocess.Popen(
     ['python', '-m', 'rsgp'],
-    cwd='/home/ezAldin/Desktop/RSG/Implementation/residential-smart-grid',
+    cwd='../../../',
     env={**os.environ, 'CSV_LOGGING': 'True'})
 
 # Wait for simulation to start up
@@ -20,7 +20,7 @@ time.sleep(3)
 try:
     # Setup Pyro connections
     load_dotenv()
-    HOST = os.getenv('RSGP_REMOTE_OBJECT_HOST', 'localhost')
+    HOST = os.getenv('RSGP_REMOTE_OBJECT_HOST', '0.0.0.0')
     PORT = int(os.getenv('RSGP_REMOTE_OBJECT_PORT', 41991))
     BASE = f'PYRO:{{name}}@{HOST}:{PORT}'
 

@@ -16,7 +16,7 @@ class DashboardApp:
     def __init__(self) -> None:
         load_dotenv()
 
-        HOST = os.getenv('RSGP_REMOTE_OBJECT_HOST', 'localhost')
+        HOST = os.getenv('RSGP_REMOTE_OBJECT_HOST', '0.0.0.0')
         PORT = int(os.getenv('RSGP_REMOTE_OBJECT_PORT', 41991))
 
         BASE = f'PYRO:{{name}}@{HOST}:{PORT}'

@@ -4,14 +4,13 @@
 # Grid package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, 2025.
 #
-#, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: Residential Smart Grid \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-08-11 22:10+0300\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"PO-Revision-Date: 2025-09-02 11:45+0300\n"
+"Last-Translator: Ez Aldin Waez <ez.aldin.waez@gmail.com>\n"
 "Language: ar\n"
 "Language-Team: ar <LL@li.org>\n"
 "Plural-Forms: nplurals=6; plural=(n==0 ? 0 : n==1 ? 1 : n==2 ? 2 : "
@@ -23,7 +22,7 @@ msgstr ""
 
 #: ../../index.rst:2
 msgid "Residential Smart Grid"
-msgstr "الشبكة الذكية السكنية"
+msgstr "الشبكة الذكية للمباني السكنية"
 
 #: ../../index.rst:4
 msgid "This is some content that is showen only in the HTLM and TEXT outputs."

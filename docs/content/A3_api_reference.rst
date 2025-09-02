@@ -116,5 +116,13 @@ Dashboard
 
 Raspberry Pi Controller
 ~~~~~~~~~~~~~~~~~~~~~~~
-...
+.. automodule:: rasp_controller.hardware_config
+  :members:
+  :undoc-members:
+  :show-inheritance:
+
+.. automodule:: rasp_controller.gpio_controller
+  :members:
+  :undoc-members:
+  :show-inheritance:
 

@@ -1,5 +1,5 @@
-RSGP Houses Simulation
-======================
+Houses Simulation
+=================
 Introduction
 ------------
 The houses simulation serves as the primary load generator within the system. This chapter examines the implementation of the residential home model, the device modeling framework, and the coordination mechanisms between the components of the house simulation. 

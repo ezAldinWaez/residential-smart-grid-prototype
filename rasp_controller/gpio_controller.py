@@ -9,12 +9,12 @@ from .hardware_config import HardwareConfig, GPIOMapping, DeviceType
 if TYPE_CHECKING:
     from ..rsgp.houses_sim.simulator import HousesSimulator
 
-from Pyro5.api import Proxy
 try:
     import lgpio
+    GPIO_LIB = 'lgpio'
 except ImportError:
-    print("No GPIO library available. Exiting...")
-    exit(1)
+    print("No GPIO library available.")
+    GPIO_LIB = None
 
 
 class GPIOController:
@@ -40,6 +40,9 @@ class GPIOController:
         self._setup_callbacks()
 
     def _setup_gpio(self) -> None:
+        if GPIO_LIB == None:
+            exit(0)
+
         self._gpio_chip = lgpio.gpiochip_open(0)
         for pin in HardwareConfig.get_button_pins():
             lgpio.gpio_claim_input(self._gpio_chip, pin, lgpio.SET_PULL_UP)

@@ -1,9 +1,9 @@
-import matplotlib.pyplot as plt
-import numpy as np
-
 from rsgp.houses_sim.device import DeviceClass
 from rsgp.houses_sim.data import ADSRConf, DeviceConf
 from rsgp.config.settings import settings
+
+import matplotlib.pyplot as plt
+import numpy as np
 
 settings.TIME_FACTOR = 1.0
 

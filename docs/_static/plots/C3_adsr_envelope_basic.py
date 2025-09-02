@@ -1,9 +1,9 @@
-import matplotlib.pyplot as plt
-import numpy as np
-
 from rsgp.houses_sim.device import DeviceClass
 from rsgp.houses_sim.data import ADSRConf, DeviceConf
 from rsgp.config.settings import settings
+
+import matplotlib.pyplot as plt
+import numpy as np
 
 settings.TIME_FACTOR = 1.0
 
@@ -28,12 +28,12 @@ for t in time:
     if t >= 1.0 and not device_turned_on:
         device.toggle_envelope_state(0, 1.0)
         device_turned_on = True
-    
-    # Turn OFF at t=10  
+
+    # Turn OFF at t=10
     if t >= 10.0 and not device_turned_off:
         device.toggle_envelope_state(0, 10.0)
         device_turned_off = True
-    
+
     power_values.append(device.calc_load(t))
 
 power_values = np.array(power_values)

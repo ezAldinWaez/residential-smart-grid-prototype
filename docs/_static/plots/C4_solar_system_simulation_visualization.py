@@ -132,5 +132,3 @@ for ax in axes.flat:
 
 plt.tight_layout(pad=4)
 plt.show()
-
-pass

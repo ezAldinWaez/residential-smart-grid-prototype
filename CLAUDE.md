@@ -1,48 +1,183 @@
-# Documentation Writing Style
+# CLAUDE.md
 
-## Writing Style
+This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
 
-- Don't use abbreviations; spell out the terms
-- **Use the full range of punctuations, including the semicolon and the m-dash, but only sparingly for effect**
-- Use Oxford Comma
-- Use an academic, technical tone, and prefer verbose, informative description over concise summaries
-- Write with bland, uncolorful language
-- Use simpler words; like "covers" rather than "encapsulates" but don't simplify technical words
-- Use the active voice; like "The time simulation provides synchronization between the modules" rather than "The synchronization is provided by the time simulation"
-- Prefer specific, abstract language over concrete; to keep the academic tone
-- Compose in a top-down approach; prefer to have conclusions first before their reasoning and justification
-- Keep the documentation modular; break large topics into inter-connected sub-topics
-- Information Hierarchy; break down complex concepts into a step-by-step explanation, still maintaining an academic tone
-- Completeness Criteria; a topic's discourse is complete when you have covered all the notes and warnings you can give to make sure the reader not only has an idea, but can navigate the subject without any caveats or edge cases 
-- For each component you discourse on, the discourse must include justification for the existence of the component; what problem it is solving, where its need came from
-- **Use examples to illuminate complex concepts**
-- Optimally, a paragraph should be no less than 80 words and no more than 200
-- Include an introduction that serves as an unstructured primer to the chapter and serves as to note the place of the chapter in the big body of the project documentation
-- Write the chapters in a way that is aware that each is a part of a whole and keep in the description the role each part plays in the whole
-- Prefer shorter, more numerous sentences to lengthier, fewer sentences. Sentences should not exceed 25 words; break sentences down. Sentences may exceed 25 words in one case: if you break into independent clauses that can be comprehended easily. Prefer using clauses than breaking into new sentences if the sentence is below 26 words. 
-- Vary sentence length and structure; use causal structures (like "Due to X," or "To ahieve Y,"), infromative structures ("X is Y"), and so on. 
-- **Keep in mind your mission in writing the documentation: to generate a lot of *relevant* content so we can review it ourselves later and heavily edit it. Prefer to include as much as you can *while still keeping it relevant* so we have more material to work with.**
-- Always include mathematical formulas and equations where algorithms, calculations, or mathematical relationships are implemented in the code. Extract these from the code implementation and present them in proper mathematical notation using LaTeX/MathJax syntax
-- Include detailed algorithm flowcharts using mermaid diagrams to illustrate complex processes, decision trees, and system workflows wherever they clarify the implementation logic
+## Project Overview
 
-## ReStructured Text Technical Instructions
+This is the Residential Smart Grid Prototype (RSGP) - a Python-based simulation system for smart grid research and analysis. The project simulates residential energy systems, including household power consumption, solar power generation, and power management strategies.
 
-- Use sphinx tips, notes, warnings, etc. to add variety to the text
-- If at any point you embed a graph, write as a mermaid graph
-- Use sphinx extensions when needed
-- If you see it fit to include a figure at any point, describe what the figure graphics (like the alt for imgs) and keep a placeholder figure using the sphinx-provided example-image
+## Architecture
 
-## Arabic Translation Instructions
+The RSGP follows a modular, distributed architecture with three main simulation components:
 
-- Translate technical concepts accurately while preserving their precise meaning
-- Keep the original English technical terms in parentheses after their Arabic translation on first mention
+### Core Modules
+- **`rsgp/houses_sim/`** - Houses simulation: Models household energy consumption with various devices and appliances using ADSR envelope patterns
+- **`rsgp/solar_system_sim/`** - Solar system simulation: Models solar panels, batteries, and inverters with real-world data from NSRDB
+- **`rsgp/power_mng/`** - Power management: Handles load balancing, virtual battery management, and grid interactions between houses and solar systems
+- **`rsgp/utils/`** - Shared utilities: Time simulation, remote object interface, logging, and data handling
+
+### Supporting Components
+- **`dashboard/`** - GUI dashboard using tkinter/ttkbootstrap for visualization and control
+- **`rasp_controller/`** - Raspberry Pi GPIO controller for hardware integration
+- **`notebooks/`** - Jupyter notebooks for data visualization and analysis
+- **`docs/`** - Sphinx documentation with multi-language support (English/Arabic)
+
+### Key Design Patterns
+- **Remote Object Architecture**: Uses Pyro5 for distributed simulation across components
+- **Time Simulation**: Centralized time management with configurable simulation speed factors
+- **CSV Data Logging**: Each simulation component logs data to timestamped CSV files in `rsgp/_logs/`
+- **Configuration Management**: Centralized settings in `rsgp/config/settings.py`
+
+## Running the System
+
+### Main RSGP Simulation
+```bash
+# Run the main simulation system
+python -m rsgp
+
+# Or run from project root
+cd /path/to/residential-smart-grid
+python -m rsgp
+```
+
+### Dashboard
+```bash
+# Run the GUI dashboard
+python -m dashboard
+```
+
+### Raspberry Pi Controller
+```bash
+# Run hardware controller (requires GPIO setup)
+python -m rasp_controller
+```
+
+### Individual Components
+```bash
+# Run notebooks for data analysis
+python notebooks/rsgp_logs_visualization.py
+python notebooks/nsrdb_visualization.py
+python notebooks/graphs_editor.py
+```
+
+## Documentation
+
+### Building Documentation
+```bash
+# Build Sphinx documentation (language-specific)
+cd docs/
+
+# English documentation
+make html-en    # HTML format
+make latex-en   # LaTeX/PDF format
+
+# Arabic documentation  
+make html-ar    # HTML format
+make latex-ar   # LaTeX/PDF format
+
+# Clean build
+make clean
+```
+
+The documentation supports bilingual generation (English/Arabic) and includes:
+- API reference with auto-generated module documentation
+- Technical chapters covering each simulation component
+- Mathematical formulations and algorithms
+- System architecture diagrams
+
+### Documentation Writing Guidelines
+
+When writing documentation for this project, follow the established style guide in the existing CLAUDE.md:
+
+- Use academic, technical tone with verbose descriptions
+- Include mathematical formulas in LaTeX/MathJax syntax
+- Create mermaid diagrams for system workflows
+- Maintain completeness criteria covering edge cases
+- Include justification for component existence
+- Support bilingual documentation (English/Arabic)
+
+## Dependencies and Environment
+
+The project uses these key dependencies:
+- **Simulation**: `numpy`, `pandas`, `scipy`, `pvlib` (solar calculations)
+- **Remote Objects**: `Pyro5` for distributed simulation
+- **GUI**: `tkinter`, `ttkbootstrap` for dashboard
+- **Data**: `h5py`, `xlrd` for data file handling  
+- **Hardware**: GPIO libraries for Raspberry Pi integration
+- **Documentation**: `sphinx`, `sphinx-rtd-theme` for docs generation
+- **Notebooks**: `marimo` for interactive analysis
+
+Install dependencies:
+```bash
+pip install -r requirements.txt
+```
+
+## Data Sources and Simulation
+
+### NSRDB Data
+Solar simulation uses National Solar Radiation Database (NSRDB) data stored in:
+- `rsgp/_static/nsrdb.csv` - Main solar irradiance data
+- `notebooks/_static/nsrdb/` - Historical datasets
+
+### Simulation Logging
+Each simulation run creates timestamped directories in `rsgp/_logs/` containing:
+- `houses_simulation.csv` - House energy consumption data
+- `solar_system_simulation.csv` - Solar generation and battery data  
+- `power_management.csv` - Power flow and grid interaction data
+
+### Configuration
+Key settings in `rsgp/config/settings.py`:
+- `TIME_FACTOR` - Simulation speed multiplier
+- Remote object server settings (host/port)
+- Logging configurations
+- Simulation parameters
+
+## Development Guidelines
+
+### Code Organization
+- Follow the existing modular structure
+- Use type hints and docstrings consistently
+- Implement `@expose` decorator for Pyro5 remote methods
+- Log important events using the centralized logger
+
+### Simulation Components
+- Each simulator inherits common patterns for threading and data logging
+- Use the shared time simulation (`time_sim`) for synchronized timestamps  
+- Follow CSV logging format established in existing modules
+- Implement proper start/stop methods for clean shutdown
+
+### Documentation Writing Style
+
+When writing or updating documentation, adhere to these specific guidelines from the project's documentation style:
+
+- Don't use abbreviations; spell out terms
+- Use academic, technical tone with verbose descriptions
+- Write with bland, uncolorful language using simpler words
+- Use active voice: "The time simulation provides synchronization" not "Synchronization is provided by the time simulation"
+- Compose top-down: conclusions first, then reasoning
+- Keep documentation modular with inter-connected sub-topics
+- Include justification for each component's existence
+- Use examples to illuminate complex concepts
+- Prefer shorter sentences (under 25 words), break down complex sentences
+- Include mathematical formulas in LaTeX/MathJax syntax where algorithms are implemented
+- Create mermaid diagrams for complex processes and workflows
+
+### Arabic Translation Instructions
+
+For bilingual documentation:
+- Translate technical concepts accurately while preserving meaning
+- Keep original English terms in parentheses after Arabic translation
 - Never translate code snippets, variable names, function names, or file paths
 - Keep API names, library names, and framework names in English
-- Preserve all code formatting, indentation, and syntax exactly as is
-- For well-established technical terms with accepted Arabic equivalents, use the Arabic term followed by English in parentheses: "قاعدة البيانات (Database)"
-- For newer or specialized terms without established Arabic equivalents, provide a descriptive Arabic phrase followed by the English term: "إطار العمل (Framework)"
-- For common computing and technical terms, always supplement the Arabic translation with the English term in parentheses: "خيط التنفيذ (Thread)", "واجهة (Interface)", "مثيل (Instance)", "قاعدة البيانات (Database)"
-- When translating compound technical terms where individual components are also technical terms, include the English for the entire term: "مغلف الهجوم-الانحدار-الاستمرار-التحرير (Attack-Decay-Sustain-Release Envelope)" where "envelope" itself is a technical term
-- Maintain a formal, technical register appropriate for documentation
-- Keep all reStructuredText (rST) markup syntax unchanged: **bold**, *italic*, `code`, etc.
-- Don't translate Sphinx role names: :class:, :func:, :meth:, :mod:, etc. 
+- For established terms: "قاعدة البيانات (Database)"
+- For newer terms: "إطار العمل (Framework)" 
+- Maintain formal, technical register
+- Keep all reStructuredText markup unchanged
+
+## Important Notes
+
+- No formal test suite is currently implemented - the project relies on simulation validation
+- The system is designed for research and educational purposes
+- Hardware integration requires proper Raspberry Pi GPIO setup
+- Remote object communication requires network configuration for distributed deployment
+- CSV logging can generate large amounts of data during extended simulations

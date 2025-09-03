@@ -1,4 +1,4 @@
-from rsgp.houses_sim.device import DeviceClass
+from rsgp.houses_sim.device import DeviceClass, RegularDevices
 from rsgp.houses_sim.data import ADSRConf, DeviceConf
 from rsgp.config.settings import settings
 
@@ -7,54 +7,50 @@ import numpy as np
 
 settings.TIME_FACTOR = 1.0
 
-# Create basic ADSR configuration
-adsr = ADSRConf(a=2, d=3, s=0.7, r=4, wt='none', wp=1, wa=0.0)
-device_conf = DeviceConf(base_watt=1000, max_count=1, adsr=adsr)
-
-# Create device
+adsr = ADSRConf(a=5, d=10, s=0.7, r=4, wt='none', wp=1, wa=0.0)
 device = DeviceClass('HVAC')
-device.conf = device_conf
+device.conf = DeviceConf(base_watt=1000, max_count=1, adsr=adsr)
 
-# Time array for 15 seconds
-time = np.linspace(0.0, 15.0, 150)
+time = np.linspace(0.0, 50.0, 500)
 
-# Calculate power values for each time point
-power_values = []
-device_turned_on = False
-device_turned_off = False
+power = np.array([device.calc_load(t) for t in time[:50]])
+device.toggle_envelope_state(0, time[50])
+power = np.append(power, [device.calc_load(t) for t in time[50:400]])
+device.toggle_envelope_state(0, time[400])
+power = np.append(power, [device.calc_load(t) for t in time[400:]])
 
-for t in time:
-    # Turn ON at t=1
-    if t >= 1.0 and not device_turned_on:
-        device.toggle_envelope_state(0, 1.0)
-        device_turned_on = True
-
-    # Turn OFF at t=10
-    if t >= 10.0 and not device_turned_off:
-        device.toggle_envelope_state(0, 10.0)
-        device_turned_off = True
-
-    power_values.append(device.calc_load(t))
-
-power_values = np.array(power_values)
-
-# Create the plot
 plt.figure(figsize=(10, 6))
-plt.plot(time, power_values, 'b-', linewidth=2.5, label='ADSR Envelope')
-plt.fill_between(time, power_values, alpha=0.2, color='blue')
+plt.plot(time, power, 'b-', linewidth=2, label='ADSR Envelope')
+plt.fill_between(time, power, alpha=0.2, color='blue')
 
-plt.axvline(x=1, color='green', linestyle='--', alpha=0.7, label='Device ON')
-plt.axvline(x=10, color='red', linestyle='--', alpha=0.7, label='Device OFF')
+plt.axvline(x=time[50], color='green', linestyle='--', label='Device ON')
+plt.axvline(x=time[400], color='red', linestyle='--', label='Device OFF')
 
-# Simple phase labels
-plt.text(2.0, 800, 'Attack', fontsize=11, ha='center')
-plt.text(5.0, 870, 'Decay', fontsize=11, ha='center')
-plt.text(7.5, 720, 'Sustain', fontsize=11, ha='center')
-plt.text(12, 500, 'Release', fontsize=11, ha='center')
+plt.text(
+    x=time[50]+adsr.a/2,
+    y=np.average(power[50:50+10*adsr.a]),
+    rotation=np.degrees(np.arctan((power[50+10*adsr.a] - power[50]) / (time[50+10*adsr.a] - time[50]))),
+    s='Attack', fontsize=11, ha='center', transform_rotates_text=True, rotation_mode='anchor')
+plt.text(
+    x=time[50]+adsr.a+adsr.d/2,
+    y=np.average(power[50+10*adsr.a:50+10*(adsr.a+adsr.d)]),
+    rotation=np.degrees(np.arctan((power[50+10*(adsr.a+adsr.d)] - power[50+10*adsr.a]) / (time[50+10*(adsr.a+adsr.d)] - time[50+10*adsr.a]))),
+    s='Decay', fontsize=11, ha='center', transform_rotates_text=True, rotation_mode='anchor')
+plt.text(
+    x=time[50]+adsr.a+adsr.d+(time[400]-(time[50]+adsr.a+adsr.d))/2,
+    y=adsr.s * device.conf.base_watt,
+    s='Sustain', fontsize=11, ha='center')
+plt.text(
+    x=time[400]+adsr.r/2,
+    y=np.average(power[400:400+10*adsr.r]),
+    rotation=np.degrees(np.arctan((power[400+10*adsr.r] - power[400]) / (time[400+10*adsr.r] - time[400]))),
+    s='Release', fontsize=11, ha='center', transform_rotates_text=True, rotation_mode='anchor',
+    )
 
-plt.title('ADSR Envelope: Attack-Decay-Sustain-Release', fontsize=14)
-plt.xlabel('Time (seconds)')
-plt.ylabel('Power (W)')
+plt.title('ADSR Envelope: Attack-Decay-Sustain-Release', fontsize=14, fontweight='bold')
+plt.xlabel('Time [sec]')
+plt.ylabel('Power [W]')
 plt.legend()
 plt.grid(True, alpha=0.3)
+plt.tight_layout(pad=2)
 plt.show()

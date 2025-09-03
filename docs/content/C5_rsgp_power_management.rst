@@ -1,8 +1,7 @@
 .. default-role:: math
 
-RSGP Power Management
-=====================
-
+Power Management
+================
 Introduction
 ------------
 The power management system serves as the intelligent coordination layer. This chapter examines the algorithms and mathematical foundation that enable the power manager to achieve efficient energy utilization. 
@@ -13,44 +12,9 @@ System Architecture
 -------------------
 The power management system integrates with both the houses simulation and solar system simulation through well-defined interfaces that enable real-time coordination and control. 
 
-.. mermaid::
-
-   graph TB
-       subgraph "Power Management System"
-           PM[PowerManager]
-           VB1[VirtualBattery 1]
-           VB2[VirtualBattery 2]
-           VBN[VirtualBattery N]
-           PM --> VB1
-           PM --> VB2
-           PM --> VBN
-       end
-       
-       subgraph "Houses Simulation"
-           HS[HousesSimulator]
-           H1[House 1]
-           H2[House 2]
-           HN[House N]
-           HS --> H1
-           HS --> H2
-           HS --> HN
-       end
-       
-       subgraph "Solar System Simulation"
-           SSS[SolarSystemSimulator]
-           INV[Inverter]
-           BAT[Battery]
-           PAN[Panels]
-           SSS --> INV
-           SSS --> BAT
-           SSS --> PAN
-       end
-       
-       PM <==> HS
-       PM <==> SSS
-       VB1 <==> H1
-       VB2 <==> H2
-       VBN <==> HN
+.. mermaid:: ../_static/graphs/C5_pm_arch.mmd
+   :align: center
+   :caption: Power management architecture
 
 The power manager operates on a configurable update cycle, typically set to match the houses simulation update interval of 100 milliseconds. During each update cycle, the manager executes a sequence of coordinated algorithms that process current system state, update virtual battery parameters, and make power distribution decisions.
 

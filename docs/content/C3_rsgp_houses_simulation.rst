@@ -12,7 +12,7 @@ The architecture separates simulation coordination, individual house modeling, a
 
 .. mermaid:: ../_static/graphs/C3_hs_arch.mmd
    :align: center
-   :caption: Houses simulation architecture with hierarchical device organization
+   :caption: Houses simulation architecture
 
 - The ``HousesSimulator`` serves as the coordination layer; it manages the house instances and coordinates their execution.
 - The ``House`` serves as the individual unit; it maintains state information about its devices and utility and load lines.
@@ -100,8 +100,8 @@ The ``HousesSimulator`` provides the aggregated system load to the ``PowerManage
 
 .. note:: The interface maintains loose coupling between the ``HouseSimulator`` and the ``PowerManager`` to enable independent development and testing.
 
-Data Collection and Analysis
------------------------------
+Data Collection
+---------------
 The houses simulation captures device operation statistics and system performance metrics for later analysis. The data is stored as a time-series dataset (in a CSV file) to enable examination of the effectiveness of power management solutions.
 
 CSV logging operates in the update cycle (usually once every 100-milliseconds). It records total house loads, individual device loads, connectivity states, and utility exchange values for each house throughout the simulation. The goal is to track the utility exchange power and minimize it through an effective power management solution.

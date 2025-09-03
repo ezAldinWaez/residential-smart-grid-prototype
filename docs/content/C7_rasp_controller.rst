@@ -1,6 +1,5 @@
 Raspberry Pi Controller
 =======================
-
 Introduction
 ------------
 The Raspberry Pi controller serves as the physical hardware interface for the residential smart grid project. This chapter examines the implementation of the GPIO controller system that bridges between the software simulation and physical hardware controls. The controller enables real-time interaction with the RSGP simulation through physical buttons and visual feedback via LEDs; thus providing an intuitive testing environment.
@@ -8,45 +7,6 @@ The Raspberry Pi controller serves as the physical hardware interface for the re
 System Architecture Overview
 ----------------------------
 The controller architecture separates hardware abstraction, GPIO management, and simulation integration into distinct layers. This modular design ensures that hardware-specific code remains isolated from simulation logic; thus maintaining system flexibility and enabling future expansion to different hardware platforms.
-
-
-.. mermaid::
-
-   graph TB
-      subgraph "Raspberry Pi Hardware"
-         BTN1[Button GPIO 2-14]
-         LED1[LED GPIO 15-27]
-         GPIO[GPIO Chip]
-         BTN1 --> GPIO
-         GPIO --> LED1
-      end
-
-      subgraph "GPIO Controller Layer"
-         GC[GPIOController]
-         HC[HardwareConfig]
-         GM[GPIO Mappings]
-         GC --> HC
-         HC --> GM
-      end
-
-      subgraph "Remote Communication"
-         PROXY[Pyro5 Proxy]
-         RSGP[RSGP Remote Object]
-         PROXY --> RSGP
-      end
-
-      subgraph "RSGP Simulation"
-         HS[Houses Simulator]
-         PM[Power Manager]
-         SSS[Solar System]
-         HS --> PM
-         PM --> SSS
-      end
-
-      GPIO --> GC
-      GC --> PROXY
-      RSGP --> HS
-
 
 The architecture implements a three-layer approach: the hardware layer manages physical GPIO operations; the controller layer provides abstraction and mapping logic; and the communication layer enables remote interaction with the RSGP simulation. This separation ensures that each layer operates independently; thus allowing for individual component testing and modification without affecting other system elements. 
 
@@ -60,50 +20,7 @@ GPIO Pin Allocation Strategy
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 The pin allocation follows a systematic approach that groups related controls and maintains logical separation between houses and device types. The allocation strategy ensures that each house receives dedicated GPIO pins for its device controls; while global controls such as the utility line receive separate pin assignments.
 
-.. mermaid::
-
-   graph LR
-      subgraph "House 1 Controls"
-         B2[Button 2: Refrigerator] --> L15[LED 15]
-         B3[Button 3: HVAC] --> L16[LED 16] 
-         B4[Button 4: Water Heater] --> L17[LED 17]
-         B5[Button 5: Load Line] --> L18[LED 18]
-      end
-      
-      subgraph "House 2 Controls"
-         B6[Button 6: Refrigerator] --> L19[LED 19]
-         B7[Button 7: HVAC] --> L20[LED 20]
-         B8[Button 8: Water Heater] --> L21[LED 21]
-         B9[Button 9: Load Line] --> L22[LED 22]
-      end
-      
-      subgraph "House 3 Controls"
-         B10[Button 10: Refrigerator] --> L23[LED 23]
-         B11[Button 11: HVAC] --> L24[LED 24]
-         B12[Button 12: Water Heater] --> L25[LED 25]
-         B13[Button 13: Load Line] --> L26[LED 26]
-      end
-      
-      subgraph "Global Controls"
-         B14[Button 14: Utility Line] --> L27[LED 27]
-      end
-
 The GPIO mapping employs a paired button-LED configuration where each control function receives both an input button and a corresponding output LED. The button enables user interaction; while the LED provides visual feedback about the current state of the load line of the associated house in the simulation. This pairing ensures that users receive immediate confirmation of their actions and continuous state information.
-
-Device Type Enumeration
-~~~~~~~~~~~~~~~~~~~~~~~
-The system implements a device type enumeration that covers the primary controllable elements within the simulation:
-
-.. code-block:: python
-
-   class DeviceType(Enum):
-       REFRIGERATOR = "REFRIGERATOR"
-       HVAC = "HVAC" 
-       WATER_HEATER = "WATER_HEATER"
-       LOAD_LINE = "LOAD_LINE"
-       UTILITY_LINE = "UTILITY_LINE"
-
-The enumeration provides type safety and ensures consistent device identification across the hardware configuration system. Each device type maps to specific GPIO pins and callback functions; thus enabling targeted control over individual simulation elements.
 
 Mathematical GPIO Pin Assignment
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -130,15 +47,6 @@ The ``GPIOController`` serves as the primary interface between the Raspberry Pi 
 Controller Initialization and Setup
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 The controller initialization process establishes GPIO chip access; configures pin modes; and sets up callback mechanisms for user interactions. The initialization sequence ensures that all hardware resources are properly allocated before beginning the main control loop.
-
-.. code-block:: python
-
-   def _setup_gpio(self) -> None:
-       self._gpio_chip = lgpio.gpiochip_open(0)
-       for pin in HardwareConfig.get_button_pins():
-           lgpio.gpio_claim_input(self._gpio_chip, pin, lgpio.SET_PULL_UP)
-       for pin in HardwareConfig.get_led_pins():
-           lgpio.gpio_claim_output(self._gpio_chip, pin, 0)
 
 The GPIO setup employs pull-up resistors for button inputs to ensure reliable signal detection; while LED outputs initialize to the off state to provide a consistent starting configuration. The controller maintains internal state tracking for both buttons and LEDs to enable efficient change detection and minimize unnecessary GPIO operations.
 
@@ -212,29 +120,6 @@ The controller employs a fixed update cycle timing that balances responsiveness 
 
 The update frequency of 10 Hz ensures that button presses receive prompt recognition and LED updates occur frequently enough to provide smooth visual feedback. 
 
-Main Loop Workflow
-~~~~~~~~~~~~~~~~~~
-The main control loop implements a structured workflow that processes hardware inputs, updates simulation states, and manages errors within each update cycle:
-
-.. mermaid::
-
-   graph TD
-      A[Start Update Cycle] --> B[Read All Button States]
-      B --> C[Process Button Press Events]
-      C --> D[Execute Device Callbacks]
-      D --> E[Query Simulation States]
-      E --> F[Update LED Indicators]
-      F --> G{Error Occurred?}
-      G -->|Yes| H[Log Error Information]
-      G -->|No| I[Sleep Until Next Cycle]
-      H --> I
-      I --> J{Shutdown Requested?}
-      J -->|No| A
-      J -->|Yes| K[Cleanup GPIO Resources]
-      K --> L[End Controller Operation]
-
-The error handling mechanism prevents individual operation failures from disrupting the control loop.
-
 Hardware Integration and Deployment
 -----------------------------------
 The controller requires specific hardware configuration and deployment considerations to ensure reliable operation within the residential smart grid testing environment.
@@ -267,4 +152,4 @@ The GPIO pin allocation follows the mathematical assignment pattern defined in t
 
 LED outputs require current-limiting resistors to prevent excessive current flow that could damage the GPIO pins or LED components. The recommended resistor values range from 220Ω to 470Ω depending on the LED specifications and desired brightness level. The GPIO outputs operate at 3.3V logic levels with a maximum current capacity of 16mA per pin; necessitating proper current limiting for reliable operation.
 
-.. note:: The current controller is implemented as a proof of concept for demonstration purposes. For real-world applications, a new system must be built using the results of testing this proof of concept. 
+.. note:: The current controller is implemented as a proof of concept for demonstration purposes. For real-world applications, a new system must be built using the results of testing this proof of concept.

@@ -1,4 +1,3 @@
-
 SCENARIO_EVENTS = [
     # Morning routine (6-9 AM)
     (1.0, lambda hs: hs.get_house(0).get_device('WATER_HEATER').toggle_envelope_state(0, 1.0)),    # House 1 morning shower

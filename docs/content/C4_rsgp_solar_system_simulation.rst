@@ -1,5 +1,5 @@
-RSGP Solar System Simulation
-============================
+Solar System Simulation
+=======================
 Introduction
 ------------
 The solar system simulation serves as the source of power within the system. This chapter examines the implementation of photovoltaic panel modeling, battery energy storage systems, and inverter control mechanisms that enable realistic solar power generation and management.
@@ -12,7 +12,7 @@ The solar system simulation architecture consists of photovoltaic panels, one ba
 
 .. mermaid:: ../_static/graphs/C4_sss_arch.mmd
    :align: center
-   :caption: Solar system simulation architecture with three-component design
+   :caption: Solar system simulation architecture
 
 The **Panels** handle solar irradiance calculations and power generation based on the data collected from the National Solar Radiation Database (NSRDB). The **Battery** manages charge state tracking. The **Inverter** adheres to its operational mode control and manages power distribution from and to the solar system components and the demands of the power manager.
 

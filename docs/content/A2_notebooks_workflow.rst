@@ -1,6 +1,5 @@
 Notebooks Workflow
 ==================
-
 Introduction
 ------------
 The notebooks provide comprehensive data visualization through marimo-based web applications. Each notebook targets a specific aspect of the system data, including the NSRDB dataset. This approach ensures ease of examination as each notebook contains related data only. Additionally, data can be downloaded as csv, JSON, or parquet to be imported into 3rd party analysis tools for mathematical analysis. 

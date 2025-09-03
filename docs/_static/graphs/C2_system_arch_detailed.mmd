@@ -15,7 +15,13 @@ graph LR
       end
     end
     subgraph RSGP_PM[Power Management]
-      RSGP_PM_([...])
+      RSGP_PMnger[Power Manager]
+      subgraph RSGP_PM_VBA[Virtual Battery Array]
+        RSGP_PM_VB1[Virtual Battery 1]
+        RSGP_PM_VB2[Virtual Battery 2]
+        RSGP_PM_VBK[...]
+        RSGP_PM_VBN[Virtual Battery N]
+      end
     end
     subgraph RSGP_HS[Houses Simulation]
       subgraph RSGP_HS_HN[House N]
@@ -67,6 +73,7 @@ graph LR
   RSGP_SSS_P_D --Data--> RSGP_SSS_P_C --Data--> RSGP_SSS_P_O --Data--> RSGP_SSS_I_M
   RSGP_SSS_B_M <--Data--> RSGP_SSS_I_M <--Data--> RSGP_SSS_I_LG
   RSGP_SSS_I_LG <--Data--> RSGP_PM
-  RSGP_PM <--Data--> RSGP_HS_H1 & RSGP_HS_H2 & RSGP_HS_HK & RSGP_HS_HN
-  RSGP <--Data--> D & RC
+  RSGP_PMnger <--Data & Controls--> RSGP_PM_VB1 & RSGP_PM_VB2 & RSGP_PM_VBK & RSGP_PM_VBN
+  RSGP_PM <--Data & Controls--> RSGP_HS_H1 & RSGP_HS_H2 & RSGP_HS_HK & RSGP_HS_HN
+  RSGP <--Data & Controls--> D & RC
   RC <--Electric Signals--> HHC_H1 & HHC_H2 & HHC_HK & HHC_HN

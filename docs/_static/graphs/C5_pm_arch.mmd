@@ -1,0 +1,15 @@
+graph TB
+  RSGP_SSS([Solar System Simulation])
+  subgraph RSGP_PM[Power Management]
+    RSGP_PMnger[Power Manager]
+    subgraph RSGP_PM_VBA[Virtual Battery Array]
+      RSGP_PM_VB1[Virtual Battery 1]
+      RSGP_PM_VB2[Virtual Battery 2]
+      RSGP_PM_VBK[...]
+      RSGP_PM_VBN[Virtual Battery N]
+    end
+  end
+  RSGP_HS([Houses Simulation])
+
+  RSGP_SSS <--Data--> RSGP_PM <--Data--> RSGP_HS
+  RSGP_PMnger <--Data & Controls--> RSGP_PM_VB1 & RSGP_PM_VB2 & RSGP_PM_VBK & RSGP_PM_VBN

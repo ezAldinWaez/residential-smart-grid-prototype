@@ -44,7 +44,7 @@ class PowerManager:
             init_residual_capacity=self._solar_system_sim.battery.residual_capacity * self._vb_static_ratio,
             charge_efficiency=self._solar_system_sim.battery.conf.charge_efficiency,
             min_weight=settings.GUARANTEED_MINIMUM_WEIGHT,
-            max_weight=1+(1-settings.GUARANTEED_MINIMUM_WEIGHT) * self._houses_sim.get_num_houses(),
+            max_weight=1 + (1 - settings.GUARANTEED_MINIMUM_WEIGHT) * (self._houses_sim.get_num_houses() - 1),
         ) for idx in range(self._houses_sim.get_num_houses())]
 
     def is_running(self) -> bool:

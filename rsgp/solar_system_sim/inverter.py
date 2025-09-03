@@ -67,7 +67,12 @@ class Inverter:
         """
         if p_dc <= 0:
             return 0.0
-        ac_power_calculated = pvlib.inverter.pvwatts(pdc=p_dc, pdc0=self.conf.pdco)
+        ac_power_calculated = pvlib.inverter.pvwatts(
+            pdc=p_dc, 
+            pdc0=self.conf.pdco,
+            eta_inv_nom=self.conf.eta_inv_nom,
+            eta_inv_ref=self.conf.eta_inv_ref
+        )
         actual_ac_power = max(0.0, min(float(ac_power_calculated), self.conf.paco))
         return actual_ac_power
 

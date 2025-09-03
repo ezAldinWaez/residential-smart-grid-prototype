@@ -1,0 +1,99 @@
+graph TB
+    %% Main components
+    Start([Start Power Operation]) --> LoadReq[Load Power Required]
+    LoadReq --> ModeCheck{Inverter Mode?}
+
+    %% SBU Mode Subgraph
+    subgraph SBU [" SBU Mode "]
+        direction TB
+        SBU_S["Solar Power"]
+        
+        SBU_S --> SBU_Check1{Load fully met?}
+        SBU_Check1 -->|No| SBU_B["Battery Power"]
+        SBU_Check1 -->|Yes| SBU_Export
+        
+        SBU_B --> SBU_Check2{Load fully met?}
+        SBU_Check2 -->|No| SBU_U["Utility Power"]
+        SBU_Check2 -->|Yes| SBU_Export
+        
+        SBU_U --> SBU_Check3{Load fully met?}
+        SBU_Check3 -->|No| SBU_Disconnect["Load Shedding"]
+        SBU_Check3 -->|Yes| SBU_Export
+        
+        SBU_Export["Export Excess"]
+    end
+    
+    %% SUB Mode Subgraph  
+    subgraph SUB [" SUB Mode "]
+        direction TB
+        SUB_S["Solar Power"]
+        
+        SUB_S --> SUB_Check1{Load fully met?}
+        SUB_Check1 -->|No| SUB_U["Utility Power"]
+        SUB_Check1 -->|Yes| SUB_Export
+        
+        SUB_U --> SUB_Check2{Load fully met?}
+        SUB_Check2 -->|No| SUB_B["Battery Power"]
+        SUB_Check2 -->|Yes| SUB_Export
+        
+        SUB_B --> SUB_Check3{Load fully met?}
+        SUB_Check3 -->|No| SUB_Disconnect["Load Shedding"]
+        SUB_Check3 -->|Yes| SUB_Export
+        
+        SUB_Export["Export Excess"]
+    end
+    
+    %% USB Mode Subgraph
+    subgraph USB [" USB Mode "]
+        direction TB
+        USB_U["Utility Power"]
+        
+        USB_U --> USB_Check1{Load fully met?}
+        USB_Check1 -->|No| USB_S["Solar Power"]
+        USB_Check1 -->|Yes| USB_Solar_Charge
+        
+        USB_S --> USB_Check2{Load fully met?}
+        USB_Check2 -->|No| USB_B["Battery Power"]
+        USB_Check2 -->|Yes| USB_Export
+        
+        USB_B --> USB_Check3{Load fully met?}
+        USB_Check3 -->|No| USB_Disconnect["Load Shedding"]
+        USB_Check3 -->|Yes| USB_Export
+        
+        USB_Solar_Charge["Solar Charging"]
+        
+        USB_Export["Export Excess"]
+        
+    end
+
+    %% Mode routing
+    ModeCheck -->|SBU| SBU_S
+    ModeCheck -->|SUB| SUB_S  
+    ModeCheck -->|USB| USB_U
+
+    %% End state
+    End([End Power Operation])
+
+    SBU_Disconnect --> End
+    SBU_Export --> End
+
+    SUB_Disconnect --> End
+    SUB_Export --> End
+
+    USB_Solar_Charge --> End
+    USB_Disconnect --> End
+    USB_Export --> End
+
+
+    %% Styling
+    classDef solarStyle fill:#FFE066,stroke:#F39C12,stroke-width:3px
+    classDef batteryStyle fill:#85C1E9,stroke:#2980B9,stroke-width:3px  
+    classDef utilityStyle fill:#82E0AA,stroke:#27AE60,stroke-width:3px
+    classDef criticalStyle fill:#F1948A,stroke:#E74C3C,stroke-width:3px
+    classDef exportStyle fill:#D7BDE2,stroke:#8E44AD,stroke-width:3px
+
+    class S,SBU_S,SUB_S,USB_S solarStyle
+    class B,SBU_B,SUB_B,USB_B batteryStyle
+    class U,SBU_U,SUB_U,USB_U utilityStyle
+    class SBU_Disconnect,SUB_Disconnect,USB_Disconnect criticalStyle
+    class SBU_Export,SUB_Export,USB_Export,USB_Solar_Charge exportStyle

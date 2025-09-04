@@ -1,0 +1,14 @@
+graph TB     
+    subgraph "Core Components"
+        TS[Time Simulation]
+        HS[Houses Simulation]
+        PM[Power Management]
+        SSS[Solar System Simulation] 
+        RO[Remote Object]
+    end
+    subgraph "User Interfaces"
+        DB[Dashboard]
+        RC[Raspberry Pi Controller]
+    end
+
+    TS <--> SSS & PM & HS <--> RO <--> DB & RC

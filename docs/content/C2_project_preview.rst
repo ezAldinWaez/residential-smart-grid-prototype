@@ -11,7 +11,8 @@ System Architecture Overview
 The RSGP implements a distributed simulation architecture that enables concurrent modeling of multiple energy system components while maintaining synchronized operation through centralized time management. The system consists of three core simulation modules, supporting infrastructure components, and analysis tools that collectively provide comprehensive smart grid modeling capabilities.
 
 .. mermaid:: ../_static/graphs/C2_system_arch_simple.mmd
-   :caption: RSGP System Architecture Overview showing the relationships between core simulation components, supporting infrastructure, and external interfaces.
+   :align: center
+   :caption: RSGP System Architecture Overview showing the relationships between core simulation components, supporting infrastructure, and external interfaces
 
 The architectural design follows distributed computing principles through the implementation of Pyro5 remote objects, which enable component communication across network boundaries. This approach allows the RSGP to scale from single-machine educational demonstrations to multi-node research deployments while maintaining consistent interfaces and data exchange protocols.
 
@@ -91,34 +92,9 @@ Component Interconnection
 
 The RSGP employs a sophisticated interconnection scheme that enables seamless data exchange and control coordination between simulation modules. The system utilizes Pyro5 remote objects to provide distributed access to component methods and properties while maintaining thread safety and network transparency.
 
-.. mermaid::
-
-   graph TB
-     subgraph "Time Synchronization"
-       TS[Time Simulation Engine]
-     end
-     
-     subgraph "Core Components"
-       HS[Houses Simulation]
-       SSS[Solar System Simulation] 
-       PM[Power Management]
-     end
-     
-     subgraph "Data Exchange"
-       DE[Remote Object Server]
-     end
-     
-     subgraph "User Interfaces"
-       DB[Dashboard]
-       RC[Raspberry Pi Controller]
-       NB[Analysis Notebooks]
-     end
-     
-     TS --> HS & SSS & PM
-     HS <--> DE <--> SSS
-     SSS <--> DE <--> PM
-     PM <--> DE <--> HS
-     DE <--> DB & RC & NB
+.. mermaid:: ../_static/graphs/C2_system_dataflow.mmd
+   :align: center
+   :caption: RSGP System Component Interconnection Diagram showing data flow and control signals between core modules and supporting infrastructure
 
 The communication architecture implements hierarchical object registration that provides granular access to system components. Individual devices, virtual batteries, and inverter parameters are accessible through structured naming conventions that enable both automated control and interactive analysis.
 

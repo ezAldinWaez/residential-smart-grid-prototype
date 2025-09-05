@@ -1,6 +1,9 @@
-from rsgp.utils.nsrdb_data import nsrdb_start_point
 from rsgp.solar_system_sim.simulator import SolarSystemSimulator
 from rsgp.houses_sim.simulator import HousesSimulator
+from rsgp.power_mng.manager import PowerManager
+from rsgp.config.settings import settings
+from rsgp.utils.nsrdb_data import nsrdb_start_point
+from rsgp.utils.time_sim import time_sim
 from docs._static.plots.scenario_events import SCENARIO_EVENTS
 
 import matplotlib.pyplot as plt
@@ -10,7 +13,10 @@ from datetime import timedelta
 
 solar_sim = SolarSystemSimulator()
 houses_sim = HousesSimulator()
-base_time = nsrdb_start_point + timedelta(days=2)
+power_mng = PowerManager(houses_sim, solar_sim)
+
+base_time = nsrdb_start_point + timedelta(days=2, hours=12)
+time_sim._start_point = base_time
 
 data = {
     'timestamp': [],
@@ -31,24 +37,25 @@ total_steps = simulation_hours * steps_per_hour
 dt_hours = 1.0 / steps_per_hour  # 6 minutes
 dt_seconds = dt_hours * 3600
 
+houses_sim._dt = (dt_seconds / settings.TIME_FACTOR) * 1000
+solar_sim._dt = (dt_seconds / settings.TIME_FACTOR) * 1000
+power_mng._dt = (dt_seconds / settings.TIME_FACTOR) * 1000
+
 for step in range(total_steps):
     current_time_hours = step * dt_hours
+    current_time_seconds = current_time_hours * 3600
     current_timestamp = base_time + timedelta(hours=current_time_hours)
 
     for event_time, event_callback in SCENARIO_EVENTS:
         if abs(current_time_hours - event_time) < dt_hours / 2:
             event_callback(houses_sim)
 
-    houses_sim._update_step()
-    system_load = sum(house.load_power for house in houses_sim.houses)
-
-    solar_power = solar_sim.panels.calc_total_power(current_timestamp)
-    solar_sim.inverter.load_power = system_load
-
-    solar_sim.inverter.operate(current_timestamp, dt_seconds)
+    houses_sim._update_step(current_time_seconds)
+    solar_sim._update_step(current_time_seconds)
+    power_mng._update_step(current_time_seconds)
 
     data['timestamp'].append(current_timestamp)
-    data['panels_total_power'].append(solar_power)
+    data['panels_total_power'].append(solar_sim.panels.total_power)
     data['battery_residual_capacity'].append(solar_sim.battery.residual_capacity)
     data['battery_soc'].append((solar_sim.battery.residual_capacity / solar_sim.battery.conf.total_capacity) * 100)
     data['inverter_panels_power'].append(solar_sim.inverter.panels_power)
@@ -60,7 +67,7 @@ for step in range(total_steps):
 
 df = pd.DataFrame(data)
 
-fig, axes = plt.subplots(3, 1, figsize=(10, 9))
+fig, axes = plt.subplots(3, 1, figsize=(10, 12))
 fig.suptitle('Solar System Simulation: Response to Device Control Scenario', fontsize=14, fontweight='bold')
 
 # Plot 1: Solar generation and load consumption
@@ -130,5 +137,5 @@ for ax in axes.flat:
     ax.tick_params(axis='x', rotation=45)
     plt.setp(ax.xaxis.get_majorticklabels(), ha='right')
 
-plt.tight_layout(pad=4)
+plt.tight_layout(pad=2)
 plt.show()

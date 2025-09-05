@@ -63,6 +63,8 @@ where :math:`S_{previous}` represents the previous button state and :math:`S_{cu
 The button reading cycle operates continuously within the main update loop:
 
 .. mermaid::
+   :align: center
+   :caption: Button state monitoring algorithm
 
    graph TD
       A[Read All Button States] --> B{State Changed?}
@@ -143,13 +145,13 @@ Physical Hardware Layout and Wiring Specifications
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 The hardware configuration implements a comprehensive physical layout that maps logical device controls to specific GPIO pins. 
 
-.. plot:: _static/plots/C7_rasp_hardware_design.py
-   :align: center
+.. .. plot:: _static/plots/C7_rasp_hardware_design.py
+..    :align: center
 
-   Raspberry Pi Controller Hardware Design showing GPIO pin assignments, physical component layout, and wiring connections for all house controls and utility management
+..    Raspberry Pi Controller Hardware Design showing GPIO pin assignments, physical component layout, and wiring connections for all house controls and utility management
 
 The GPIO pin allocation follows the mathematical assignment pattern defined in the hardware configuration system. Button inputs employ internal pull-up resistors provided by the Raspberry Pi GPIO controller; thus simplifying external wiring requirements and ensuring reliable signal detection. 
 
-LED outputs require current-limiting resistors to prevent excessive current flow that could damage the GPIO pins or LED components. The recommended resistor values range from 220Ω to 470Ω depending on the LED specifications and desired brightness level. The GPIO outputs operate at 3.3V logic levels with a maximum current capacity of 16mA per pin; necessitating proper current limiting for reliable operation.
+LED outputs require current-limiting resistors to prevent excessive current flow that could damage the GPIO pins or LED components. The recommended resistor values range from 220:math:`\Omega` to 470:math:`\Omega` depending on the LED specifications and desired brightness level. The GPIO outputs operate at 3.3V logic levels with a maximum current capacity of 16mA per pin; necessitating proper current limiting for reliable operation.
 
 .. note:: The current controller is implemented as a proof of concept for demonstration purposes. For real-world applications, a new system must be built using the results of testing this proof of concept.

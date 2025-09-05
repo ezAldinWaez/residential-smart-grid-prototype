@@ -73,8 +73,10 @@ class SolarSystemSimulator:
             self._update_step()
             time.sleep(self._dt / 1000.0)
 
-    def _update_step(self) -> None:
-        timestamp = time_sim.get_timestamp()
+    def _update_step(self, elapsed: float = None) -> None:
+        if not elapsed:
+            elapsed = time_sim.get_elapsed()
+        timestamp = time_sim.get_timestamp(elapsed)
 
         dt_seconds = (self._dt / 1000.0) * settings.TIME_FACTOR
 

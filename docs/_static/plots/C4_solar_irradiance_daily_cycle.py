@@ -17,7 +17,7 @@ dhi = clear_day_data['DHI'].values
 ghi = clear_day_data['GHI'].values
 zenith_angle = clear_day_data['Solar Zenith Angle'].values
 
-fig, (ax1, ax2) = plt.subplots(2, 1, figsize=(10, 6))
+fig, (ax1, ax2) = plt.subplots(2, 1, figsize=(10, 8))
 fig.suptitle('Solar Irradiance and Solar Position for a Clear Day', fontsize=14, fontweight='bold')
 
 

@@ -28,7 +28,7 @@ efficiency_linear = np.array([
     (p_ac_linear[idx] / p_dc) * 100 if p_dc > 0 else 0.0
     for idx, p_dc in enumerate(p_dc_range)])
 
-fig, (ax1, ax2) = plt.subplots(2, 1, figsize=(10, 6))
+fig, (ax1, ax2) = plt.subplots(2, 1, figsize=(10, 8))
 fig.suptitle('Inverter DC-AC Conversion and Efficiency', fontsize=14, fontweight='bold')
 
 # Plot 1: Power conversion curves

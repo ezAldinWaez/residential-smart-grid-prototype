@@ -27,22 +27,22 @@ plt.axvline(x=time[50], color='green', linestyle='--', label='Device ON')
 plt.axvline(x=time[400], color='red', linestyle='--', label='Device OFF')
 
 plt.text(
-    x=time[50]+adsr.a/2,
-    y=np.average(power[50:50+10*adsr.a]),
+    x=time[50]+adsr.a/2 -.7*(50/100),
+    y=np.average(power[50:50+10*adsr.a]) +.7*(1000/100),
     rotation=np.degrees(np.arctan((power[50+10*adsr.a] - power[50]) / (time[50+10*adsr.a] - time[50]))),
     s='Attack', fontsize=11, ha='center', transform_rotates_text=True, rotation_mode='anchor')
 plt.text(
-    x=time[50]+adsr.a+adsr.d/2,
-    y=np.average(power[50+10*adsr.a:50+10*(adsr.a+adsr.d)]),
+    x=time[50]+adsr.a+adsr.d/2 +.4*(50/100),
+    y=np.average(power[50+10*adsr.a:50+10*(adsr.a+adsr.d)]) +.4*(1000/100),
     rotation=np.degrees(np.arctan((power[50+10*(adsr.a+adsr.d)] - power[50+10*adsr.a]) / (time[50+10*(adsr.a+adsr.d)] - time[50+10*adsr.a]))),
     s='Decay', fontsize=11, ha='center', transform_rotates_text=True, rotation_mode='anchor')
 plt.text(
     x=time[50]+adsr.a+adsr.d+(time[400]-(time[50]+adsr.a+adsr.d))/2,
-    y=adsr.s * device.conf.base_watt,
+    y=adsr.s * device.conf.base_watt +1*(1000/100),
     s='Sustain', fontsize=11, ha='center')
 plt.text(
-    x=time[400]+adsr.r/2,
-    y=np.average(power[400:400+10*adsr.r]),
+    x=time[400]+adsr.r/2 +.4*(50/100),
+    y=np.average(power[400:400+10*adsr.r]) +.4*(1000/100),
     rotation=np.degrees(np.arctan((power[400+10*adsr.r] - power[400]) / (time[400+10*adsr.r] - time[400]))),
     s='Release', fontsize=11, ha='center', transform_rotates_text=True, rotation_mode='anchor',
     )

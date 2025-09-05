@@ -10,7 +10,7 @@ System Architecture Overview
 
 The RSGP implements a distributed simulation architecture that enables concurrent modeling of multiple energy system components while maintaining synchronized operation through centralized time management. The system consists of three core simulation modules, supporting infrastructure components, and analysis tools that collectively provide comprehensive smart grid modeling capabilities.
 
-.. mermaid:: ../_static/graphs/C2_system_arch_simple.mmd
+.. mermaid:: ../_static/diagrams/C2_system_arch_simple.mmd
    :align: center
    :caption: RSGP System Architecture Overview showing the relationships between core simulation components, supporting infrastructure, and external interfaces
 
@@ -92,7 +92,7 @@ Component Interconnection
 
 The RSGP employs a sophisticated interconnection scheme that enables seamless data exchange and control coordination between simulation modules. The system utilizes Pyro5 remote objects to provide distributed access to component methods and properties while maintaining thread safety and network transparency.
 
-.. mermaid:: ../_static/graphs/C2_system_dataflow.mmd
+.. mermaid:: ../_static/diagrams/C2_system_dataflow.mmd
    :align: center
    :caption: RSGP System Component Interconnection Diagram showing data flow and control signals between core modules and supporting infrastructure
 

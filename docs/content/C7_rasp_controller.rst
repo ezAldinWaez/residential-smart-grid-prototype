@@ -62,7 +62,7 @@ where :math:`S_{previous}` represents the previous button state and :math:`S_{cu
 
 The button reading cycle operates continuously within the main update loop:
 
-.. mermaid:: ../_static/graphs/C7_controller_state_machine.mmd
+.. mermaid:: ../_static/diagrams/C7_controller_state_machine.mmd
    :align: center
    :caption: GPIO controller state machine showing main control loop, button processing, and LED synchronization with simulation components
 

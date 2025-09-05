@@ -23,7 +23,7 @@ The dashboard application builds upon the Tkinter GUI framework enhanced with tt
 
 The application implements a hierarchical view structure that scales to accommodate varying numbers of houses and devices within the simulation. The framework provides scrollable interfaces for scenarios with large numbers of components, ensuring usability regardless of simulation scale.
 
-.. mermaid:: ../_static/graphs/C6_component_layout.mmd
+.. mermaid:: ../_static/diagrams/C6_component_layout.mmd
    :align: center
    :caption: Dashboard component layout showing hierarchical view structure and UI organization
 

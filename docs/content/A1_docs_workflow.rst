@@ -102,7 +102,7 @@ The documentation uses Sphinx as the primary documentation generator and reStruc
    
       C_{vb,i} = \frac {C_{total}}{N} \times w_i
    
-   .. mermaid:: ../_static/graphs/C5_pm_arch.mmd
+   .. mermaid:: ../_static/diagrams/C5_pm_arch.mmd
       :align: center
       :caption: Power management architecture
 
@@ -164,6 +164,21 @@ This architecture provides several advantages:
 - **Automatic updates**: Visualizations automatically reflect code changes
 - **Reproducibility**: Plot generation is completely automated and reproducible
 - **Version control**: Plot scripts maintain change history independently
+
+Scientific Data Extraction and Validation
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+The documentation workflow includes procedures for extracting real-world data from scientific literature to validate simulation models against established research findings.
+
+**WebPlotDigitizer Integration**: For model validation scenarios where raw data is not available, the workflow employs WebPlotDigitizer (https://automeris.io/WebPlotDigitizer/) to extract numerical data points from published scientific figures:
+
+.. code-block:: text
+
+   1. Identify peer-reviewed papers with relevant experimental data
+   2. Use WebPlotDigitizer to extract data points from figures
+   3. Save extracted data as CSV with proper source attribution
+   4. Create comparison plots showing model vs. real data
+   5. Include statistical analysis and validation metrics
+
 
 Scenario-Based Plot Generation
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

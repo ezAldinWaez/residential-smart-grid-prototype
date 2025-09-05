@@ -12,7 +12,7 @@ def _(mo):
 
 @app.cell
 def _(Path, mo):
-    _LOGS_DIR = Path(__file__).parent / "_static" / "inverter_logs"
+    _LOGS_DIR = Path(__file__).parent.parent / "docs" / "_static" / "data" / "inverter_logs"
     _LOGS_DIR.mkdir(parents=True, exist_ok=True)
 
     file_browser = mo.ui.file_browser(

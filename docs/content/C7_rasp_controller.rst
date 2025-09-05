@@ -62,19 +62,9 @@ where :math:`S_{previous}` represents the previous button state and :math:`S_{cu
 
 The button reading cycle operates continuously within the main update loop:
 
-.. mermaid::
+.. mermaid:: ../_static/graphs/C7_controller_state_machine.mmd
    :align: center
-   :caption: Button state monitoring algorithm
-
-   graph TD
-      A[Read All Button States] --> B{State Changed?}
-      B -->|Yes| C[Identify Changed Buttons]
-      B -->|No| A
-      C --> D{Falling Edge Detected?}
-      D -->|Yes| E[Execute Callback Function]
-      D -->|No| F[Update State Cache]
-      E --> F
-      F --> A
+   :caption: GPIO controller state machine showing main control loop, button processing, and LED synchronization with simulation components
 
 LED State Synchronization
 ~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -143,14 +133,50 @@ The controller implementation requires a Raspberry Pi single-board computer with
 
 Physical Hardware Layout and Wiring Specifications
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-The hardware configuration implements a comprehensive physical layout that maps logical device controls to specific GPIO pins. 
+The hardware configuration implements a comprehensive physical layout that maps logical device controls to specific GPIO pins.
 
-.. .. plot:: _static/plots/C7_rasp_hardware_design.py
-..    :align: center
+.. figure:: ../_static/images/C7_raspberry_pi_5_gpio_pinout_diagram.webp
+   :align: center
+   
+   Raspberry Pi 5 GPIO pinout diagram showing 40-pin header layout and pin assignments
 
-..    Raspberry Pi Controller Hardware Design showing GPIO pin assignments, physical component layout, and wiring connections for all house controls and utility management
+The GPIO pin allocation follows the mathematical assignment pattern defined in the hardware configuration system. The complete hardware mapping is shown in the following table:
 
-The GPIO pin allocation follows the mathematical assignment pattern defined in the hardware configuration system. Button inputs employ internal pull-up resistors provided by the Raspberry Pi GPIO controller; thus simplifying external wiring requirements and ensuring reliable signal detection. 
+.. table:: GPIO Pin Mappings for Hardware Controls
+   :align: center
+   
+   +-------------------+-------------+----------+----------+-----------------+
+   | Control Function  | House ID    | Button   | LED      | Device Type     |
+   |                   |             | GPIO Pin | GPIO Pin |                 |
+   +===================+=============+==========+==========+=================+
+   | H1 Refrigerator   | 1           | 2        | 15       | REFRIGERATOR    |
+   +-------------------+-------------+----------+----------+-----------------+
+   | H1 HVAC           | 1           | 3        | 16       | HVAC            |
+   +-------------------+-------------+----------+----------+-----------------+
+   | H1 Water Heater   | 1           | 4        | 17       | WATER_HEATER    |
+   +-------------------+-------------+----------+----------+-----------------+
+   | H1 Load Line      | 1           | 5        | 18       | LOAD_LINE       |
+   +-------------------+-------------+----------+----------+-----------------+
+   | H2 Refrigerator   | 2           | 6        | 19       | REFRIGERATOR    |
+   +-------------------+-------------+----------+----------+-----------------+
+   | H2 HVAC           | 2           | 7        | 20       | HVAC            |
+   +-------------------+-------------+----------+----------+-----------------+
+   | H2 Water Heater   | 2           | 8        | 21       | WATER_HEATER    |
+   +-------------------+-------------+----------+----------+-----------------+
+   | H2 Load Line      | 2           | 9        | 22       | LOAD_LINE       |
+   +-------------------+-------------+----------+----------+-----------------+
+   | H3 Refrigerator   | 3           | 10       | 23       | REFRIGERATOR    |
+   +-------------------+-------------+----------+----------+-----------------+
+   | H3 HVAC           | 3           | 11       | 24       | HVAC            |
+   +-------------------+-------------+----------+----------+-----------------+
+   | H3 Water Heater   | 3           | 12       | 25       | WATER_HEATER    |
+   +-------------------+-------------+----------+----------+-----------------+
+   | H3 Load Line      | 3           | 13       | 26       | LOAD_LINE       |
+   +-------------------+-------------+----------+----------+-----------------+
+   | Utility Line      | Global (0)  | 14       | 27       | UTILITY_LINE    |
+   +-------------------+-------------+----------+----------+-----------------+
+
+Button inputs employ internal pull-up resistors provided by the Raspberry Pi GPIO controller; thus simplifying external wiring requirements and ensuring reliable signal detection. 
 
 LED outputs require current-limiting resistors to prevent excessive current flow that could damage the GPIO pins or LED components. The recommended resistor values range from 220:math:`\Omega` to 470:math:`\Omega` depending on the LED specifications and desired brightness level. The GPIO outputs operate at 3.3V logic levels with a maximum current capacity of 16mA per pin; necessitating proper current limiting for reliable operation.
 

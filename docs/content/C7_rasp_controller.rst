@@ -126,10 +126,15 @@ The controller implementation requires a Raspberry Pi single-board computer with
 - Breadboard or custom PCB for component mounting
 - Power supply suitable for Raspberry Pi and connected components
 
-.. .. figure:: ../_static/images/C7_hardware_parts.png
-..    :align: center
+.. figure:: ../_static/images/C7_raspberry_pi.jpg
+   :align: center
 
-..    Hardware parts required by the system
+   Raspberry Pi used in the project
+
+.. figure:: ../_static/images/C7_hardware_parts.jpg
+   :align: center
+
+   Hardware parts required by the system
 
 Physical Hardware Layout and Wiring Specifications
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

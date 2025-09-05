@@ -138,7 +138,7 @@ The hardware configuration implements a comprehensive physical layout that maps 
 .. figure:: ../_static/images/C7_raspberry_pi_5_gpio_pinout_diagram.webp
    :align: center
    
-   Raspberry Pi 5 GPIO pinout diagram showing 40-pin header layout and pin assignments
+   Raspberry Pi 5 GPIO pinout diagram showing 40-pin header layout and pin assignments (Source: Raspberry Pi Documentation)
 
 The GPIO pin allocation follows the mathematical assignment pattern defined in the hardware configuration system. The complete hardware mapping is shown in the following table:
 

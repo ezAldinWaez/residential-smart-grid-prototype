@@ -34,7 +34,7 @@ Solar position calculations account for latitude, longitude, time of year, and t
    :align: center
    :scale: 50%
 
-   Components of solar radiation
+   Components of solar radiation (Source: ResearchGate)
 
 - **Direct Normal Irradiance (DNI)** represents the irradiance directly from the sun to the surface of the photovoltaic panels.
 
@@ -56,7 +56,7 @@ where :math:`\theta` is the solar zenith angle.
 .. figure:: ../_static/images/C4_zenith_angle.jpg
    :align: center
 
-   Solar zenith angle
+   Solar zenith angle (Source: ScienceDirect Topics)
 
 The simulation supports configurable panel count, individual panel area, and conversion efficiency specifications that determine total array capacity. The total photovoltaic power generation follows:
 

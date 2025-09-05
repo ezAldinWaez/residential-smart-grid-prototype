@@ -120,6 +120,11 @@ When weight adjustment reduces total capacity `C_{vb,i}^{t+1}` below current res
 
 This excess energy is then redistributed among the other virtual batteries to conserve the energy during system optimization.
 
+.. plot:: _static/plots/C5_virtual_battery_weight_and_allocation.py
+   :align: center
+
+   Virtual battery weight evolution and capacity allocation showing adaptive learning behavior and fair energy distribution among houses
+
 Adaptive Learning Algorithm
 ---------------------------
 The power management system implements an adaptive learning algorithm that continuously adjusts virtual battery weights based on consumption. This algorithm enables the system to optimize energy allocation over time, improving efficiency as it learns each house's consumption patterns.
@@ -188,6 +193,16 @@ The total excess capacity released from all weight adjustments is then aggregate
 
 This excess capacity becomes available for redistribution during the charging phase, ensuring that energy released through weight reductions does not disappear, thus maintaining energy conservation.
 
+.. plot:: _static/plots/C5_learning_convergence_analysis.py
+   :align: center
+
+   Learning algorithm convergence analysis comparing different learning rates and their impact on weight stability and adaptation speed
+
+.. plot:: _static/plots/C5_weight_variance_analysis.py
+   :align: center
+
+   Weight variance and convergence metrics analysis showing quantitative measures of algorithm stability and deviation from initial state across different learning rates
+
 Power Distribution Algorithms
 -----------------------------
 The power management system implements algorithms for distributing available power sources among connected houses while maintaining fairness and system efficiency. These algorithms coordinate solar panel output, utility grid power, and virtual battery discharge to meet residential demand.
@@ -221,6 +236,11 @@ where:
 - `P_{vb,i}` represents the i-th house power demand from its virtual battery
 
 This sequential allocation ensures that houses with lower demand receive priority access to available solar and utility power, as they might not use their full share, thus allowing for efficient redistribution of the remainder equally among the remaining houses.
+
+.. plot:: _static/plots/C5_power_distribution_waterfall.py
+   :align: center
+
+   Power distribution waterfall visualization showing priority-based sequential allocation algorithm with stacked power sources (solar, utility, virtual battery) across different time periods and load conditions
 
 Virtual Battery Charging Algorithm
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -261,6 +281,11 @@ The algorithm tracks whether each virtual battery can fully meet its required di
    \text{Usage Met} = |P_{discharge,i} - P_{actual,i}| < \epsilon
 
 Houses whose virtual batteries cannot meet their full energy requirements trigger load line disconnection to prevent system instability.
+
+.. plot:: _static/plots/C5_virtual_battery_soc_tracking.py
+   :align: center
+
+   Virtual battery state-of-charge tracking showing individual energy storage utilization, capacity allocation dynamics, and charge-discharge patterns in response to house loads and solar generation
 
 System-Wide Load Line Coordination
 ----------------------------------
@@ -320,6 +345,11 @@ where `P_{export,total}` represents the total power available for utility export
 
 This ensures that houses with more efficient virtual battery utilization (lower weights) receive proportionally higher export benefits, creating economic incentives for optimal energy usage.
 
+.. plot:: _static/plots/C5_export_distribution_fairness.py
+   :align: center
+
+   Utility export distribution fairness demonstration showing inverse weight relationship, export power allocation among houses, and economic incentives that reward efficient virtual battery utilization
+
 System Integration and Real-Time Control
 ----------------------------------------
 The power management system maintains continuous coordination with simulation components through real-time interfaces. The integration architecture ensures that power management decisions reflect current system state.
@@ -330,41 +360,9 @@ The power manager executes its core algorithm within a threaded update loop that
 
 The update sequence implements a structured workflow that processes system state, executes learning algorithms, performs power distribution calculations, and updates component states within each cycle:
 
-.. mermaid::
+.. mermaid:: ../_static/graphs/C5_pm_flowchart.mmd
+   :align: center
    :caption: Power manager real-time update cycle with detailed learning algorithm flowchart
-
-   graph TD
-       A[Read System State] --> B[Calculate Load Baseline Deviations]
-       B --> C{Load Baseline Max > 0?}
-       C -->|Yes| D[Normalize Baseline Values]
-       C -->|No| E[Set All Normalized Values to 0]
-       D --> F[Identify Min Weight Houses]
-       E --> F
-       F --> G{Any Min Weight Houses with Negative Baseline?}
-       G -->|Yes| H[Redistribute Negative Baseline to Positive Houses]
-       G -->|No| I[Apply Weight Adjustments]
-       H --> I
-       I --> J[Calculate Excess Capacity from Weight Changes]
-       J --> K[Determine Power Distribution Strategy]
-       K --> L{Battery Exchange Power > ε?}
-       L -->|Positive| M[Charge All Virtual Batteries]
-       L -->|Negative| N[Calculate Houses VB Usage]
-       L -->|~Zero| Q[Skip Battery Operations]
-       M --> Q
-       N --> O[Normalize VB Usage Weights]
-       O --> P[Discharge Virtual Batteries with Weights]
-       P --> R{Usage Met for All Houses?}
-       R -->|No| S[Disconnect Houses with Unmet Usage]
-       R -->|Yes| T[All Houses Remain Connected]
-       S --> T
-       Q --> T
-       T --> U{Utility Export Power > ε?}
-       U -->|Yes| V[Calculate Export Distribution]
-       U -->|No| W[Update Inverter Load and Utility States]
-       V --> W
-       W --> X[Log Virtual Battery States to CSV]
-       X --> Y[Sleep Until Next Update]
-       Y --> A
 
 Inverter Synchronization
 ~~~~~~~~~~~~~~~~~~~~~~~~

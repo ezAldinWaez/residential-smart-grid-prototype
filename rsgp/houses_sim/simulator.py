@@ -112,8 +112,9 @@ class HousesSimulator:
             self._update_step()
             time.sleep(self._dt/1000)
 
-    def _update_step(self) -> None:
-        elapsed = time_sim.get_elapsed()
+    def _update_step(self, elapsed: float = None) -> None:
+        if not elapsed:
+            elapsed = time_sim.get_elapsed()
         timestamp = time_sim.get_timestamp(elapsed)
 
         sl = 0.0

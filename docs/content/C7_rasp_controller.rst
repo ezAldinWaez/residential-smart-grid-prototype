@@ -8,13 +8,13 @@ System Architecture Overview
 ----------------------------
 The controller architecture separates hardware abstraction, GPIO management, and simulation integration into distinct layers. This modular design ensures that hardware-specific code remains isolated from simulation logic; thus maintaining system flexibility and enabling future expansion to different hardware platforms.
 
-The architecture implements a three-layer approach: the hardware layer manages physical GPIO operations; the controller layer provides abstraction and mapping logic; and the communication layer enables remote interaction with the RSGP simulation. This separation ensures that each layer operates independently; thus allowing for individual component testing and modification without affecting other system elements. 
+The architecture implements a three-layer approach: the hardware layer manages physical GPIO operations; the controller layer provides abstraction and mapping logic; and the communication layer enables remote interaction with the RSGP simulation. This separation ensures that each layer operates independently; thus allowing for individual component testing and modification without affecting other system elements.
 
-The architecture is a variation on the popular Model-View-Controller architecture, but the Views are swapped here with a communication system that synchronizes with the simulation, albeit a minimal View represented by the state of the LEDs still remains. 
+The architecture is a variation on the popular Model-View-Controller architecture, but the Views are swapped here with a communication system that synchronizes with the simulation, albeit a minimal View represented by the state of the LEDs still remains.
 
 Hardware Configuration and GPIO Mapping
 ---------------------------------------
-The hardware configuration system manages the mapping between physical GPIO pins and logical device controls. 
+The hardware configuration system manages the mapping between physical GPIO pins and logical device controls.
 
 GPIO Pin Allocation Strategy
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -62,17 +62,9 @@ where :math:`S_{previous}` represents the previous button state and :math:`S_{cu
 
 The button reading cycle operates continuously within the main update loop:
 
-.. mermaid::
-
-   graph TD
-      A[Read All Button States] --> B{State Changed?}
-      B -->|Yes| C[Identify Changed Buttons]
-      B -->|No| A
-      C --> D{Falling Edge Detected?}
-      D -->|Yes| E[Execute Callback Function]
-      D -->|No| F[Update State Cache]
-      E --> F
-      F --> A
+.. mermaid:: ../_static/diagrams/C7_controller_state_machine.mmd
+   :align: center
+   :caption: GPIO controller state machine showing main control loop, button processing, and LED synchronization with simulation components
 
 LED State Synchronization
 ~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -108,7 +100,7 @@ The proxy configuration establishes connection parameters. The system employs en
    PORT = int(os.getenv('RSGP_REMOTE_OBJECT_PORT', 41991))
    BASE = f'PYRO:{{name}}@{HOST}:{PORT}'
 
-The proxy configuration supports both local and networked deployment scenarios. Local deployment enables single-machine testing; while networked deployment enables distributed system evaluation. 
+The proxy configuration supports both local and networked deployment scenarios. Local deployment enables single-machine testing; while networked deployment enables distributed system evaluation.
 
 Real-Time Control Loop Implementation
 -------------------------------------
@@ -118,7 +110,7 @@ The controller employs a fixed update cycle timing that balances responsiveness 
 
    f_{update} = \frac{1}{\Delta t_{update}} = \frac{1}{0.1} = 10 \text{ Hz}
 
-The update frequency of 10 Hz ensures that button presses receive prompt recognition and LED updates occur frequently enough to provide smooth visual feedback. 
+The update frequency of 10 Hz ensures that button presses receive prompt recognition and LED updates occur frequently enough to provide smooth visual feedback.
 
 Hardware Integration and Deployment
 -----------------------------------
@@ -141,15 +133,51 @@ The controller implementation requires a Raspberry Pi single-board computer with
 
 Physical Hardware Layout and Wiring Specifications
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-The hardware configuration implements a comprehensive physical layout that maps logical device controls to specific GPIO pins. 
+The hardware configuration implements a comprehensive physical layout that maps logical device controls to specific GPIO pins.
 
-.. plot:: _static/plots/C7_rasp_hardware_design.py
+.. figure:: ../_static/images/C7_raspberry_pi_5_gpio_pinout_diagram.png
    :align: center
+   
+   Raspberry Pi 5 GPIO pinout diagram showing 40-pin header layout and pin assignments (Source: Raspberry Pi Documentation)
 
-   Raspberry Pi Controller Hardware Design showing GPIO pin assignments, physical component layout, and wiring connections for all house controls and utility management
+The GPIO pin allocation follows the mathematical assignment pattern defined in the hardware configuration system. The complete hardware mapping is shown in the following table:
 
-The GPIO pin allocation follows the mathematical assignment pattern defined in the hardware configuration system. Button inputs employ internal pull-up resistors provided by the Raspberry Pi GPIO controller; thus simplifying external wiring requirements and ensuring reliable signal detection. 
+.. table:: GPIO Pin Mappings for Hardware Controls
+   :align: center
+   
+   +-------------------+-------------+----------+----------+-----------------+
+   | Control Function  | House ID    | Button   | LED      | Device Type     |
+   |                   |             | GPIO Pin | GPIO Pin |                 |
+   +===================+=============+==========+==========+=================+
+   | H1 Refrigerator   | 1           | 2        | 15       | REFRIGERATOR    |
+   +-------------------+-------------+----------+----------+-----------------+
+   | H1 HVAC           | 1           | 3        | 16       | HVAC            |
+   +-------------------+-------------+----------+----------+-----------------+
+   | H1 Water Heater   | 1           | 4        | 17       | WATER_HEATER    |
+   +-------------------+-------------+----------+----------+-----------------+
+   | H1 Load Line      | 1           | 5        | 18       | LOAD_LINE       |
+   +-------------------+-------------+----------+----------+-----------------+
+   | H2 Refrigerator   | 2           | 6        | 19       | REFRIGERATOR    |
+   +-------------------+-------------+----------+----------+-----------------+
+   | H2 HVAC           | 2           | 7        | 20       | HVAC            |
+   +-------------------+-------------+----------+----------+-----------------+
+   | H2 Water Heater   | 2           | 8        | 21       | WATER_HEATER    |
+   +-------------------+-------------+----------+----------+-----------------+
+   | H2 Load Line      | 2           | 9        | 22       | LOAD_LINE       |
+   +-------------------+-------------+----------+----------+-----------------+
+   | H3 Refrigerator   | 3           | 10       | 23       | REFRIGERATOR    |
+   +-------------------+-------------+----------+----------+-----------------+
+   | H3 HVAC           | 3           | 11       | 24       | HVAC            |
+   +-------------------+-------------+----------+----------+-----------------+
+   | H3 Water Heater   | 3           | 12       | 25       | WATER_HEATER    |
+   +-------------------+-------------+----------+----------+-----------------+
+   | H3 Load Line      | 3           | 13       | 26       | LOAD_LINE       |
+   +-------------------+-------------+----------+----------+-----------------+
+   | Utility Line      | Global (0)  | 14       | 27       | UTILITY_LINE    |
+   +-------------------+-------------+----------+----------+-----------------+
 
-LED outputs require current-limiting resistors to prevent excessive current flow that could damage the GPIO pins or LED components. The recommended resistor values range from 220Ω to 470Ω depending on the LED specifications and desired brightness level. The GPIO outputs operate at 3.3V logic levels with a maximum current capacity of 16mA per pin; necessitating proper current limiting for reliable operation.
+Button inputs employ internal pull-up resistors provided by the Raspberry Pi GPIO controller; thus simplifying external wiring requirements and ensuring reliable signal detection.
+
+LED outputs require current-limiting resistors to prevent excessive current flow that could damage the GPIO pins or LED components. The recommended resistor values range from 220:math:`\Omega` to 470:math:`\Omega` depending on the LED specifications and desired brightness level. The GPIO outputs operate at 3.3V logic levels with a maximum current capacity of 16mA per pin; necessitating proper current limiting for reliable operation.
 
 .. note:: The current controller is implemented as a proof of concept for demonstration purposes. For real-world applications, a new system must be built using the results of testing this proof of concept.

@@ -79,5 +79,5 @@ for idx, (config_set, title) in enumerate(zip(configurations, titles)):
     ax.axvline(x=15, color='red', linestyle=':', alpha=0.7, label='Device Off')
     ax.axvline(x=25, color='black', linestyle=':', alpha=0.7, label='Device On')
 
-plt.tight_layout(pad=4)
+plt.tight_layout(pad=2)
 plt.show()

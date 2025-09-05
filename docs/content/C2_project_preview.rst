@@ -8,7 +8,7 @@ System Architecture Overview
 ----------------------------
 RSGP system consists of three core simulation modules, supporting infrastructure, and analysis tools that collectively provide a foundation for analysis to improve RSGP and validate its algorithms before it is applied in the real world.
 
-.. mermaid:: ../_static/graphs/C2_system_arch_simple.mmd
+.. mermaid:: ../_static/diagrams/C2_system_arch_simple.mmd
    :align: center
    :caption: RSGP System Architecture Overview showing the relationships between core simulation components, supporting infrastructure, and external interfaces
 
@@ -30,7 +30,7 @@ System Integration and Communication
 ------------------------------------
 The system uses Pyro5 remote objects to provide access to component methods and properties while maintaining network transparency.
 
-.. mermaid:: ../_static/graphs/C2_system_dataflow.mmd
+.. mermaid:: ../_static/diagrams/C2_system_dataflow.mmd
    :align: center
    :caption: RSGP System Component Interconnection Diagram showing data flow and control signals between core modules and supporting infrastructure
 

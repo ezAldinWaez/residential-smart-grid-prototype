@@ -10,7 +10,7 @@ Architecture Overview
 ---------------------
 The architecture separates simulation coordination, individual house modeling, and device-level power consumption calculations.
 
-.. mermaid:: ../_static/graphs/C3_hs_arch.mmd
+.. mermaid:: ../_static/diagrams/C3_hs_arch.mmd
    :align: center
    :caption: Houses simulation architecture
 
@@ -30,7 +30,7 @@ The ``HousesSimulator`` coordinates the execution of individual house instances;
 
 where :math:`N` represents the number of the houses, :math:`L_{i}` the load of the i-th house, and :math:`LL_{i}` the binary connection state for the i-th house.
 
-.. mermaid:: ../_static/graphs/C3_hs_workflow.mmd
+.. mermaid:: ../_static/diagrams/C3_hs_workflow.mmd
    :align: center
    :caption: HousesSimulator coordination and load aggregation workflow
 

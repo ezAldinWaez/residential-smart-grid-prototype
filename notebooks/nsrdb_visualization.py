@@ -12,7 +12,7 @@ def _(mo):
 
 @app.cell
 def _(Path, mo):
-    _NSRDB_DIR = Path(__file__).parent / "_static" / "nsrdb"
+    _NSRDB_DIR = Path(__file__).parent.parent / "docs" / "_static" / "data" / "nsrdb"
     _NSRDB_DIR.mkdir(parents=True, exist_ok=True)
 
     file_browser = mo.ui.file_browser(

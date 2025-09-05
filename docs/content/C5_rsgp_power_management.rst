@@ -4,15 +4,15 @@ Power Management
 ================
 Introduction
 ------------
-The power management system serves as the intelligent coordination layer. This chapter examines the algorithms and mathematical foundation that enable the power manager to achieve efficient energy utilization. 
+The power management system serves as the intelligent coordination layer. This chapter examines the algorithms and mathematical foundation that enable the power manager to achieve efficient energy utilization.
 
-The power manager implements an adaptive algorithm that learns from the consumption patterns and adjusts distribution weights as to minimize utility grid dependence. The system operates through two primary components: the central ``PowerManager`` that coordinates system-wide decisions, and individual ``VirtualBattery`` instances that represent each house's allocation within the shared battery. 
+The power manager implements an adaptive algorithm that learns from the consumption patterns and adjusts distribution weights as to minimize utility grid dependence. The system operates through two primary components: the central ``PowerManager`` that coordinates system-wide decisions, and individual ``VirtualBattery`` instances that represent each house's allocation within the shared battery.
 
 System Architecture
 -------------------
-The power management system integrates with both the houses simulation and solar system simulation through well-defined interfaces that enable real-time coordination and control. 
+The power management system integrates with both the houses simulation and solar system simulation through well-defined interfaces that enable real-time coordination and control.
 
-.. mermaid:: ../_static/graphs/C5_pm_arch.mmd
+.. mermaid:: ../_static/diagrams/C5_pm_arch.mmd
    :align: center
    :caption: Power management architecture
 
@@ -36,7 +36,7 @@ where:
 
 - `C_{vb,i}` represents the total capacity of the i-th virtual battery
 
-- `C_{total}` represents the total capacity of the physical battery  
+- `C_{total}` represents the total capacity of the physical battery
 
 - `N` represents the number of houses in the system
 
@@ -48,7 +48,7 @@ The weight constraint ensures that the sum of all virtual capacities equals the 
 
    \sum_{i=1}^{N} w_{i} = N
 
-where *N* represents the number of houses in the system. This constraint ensures energy conservation between the physical battery and the virtual batteries. 
+where *N* represents the number of houses in the system. This constraint ensures energy conservation between the physical battery and the virtual batteries.
 
 The system implements weight boundaries to ensure fairness and prevent extreme allocations:
 
@@ -73,15 +73,10 @@ The virtual battery implements charge and discharge operations that maintain ene
 where:
 
 - `P_{charge,actual}` represents the actual power consumed for charging
-
 - `P_{charge}` represents the requested charging power
-
 - `\eta_{charge}` represents the charging efficiency
-
 - `\Delta t` represents the time interval in hours: `\Delta t = \frac{\Delta t_{s}}{3600}` where `\Delta t_{s}` represents the time interval in seconds
-
 - `C_{total}` represents the maximum capacity
-
 - `C_{residual}` represents the current residual capacity
 
 The discharge operation implements efficiency losses and capacity limitations:
@@ -106,7 +101,7 @@ The adjustment function modifies weights while maintaining system constraints:
 
    w_{i}^{t+1} = \text{clamp}(w_{i}^{t} + \Delta w_{i}, w_{min}, w_{max})
 
-After adjusting the weights, the new capacity for the virtual battery is calculated: 
+After adjusting the weights, the new capacity for the virtual battery is calculated:
 
 .. math::
 
@@ -119,6 +114,11 @@ When weight adjustment reduces total capacity `C_{vb,i}^{t+1}` below current res
    E_{excess} = \max(0, C_{vb,i}^{residual} - C_{vb,i}^{t+1})
 
 This excess energy is then redistributed among the other virtual batteries to conserve the energy during system optimization.
+
+.. plot:: _static/plots/C5_virtual_battery_weight_and_allocation.py
+   :align: center
+
+   Virtual battery weight evolution and capacity allocation showing adaptive learning behavior and fair energy distribution among houses
 
 Adaptive Learning Algorithm
 ---------------------------
@@ -146,7 +146,7 @@ The deviation values undergo normalization to ensure consistent scaling across d
 
    \sigma_{norm,i} = \frac{\sigma_{i}}{\max_j |\sigma_{j}|}
 
-This normalization prevents large load values from overwhelming the learning algorithm and ensures that weight adjustments respond proportionally to relative consumption differences rather than absolute values. 
+This normalization prevents large load values from overwhelming the learning algorithm and ensures that weight adjustments respond proportionally to relative consumption differences rather than absolute values.
 
 Load Redistribution for Minimum Weight Houses
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -188,6 +188,16 @@ The total excess capacity released from all weight adjustments is then aggregate
 
 This excess capacity becomes available for redistribution during the charging phase, ensuring that energy released through weight reductions does not disappear, thus maintaining energy conservation.
 
+.. plot:: _static/plots/C5_learning_convergence_analysis.py
+   :align: center
+
+   Learning algorithm convergence analysis comparing different learning rates and their impact on weight stability and adaptation speed
+
+.. plot:: _static/plots/C5_weight_variance_analysis.py
+   :align: center
+
+   Weight variance and convergence metrics analysis showing quantitative measures of algorithm stability and deviation from initial state across different learning rates
+
 Power Distribution Algorithms
 -----------------------------
 The power management system implements algorithms for distributing available power sources among connected houses while maintaining fairness and system efficiency. These algorithms coordinate solar panel output, utility grid power, and virtual battery discharge to meet residential demand.
@@ -211,16 +221,17 @@ The virtual battery usage calculation determines how much energy each house shou
 where:
 
 - `L_{i}` represents the load of the i-th house
-
 - `P_{panels,available}` represents remaining solar panel power
-
 - `P_{utility,available}` represents remaining utility power
-
 - `N_{remaining}` represents the number of houses not yet processed
-
 - `P_{vb,i}` represents the i-th house power demand from its virtual battery
 
 This sequential allocation ensures that houses with lower demand receive priority access to available solar and utility power, as they might not use their full share, thus allowing for efficient redistribution of the remainder equally among the remaining houses.
+
+.. plot:: _static/plots/C5_power_distribution_waterfall.py
+   :align: center
+
+   Power distribution waterfall visualization showing priority-based sequential allocation algorithm with stacked power sources (solar, utility, virtual battery) across different time periods and load conditions
 
 Virtual Battery Charging Algorithm
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -262,6 +273,11 @@ The algorithm tracks whether each virtual battery can fully meet its required di
 
 Houses whose virtual batteries cannot meet their full energy requirements trigger load line disconnection to prevent system instability.
 
+.. plot:: _static/plots/C5_virtual_battery_soc_tracking.py
+   :align: center
+
+   Virtual battery state-of-charge tracking showing individual energy storage utilization, capacity allocation dynamics, and charge-discharge patterns in response to house loads and solar generation
+
 System-Wide Load Line Coordination
 ----------------------------------
 The power manager coordinates load line states between individual houses and the solar system inverter. When the inverter implements load shedding due to extreme power shortage, the power manager propagates this state to all connected houses:
@@ -270,15 +286,14 @@ The power manager coordinates load line states between individual houses and the
 
    \neg LL_{inverter} \rightarrow \neg LL_{i}, \quad \forall i
 
-where 
+where:
 
 - `LL_{inverter}` represents the state of the inverter load line connection
-
-- `LL_{i}` represents the state of the load line connection of the i-th house 
+- `LL_{i}` represents the state of the load line connection of the i-th house
 
 This ensures individual house load line states remain consistent with overall system capacity and prevents conflicts between local and system-wide load management decisions.
 
-Restoration operates automatically after a configurable set interval (typically 30 seconds). 
+Restoration operates automatically after a configurable set interval (typically 30 seconds).
 
 Utility Power Export Distribution
 ---------------------------------
@@ -292,7 +307,7 @@ The utility export distribution algorithm operates exclusively on houses that ma
 
    S_{export} = \{i \mid UL_{i} \}
 
-where 
+where:
 
 - `UL_{i}` represents the utility line connection state of the i-th house
 
@@ -316,9 +331,14 @@ The final export power allocation for each eligible house follows:
 
    P_{export,i} = P_{export,total} \times w_{export,norm,i}
 
-where `P_{export,total}` represents the total power available for utility export from the solar system. 
+where `P_{export,total}` represents the total power available for utility export from the solar system.
 
 This ensures that houses with more efficient virtual battery utilization (lower weights) receive proportionally higher export benefits, creating economic incentives for optimal energy usage.
+
+.. plot:: _static/plots/C5_export_distribution_fairness.py
+   :align: center
+
+   Utility export distribution fairness demonstration showing inverse weight relationship, export power allocation among houses, and economic incentives that reward efficient virtual battery utilization
 
 System Integration and Real-Time Control
 ----------------------------------------
@@ -330,41 +350,9 @@ The power manager executes its core algorithm within a threaded update loop that
 
 The update sequence implements a structured workflow that processes system state, executes learning algorithms, performs power distribution calculations, and updates component states within each cycle:
 
-.. mermaid::
+.. mermaid:: ../_static/diagrams/C5_pm_flowchart.mmd
+   :align: center
    :caption: Power manager real-time update cycle with detailed learning algorithm flowchart
-
-   graph TD
-       A[Read System State] --> B[Calculate Load Baseline Deviations]
-       B --> C{Load Baseline Max > 0?}
-       C -->|Yes| D[Normalize Baseline Values]
-       C -->|No| E[Set All Normalized Values to 0]
-       D --> F[Identify Min Weight Houses]
-       E --> F
-       F --> G{Any Min Weight Houses with Negative Baseline?}
-       G -->|Yes| H[Redistribute Negative Baseline to Positive Houses]
-       G -->|No| I[Apply Weight Adjustments]
-       H --> I
-       I --> J[Calculate Excess Capacity from Weight Changes]
-       J --> K[Determine Power Distribution Strategy]
-       K --> L{Battery Exchange Power > ε?}
-       L -->|Positive| M[Charge All Virtual Batteries]
-       L -->|Negative| N[Calculate Houses VB Usage]
-       L -->|~Zero| Q[Skip Battery Operations]
-       M --> Q
-       N --> O[Normalize VB Usage Weights]
-       O --> P[Discharge Virtual Batteries with Weights]
-       P --> R{Usage Met for All Houses?}
-       R -->|No| S[Disconnect Houses with Unmet Usage]
-       R -->|Yes| T[All Houses Remain Connected]
-       S --> T
-       Q --> T
-       T --> U{Utility Export Power > ε?}
-       U -->|Yes| V[Calculate Export Distribution]
-       U -->|No| W[Update Inverter Load and Utility States]
-       V --> W
-       W --> X[Log Virtual Battery States to CSV]
-       X --> Y[Sleep Until Next Update]
-       Y --> A
 
 Inverter Synchronization
 ~~~~~~~~~~~~~~~~~~~~~~~~
@@ -374,7 +362,7 @@ The power manager maintains synchronization with the solar system inverter throu
 
    P_{load,inverter} = \sum_{i=1}^{N} L_{i} \times LL_{i}
 
-where `LL_{i}` represents the binary load line state for the i-th house. 
+where `LL_{i}` represents the binary load line state for the i-th house.
 
 The utility line state coordination ensures that the inverter maintains proper grid connection based on house connectivity:
 
@@ -382,9 +370,9 @@ The utility line state coordination ensures that the inverter maintains proper g
 
    UL_{inverter} = \bigvee_{i=1}^{N} UL_{i}
 
-where `UL_{i}` represents the binary utility line state for the i-th house. This coordination maintains consistency between individual house utility connections and overall system grid interface requirements. 
+where `UL_{i}` represents the binary utility line state for the i-th house. This coordination maintains consistency between individual house utility connections and overall system grid interface requirements.
 
-.. note:: The current model for setting the inverter's utility line is not representative of the real world and thus must be changed to one more closely reflective of reality. It was set as this for now for the lack of a better idea, and further analysis of the problem was precluded by approaching deadlines. 
+.. note:: The current model for setting the inverter's utility line is not representative of the real world and thus must be changed to one more closely reflective of reality. It was set as this for now for the lack of a better idea, and further analysis of the problem was precluded by approaching deadlines.
 
 Performance Monitoring and Data Collection
 ------------------------------------------

@@ -10,7 +10,7 @@ Solar System Architecture Overview
 ----------------------------------
 The solar system simulation architecture consists of photovoltaic panels, one battery, and an inverter connecting the elements. The inverter is then connected to the power manager through a load line and a utility line. This design separates concerns between energy generation, storage, and power conversion and enables more realistic modeling of each component.
 
-.. mermaid:: ../_static/graphs/C4_sss_arch.mmd
+.. mermaid:: ../_static/diagrams/C4_sss_arch.mmd
    :align: center
    :caption: Solar system simulation architecture
 
@@ -22,7 +22,7 @@ Photovoltaic Panel Modeling
 ---------------------------
 The photovoltaic panels integrate with the National Solar Radiation Database to obtain weather information and employs the PVLib photovoltaic modeling library to perform accurate solar calculations. The panel model accounts for solar position, atmospheric conditions, and system configuration parameters to generate power output that mirror actual photovoltaic system performance.
 
-.. mermaid:: ../_static/graphs/C4_sss_workflow.mmd
+.. mermaid:: ../_static/diagrams/C4_sss_workflow.mmd
    :align: center
    :caption: Photovoltaic panel modeling workflow and data processing pipeline
 
@@ -34,7 +34,7 @@ Solar position calculations account for latitude, longitude, time of year, and t
    :align: center
    :scale: 50%
 
-   Components of solar radiation
+   Components of solar radiation (Source: ResearchGate)
 
 - **Direct Normal Irradiance (DNI)** represents the irradiance directly from the sun to the surface of the photovoltaic panels.
 
@@ -56,7 +56,7 @@ where :math:`\theta` is the solar zenith angle.
 .. figure:: ../_static/images/C4_zenith_angle.jpg
    :align: center
 
-   Solar zenith angle
+   Solar zenith angle (Source: ScienceDirect Topics)
 
 The simulation supports configurable panel count, individual panel area, and conversion efficiency specifications that determine total array capacity. The total photovoltaic power generation follows:
 
@@ -147,7 +147,7 @@ In all charge priorities, the inverter will export to utility only when the batt
 
 where power sources are allocated according to the configured priority mode, and any remaining unmet load triggers load line disconnection.
 
-.. mermaid:: ../_static/graphs/C4_inverter_operational_modes.mmd
+.. mermaid:: ../_static/diagrams/C4_inverter_operational_modes.mmd
    :align: center
    :caption: Inverter operational modes showing power flow priority and decision trees for SBU, SUB, and USB modes
 

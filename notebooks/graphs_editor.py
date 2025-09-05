@@ -12,7 +12,7 @@ def _(mo):
 
 @app.cell
 def _(Path, mo):
-    _GRAPHS_DIR = Path(__file__).parent.parent / "docs" / "_static" / "graphs"
+    _GRAPHS_DIR = Path(__file__).parent.parent / "docs" / "_static" / "diagrams"
     _GRAPHS_DIR.mkdir(parents=True, exist_ok=True)
 
     file_browser = mo.ui.file_browser(

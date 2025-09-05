@@ -1,4 +1,5 @@
 from rsgp.houses_sim.simulator import HousesSimulator
+from rsgp.config.settings import settings
 from rsgp.utils.nsrdb_data import nsrdb_start_point
 from docs._static.plots.scenario_events import SCENARIO_EVENTS
 
@@ -28,16 +29,20 @@ simulation_hours = 24
 steps_per_hour = 10
 total_steps = simulation_hours * steps_per_hour
 dt_hours = 1.0 / steps_per_hour  # 6 minutes
+dt_seconds = dt_hours * 3600
+
+houses_sim._dt = (dt_seconds / settings.TIME_FACTOR) * 1000
 
 for step in range(total_steps):
     current_time_hours = step * dt_hours
+    current_time_seconds = current_time_hours * 3600
     current_timestamp = base_time + timedelta(hours=current_time_hours)
 
     for event_time, event_callback in SCENARIO_EVENTS:
         if abs(current_time_hours - event_time) < dt_hours / 2:
             event_callback(houses_sim)
 
-    houses_sim._update_step()
+    houses_sim._update_step(current_time_seconds)
 
     data['timestamp'].append(current_timestamp)
     data['system_load'].append(sum(house.load_power for house in houses_sim.houses))
@@ -53,7 +58,7 @@ for step in range(total_steps):
 
 df = pd.DataFrame(data)
 
-fig, axes = plt.subplots(2, 1, figsize=(10, 6))
+fig, axes = plt.subplots(2, 1, figsize=(10, 8))
 fig.suptitle('Houses Simulation: Real-time Device Control Scenario', fontsize=14, fontweight='bold')
 
 # Plot 1: System load over time

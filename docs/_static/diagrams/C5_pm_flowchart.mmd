@@ -1,0 +1,38 @@
+graph LR
+    subgraph SG2[Phase 2]
+        direction TB
+        I{Battery Exchange Power > ε?}
+        I -->|~Zero| L[Skip Battery Operations]
+        I -->|Positive| J[Charge All Virtual Batteries]
+        I -->|Negative| K[Calculate Houses VB Usage]
+        J -----> L
+        K --> M[Normalize VB Usage Weights]
+        M --> N[Discharge Virtual Batteries with Weights]
+        N --> L
+    end
+    subgraph SG3[Phase 3]
+        direction TB
+        O{Usage Met for All Houses?}
+        O -->|No| P[Disconnect Houses with Unmet Usage]
+        O -->|Yes| Q[All Houses Remain Connected]
+        P --> Q
+        Q --> R{Utility Export Power > ε?}
+        R -->|Yes| S[Calculate Export Distribution]
+        R -->|No| T[Update Inverter Load and Utility States]
+        S --> T
+        T --> U[Log Virtual Battery States to CSV]
+        U --> V[Sleep Until Next Update]
+    end
+    subgraph SG1[Phase 1]
+        direction TB
+        A[Read System State] --> B[Normalize Baseline Loads]
+        B --> C[Identify Min Weight Houses]
+        C --> D{Any Min Weight Houses with Negative Baseline?}
+        D -->|Yes| E[Redistribute Negative Baseline to Positive Houses]
+        D -->|No| F[Apply Weight Adjustments]
+        E --> F
+        F --> G[Calculate Excess Capacity from Weight Changes]
+        G --> H[Determine Power Distribution Strategy]
+    end
+
+    SG1 ==> SG2 ==> SG3 ==> SG1

@@ -206,7 +206,10 @@ class PowerManager:
             self._update_step()
             time.sleep(self._dt/1000)
 
-    def _update_step(self) -> None:
+    def _update_step(self, elapsed: float = None) -> None:
+        if not elapsed:
+            elapsed = time_sim.get_elapsed()
+
         # If the inverter has disconnected the load line, then all houses are disconnected and nothing else to do
         if self._solar_system_sim.inverter.load_line is False:
             for house in self._houses_sim.houses:
@@ -259,7 +262,7 @@ class PowerManager:
         if settings.CSV_LOGGING:
             log_record_into_csv(
                 settings.CSV_PM_LOG_PATH,
-                timestamp=f"{time_sim.get_timestamp()}",
+                timestamp=f"{time_sim.get_timestamp(elapsed)}",
                 ** {f"virtual_battery_{vb.idx+1}_charge_level": f"{vb.residual_capacity:.3f}" for vb in self.virtual_batteries},
             )
 

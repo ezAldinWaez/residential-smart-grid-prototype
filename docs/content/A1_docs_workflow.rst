@@ -166,10 +166,10 @@ This architecture provides several advantages:
 - **Version control**: Plot scripts maintain change history independently
 
 Scientific Data Extraction and Validation
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-The documentation workflow includes procedures for extracting real-world data from scientific literature to validate simulation models against established research findings.
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+The documentation workflow includes extracting real-world data from scientific literature to validate simulation models against established research findings.
 
-**WebPlotDigitizer Integration**: For model validation scenarios where raw data is not available, the workflow employs WebPlotDigitizer (https://automeris.io/WebPlotDigitizer/) to extract numerical data points from published scientific figures:
+**WebPlotDigitizer Integration**: For model validation scenarios where raw data is not available, the workflow uses WebPlotDigitizer (https://automeris.io/WebPlotDigitizer/) to extract numerical data points from published scientific figures:
 
 .. code-block:: text
 

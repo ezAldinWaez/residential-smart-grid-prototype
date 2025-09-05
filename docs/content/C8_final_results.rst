@@ -2,13 +2,13 @@ Final Results
 =============
 This chapter presents the results obtained from simulation runs, performance analysis, and validation testing conducted during the development and evaluation of the project.
 
-To restate the purpose of this project, it is this: to create a residential smart grid application that would minimize the grid dependence using a smart algorithm, while also providing the residential house owners a way to monitor their system. The results are as follows.
+To restate the purpose of this project, it is this: to create a residential smart grid application that would minimize excess energy and grid dependence using a smart algorithm. The results are as follows.
 
 System Design Validation
 ------------------------
 The system uses three models as the base of its simulation: the ADSR Envelope for device modeling, pvwatts for inverter modeling, and pvlib for solar panels modeling. The results of validating the models are as follows:
 
-**ADSR Device Modeling**: The ADSR envelope model demonstrates good correlation with real refrigerator power consumption data extracted from scientific literature.
+**ADSR Device Modeling**: The ADSR envelope model demonstrated good correlation with real power consumption data extracted from scientific literature. Below is a comparison between data collected from a real refrigerator versus that collected from the ADSR envelope for a refrigerator. 
 
 .. plot:: _static/plots/C8_ADSR_vs_real_load_profile.py
    :align: center
@@ -33,4 +33,4 @@ The smart power management algorithm implemented showed a reduction in grid depe
 
 Calculate RMSE and add maths and maybe like use plots or sth I don't know. This one needs work.
 
-.. note:: The results of the project are tentative and must be subject to further testing and validation against real life scenarios.
+.. note:: Further validation of the project can happen only through a real-world prototype and data from real usage of the project.

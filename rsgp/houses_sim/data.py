@@ -66,9 +66,9 @@ class RegularDevices(Enum):
     )  #: DeviceConf: TV.
 
     REFRIGERATOR = DeviceConf(
-        base_watt=350,
+        base_watt=50,
         max_count=2,
-        adsr=ADSRConf(a=1, d=1, s=.6, r=2, wt="square", wp=3, wa=.06),
+        adsr=ADSRConf(a=0.5, d=0.5, s=.9, r=1, wt="square", wp=5, wa=.02),
     )  #: DeviceConf: Refrigerator.
 
     HVAC = DeviceConf(

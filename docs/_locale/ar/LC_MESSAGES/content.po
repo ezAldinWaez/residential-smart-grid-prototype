@@ -657,11 +657,11 @@ msgstr ""
 
 #: ../../content/A3_api_reference.rst:2
 msgid "API Reference"
-msgstr ""
+msgstr "واجهات البرمجة المرجعية"
 
 #: ../../content/A3_api_reference.rst:4
 msgid "RSGP"
-msgstr ""
+msgstr "نموذج الشبكة الذكية السكنية"
 
 #: ../../content/A3_api_reference.rst:6
 #: ../../content/C3_rsgp_houses_simulation.rst:2
@@ -705,7 +705,7 @@ msgstr ""
 #: rasp_controller.hardware_config.HardwareConfig.get_mapping_by_button
 #: rasp_controller.hardware_config.HardwareConfig.get_mappings_by_house
 msgid "Parameters"
-msgstr ""
+msgstr "Parameters"
 
 #: ../../docstring dashboard.views.HSTabView.open_hc_window:3
 #: dashboard.views.HouseControlsWindowView:5
@@ -718,7 +718,7 @@ msgstr ""
 
 #: ../../content/A3_api_reference.rst
 msgid "Returns"
-msgstr ""
+msgstr "Returns"
 
 #: of rsgp.houses_sim.simulator.HousesSimulator.get_house:6
 msgid "House object."
@@ -748,7 +748,7 @@ msgstr ""
 #: rsgp.utils.time_sim.TimeSimulator.resume
 #: rsgp.utils.time_sim.TimeSimulator.start
 msgid "Return type"
-msgstr ""
+msgstr "Return type"
 
 #: of rsgp.houses_sim.simulator.HousesSimulator.get_houses:1
 msgid "Get houses in the system."
@@ -1693,7 +1693,7 @@ msgstr ""
 
 #: ../../content/A3_api_reference.rst:55
 msgid "Power Mangament"
-msgstr ""
+msgstr "إدارة الطاقة"
 
 #: of rsgp.power_mng.manager:1
 msgid "Power management manager."
@@ -1843,7 +1843,7 @@ msgstr ""
 
 #: ../../content/A3_api_reference.rst:67
 msgid "RSGP Utilities"
-msgstr ""
+msgstr "أدوات نموذج الشبكة الذكية السكنية"
 
 #: of rsgp.utils.time_sim:1
 msgid "RSGP Time simulator."
@@ -2091,11 +2091,11 @@ msgstr ""
 
 #: ../../content/A3_api_reference.rst:99
 msgid "Other Packages"
-msgstr ""
+msgstr "أخرى"
 
 #: ../../content/A3_api_reference.rst:101 ../../content/C6_dashboard.rst:2
 msgid "Dashboard"
-msgstr ""
+msgstr "لوحة التحكم"
 
 #: dashboard.app:1 of
 msgid "Dashboard application."
@@ -2246,7 +2246,7 @@ msgstr ""
 #: ../../content/A3_api_reference.rst:118
 #: ../../content/C7_rasp_controller.rst:2
 msgid "Raspberry Pi Controller"
-msgstr ""
+msgstr "متحكم Raspberry Pi"
 
 #: of rasp_controller.hardware_config:1
 msgid "Hardware configuration for Raspberry Pi GPIO controller."
@@ -5023,10 +5023,14 @@ msgid ""
 "the remote object communication architecture that enable operators to "
 "interact with the simulation."
 msgstr ""
+"تعمل لوحة التحكم كواجهة التفاعل بين الإنسان والآلة لنموذج الشبكة الذكية "
+"السكنية، وتوفر المراقبة والتحكم في الوقت الفعلي. يفحص هذا الفصل تطبيق "
+"واجهة المستخدم الرسومية وبنية التواصل مع الكائنات البعيدة (Remote Object) "
+"التي تمكن المشغلين من التفاعل مع المحاكاة."
 
 #: ../../content/C6_dashboard.rst:8
 msgid "Remote Object Architecture"
-msgstr ""
+msgstr "بنية الكائنات البعيدة (Remote Object Architecture)"
 
 #: ../../content/C6_dashboard.rst:9
 msgid ""
@@ -5036,6 +5040,10 @@ msgid ""
 "processes, enabling the dashboard to run independently while maintaining "
 "synchronized access to system state and control functions."
 msgstr ""
+"تطبق لوحة التحكم بنية موزعة باستخدام كائنات Pyro5 البعيدة للتواصل مع مكونات "
+"المحاكاة. يفصل هذا التصميم واجهة المستخدم عن عمليات المحاكاة المكثفة حسابياً، "
+"مما يُمكن لوحة التحكم من العمل بشكل مستقل مع المحافظة على الوصول المتزامن "
+"لحالة النظام ووظائف التحكم."
 
 #: ../../content/C6_dashboard.rst:11
 msgid ""
@@ -5043,6 +5051,8 @@ msgid ""
 " allowing deployment flexibility across different network configurations "
 "and development environments."
 msgstr ""
+"يستخدم النظام متغيرات البيئة لتهيئة معاملات الاتصال، مما يسمح بمرونة النشر "
+"عبر تهيئات شبكة مختلفة وبيئات تطوير متنوعة."
 
 #: ../../content/C6_dashboard.rst:13
 msgid ""
@@ -5051,20 +5061,25 @@ msgid ""
 "components as local objects while maintaining network resilience and "
 "error handling."
 msgstr ""
+"يوفر إطار عمل الكائنات البعيدة Pyro5 تواصلاً شبكياً شفافاً، مما يُمكن لوحة "
+"التحكم من معاملة مكونات المحاكاة البعيدة ككائنات محلية مع المحافظة "
+"على قوة الشبكة ومعالجة الأخطاء."
 
 #: ../../content/C6_dashboard.rst:16
 msgid "Dashboard Application Framework"
-msgstr ""
+msgstr "إطار عمل تطبيق لوحة التحكم (Dashboard Application Framework)"
 
 #: ../../content/C6_dashboard.rst:17
 msgid ""
 "The dashboard application builds upon the Tkinter GUI framework enhanced "
 "with ttkbootstrap styling to provide a modern, responsive user interface."
 msgstr ""
+"يبني تطبيق لوحة التحكم على إطار عمل Tkinter GUI المحسّن بتنسيق ttkbootstrap "
+"لتوفير واجهة مستخدم عصرية ومتجاوبة."
 
 #: ../../content/C6_dashboard.rst:22
 msgid "Dashboard snapshot"
-msgstr ""
+msgstr "لقطة من لوحة التحكم"
 
 #: ../../content/C6_dashboard.rst:24
 msgid ""
@@ -5073,10 +5088,13 @@ msgid ""
 "The framework provides scrollable interfaces for scenarios with large "
 "numbers of components, ensuring usability regardless of simulation scale."
 msgstr ""
+"يطبق التطبيق بنية عرض هرمية تتماشى مع أعداد متفاوتة من المنازل والأجهزة داخل "
+"المحاكاة. يوفر الإطار واجهات قابلة للتمرير للسيناريوهات ذات الأعداد الكبيرة "
+"من المكونات، مما يضمن قابلية الاستخدام بغض النظر عن حجم المحاكاة."
 
 #: ../../content/C6_dashboard.rst:31
 msgid "Houses Simulation Interface"
-msgstr ""
+msgstr "واجهة محاكاة المنازل"
 
 #: ../../content/C6_dashboard.rst:32
 msgid ""
@@ -5087,6 +5105,10 @@ msgid ""
 " to simulate grid disconnections to support testing of power management "
 "response mechanisms."
 msgstr ""
+"توفر واجهة محاكاة المنازل قدرات مراقبة وتحكم للمنازل الفردية. تعرض كل لوحة "
+"منزل استهلاك الطاقة الحالي وحالة الاتصال وتوفر الوصول للتحكم في حمولة المنزل. "
+"يُمكن مفتاحا خط المرافق وخط الحمولة المشغلين من محاكاة انقطاع الشبكة "
+"لدعم اختبار آليات استجابة إدارة الطاقة."
 
 #: ../../content/C6_dashboard.rst:34
 msgid ""
@@ -5094,10 +5116,13 @@ msgid ""
 "within each house. These windows display device-specific information "
 "including current load and configuration parameters."
 msgstr ""
+"توفر نافذة تحكم المنزل الوصول لعمليات الأجهزة الفردية داخل كل منزل. "
+"تعرض هذه النوافذ معلومات خاصة بالجهاز بما في ذلك الحمولة الحالية "
+"ومعاملات التهيئة."
 
 #: ../../content/C6_dashboard.rst:37
 msgid "Summary and Monitoring Views"
-msgstr ""
+msgstr "عروض الملخص والمراقبة"
 
 #: ../../content/C6_dashboard.rst:38
 msgid ""
@@ -5106,6 +5131,9 @@ msgid ""
 "information and operational metrics. These views serve as primary "
 "monitoring interfaces for system analysis and troubleshooting activities."
 msgstr ""
+"تطبق لوحة التحكم عروض ملخص مخصصة لكل مكون رئيسي في المحاكاة، وتوفر "
+"معلومات شاملة عن الحالة في الوقت الفعلي ومقاييس التشغيل. تعمل هذه العروض "
+"كواجهات مراقبة أساسية لتحليل النظام وأنشطة استكشاف الأعطال."
 
 #: ../../content/C6_dashboard.rst:40
 msgid ""
@@ -5114,12 +5142,17 @@ msgid ""
 "information updates continuously during simulation execution and provides"
 " formatted output that facilitates rapid assessment of system state."
 msgstr ""
+"يعرض ملخص محاكاة المنازل إحصائيات على مستوى النظام بما في ذلك الحمولة الإجمالية "
+"ومساهمات المنازل الفردية وحالات الاتصال. تُحدّث المعلومات باستمرار أثناء "
+"تنفيذ المحاكاة وتوفر مخرجات منسقة تسهل التقييم السريع لحالة النظام."
 
 #: ../../content/C6_dashboard.rst:42
 msgid ""
 "The solar system simulation summary provides detailed information about "
 "photovoltaic generation, battery state, and inverter operations."
 msgstr ""
+"يوفر ملخص محاكاة النظام الشمسي معلومات تفصيلية حول التوليد الكهروضوئي "
+"وحالة البطارية وعمليات العاكس."
 
 #: ../../content/C6_dashboard.rst:44
 msgid ""
@@ -5128,10 +5161,12 @@ msgid ""
 "power management effectiveness and identifying areas for algorithm "
 "improvement."
 msgstr ""
+"يعرض ملخص إدارة الطاقة مقاييس أداء الخوارزمية وحالة اتخاذ القرارات. تثبت هذه "
+"المعلومات أهميتها في تقييم فعالية إدارة الطاقة وتحديد مجالات تحسين الخوارزمية."
 
 #: ../../content/C6_dashboard.rst:47
 msgid "Real-time Update Architecture"
-msgstr ""
+msgstr "بنية التحديث في الوقت الفعلي"
 
 #: ../../content/C6_dashboard.rst:48
 msgid ""
@@ -5142,10 +5177,14 @@ msgid ""
 "100-milliseconds was chosen as a middle between responsiveness and low "
 "overhead."
 msgstr ""
+"تطبق لوحة التحكم نظام تحديث في الوقت الفعلي يحافظ على التزامن بين واجهة "
+"المستخدم والمحاكاة الأساسية. يمكن تعيين طول دورة التحديث للتوازن بين "
+"المحافظة على الاتصال في الوقت الفعلي وتقليل العبء. لذا، تم اختيار القيمة "
+"الافتراضية 100 ميلي ثانية كوسط بين الاستجابة وقلة العبء."
 
 #: ../../content/C6_dashboard.rst:51
 msgid "Data Collection and Analysis Support"
-msgstr ""
+msgstr "دعم جمع البيانات والتحليل"
 
 #: ../../content/C6_dashboard.rst:52
 msgid ""
@@ -5154,6 +5193,9 @@ msgid ""
 " real-time system analysis and post-simulation evaluation of system "
 "performance and algorithm effectiveness."
 msgstr ""
+"توفر لوحة التحكم الوصول لبيانات المحاكاة من خلال عروض الملخص وواجهات "
+"مراقبة المكونات. تدعم هذه المعلومات كلاً من تحليل النظام في الوقت الفعلي "
+"وتقييم أداء النظام وفعالية الخوارزمية بعد المحاكاة."
 
 #: ../../content/C6_dashboard.rst:54
 msgid ""
@@ -5163,6 +5205,10 @@ msgid ""
 "from the various simulation components can be imported into a third party"
 " tool for visualization and statistical analysis."
 msgstr ""
+"تُعرض البيانات حالياً فقط كملخصات، وتفتقر لأي تمثيل بصري، لأن الهدف من "
+"لوحة التحكم كان استكشاف أخطاء المحاكاة وحلول إدارة الطاقة. ومع ذلك، "
+"يمكن استيراد البيانات المُصدّرة لملفات CSV من مكونات المحاكاة المختلفة "
+"لأداة طرف ثالث للتمثيل البصري والتحليل الإحصائي."
 
 #: ../../content/C7_rasp_controller.rst:5
 msgid ""
@@ -5174,6 +5220,11 @@ msgid ""
 "buttons and visual feedback via LEDs; thus providing an intuitive testing"
 " environment."
 msgstr ""
+"يعمل متحكم Raspberry Pi كواجهة الأجهزة المادية لنموذج الشبكة الذكية "
+"السكنية الأولي. يفحص هذا الفصل تطبيق نظام متحكم GPIO الذي يربط بين "
+"محاكاة البرمجيات وضوابط الأجهزة المادية. يتيح المتحكم التفاعل في الوقت "
+"الحقيقي مع محاكاة RSGP من خلال الأزرار المادية والتغذية الراجعة المرئية "
+"عبر LEDs؛ وبالتالي توفير بيئة اختبار بديهية."
 
 #: ../../content/C7_rasp_controller.rst:9
 msgid ""
@@ -5183,6 +5234,10 @@ msgid ""
 "simulation logic; thus maintaining system flexibility and enabling future"
 " expansion to different hardware platforms."
 msgstr ""
+"تفصل بنية المتحكم تجريد الأجهزة وإدارة GPIO وتكامل المحاكاة إلى طبقات "
+"منفصلة. يضمن هذا التصميم المعياري أن الكود الخاص بالأجهزة يبقى معزولاً "
+"عن منطق المحاكاة؛ وبالتالي الحفاظ على مرونة النظام وتمكين التوسع "
+"المستقبلي إلى منصات أجهزة مختلفة."
 
 #: ../../content/C7_rasp_controller.rst:11
 msgid ""
@@ -5193,6 +5248,10 @@ msgid ""
 "layer operates independently; thus allowing for individual component "
 "testing and modification without affecting other system elements."
 msgstr ""
+"تطبق البنية نهجاً ثلاثي الطبقات: تدير طبقة الأجهزة عمليات GPIO المادية؛ "
+"توفر طبقة المتحكم تجريد ومنطق التعيين؛ وتمكن طبقة التواصل التفاعل عن بُعد "
+"مع محاكاة RSGP. يضمن هذا الفصل أن كل طبقة تعمل بشكل مستقل؛ وبالتالي "
+"السماح باختبار وتعديل المكونات الفردية دون تأثير على عناصر النظام الأخرى."
 
 #: ../../content/C7_rasp_controller.rst:13
 msgid ""
@@ -5201,20 +5260,24 @@ msgid ""
 "that synchronizes with the simulation, albeit a minimal View represented "
 "by the state of the LEDs still remains."
 msgstr ""
+"البنية هي تنويع على بنية Model-View-Controller الشائعة، ولكن تم استبدال "
+"Views هنا بنظام تواصل يتزامن مع المحاكاة، على الرغم من أن View بسيطة "
+"ممثلة بحالة LEDs لا تزال باقية."
 
 #: ../../content/C7_rasp_controller.rst:16
 msgid "Hardware Configuration and GPIO Mapping"
-msgstr ""
+msgstr "تكوين الأجهزة وتعيين GPIO"
 
 #: ../../content/C7_rasp_controller.rst:17
 msgid ""
 "The hardware configuration system manages the mapping between physical "
 "GPIO pins and logical device controls."
 msgstr ""
+"يدير نظام تكوين الأجهزة التعيين بين منافذ GPIO المادية وضوابط الأجهزة المنطقية."
 
 #: ../../content/C7_rasp_controller.rst:20
 msgid "GPIO Pin Allocation Strategy"
-msgstr ""
+msgstr "استراتيجية تخصيص منافذ GPIO"
 
 #: ../../content/C7_rasp_controller.rst:21
 msgid ""
@@ -5224,6 +5287,10 @@ msgid ""
 " GPIO pins for its device controls; while global controls such as the "
 "utility line receive separate pin assignments."
 msgstr ""
+"يتبع تخصيص المنافذ نهجاً منهجياً يجمع الضوابط ذات الصلة ويحافظ على الفصل "
+"المنطقي بين المنازل وأنواع الأجهزة. تضمن استراتيجية التخصيص أن كل منزل "
+"يحصل على منافذ GPIO مخصصة لضوابط أجهزته؛ بينما تحصل الضوابط العامة "
+"مثل خط المرافق على تخصيصات منافذ منفصلة."
 
 #: ../../content/C7_rasp_controller.rst:23
 msgid ""
@@ -5234,10 +5301,15 @@ msgid ""
 " in the simulation. This pairing ensures that users receive immediate "
 "confirmation of their actions and continuous state information."
 msgstr ""
+"يستخدم تعيين GPIO تكوين زر-LED مزدوج حيث تحصل كل وظيفة تحكم على زر "
+"إدخال وLED إخراج مقابل. يمكن الزر من تفاعل المستخدم؛ بينما يوفر LED "
+"تغذية راجعة مرئية حول الحالة الحالية لخط الحمل للمنزل المرتبط في "
+"المحاكاة. يضمن هذا الاقتران أن يحصل المستخدمون على تأكيد فوري لأفعالهم "
+"ومعلومات حالة مستمرة."
 
 #: ../../content/C7_rasp_controller.rst:26
 msgid "Mathematical GPIO Pin Assignment"
-msgstr ""
+msgstr "التخصيص الرياضي لمنافذ GPIO"
 
 #: ../../content/C7_rasp_controller.rst:27
 msgid ""
@@ -5245,11 +5317,13 @@ msgid ""
 "systematic allocation across houses and device types. The button pin "
 "allocation for house devices follows:"
 msgstr ""
+"يتبع تخصيص منافذ GPIO نمطاً رياضياً يضمن التخصيص المنهجي عبر المنازل "
+"وأنواع الأجهزة. يتبع تخصيص منفذ الزر لأجهزة المنزل:"
 
 #: ../../content/C7_rasp_controller.rst:29
 #, python-brace-format
 msgid "P_{button,h,d} = (h-1) \\times 4 + d + 1"
-msgstr ""
+msgstr "P_{button,h,d} = (h-1) \\times 4 + d + 1"
 
 #: ../../content/C7_rasp_controller.rst:33
 #, python-brace-format
@@ -5263,12 +5337,12 @@ msgstr ""
 
 #: ../../content/C7_rasp_controller.rst:35
 msgid "The LED pin allocation maintains a consistent offset from button pins:"
-msgstr ""
+msgstr "يحافظ تخصيص منفذ LED على إزاحة ثابتة من منافذ الأزرار:"
 
 #: ../../content/C7_rasp_controller.rst:37
 #, python-brace-format
 msgid "P_{LED,h,d} = P_{button,h,d} + 13"
-msgstr ""
+msgstr "P_{LED,h,d} = P_{button,h,d} + 13"
 
 #: ../../content/C7_rasp_controller.rst:41
 msgid ""
@@ -5277,10 +5351,13 @@ msgid ""
 "pin assignments outside the house-specific allocation range to prevent "
 "conflicts with house-level controls."
 msgstr ""
+"تضمر هذه العلاقة الرياضية تخصيصات منافذ قابلة للتنبؤ وتبسط تخطيط تكوين "
+"الأجهزة. يحصل خط المرافق على تخصيصات منافذ مخصصة خارج نطاق "
+"التخصيص الخاص بالمنازل لمنع التعارض مع ضوابط مستوى المنزل."
 
 #: ../../content/C7_rasp_controller.rst:44
 msgid "GPIOController Implementation"
-msgstr ""
+msgstr "تطبيق GPIOController"
 
 #: ../../content/C7_rasp_controller.rst:45
 msgid ""
@@ -5290,6 +5367,9 @@ msgid ""
 "output control, and bidirectional communication with simulation "
 "components."
 msgstr ""
+"يعمل ``GPIOController`` كواجهة أساسية بين أجهزة Raspberry Pi ونظام "
+"محاكاة RSGP. يطبق المتحكم إدارة GPIO شاملة، بما في ذلك مراقبة الإدخال "
+"وتحكم الإخراج والتواصل ثنائي الاتجاه مع مكونات المحاكاة."
 
 #: ../../content/C7_rasp_controller.rst:48
 msgid "Controller Initialization and Setup"
@@ -5540,30 +5620,30 @@ msgstr "وظيفة التحكم"
 
 #: ../../content/C7_rasp_controller.rst:154
 msgid "House ID"
-msgstr ""
+msgstr "معرف المنزل"
 
 #: ../../content/C7_rasp_controller.rst:154
 msgid "Button GPIO Pin"
-msgstr ""
+msgstr "منفذ GPIO للزر"
 
 #: ../../content/C7_rasp_controller.rst:154
 msgid "LED GPIO Pin"
-msgstr ""
+msgstr "منفذ GPIO لـLED"
 
 #: ../../content/C7_rasp_controller.rst:154
 msgid "Device Type"
-msgstr ""
+msgstr "نوع الجهاز"
 
 #: ../../content/C7_rasp_controller.rst:157
 msgid "H1 Refrigerator"
-msgstr ""
+msgstr "H1 Refrigerator"
 
 #: ../../content/C7_rasp_controller.rst:157
 #: ../../content/C7_rasp_controller.rst:159
 #: ../../content/C7_rasp_controller.rst:161
 #: ../../content/C7_rasp_controller.rst:163
 msgid "1"
-msgstr ""
+msgstr "1"
 
 #: ../../content/C7_rasp_controller.rst:157
 #: ../../content/C7_rasp_controller.rst:165
@@ -5571,21 +5651,21 @@ msgstr ""
 #: ../../content/C7_rasp_controller.rst:169
 #: ../../content/C7_rasp_controller.rst:171
 msgid "2"
-msgstr ""
+msgstr "2"
 
 #: ../../content/C7_rasp_controller.rst:157
 msgid "15"
-msgstr ""
+msgstr "15"
 
 #: ../../content/C7_rasp_controller.rst:157
 #: ../../content/C7_rasp_controller.rst:165
 #: ../../content/C7_rasp_controller.rst:173
 msgid "REFRIGERATOR"
-msgstr ""
+msgstr "REFRIGERATOR"
 
 #: ../../content/C7_rasp_controller.rst:159
 msgid "H1 HVAC"
-msgstr ""
+msgstr "H1 HVAC"
 
 #: ../../content/C7_rasp_controller.rst:159
 #: ../../content/C7_rasp_controller.rst:173
@@ -5593,169 +5673,169 @@ msgstr ""
 #: ../../content/C7_rasp_controller.rst:177
 #: ../../content/C7_rasp_controller.rst:179
 msgid "3"
-msgstr ""
+msgstr "3"
 
 #: ../../content/C7_rasp_controller.rst:159
 msgid "16"
-msgstr ""
+msgstr "16"
 
 #: ../../content/C7_rasp_controller.rst:159
 #: ../../content/C7_rasp_controller.rst:167
 #: ../../content/C7_rasp_controller.rst:175
 msgid "HVAC"
-msgstr ""
+msgstr "HVAC"
 
 #: ../../content/C7_rasp_controller.rst:161
 msgid "H1 Water Heater"
-msgstr ""
+msgstr "H1 Water Heater"
 
 #: ../../content/C7_rasp_controller.rst:161
 msgid "4"
-msgstr ""
+msgstr "4"
 
 #: ../../content/C7_rasp_controller.rst:161
 msgid "17"
-msgstr ""
+msgstr "17"
 
 #: ../../content/C7_rasp_controller.rst:161
 #: ../../content/C7_rasp_controller.rst:169
 #: ../../content/C7_rasp_controller.rst:177
 msgid "WATER_HEATER"
-msgstr ""
+msgstr "WATER_HEATER"
 
 #: ../../content/C7_rasp_controller.rst:163
 msgid "H1 Load Line"
-msgstr ""
+msgstr "H1 Load Line"
 
 #: ../../content/C7_rasp_controller.rst:163
 msgid "5"
-msgstr ""
+msgstr "5"
 
 #: ../../content/C7_rasp_controller.rst:163
 msgid "18"
-msgstr ""
+msgstr "18"
 
 #: ../../content/C7_rasp_controller.rst:163
 #: ../../content/C7_rasp_controller.rst:171
 #: ../../content/C7_rasp_controller.rst:179
 msgid "LOAD_LINE"
-msgstr ""
+msgstr "LOAD_LINE"
 
 #: ../../content/C7_rasp_controller.rst:165
 msgid "H2 Refrigerator"
-msgstr ""
+msgstr "H2 Refrigerator"
 
 #: ../../content/C7_rasp_controller.rst:165
 msgid "6"
-msgstr ""
+msgstr "6"
 
 #: ../../content/C7_rasp_controller.rst:165
 msgid "19"
-msgstr ""
+msgstr "19"
 
 #: ../../content/C7_rasp_controller.rst:167
 msgid "H2 HVAC"
-msgstr ""
+msgstr "H2 HVAC"
 
 #: ../../content/C7_rasp_controller.rst:167
 msgid "7"
-msgstr ""
+msgstr "7"
 
 #: ../../content/C7_rasp_controller.rst:167
 msgid "20"
-msgstr ""
+msgstr "20"
 
 #: ../../content/C7_rasp_controller.rst:169
 msgid "H2 Water Heater"
-msgstr ""
+msgstr "H2 Water Heater"
 
 #: ../../content/C7_rasp_controller.rst:169
 msgid "8"
-msgstr ""
+msgstr "8"
 
 #: ../../content/C7_rasp_controller.rst:169
 msgid "21"
-msgstr ""
+msgstr "21"
 
 #: ../../content/C7_rasp_controller.rst:171
 msgid "H2 Load Line"
-msgstr ""
+msgstr "H2 Load Line"
 
 #: ../../content/C7_rasp_controller.rst:171
 msgid "9"
-msgstr ""
+msgstr "9"
 
 #: ../../content/C7_rasp_controller.rst:171
 msgid "22"
-msgstr ""
+msgstr "22"
 
 #: ../../content/C7_rasp_controller.rst:173
 msgid "H3 Refrigerator"
-msgstr ""
+msgstr "H3 Refrigerator"
 
 #: ../../content/C7_rasp_controller.rst:173
 msgid "10"
-msgstr ""
+msgstr "10"
 
 #: ../../content/C7_rasp_controller.rst:173
 msgid "23"
-msgstr ""
+msgstr "23"
 
 #: ../../content/C7_rasp_controller.rst:175
 msgid "H3 HVAC"
-msgstr ""
+msgstr "H3 HVAC"
 
 #: ../../content/C7_rasp_controller.rst:175
 msgid "11"
-msgstr ""
+msgstr "11"
 
 #: ../../content/C7_rasp_controller.rst:175
 msgid "24"
-msgstr ""
+msgstr "24"
 
 #: ../../content/C7_rasp_controller.rst:177
 msgid "H3 Water Heater"
-msgstr ""
+msgstr "H3 Water Heater"
 
 #: ../../content/C7_rasp_controller.rst:177
 msgid "12"
-msgstr ""
+msgstr "12"
 
 #: ../../content/C7_rasp_controller.rst:177
 msgid "25"
-msgstr ""
+msgstr "25"
 
 #: ../../content/C7_rasp_controller.rst:179
 msgid "H3 Load Line"
-msgstr ""
+msgstr "H3 Load Line"
 
 #: ../../content/C7_rasp_controller.rst:179
 msgid "13"
-msgstr ""
+msgstr "13"
 
 #: ../../content/C7_rasp_controller.rst:179
 msgid "26"
-msgstr ""
+msgstr "26"
 
 #: ../../content/C7_rasp_controller.rst:181
 msgid "Utility Line"
-msgstr ""
+msgstr "Utility Line"
 
 #: ../../content/C7_rasp_controller.rst:181
 msgid "Global (0)"
-msgstr ""
+msgstr "Global (0)"
 
 #: ../../content/C7_rasp_controller.rst:181
 msgid "14"
-msgstr ""
+msgstr "14"
 
 #: ../../content/C7_rasp_controller.rst:181
 msgid "27"
-msgstr ""
+msgstr "27"
 
 #: ../../content/C7_rasp_controller.rst:181
 msgid "UTILITY_LINE"
-msgstr ""
+msgstr "UTILITY_LINE"
 
 #: ../../content/C7_rasp_controller.rst:184
 msgid ""
@@ -5763,6 +5843,9 @@ msgid ""
 " Pi GPIO controller; thus simplifying external wiring requirements and "
 "ensuring reliable signal detection."
 msgstr ""
+"تستخدم مدخلات الأزرار مقاومات الرفع الداخلية التي يوفرها متحكم GPIO في "
+"Raspberry Pi؛ وبالتالي تبسيط متطلبات الأسلاك الخارجية وضمان اكتشاف إشارة "
+"موثوق."
 
 #: ../../content/C7_rasp_controller.rst:186
 msgid ""
@@ -5774,6 +5857,11 @@ msgid ""
 "maximum current capacity of 16mA per pin; necessitating proper current "
 "limiting for reliable operation."
 msgstr ""
+"تتطلب مخارج LED مقاومات تحديد التيار لمنع تدفق التيار المفرط الذي يمكن أن "
+"يضر منافذ GPIO أو مكونات LED. تتراوح قيم المقاومات الموصى بها من "
+"220:math:`\\Omega` إلى 470:math:`\\Omega` حسب مواصفات LED ومستوى السطوع "
+"المرغوب. تعمل مخارج GPIO على مستويات منطقية 3.3V بقدرة تيار قصوى 16mA "
+"لكل منفذ؛ مما يستلزم تحديد تيار مناسب للعمل الموثوق."
 
 #: ../../content/C7_rasp_controller.rst:188
 msgid ""
@@ -5781,10 +5869,12 @@ msgid ""
 "demonstration purposes. For real-world applications, a new system must be"
 " built using the results of testing this proof of concept."
 msgstr ""
+"تم تطبيق المتحكم الحالي كإثبات مفهوم لأغراض العرض. للتطبيقات في العالم "
+"الحقيقي، يجب بناء نظام جديد باستخدام نتائج اختبار هذا إثبات المفهوم."
 
 #: ../../content/C8_final_results.rst:2
 msgid "Final Results"
-msgstr ""
+msgstr "النتائج النهائية"
 
 #: ../../content/C8_final_results.rst:3
 msgid ""
@@ -5792,6 +5882,8 @@ msgid ""
 "performance analysis, and validation testing conducted during the "
 "development and evaluation of the project."
 msgstr ""
+"يعرض هذا الفصل النتائج المحصلة من عمليات المحاكاة وتحليل الأداء واختبار التحقق "
+"التي أجريت خلال تطوير المشروع وتقييمه."
 
 #: ../../content/C8_final_results.rst:5
 msgid ""
@@ -5799,10 +5891,12 @@ msgid ""
 "residential smart grid application that would minimize excess energy and "
 "grid dependence using a smart algorithm. The results are as follows."
 msgstr ""
+"لإعادة بيان الغرض من هذا المشروع، فهو هذا: إنشاء تطبيق شبكة ذكية سكنية يقلل "
+"الطاقة الفائضة والاعتماد على الشبكة باستخدام خوارزمية ذكية. النتائج كما يلي."
 
 #: ../../content/C8_final_results.rst:8
 msgid "System Design Validation"
-msgstr ""
+msgstr "التحقق من تصميم النظام"
 
 #: ../../content/C8_final_results.rst:9
 msgid ""
@@ -5811,6 +5905,8 @@ msgid ""
 "for solar panels modeling. The results of validating the models are as "
 "follows:"
 msgstr ""
+"يستخدم النظام ثلاثة نماذج كأساس لمحاكاته: نموذج ADSR Envelope لنمذجة الأجهزة، "
+"وpvwatts لنمذجة العاكس، وpvlib لنمذجة الألواح الشمسية. نتائج التحقق من النماذج كما يلي:"
 
 #: ../../content/C8_final_results.rst:11
 msgid ""
@@ -5820,6 +5916,9 @@ msgid ""
 "refrigerator versus that collected from the ADSR envelope for a "
 "refrigerator."
 msgstr ""
+"**نمذجة الأجهزة بـ ADSR**: أظهر نموذج ADSR envelope ترابطًا جيدًا مع بيانات "
+"استهلاك الطاقة الحقيقية المستخرجة من الأدبيات العلمية. فيما يلي مقارنة بين "
+"البيانات المجمعة من ثلاجة حقيقية مقابل تلك المجمعة من نموذج ADSR envelope للثلاجة."
 
 #: ../../_static/plots/C8_ADSR_vs_real_load_profile.py:7
 msgid ""
@@ -5849,6 +5948,9 @@ msgid ""
 "ADSR envelope model's ability to approximate real device behavior with "
 "synchronized timing and comparable power levels."
 msgstr ""
+"التحقق من نموذج ثلاجة RSGP ADSR مقابل بيانات استهلاك الطاقة الحقيقية من "
+"بحث MDPI (Energies 2018, 11, 607). المقارنة تظهر قدرة نموذج ADSR envelope "
+"على تقريب سلوك الجهاز الحقيقي بتوقيت متزامن ومستويات طاقة مشابهة."
 
 #: ../../content/C8_final_results.rst:18
 msgid ""
@@ -5857,6 +5959,9 @@ msgid ""
 " Solar Radiation Database, the solar system simulation, including the "
 "inverter and panels, closely match reality."
 msgstr ""
+"**دقة نمذجة النظام الشمسي**: نتيجة لاستخدام المكتبات المعيارية pvlib وpvwatts، "
+"واستخدام مجموعة بيانات من قاعدة البيانات الوطنية للإشعاع الشمسي (National Solar Radiation Database)، "
+"تطابق محاكاة النظام الشمسي، بما في ذلك العاكس والألواح، الواقع بشكل وثيق."
 
 #: ../../_static/plots/C8_sss_visualization_vs_real_visualization.py:7
 msgid ""
@@ -5887,6 +5992,10 @@ msgid ""
 " generation, demonstrating good correlation despite geographic "
 "differences between NSRDB Arizona data and Syrian conditions."
 msgstr ""
+"التحقق من محاكاة النظام الشمسي RSGP مقابل بيانات عاكس SolarMax الحقيقية "
+"من تركيب 8 ألواح في حلب، سوريا (4 فبراير 2025). المقارنة تظهر دقة نمذجة RSGP pvlib "
+"مقابل توليد الطاقة الكهروضوئية الحقيقي، مما يُظهر ترابطًا جيدًا رغم الاختلافات "
+"الجغرافية بين بيانات NSRDB Arizona والظروف السورية."
 
 #: ../../content/C8_final_results.rst:25
 msgid ""
@@ -5897,6 +6006,11 @@ msgid ""
 "consumed by the connected loads, which explains potential differences "
 "between theoretical generation capacity and measured inverter output."
 msgstr ""
+"تمثل بيانات SSS السعة القصوى النظرية لتوليد الطاقة المحسوبة بواسطة pvlib "
+"بناءً على الإشعاع الشمسي ومواصفات الألواح، بينما تُظهر بيانات العاكس الحقيقية "
+"الاستخراج العملي للطاقة المحدود بطلب الحمولة الفعلي. الألواح الشمسية تُوصل "
+"فقط الطاقة التي تُستهلك فعلياً من قبل الأحمال المتصلة، مما يُفسر الاختلافات "
+"المحتملة بين السعة النظرية للتوليد وخرج العاكس المقاس."
 
 #: ../../content/C8_final_results.rst:28
 msgid "Simulation Results and Analysis"
@@ -5911,20 +6025,26 @@ msgid ""
 "availability, leading to improved grid independence and efficient energy "
 "utilization."
 msgstr ""
+"تُظهر خوارزمية إدارة الطاقة الذكية المطبقة في RSGP قدرات تعلم تكيفية من خلال "
+"التعديل الديناميكي للأوزان وتخصيص البطاريات الافتراضية. يُحسن النظام باستمرار "
+"توزيع الطاقة بين المنازل بناءً على أنماط الحمولة وتوافر التوليد الشمسي، مما "
+"يؤدي إلى تحسن الاستقلالية عن الشبكة والاستخدام الفعال للطاقة."
 
 #: ../../content/C8_final_results.rst:31
 msgid ""
 "Further validation of the project can happen only through a real-world "
 "prototype and data from real usage of the project."
 msgstr ""
+"التحقق الإضافي من المشروع يمكن أن يحدث فقط من خلال نموذج أولي حقيقي وبيانات "
+"من الاستخدام الفعلي للمشروع."
 
 #: ../../content/C9_conclusions_and_suggestions.rst:2
 msgid "Conclusions and Suggestions"
-msgstr ""
+msgstr "الخلاصات والاقتراحات"
 
 #: ../../content/C9_conclusions_and_suggestions.rst:4
 msgid "Conclusions"
-msgstr ""
+msgstr "الخلاصات"
 
 #: ../../content/C9_conclusions_and_suggestions.rst:5
 msgid ""
@@ -5938,10 +6058,17 @@ msgid ""
 "without wasting resources and efficiently manage the shared battery to "
 "meet each house's demand."
 msgstr ""
+"يعمل نموذج الشبكة الذكية السكنية الأولي كحل عملي لمشكلة حقيقية وكأداة بحث "
+"تجمع البيانات وتعرضها لتسهيل البحث والتطوير لخوارزمياتها. باستخدام "
+"المكتبات المعيارية مثل pvlib وpvwatts ومصادر البيانات الدولية مثل NSRDB، "
+"وتطبيق خوارزميات ذكية مبنية على الإحصائيات، أظهر نموذج الشبكة الذكية السكنية "
+"الأولي (RSGP) نتائج ممتازة وأظهر إمكانية للتطبيق في العالم الحقيقي لتوزيع "
+"الطاقة الشمسية المولدة بعدالة دون إهدار الموارد وإدارة البطارية المشتركة "
+"بكفاءة لتلبية احتياجات كل منزل."
 
 #: ../../content/C9_conclusions_and_suggestions.rst:8
 msgid "Suggestions"
-msgstr ""
+msgstr "الاقتراحات"
 
 #: ../../content/C9_conclusions_and_suggestions.rst:9
 msgid ""
@@ -5950,6 +6077,9 @@ msgid ""
 "generation prediction, demand forecasting, and virtual battery allocation"
 " optimizations."
 msgstr ""
+"**تكامل تعلم الآلة (Machine Learning Integration)**: يمكن لخوارزميات "
+"تعلم الآلة (Machine Learning) تعزيز إدارة الطاقة بشكل كبير عند تطبيقها "
+"لتوقع توليد الطاقة الشمسية وتوقع الطلب وتحسين تخصيص البطارية الافتراضية."
 
 #: ../../content/C9_conclusions_and_suggestions.rst:10
 msgid ""
@@ -5957,12 +6087,18 @@ msgid ""
 "improve through more sophisticated visualization tools, including real-"
 "time performance dashboards."
 msgstr ""
+"**قدرات التمثيل المرئي المحسنة (Enhanced Visualization Capabilities)**: "
+"يمكن تحسين إنتاجية البحث من خلال أدوات تمثيل مرئي أكثر تطوراً، بما في ذلك "
+"لوحات أداء الوقت الحقيقي."
 
 #: ../../content/C9_conclusions_and_suggestions.rst:11
 msgid ""
 "**Commercial Building Integration**: RSGP could see broader application "
 "if extended to include commercial and industrial loads."
 msgstr ""
+"**تكامل المباني التجارية (Commercial Building Integration)**: يمكن أن "
+"يشهد نموذج الشبكة الذكية السكنية الأولي (RSGP) تطبيقاً أوسع إذا امتد "
+"ليشمل الأحمال التجارية والصناعية."
 
 #: ../../content/C9_conclusions_and_suggestions.rst:12
 msgid ""
@@ -5970,6 +6106,9 @@ msgid ""
 "of demand response incentive could imrpove through adding economic models"
 " for electricity pricing and energy trading."
 msgstr ""
+"**النمذجة الاقتصادية ومحاكاة السوق (Economic Modeling and Market Simulation)**: "
+"يمكن تحسين التطبيق الحالي لحافز الاستجابة للطلب من خلال إضافة نماذج "
+"اقتصادية لتسعير الكهرباء وتجارة الطاقة."
 
 #: ../../content/C9_conclusions_and_suggestions.rst:14
 msgid ""
@@ -5981,10 +6120,17 @@ msgid ""
 "prototyping, after which the aforementioned suggestions should be re-"
 "evaluated and possibly integrated."
 msgstr ""
+"هذه الاقتراحات مبنية على ما نراه حالياً يفتقر إليه نموذج الشبكة الذكية "
+"السكنية الأولي (RSGP). ومع ذلك، فإن توظيف RSGP في العالم الحقيقي يمكن "
+"أن يوفر رؤى حول الاستجابة البشرية له، وبالتالي يوفر تغذية راجعة حول "
+"نقاط الضعف في RSGP ويسمح برؤية أوضح حول كيفية تطوير المشروع أكثر. "
+"وعلى هذا النحو، فإن الأولوية الحالية للمشروع يجب أن تكون النمذجة الأولية "
+"في العالم الحقيقي، وبعدها يجب إعادة تقييم الاقتراحات المذكورة أعلاه "
+"وربما دمجها."
 
 #: ../../content/_references.rst:9
 msgid "References"
-msgstr ""
+msgstr "المراجع"
 
 #: ../../content/_references.rst:11
 msgid "[1] National Renewable Energy Laboratory (NREL)"
@@ -6096,7 +6242,7 @@ msgstr ""
 
 #: ../../content/_thanks_and_appreciation.rst:9
 msgid "Thanks and Appreciation"
-msgstr ""
+msgstr "الشكر والتقدير"
 
 #: ../../content/_thanks_and_appreciation.rst:11
 msgid ""
@@ -6104,6 +6250,9 @@ msgid ""
 "throughout this journey, making the Residential Smart Grid Prototype a "
 "meaningful and enriching experience."
 msgstr ""
+"نتوجه بأعمق عبارات الامتنان لجميع الذين دعمونا وأرشدونا خلال هذه الرحلة، مما "
+"جعل نموذج الشبكة الذكية السكنية (Residential Smart Grid Prototype) تجربة ذات "
+"معنى ومثرية."
 
 #: ../../content/_thanks_and_appreciation.rst:13
 msgid ""
@@ -6111,6 +6260,8 @@ msgid ""
 "Farha**, our project supervisor, whose invaluable guidance, expertise, "
 "and unwavering support made this project possible."
 msgstr ""
+"أولاً وقبل كل شيء، نعبر عن تقديرنا الخالص للدكتور **فادي فرحة**، مشرف المشروع، "
+"الذي جعل توجيهه الثمين وخبرته ودعمه المستمر هذا المشروع ممكناً."
 
 #: ../../content/_thanks_and_appreciation.rst:15
 msgid ""
@@ -6118,6 +6269,8 @@ msgid ""
 "**University of Aleppo** for providing the academic environment for "
 "conducting this research."
 msgstr ""
+"نحن ممتنون لكلية **هندسة المعلوماتية** في **جامعة حلب** لتوفير البيئة الأكاديمية "
+"لإجراء هذا البحث."
 
 #: ../../content/_thanks_and_appreciation.rst:17
 msgid ""
@@ -6126,6 +6279,9 @@ msgid ""
 "enabled us to understand and implement system architecture principles "
 "that form the backbone of this project."
 msgstr ""
+"يمتد تقديرنا لأعضاء هيئة التدريس في **قسم أنظمة الحاسوب والشبكات** الذين "
+"ساهموا في تعليمنا الذي مكننا من فهم وتطبيق مبادئ هندسة النظم (System "
+"Architecture) التي تشكل العمود الفقري لهذا المشروع."
 
 #: ../../content/_thanks_and_appreciation.rst:19
 msgid ""
@@ -6137,4 +6293,9 @@ msgid ""
 "comprehensive solar irradiance data freely available for research "
 "purposes."
 msgstr ""
+"نعترف بالمساهمات القيمة لمجتمعات المصدر المفتوح (Open-Source) ومؤسسات البحث "
+"التي جعلت أدواتها ومجموعات بياناتها هذا العمل ممكناً. يذهب تقدير خاص لمطوري "
+"**pvlib** و **pvwatts** و **مختبر الطاقة المتجددة الوطني (NREL)**. نشكر فريق "
+"**قاعدة بيانات الإشعاع الشمسي الوطنية (NSRDB)** لجعل بيانات الإشعاع الشمسي "
+"الشاملة متاحة مجاناً لأغراض البحث."
 

@@ -1302,7 +1302,7 @@ msgstr ""
 #: ../../content/A3_api_reference.rst:28
 #: ../../content/C4_rsgp_solar_system_simulation.rst:2
 msgid "Solar System Simulation"
-msgstr ""
+msgstr "محاكاة النظام الشمسي"
 
 #: of rsgp.power_mng.manager.PowerManager:5 rsgp.solar_system_sim.simulator:1
 #: rsgp.solar_system_sim.simulator.SolarSystemSimulator:1
@@ -2326,6 +2326,13 @@ msgid ""
 "residential solar installations, where each house operates independently "
 "without coordination with nearby houses."
 msgstr ""
+"لقد أدى اعتماد الطاقة الشمسية في المناطق السكنية إلى عدم كفاءة كبيرة: "
+"فالبيوت المزودة بألواح شمسية غالباً ما تولد طاقة أكثر مما تحتاج بينما "
+"تفتقر البيوت المجاورة إلى الطاقة الكافية. هذه الطاقة الزائدة عادة ما "
+"تذهب هدراً أو تُباع للشبكة الكهربائية بأسعار منخفضة، بينما البيوت "
+"التي تحتاج للطاقة يجب عليها شراؤها من المرافق بتكاليف أعلى. تنبع "
+"المشكلة من الطبيعة الفردية لتركيبات الطاقة الشمسية السكنية الحالية، "
+"حيث يعمل كل بيت بشكل مستقل دون تنسيق مع البيوت المجاورة."
 
 #: ../../content/C1_introduction.rst:5
 msgid ""
@@ -2336,6 +2343,12 @@ msgid ""
 "houses to share their surplus with neighbors who need it, creating a "
 "collaborative energy ecosystem at the residential level."
 msgstr ""
+"هذه عدم الكفاءة حفزت تطوير النموذج الأولي للشبكة الذكية السكنية "
+"(Residential Smart Grid Prototype - RSGP). يمكن للأحياء تحقيق استخدام "
+"أفضل للطاقة وتقليل الاعتماد على الشبكة الكهربائية من خلال المشاركة "
+"الذكية لموارد الطاقة بين البيوت. بدلاً من هدر توليد الطاقة الشمسية "
+"الزائدة، يمكن RSGP للبيوت مشاركة فائضها مع الجيران الذين يحتاجونها، "
+"مما يخلق نظاماً بيئياً تعاونياً للطاقة على المستوى السكني."
 
 #: ../../content/C1_introduction.rst:7
 msgid ""
@@ -2351,6 +2364,16 @@ msgid ""
 " demands get larger shares but less utility export benefits, creating a "
 "dynamic and fair system."
 msgstr ""
+"يحل RSGP هذه المشكلة من خلال نظام ذكي لإدارة الطاقة ينسق توزيع الطاقة "
+"بين عدة بيوت تشارك بطارية مشتركة. يستخدم النظام تخصيص البطارية "
+"الافتراضية (Virtual Battery)، حيث يحصل كل بيت على جزء من البطارية "
+"الفيزيائية المشتركة بناءً على أنماط استهلاكه. تقوم خوارزمية التعلم "
+"بتعديل هذه التخصيصات بشكل مستمر من خلال تحليل استخدام كل بيت للطاقة، "
+"مما يضمن التوزيع العادل مع تعظيم فوائد توليد الطاقة الشمسية المشتركة. "
+"البيوت التي تستخدم طاقة أقل بشكل مستمر تحصل على تخصيصات بطارية أصغر "
+"لكن فوائد أكبر من تصدير الطاقة للمرافق، بينما البيوت ذات الطلب الأعلى "
+"تحصل على حصص أكبر لكن فوائد أقل من تصدير الطاقة، مما يخلق نظاماً "
+"ديناميكياً وعادلاً."
 
 #: ../../content/C1_introduction.rst:9
 msgid ""
@@ -2361,6 +2384,11 @@ msgid ""
 "deployment, ensuring the system works effectively under various scenarios"
 " and conditions."
 msgstr ""
+"ينفذ المشروع هذا الحل من خلال إطار عمل محاكاة شامل ينمذج استهلاك "
+"الطاقة الواقعي للبيوت وتوليد الطاقة الشمسية، وينفذ خوارزميات ذكية "
+"لإدارة الطاقة. تسمح بيئة المحاكاة هذه بالاختبار والتحقق قبل النشر في "
+"العالم الحقيقي، مما يضمن عمل النظام بفعالية تحت سيناريوهات وظروف "
+"مختلفة."
 
 #: ../../content/C1_introduction.rst:11
 msgid ""
@@ -2370,6 +2398,10 @@ msgid ""
 "establishes system architecture and technology stack. The preview chapter"
 " presents the overall vision and scope of the project."
 msgstr ""
+"تقدم هذه الوثيقة فحصاً شاملاً للنموذج الأولي للشبكة الذكية السكنية "
+"من خلال تسعة فصول أساسية وثلاثة ملاحق داعمة. يوفر الفصل الثاني "
+"معاينة مفصلة للمشروع تؤسس لهيكل النظام ومجموعة التقنيات. يقدم فصل "
+"المعاينة الرؤية العامة ونطاق المشروع."
 
 #: ../../content/C1_introduction.rst:13
 msgid ""
@@ -2383,6 +2415,13 @@ msgid ""
 "Chapter 5 examines power management system architecture, virtual battery "
 "mathematical foundation, and the adaptive learning algorithm."
 msgstr ""
+"تشكل الفصول من 3 إلى 5 اللب التقني للتوثيق، حيث تفحص كل مكون محاكاة "
+"بتفاصيل شاملة. يستكشف الفصل الثالث هيكل محاكاة البيوت ونمذجة غلاف "
+"ADSR والتكامل مع إدارة الطاقة. يقدم الفصل الرابع تنفيذ محاكاة النظام "
+"الشمسي، بما في ذلك نمذجة الخلايا الضوئية باستخدام مكتبات موثوقة وتصميم "
+"نظام البطارية وخوارزميات التحكم في العاكس وتكامل بيانات الطقس من مصادر "
+"موثوقة. يفحص الفصل الخامس هيكل نظام إدارة الطاقة والأساس الرياضي "
+"للبطارية الافتراضية وخوارزمية التعلم التكيفي."
 
 #: ../../content/C1_introduction.rst:15
 msgid ""
@@ -2392,6 +2431,10 @@ msgid ""
 "integration through Raspberry Pi, GPIO mapping, and physical interaction "
 "mechanisms."
 msgstr ""
+"يتناول الفصلان 6 و7 تنفيذ واجهات المستخدم التفاعلية. يفصل الفصل السادس "
+"هيكل نظام لوحة المعلومات واتصال العناصر البعيدة والمراقبة في الوقت "
+"الفعلي. يقدم الفصل السابع التكامل العتادي من خلال Raspberry Pi "
+"وتخطيط GPIO وآليات التفاعل الفيزيائي."
 
 #: ../../content/C1_introduction.rst:17
 msgid ""
@@ -2400,6 +2443,9 @@ msgid ""
 "correlation between simulation models and real-world data and quantifies "
 "system performance improvements in grid independence."
 msgstr ""
+"يقدم الفصل الثامن نتائج من تحقق المحاكاة وتحليل الأداء وتقييم فعالية "
+"النظام. تُظهر النتائج ارتباطاً بين نماذج المحاكاة وبيانات العالم الحقيقي "
+"وتقيس تحسينات أداء النظام في الاستقلال عن الشبكة الكهربائية."
 
 #: ../../content/C1_introduction.rst:19
 msgid ""
@@ -2407,6 +2453,8 @@ msgid ""
 "future development opportunities, and recommendations for continued "
 "research and real-world deployment."
 msgstr ""
+"يختتم الفصل التاسع بتحليل نتائج المشروع وتحديد فرص التطوير المستقبلية "
+"وتوصيات للبحث المستمر والنشر في العالم الحقيقي."
 
 #: ../../content/C1_introduction.rst:21
 msgid ""
@@ -2419,10 +2467,16 @@ msgid ""
 "API reference documentation that enables future development and "
 "integration with external systems."
 msgstr ""
+"توفر الملاحق توثيقاً داعماً ضرورياً لفهم المشروع واستمراره. يفصل الملحق "
+"A1 سير عمل التوثيق، بما في ذلك معايير التدوين الرياضي ومنهجيات إنشاء "
+"المخططات التي تضمن الاتساق. يقدم الملحق A2 أداة التحليل القائمة على "
+"Notebook وإطار عمل تصور البيانات الذي يدعم جهود البحث المستمرة "
+"وتحسين النظام. يوفر الملحق A3 توثيق مرجع API يمكن التطوير المستقبلي "
+"والتكامل مع الأنظمة الخارجية."
 
 #: ../../content/C2_project_preview.rst:2
 msgid "Project Preview"
-msgstr ""
+msgstr "معاينة المشروع"
 
 #: ../../content/C2_project_preview.rst:3
 msgid ""
@@ -2434,6 +2488,12 @@ msgid ""
 "smart solution that tracks the houses' needs and consumption patterns to "
 "allocate to each house the amount it needs."
 msgstr ""
+"يهدف النموذج الأولي للشبكة الذكية السكنية (RSGP) إلى حل المشكلة التالية: "
+"في المباني السكنية حيث يمتلك كل بيت نظامه الشمسي وبطاريته الخاصة، بعض البيوت "
+"لديها طاقة مولدة زائدة بينما تفتقر أخرى للطاقة. هذه الطاقة الزائدة كان بإمكانها "
+"أن تذهب للبيوت التي تفتقر للطاقة دون تكلفة على البيوت ذات الفائض. لذلك يأتي "
+"RSGP ليوفر حلاً ذكياً يتتبع احتياجات البيوت وأنماط استهلاكها لتخصيص لكل بيت "
+"الكمية التي يحتاجها."
 
 #: ../../content/C2_project_preview.rst:5
 msgid ""
@@ -2442,11 +2502,14 @@ msgid ""
 "management algorithm that allocates and alters virtual batteries "
 "allocated to the houses."
 msgstr ""
+"الحالة الراهنة لـ RSGP هي نموذج أولي يعمل على محاكاة للبيوت ونظام شمسي "
+"مع بطارية مشتركة واحدة، مع خوارزمية إدارة طاقة تخصص وتعدل البطاريات "
+"الافتراضية المخصصة للبيوت."
 
 #: ../../content/C2_project_preview.rst:8
 #: ../../content/C7_rasp_controller.rst:8
 msgid "System Architecture Overview"
-msgstr ""
+msgstr "نظرة عامة على هيكل النظام"
 
 #: ../../content/C2_project_preview.rst:9
 msgid ""
@@ -2455,6 +2518,9 @@ msgid ""
 " for analysis to improve RSGP and validate its algorithms before it is "
 "applied in the real world."
 msgstr ""
+"يتكون نظام RSGP من ثلاث وحدات محاكاة أساسية وبنية تحتية داعمة وأدوات "
+"تحليل توفر مجتمعة أساساً للتحليل لتحسين RSGP والتحقق من خوارزمياته قبل "
+"تطبيقه في العالم الحقيقي."
 
 #: ../../content/C2_project_preview.rst:15
 msgid ""
@@ -2465,6 +2531,11 @@ msgid ""
 "of applying RSGP over larger periods of time to facilitate studying and "
 "analyzing the results before applying RSGP to the real world."
 msgstr ""
+"يوفر محرك محاكاة الزمن تنسيقاً متزامناً للاقتران الزمني عبر جميع مكونات "
+"النظام، مما يضمن عمل محاكاة البيوت ومحاكاة النظام الشمسي وإدارة الطاقة "
+"بشكل متسق. يمكن عامل تسريع الوقت القابل للتهيئة من محاكاة نتائج تطبيق "
+"RSGP على فترات زمنية أطول لتسهيل دراسة وتحليل النتائج قبل تطبيق RSGP في "
+"العالم الحقيقي."
 
 #: ../../content/C2_project_preview.rst:18
 msgid "Core Simulation Components"
@@ -2475,6 +2546,7 @@ msgid ""
 "The core components are the houses simulation, solar system simulation, "
 "and power management."
 msgstr ""
+"المكونات الأساسية هي محاكاة البيوت ومحاكاة النظام الشمسي وإدارة الطاقة."
 
 #: ../../content/C2_project_preview.rst:21
 msgid ""
@@ -2485,6 +2557,11 @@ msgid ""
 " collect data and use it to analyze both the simulation and the power "
 "management algorithm."
 msgstr ""
+"**محاكاة البيوت** تتكون من مجموعة من البيوت المحاكاة، ويحتوي كل منها على أجهزة "
+"محاكاة يمكن تفعيلها وإلغاؤها حسب مدخلات المستخدم أو باستخدام "
+"نصوص برمجية (Scripts). تتيح إمكانية برمجة تفعيل وإلغاء الأجهزة برمجة "
+"سيناريوهات وتشغيلها لجمع البيانات واستخدامها لتحليل كل من المحاكاة "
+"وخوارزمية إدارة الطاقة."
 
 #: ../../content/C2_project_preview.rst:23
 msgid ""
@@ -2494,6 +2571,10 @@ msgid ""
 "rest of the components, their simulation use the standard libraries pvlib"
 " and pvwatts."
 msgstr ""
+"**محاكاة النظام الشمسي** تتكون من ألواح شمسية وبطارية وعاكس محاكاة. تستخدم هأه "
+"المحاكاة مجموعة بيانات مقدمة لأغراض بحثية من قاعدة البيانات الوطنية "
+"للإشعاع الشمسي (National Solar Radiation Database - NSRDB). أما بقية "
+"المكونات، فمحاكاتها تستخدم المكتبات المعيارية pvlib وpvwatts."
 
 #: ../../content/C2_project_preview.rst:25
 msgid ""
@@ -2505,26 +2586,35 @@ msgid ""
 "to ensure no house is left without an adequate share; so that only the "
 "excess is shared."
 msgstr ""
+"**إدارة الطاقة** تتكون من بطاريات افتراضية ومدير طاقة يعمل كوحدة اتخاذ قرار "
+"ورابط بين جميع المكونات الأخرى. الخوارزمية الذكية المنفذة تقوم على الإحصائيات "
+"لتخصيص وزن لكل بيت يمثل حصته من البطارية المشتركة. تطبق الخوارزمية وزناً "
+"أدنى ووزناً أعلى لضمان عدم ترك أي بيت دون حصة مناسبة؛ بحيث يتم تشارك الفائض "
+"فقط."
 
 #: ../../content/C2_project_preview.rst:27
 msgid ""
 "All components log data into csv files for later analysis to improve the "
 "simulation and the algorithms implemented."
 msgstr ""
+"تسجل جميع المكونات البيانات في ملفات csv للتحليل اللاحق لتحسين المحاكاة "
+"والخوارزميات المنفذة."
 
 #: ../../content/C2_project_preview.rst:30
 msgid "System Integration and Communication"
-msgstr ""
+msgstr "تكامل النظام والاتصال"
 
 #: ../../content/C2_project_preview.rst:31
 msgid ""
 "The system uses Pyro5 remote objects to provide access to component "
 "methods and properties while maintaining network transparency."
 msgstr ""
+"يستخدم النظام كائنات Pyro5 البعيدة لتوفير الوصول إلى طرق ومخصصات "
+"المكونات مع الحفاظ على شفافية الشبكة."
 
 #: ../../content/C2_project_preview.rst:37
 msgid "The primary data exchange patterns include:"
-msgstr ""
+msgstr "تشمل أنماط تبادل البيانات الأساسية:"
 
 #: ../../content/C2_project_preview.rst:39
 msgid ""
@@ -2532,6 +2622,9 @@ msgid ""
 "generation, battery state information, and inverter operational status to"
 " power management for decision-making."
 msgstr ""
+"**بيانات توليد الطاقة**: توفر محاكاة النظام الشمسي بيانات توليد الطاقة "
+"ومعلومات حالة البطارية وحالة تشغيل العاكس إلى إدارة الطاقة لاتخاذ "
+"القرارات."
 
 #: ../../content/C2_project_preview.rst:41
 msgid ""
@@ -2539,6 +2632,8 @@ msgid ""
 "device states, and line connection status to power management for "
 "decision-making."
 msgstr ""
+"**بيانات طلب الحمولة**: تُبلغ محاكاة البيوت عن أحمال البيوت الفردية وحالات الأجهزة "
+"وحالة اتصال الخطوط إلى إدارة الطاقة لاتخاذ القرارات."
 
 #: ../../content/C2_project_preview.rst:43
 msgid ""
@@ -2546,34 +2641,44 @@ msgid ""
 "utility line controls, and battery discharge instructions based on the "
 "decisions of the algorithm."
 msgstr ""
+"**أوامر التحكم**: تُصدر إدارة الطاقة أوامر تقليل الحمولة وضوابط خط المرافق "
+"وتعليمات تفريغ البطارية بناءً على قرارات الخوارزمية."
 
 #: ../../content/C2_project_preview.rst:46
 msgid "Technology Stack and Development Tools"
-msgstr ""
+msgstr "مجموعة التقنيات وأدوات التطوير"
 
 #: ../../content/C2_project_preview.rst:47
 msgid ""
 "The system foundation uses **Python** as the primary programming "
 "language, providing access to extensive scientific computing libraries."
 msgstr ""
+"يستخدم أساس النظام **Python** كلغة البرمجة الأساسية، مما يوفر الوصول إلى "
+"مكتبات الحوسبة العلمية الواسعة."
 
 #: ../../content/C2_project_preview.rst:49
 msgid ""
 "**NumPy** serves as the foundation for mathematical operations, enabling "
 "efficient array operations essential for power management calculations."
 msgstr ""
+"**NumPy** تعمل كأساس للعمليات الرياضية، مما يمكن عمليات المصفوفات "
+"الفعالة الضرورية لحسابات إدارة الطاقة."
 
 #: ../../content/C2_project_preview.rst:50
 msgid ""
 "**Pandas** provides data manipulation, particularly valuable for "
 "processing NSRDB datasets and managing simulation logs."
 msgstr ""
+"**Pandas** توفر معالجة البيانات، وهي قيمة خاصة في معالجة مجموعات بيانات NSRDB "
+"وإدارة سجلات المحاكاة."
 
 #: ../../content/C2_project_preview.rst:51
 msgid ""
 "**PVLib** provides photovoltaic system modeling, including solar position"
 " calculations and irradiance computations."
 msgstr ""
+"**PVLib** توفر نمذجة أنظمة الخلايا الضوئية الكهربائية، بما في ذلك حسابات "
+"موضع الشمس وعمليات حساب الإشعاع."
 
 #: ../../content/C2_project_preview.rst:52
 msgid ""
@@ -2581,6 +2686,9 @@ msgid ""
 " (NREL) provide realistic DC-AC conversion efficiency curves and power "
 "electronic behavior modeling."
 msgstr ""
+"نماذج العاكسات **PVWatts** من المختبر الوطني للطاقة المتجددة (NREL) "
+"توفر منحنيات كفاءة تحويل DC-AC واقعية ونمذجة سلوك إلكترونيات "
+"الطاقة."
 
 #: ../../content/C2_project_preview.rst:53
 msgid ""
@@ -2588,38 +2696,47 @@ msgid ""
 "source, providing hourly solar irradiance measurements required for "
 "realistic solar system modeling."
 msgstr ""
+"**NSRDB** (قاعدة بيانات الإشعاع الشمسي الوطنية - National Solar Radiation Database) "
+"تعمل كمصدر البيانات الأساسي، موفرة قياسات الإشعاع الشمسي الساعية "
+"المطلوبة لنمذجة الأنظمة الشمسية الواقعية."
 
 #: ../../content/C2_project_preview.rst:54
 msgid "**timezonefinder** provides geographic timezone detection."
-msgstr ""
+msgstr "**timezonefinder** توفر اكتشاف المنطقة الزمنية الجغرافية."
 
 #: ../../content/C2_project_preview.rst:55
 msgid ""
 "**Pyro5** (Python Remote Objects) enables the distributed simulation "
 "architecture by providing remote method invocation."
 msgstr ""
+"**Pyro5** (كائنات Python البعيدة - Python Remote Objects) يمكن هيكلية المحاكاة "
+"الموزعة من خلال توفير استدعاء الطرق البعيدة."
 
 #: ../../content/C2_project_preview.rst:56
 msgid "**Tkinter** provides the graphical user interfaces."
-msgstr ""
+msgstr "**Tkinter** توفر واجهات المستخدم الرسومية."
 
 #: ../../content/C2_project_preview.rst:57
 msgid ""
 "**ttkbootstrap** extends the interface with modern themes and enhanced "
 "widget styling."
 msgstr ""
+"**ttkbootstrap** توسع الواجهة بقوالب حديثة وتنسيق محسن للعناصر المرئية."
 
 #: ../../content/C2_project_preview.rst:58
 msgid ""
 "**Raspberry Pi** serves as the embedded computing platform for hardware "
 "integration."
 msgstr ""
+"**Raspberry Pi** تعمل كمنصة الحوسبة المدمجة لتكامل الأجهزة."
 
 #: ../../content/C2_project_preview.rst:59
 msgid ""
 "**lgpio** library provides modern GPIO control with improved performance "
 "and reliability compared to legacy alternatives."
 msgstr ""
+"مكتبة **lgpio** توفر تحكماً حديثاً في GPIO بأداء محسن وموثوقية مقارنة "
+"بالبدائل القديمة."
 
 #: ../../content/C2_project_preview.rst:61
 msgid ""
@@ -2627,42 +2744,51 @@ msgid ""
 "**LEDs**, **resistors**, and **toggle buttons** to create tangible "
 "representations of simulated devices and system states."
 msgstr ""
+"تستخدم النمذجة الفيزيائية **لوحات الخبز (breadboards)** و**الأسلاك** و**LED** "
+"و**المقاومات** و**أزرار التبديل** القياسية لإنشاء تمثيلات ملموسة للأجهزة "
+"المحاكاة وحالات النظام."
 
 #: ../../content/C2_project_preview.rst:64
 msgid "Data Analysis and Notebook Environment"
-msgstr ""
+msgstr "تحليل البيانات وبيئة الدفاتر"
 
 #: ../../content/C2_project_preview.rst:65
 msgid ""
 "**Marimo** provides notebooks for interactive data analysis and system "
 "exploration."
 msgstr ""
+"**Marimo** توفر دفاتر للتحليل التفاعلي للبيانات واستكشاف النظام."
 
 #: ../../content/C2_project_preview.rst:66
 msgid ""
 "**Altair** extends the visualization through statistical plotting and "
 "interactive charting features."
 msgstr ""
+"**Altair** توسع التصور من خلال الرسم الإحصائي وميزات الرسوم البيانية التفاعلية."
 
 #: ../../content/C2_project_preview.rst:67
 msgid "**Matplotlib** generates visualizations for system analysis."
-msgstr ""
+msgstr "**Matplotlib** تولد التصورات المرئية لتحليل النظام."
 
 #: ../../content/C2_project_preview.rst:68
 msgid ""
 "**Mermaid** creates system architecture diagrams and workflow "
 "visualizations integrated directly into documentation."
 msgstr ""
+"**Mermaid** تنشئ مخططات هيكلية النظام وتصورات سير العمل المدمجة مباشرة في "
+"التوثيق."
 
 #: ../../content/C2_project_preview.rst:69
 msgid ""
 "**WebPlotDigitizer** extracts data from plots and images, useful for "
 "comparing simulation results with published figures."
 msgstr ""
+"**WebPlotDigitizer** يستخلص البيانات من الرسوم البيانية والصور، وهو مفيد في "
+"مقارنة نتائج المحاكاة مع الأرقام المنشورة."
 
 #: ../../content/C2_project_preview.rst:72
 msgid "Documentation"
-msgstr ""
+msgstr "التوثيق"
 
 #: ../../content/C2_project_preview.rst:73
 msgid ""
@@ -2670,40 +2796,47 @@ msgid ""
 "notation, code highlighting, and multi-format output generation. The "
 "system produces both HTML and PDF documentation."
 msgstr ""
+"**Sphinx** يولد التوثيق بدعم للترميز الرياضي وتمييز الكود وتوليد مخرجات متعددة "
+"الأشكال. ينتج النظام توثيقاً بشكل HTML وPDF."
 
 #: ../../content/C2_project_preview.rst:74
 msgid ""
 "**LaTeX** integration enables mathematical notation and document "
 "formatting."
 msgstr ""
+"التكامل مع **LaTeX** يمكن من الترميز الرياضي وتنسيق الوثائق."
 
 #: ../../content/C2_project_preview.rst:75
 msgid ""
 "**sphinxcontrib-mermaid** integrates diagram generation directly into the"
 " documentation."
 msgstr ""
+"**sphinxcontrib-mermaid** يدمج توليد المخططات مباشرة في التوثيق."
 
 #: ../../content/C2_project_preview.rst:78
 msgid "Development and Deployment Tools"
-msgstr ""
+msgstr "أدوات التطوير والنشر"
 
 #: ../../content/C2_project_preview.rst:79
 msgid ""
 "**Git** version control manages collaborative development and maintains "
 "complete project history."
 msgstr ""
+"**Git** نظام إدارة النسخ يدير التطوير التعاوني ويحافظ على تاريخ كامل للمشروع."
 
 #: ../../content/C2_project_preview.rst:80
 msgid ""
 "**Make** automates builds and maintains the consistency of the process "
 "across each development environment."
 msgstr ""
+"**Make** يؤتمت عمليات البناء ويحافظ على اتساق العملية عبر كل بيئة تطوير."
 
 #: ../../content/C2_project_preview.rst:81
 msgid ""
 "**pip** package management handles dependency resolution and virtual "
 "environment management."
 msgstr ""
+"**pip** إدارة الحزم تتولى حل التبعيات وإدارة البيئة الافتراضية."
 
 #: ../../content/C2_project_preview.rst:82
 msgid ""
@@ -2711,10 +2844,12 @@ msgid ""
 "configuration settings for deployment flexibility without code "
 "modification."
 msgstr ""
+"**python-dotenv** توفر إدارة متغيرات البيئة لإعدادات التكوين لمرونة النشر دون "
+"تعديل الكود."
 
 #: ../../content/C2_project_preview.rst:85
 msgid "Conclusion and Future Development Potential"
-msgstr ""
+msgstr "الخلاصة وإمكانيات التطوير المستقبلي"
 
 #: ../../content/C2_project_preview.rst:86
 msgid ""
@@ -2725,6 +2860,10 @@ msgid ""
 "available resources to tackle the problem at hand: that of efficient "
 "distribution of generated solar power."
 msgstr ""
+"يعمل النظام كحل عملي لمشكلة حقيقية وكأداة بحثية تجمع البيانات وتصورها لتسهيل "
+"البحث وتطوير خوارزمياته. من خلال استخدامه لقائمة واسعة من الأدوات والمكتبات، "
+"يهدف RSGP إلى الاستفادة من كامل نطاق الموارد المتاحة لمعالجة المشكلة المطروحة: "
+"التوزيع الفعال للطاقة الشمسية المولدة."
 
 #: ../../content/C3_rsgp_houses_simulation.rst:5
 msgid ""
@@ -3178,7 +3317,7 @@ msgstr ""
 #: ../../content/C3_rsgp_houses_simulation.rst:104
 #: ../../content/C4_rsgp_solar_system_simulation.rst:178
 msgid "Data Collection"
-msgstr ""
+msgstr "جمع البيانات"
 
 #: ../../content/C3_rsgp_houses_simulation.rst:105
 msgid ""
@@ -3238,6 +3377,9 @@ msgid ""
 "modeling, battery energy storage systems, and inverter control mechanisms"
 " that enable realistic solar power generation and management."
 msgstr ""
+"تعمل محاكاة النظام الشمسي كمصدر للطاقة داخل النظام. يفحص هذا الفصل تنفيذ نمذجة "
+"الألواح الضوئية الفولطائية وأنظمة تخزين طاقة البطارية وآليات التحكم في العاكس "
+"التي تمكن من توليد وإدارة الطاقة الشمسية بشكل واقعي."
 
 #: ../../content/C4_rsgp_solar_system_simulation.rst:7
 msgid ""
@@ -3247,10 +3389,14 @@ msgid ""
 "management system, discussed in later chapters, coordinates between these"
 " two to optimize energy usage."
 msgstr ""
+"بينما تنمذج محاكاة البيوت استهلاك الطاقة، تنمذج محاكاة النظام الشمسي إنتاج وتخزين "
+"الطاقة. معاً يشكلان ديناميكية العرض والطلب الأساسية التي تحدد الشبكات الذكية. "
+"نظام إدارة الطاقة، المناقش في الفصول اللاحقة، ينسق بين هذين الاثنين "
+"لتحسين استخدام الطاقة."
 
 #: ../../content/C4_rsgp_solar_system_simulation.rst:10
 msgid "Solar System Architecture Overview"
-msgstr ""
+msgstr "نظرة عامة على هيكل النظام الشمسي"
 
 #: ../../content/C4_rsgp_solar_system_simulation.rst:11
 msgid ""
@@ -3261,6 +3407,10 @@ msgid ""
 "and power conversion and enables more realistic modeling of each "
 "component."
 msgstr ""
+"يتكون هيكل محاكاة النظام الشمسي من ألواح ضوئية فولطائية وبطارية واحدة وعاكس "
+"يربط العناصر. يتم بعدها ربط العاكس بمدير الطاقة من خلال خط حمولة وخط "
+"مرافق. يفصل هذا التصميم اهتمامات توليد الطاقة وتخزينها وتحويلها ويمكن من "
+"نمذجة أكثر واقعية لكل مكون."
 
 #: ../../content/C4_rsgp_solar_system_simulation.rst:17
 msgid ""
@@ -3280,7 +3430,7 @@ msgstr ""
 
 #: ../../content/C4_rsgp_solar_system_simulation.rst:22
 msgid "Photovoltaic Panel Modeling"
-msgstr ""
+msgstr "نمذجة الألواح الكهروضوئية"
 
 #: ../../content/C4_rsgp_solar_system_simulation.rst:23
 msgid ""
@@ -3291,6 +3441,11 @@ msgid ""
 "configuration parameters to generate power output that mirror actual "
 "photovoltaic system performance."
 msgstr ""
+"تتكامل الألواح الكهروضوئية مع قاعدة البيانات الوطنية للإشعاع الشمسي "
+"(National Solar Radiation Database) للحصول على معلومات الطقس وتستخدم "
+"مكتبة PVLib لنمذجة الألواح الكهروضوئية لأداء حسابات شمسية دقيقة. يأخذ "
+"نموذج اللوحة في الاعتبار موضع الشمس والظروف الجوية ومعاملات تكوين النظام "
+"لتوليد إنتاج الطاقة الذي يعكس الأداء الفعلي لنظام الألواح الكهروضوئية."
 
 #: ../../content/C4_rsgp_solar_system_simulation.rst:29
 msgid ""
@@ -3303,6 +3458,13 @@ msgid ""
 "database integration includes automatic timestamp conversion, timezone "
 "handling, and data interpolation to support accelerated simulation time."
 msgstr ""
+"تحتوي NSRDB على قياسات ساعية للإشعاع الشمسي وبيانات درجة الحرارة والظروف "
+"الجوية للمواقع عبر الولايات المتحدة. في المحاكاة، تم استخدام البيانات "
+"المحلية لفينيكس/أريزونا فقط. يقوم نظام المحاكاة بمعالجة هذه البيانات "
+"لاستخراج قيم الإشعاع العمودي المباشر (DNI) والإشعاع الأفقي المنتشر (DHI) "
+"والإشعاع الأفقي الإجمالي (GHI) اللازمة لحسابات الألواح الكهروضوئية. يتضمن "
+"تكامل قاعدة البيانات تحويل الطوابع الزمنية التلقائي ومعالجة المنطقة الزمنية "
+"واستيفاء البيانات لدعم وقت المحاكاة المعجل."
 
 #: ../../content/C4_rsgp_solar_system_simulation.rst:31
 msgid ""
@@ -3313,16 +3475,23 @@ msgid ""
 "performs these calculations using established solar position algorithms. "
 "Below is an overview of the parameters of that calculation."
 msgstr ""
+"تأخذ حسابات موضع الشمس في الاعتبار خط العرض وخط الطول ووقت السنة ووقت اليوم "
+"لتحديد زاوية السمت الشمسي وزوايا الارتفاع. تتحد معلومات موضع الشمس مع بيانات "
+"الإشعاع (DNI وDHI وGHI) لحساب الطاقة الشمسية الفعالة. تؤدي مكتبة PVLib هذه "
+"الحسابات باستخدام خوارزميات موضع الشمس المعمول بها. فيما يلي نظرة عامة على "
+"معاملات ذلك الحساب."
 
 #: ../../content/C4_rsgp_solar_system_simulation.rst:37
 msgid "Components of solar radiation (Source: ResearchGate)"
-msgstr ""
+msgstr "مكونات الإشعاع الشمسي (ResearchGate :المصدر)"
 
 #: ../../content/C4_rsgp_solar_system_simulation.rst:39
 msgid ""
 "**Direct Normal Irradiance (DNI)** represents the irradiance directly "
 "from the sun to the surface of the photovoltaic panels."
 msgstr ""
+"**الإشعاع العمودي المباشر (Direct Normal Irradiance - DNI)** يمثل الإشعاع المباشر "
+"من الشمس إلى سطح الألواح الكهروضوئية."
 
 #: ../../content/C4_rsgp_solar_system_simulation.rst:41
 msgid ""
@@ -3330,20 +3499,25 @@ msgid ""
 "indirectly reaching the surface of the photovoltaic panels through the "
 "rays scattered by the sky dome."
 msgstr ""
+"**الإشعاع الأفقي المنتشر (Diffuse Horizontal Irradiance - DHI)** يمثل الإشعاع "
+"الذي يصل بشكل غير مباشر إلى سطح الألواح الكهروضوئية عبر الأشعة "
+"المبعثرة من قبة السماء."
 
 #: ../../content/C4_rsgp_solar_system_simulation.rst:43
 msgid ""
 "**Global Horizontal Irradiance(GHI)** represents the total irradiance, "
 "calculated by the following formula:"
 msgstr ""
+"**الإشعاع الأفقي الإجمالي (Global Horizontal Irradiance - GHI)** يمثل الإشعاع الإجمالي، "
+"المحسوب بالصيغة التالية:"
 
 #: ../../content/C4_rsgp_solar_system_simulation.rst:45
 msgid "GHI = DNI \\times \\cos(\\theta) + DHI"
-msgstr ""
+msgstr "GHI = DNI \\times \\cos(\\theta) + DHI"
 
 #: ../../content/C4_rsgp_solar_system_simulation.rst:49
 msgid "where :math:`\\theta` is the solar zenith angle."
-msgstr ""
+msgstr "حيث :math:`\\theta` هي زاوية علو الشمس (solar zenith angle)."
 
 #: ../../_static/plots/C4_solar_irradiance_daily_cycle.py:7
 msgid ""
@@ -3374,7 +3548,7 @@ msgstr ""
 
 #: ../../content/C4_rsgp_solar_system_simulation.rst:59
 msgid "Solar zenith angle (Source: ScienceDirect Topics)"
-msgstr ""
+msgstr "زاوية علو الشمس (ScienceDirect Topics :المصدر)"
 
 #: ../../content/C4_rsgp_solar_system_simulation.rst:61
 msgid ""
@@ -3382,6 +3556,8 @@ msgid ""
 "and conversion efficiency specifications that determine total array "
 "capacity. The total photovoltaic power generation follows:"
 msgstr ""
+"تدعم المحاكاة عدد ألواح قابل للتكوين ومساحة اللوحة الفردية ومواصفات كفاءة التحويل "
+"التي تحدد السعة الإجمالية للمصفوفة. يتبع توليد الطاقة الكهروضوئية الإجمالي:"
 
 #: ../../content/C4_rsgp_solar_system_simulation.rst:67
 #, python-brace-format
@@ -3391,10 +3567,13 @@ msgid ""
 " represents panel efficiency, and :math:`N_{panels}` represents the "
 "number of panels."
 msgstr ""
+"حيث :math:`POA_{irradiance}` يمثل الإشعاع على مستوى المصفوفة (plane-of-array irradiance)، "
+"و :math:`A_{panel}` يمثل مساحة اللوحة الفردية، و :math:`\\eta_{panel}` يمثل "
+"كفاءة اللوحة، و :math:`N_{panels}` يمثل عدد الألواح."
 
 #: ../../content/C4_rsgp_solar_system_simulation.rst:70
 msgid "Battery Energy Storage System"
-msgstr ""
+msgstr "نظام تخزين طاقة البطارية"
 
 #: ../../content/C4_rsgp_solar_system_simulation.rst:71
 msgid ""
@@ -3405,27 +3584,31 @@ msgid ""
 "itself is devoid of any calculations beside implementing its charge "
 "efficiency and limitations."
 msgstr ""
+"ينفذ نظام البطارية خصائص بطارية أيون الليثيوم (Lithium-ion) بما في ذلك قبول الشحن "
+"وسعة التخزين وكفاءة الشحن. يوفر النموذج واجهة للعاكس للشحن والتفريغ من البطارية وفقاً "
+"لحساباته. وعلى هذا النحو، فإن مكون البطارية نفسه خال من أي حسابات عدا تنفيذ كفاءة "
+"الشحن والقيود الخاصة به."
 
 #: ../../content/C4_rsgp_solar_system_simulation.rst:73
 msgid "The battery charge operation follows:"
-msgstr ""
+msgstr "تتبع عملية شحن البطارية:"
 
 #: ../../content/C4_rsgp_solar_system_simulation.rst:75
 #, python-brace-format
 msgid ""
 "P_{charge,actual} = \\min(P_{charge,requested}, P_{max,charge}) \\times "
 "\\eta_{charge}"
-msgstr ""
+msgstr "P_{charge,actual} = \\min(P_{charge,requested}, P_{max,charge}) \\times \\eta_{charge}"
 
 #: ../../content/C4_rsgp_solar_system_simulation.rst:79
 #, python-brace-format
 msgid "E_{charge} = P_{charge,actual} \\times \\Delta t"
-msgstr ""
+msgstr "E_{charge} = P_{charge,actual} \\times \\Delta t"
 
 #: ../../content/C4_rsgp_solar_system_simulation.rst:83
 #, python-brace-format
 msgid "SoC_{new} = \\min(SoC_{current} + E_{charge}, C_{total})"
-msgstr ""
+msgstr "SoC_{new} = \\min(SoC_{current} + E_{charge}, C_{total})"
 
 #: ../../content/C4_rsgp_solar_system_simulation.rst:87
 msgid ""
@@ -3434,6 +3617,9 @@ msgid ""
 "\\frac{\\Delta t_{s}}{3600}` where :math:`\\Delta t_{s}` is the interval "
 "in seconds), and :math:`SoC` state-of-charge."
 msgstr ""
+"حيث :math:`\\eta_{charge}` يمثل كفاءة الشحن (charging efficiency)، و :math:`\\Delta t` يمثل الفترة الزمنية "
+"بالساعات (:math:`\\Delta t = \\frac{\\Delta t_{s}}{3600}` حيث :math:`\\Delta t_{s}` هي الفترة بالثواني)، و "
+":math:`SoC` حالة الشحن (state-of-charge)."
 
 #: ../../content/C4_rsgp_solar_system_simulation.rst:89
 msgid ""
@@ -3442,29 +3628,32 @@ msgid ""
 "present in actual batteries as they reject currents above a certain "
 "level. The discharge operation implements:"
 msgstr ""
+"يمكن أيضاً تكوين البطارية على الحد الأقصى لتيار الشحن الذي يمكن أن تقبله والحد الأقصى "
+"للتفريغ. ينمذج هذا اعتبارات السلامة الموجودة في البطاريات الفعلية حيث ترفض التيارات أعلى "
+"من مستوى معين. تنفذ عملية التفريغ:"
 
 #: ../../content/C4_rsgp_solar_system_simulation.rst:91
 #, python-brace-format
 msgid ""
 "P_{discharge,actual} = \\min(P_{discharge,requested}, P_{max,discharge}) "
 "/ \\eta_{charge}"
-msgstr ""
+msgstr "P_{discharge,actual} = \\min(P_{discharge,requested}, P_{max,discharge}) / \\eta_{charge}"
 
 #: ../../content/C4_rsgp_solar_system_simulation.rst:95
 #, python-brace-format
 msgid ""
 "E_{discharge} = \\min(P_{discharge,actual} \\times \\Delta t, "
 "SoC_{current})"
-msgstr ""
+msgstr "E_{discharge} = \\min(P_{discharge,actual} \\times \\Delta t, SoC_{current})"
 
 #: ../../content/C4_rsgp_solar_system_simulation.rst:99
 #, python-brace-format
 msgid "SoC_{new} = SoC_{current} - E_{discharge}"
-msgstr ""
+msgstr "SoC_{new} = SoC_{current} - E_{discharge}"
 
 #: ../../content/C4_rsgp_solar_system_simulation.rst:104
 msgid "Inverter Control System"
-msgstr ""
+msgstr "نظام التحكم في العاكس"
 
 #: ../../content/C4_rsgp_solar_system_simulation.rst:105
 msgid ""
@@ -3476,16 +3665,21 @@ msgid ""
 "library that follows established algorithms to accurately model the "
 "conversion."
 msgstr ""
+"يدير العاكس تدفق الطاقة بين الألواح الضوئية الكهربائية والبطارية ومدير الطاقة. ينفذ "
+"نمذجة تحويل DC إلى AC لمراعاة فقدان الطاقة التي تحدث عند تحويل التيار المستمر (DC) "
+"من الألواح الضوئية الكهربائية والبطارية إلى تيار متردد (AC) لاستهلاك الأحمال "
+"وتصدير المرافق. يتم التعامل مع التحويل بواسطة مكتبة PVWatts التي تتبع "
+"خوارزميات معمول بها لنمذجة التحويل بدقة."
 
 #: ../../content/C4_rsgp_solar_system_simulation.rst:107
 msgid "The DC to AC conversion follows the PVWatts model:"
-msgstr ""
+msgstr "يتبع تحويل DC إلى AC نموذج PVWatts:"
 
 #: ../../content/C4_rsgp_solar_system_simulation.rst:109
 msgid ""
 "P_{ac} = \\min\\left(\\eta_{inv} \\times P_{dc} \\times \\left(1 - "
 "\\frac{P_{dc}}{P_{dc0}}\\right), P_{ac0}\\right)"
-msgstr ""
+msgstr "P_{ac} = \\min\\left(\\eta_{inv} \\times P_{dc} \\times \\left(1 - \\frac{P_{dc}}{P_{dc0}}\\right), P_{ac0}\\right)"
 
 #: ../../content/C4_rsgp_solar_system_simulation.rst:113
 #, python-brace-format
@@ -3494,10 +3688,12 @@ msgid ""
 " represents DC power rating, and :math:`P_{ac0}` represents AC power "
 "rating. The reverse calculation for required DC power uses:"
 msgstr ""
+"حيث :math:`\\eta_{inv}` يمثل كفاءة العاكس (inverter efficiency)، و :math:`P_{dc0}` يمثل تصنيف قدرة DC، "
+"و :math:`P_{ac0}` يمثل تصنيف قدرة AC. يستخدم الحساب العكسي لقدرة DC المطلوبة:"
 
 #: ../../content/C4_rsgp_solar_system_simulation.rst:115
 msgid "P_{dc,required} = \\frac{P_{ac,target}}{\\eta_{inv,overall}}"
-msgstr ""
+msgstr "P_{dc,required} = \\frac{P_{ac,target}}{\\eta_{inv,overall}}"
 
 #: ../../_static/plots/C4_dc_ac_conversion_efficiency.py:7
 msgid ""
@@ -3528,7 +3724,7 @@ msgstr ""
 
 #: ../../content/C4_rsgp_solar_system_simulation.rst:124
 msgid "The inverter implements three operating modes for power flow priority."
-msgstr ""
+msgstr "ينفذ العاكس ثلاثة أنماط تشغيل لأولوية تدفق الطاقة."
 
 #: ../../content/C4_rsgp_solar_system_simulation.rst:126
 msgid ""
@@ -3538,6 +3734,11 @@ msgid ""
 " When the battery is empty, only then would the inverter draw from "
 "utility. This mode aims to reduce grid-dependency to a minimum."
 msgstr ""
+"**نمط الشمسي-البطارية-المرفق (Solar-Battery-Utility - SBU)** يعطي أولوية لاستخدام "
+"الطاقة المتاحة من الألواح الضوئية الكهربائية إذا كانت موجودة، وفقط عندما لا "
+"تلبي الألواح بذاتها الحمولة يقوم بالسحب من البطارية. عندما تنفد البطارية، فقط "
+"عندها يقوم العاكس بالسحب من المرفق. يهدف هذا النمط إلى تقليل الاعتماد على الشبكة "
+"إلى الحد الأدنى."
 
 #: ../../content/C4_rsgp_solar_system_simulation.rst:128
 msgid ""
@@ -3548,6 +3749,11 @@ msgid ""
 "other source of energy exists. This mode aims to provide security and "
 "prepare to meet emergencies."
 msgstr ""
+"**نمط الشمسي-المرفق-البطارية (Solar-Utility-Battery - SUB)** يعطي أولوية لاستخدام "
+"الطاقة المتاحة من الألواح الضوئية الكهربائية - تماماً مثل النمط السابق. ومع ذلك، "
+"عندما تثبت عدم كفاية قدرة الألواح، يقوم بالسحب من المرفق لتلبية الطلب ويحتفظ "
+"بالبطارية كملاذ أخير فقط عندما لا يوجد مصدر آخر للطاقة. يهدف هذا النمط إلى "
+"توفير الأمن والاستعداد لمواجهة حالات الطوارئ."
 
 #: ../../content/C4_rsgp_solar_system_simulation.rst:130
 msgid ""
@@ -3555,6 +3761,8 @@ msgid ""
 " uses the solar system as only a back-up in case the utility is out of "
 "service."
 msgstr ""
+"**نمط المرفق-الشمسي-البطارية (Utility-Solar-Battery - USB)** يعطي أولوية للسحب من المرفق. "
+"يستخدم النظام الشمسي فقط كنسخة احتياطية في حالة انقطاع المرفق."
 
 #: ../../content/C4_rsgp_solar_system_simulation.rst:132
 msgid ""
@@ -3566,6 +3774,11 @@ msgid ""
 "currently exists in the system, the power manager carries out no such "
 "switches as it currently lacks the ability to predict emergencies."
 msgstr ""
+"يمكن لمدير الطاقة تبديل نمط تشغيل العاكس. قد يثبت هذا فائدته في السيناريوهات "
+"التي يجب فيها حجز البطارية لحالة طارئة متوقعة، وبالتالي تبديل نمط التشغيل إلى SUB "
+"لاستخدام المرفق الآن والاحتفاظ بالبطارية لاستخدامها عندما لا تستطيع الألواح "
+"الشمسية ولا المرفق توفير الطاقة. بينما توجد هذه القدرة حالياً في النظام، لا ينفذ "
+"مدير الطاقة مثل هذه التبديلات لأنه يفتقر حالياً إلى قدرة التنبؤ بحالات الطوارئ."
 
 #: ../../content/C4_rsgp_solar_system_simulation.rst:134
 msgid ""
@@ -3575,24 +3788,34 @@ msgid ""
 "including solar-only charging, solar-first charging, and utility-assisted"
 " charging modes."
 msgstr ""
+"إضافة إلى ذلك، ينفذ العاكس أولوية الشحن التي تحدد كيفية تخصيص الطاقة الشمسية "
+"الزائدة بين شحن البطارية وتصدير المرافق. يدعم النظام عدة إعدادات أولوية الشحن "
+"بما في ذلك أنماط الشحن بالطاقة الشمسية فقط والشحن بالطاقة الشمسية أولاً "
+"والشحن بمساعدة المرافق."
 
 #: ../../content/C4_rsgp_solar_system_simulation.rst:136
 msgid ""
 "**Solar-only** directs all excess solar power to battery charging before "
 "any utility export occurs."
 msgstr ""
+"**الطاقة الشمسية فقط** يوجه جميع الطاقة الشمسية الزائدة إلى شحن البطارية قبل حدوث أي "
+"تصدير للمرافق."
 
 #: ../../content/C4_rsgp_solar_system_simulation.rst:138
 msgid ""
 "**Solar-first** uses the excess solar power to charge the battery when "
 "present. When not present, it uses the utility to charge the battery."
 msgstr ""
+"**الطاقة الشمسية أولاً** يستخدم الطاقة الشمسية الزائدة لشحن البطارية عند وجودها. "
+"عند عدم وجودها، يستخدم المرافق لشحن البطارية."
 
 #: ../../content/C4_rsgp_solar_system_simulation.rst:140
 msgid ""
 "**Utility-assisted** enables battery charging from utility power even "
 "when some excess solar power is present."
 msgstr ""
+"**بمساعدة المرافق** يمكن شحن البطارية من طاقة المرافق حتى عند وجود بعض الطاقة "
+"الشمسية الزائدة."
 
 #: ../../content/C4_rsgp_solar_system_simulation.rst:142
 msgid ""
@@ -3600,17 +3823,21 @@ msgid ""
 "the battery is full. The power flow priority algorithms implement "
 "sequential decision trees:"
 msgstr ""
+"في جميع أولويات الشحن، سيقوم العاكس بتصدير الطاقة للمرافق فقط عندما تكون البطارية "
+"مملوءة. خوارزميات أولوية تدفق الطاقة تنفذ أشجار قرار متسلسلة:"
 
 #: ../../content/C4_rsgp_solar_system_simulation.rst:144
 #, python-brace-format
 msgid "P_{remaining} = P_{load} - \\sum_{source} P_{source,allocated}"
-msgstr ""
+msgstr "P_{remaining} = P_{load} - \\sum_{source} P_{source,allocated}"
 
 #: ../../content/C4_rsgp_solar_system_simulation.rst:148
 msgid ""
 "where power sources are allocated according to the configured priority "
 "mode, and any remaining unmet load triggers load line disconnection."
 msgstr ""
+"حيث يتم تخصيص مصادر الطاقة وفقاً لوضع الأولوية المهيأ، وأي حمولة متبقية غير ملباة "
+"تؤدي إلى قطع خط الحمولة."
 
 #: ../../content/C4_rsgp_solar_system_simulation.rst:154
 msgid ""
@@ -3620,6 +3847,10 @@ msgid ""
 "after a set period of time, during which the power manager should have "
 "taken care of the issue."
 msgstr ""
+"ينفذ العاكس تخفيف الحمولة كإجراء وقائي يمنع زيادة حمل النظام. يقطع الحمولة "
+"عندما تكون مصادر الطاقة المتاحة غير كافية. ثم يتم إعادة ربط الحمولة "
+"تلقائياً بعد فترة زمنية محددة، والتي يجب أن يكون مدير الطاقة قد تعامل "
+"مع المشكلة خلالها."
 
 #: ../../content/C4_rsgp_solar_system_simulation.rst:156
 msgid ""
@@ -3628,10 +3859,13 @@ msgid ""
 "overusing. As such, load shedding is only ever triggered in the extreme "
 "situations where the power manager fails."
 msgstr ""
+"يضمن مدير الطاقة عدم حدوث تخفيف الحمولة حيث يقطع تلقائياً الحمولة عن "
+"البيوت المحددة التي تفرط في الاستخدام. لذلك لا يتم تفعيل تخفيف الحمولة "
+"إلا في الحالات القاهرة حيث يفشل مدير الطاقة."
 
 #: ../../content/C4_rsgp_solar_system_simulation.rst:159
 msgid "Weather Data Integration"
-msgstr ""
+msgstr "تكامل بيانات الطقس"
 
 #: ../../content/C4_rsgp_solar_system_simulation.rst:160
 msgid ""
@@ -3639,6 +3873,8 @@ msgid ""
 "and the external weather database, ensuring that solar calculations "
 "reflect actual atmospheric conditions."
 msgstr ""
+"يدير هذا المكون الواجهة بين بيئة المحاكاة وقاعدة البيانات الجوية الخارجية، "
+"مما يضمن أن حسابات الطاقة الشمسية تعكس الظروف الجوية الفعلية."
 
 #: ../../content/C4_rsgp_solar_system_simulation.rst:162
 msgid ""
@@ -3651,6 +3887,13 @@ msgid ""
 "applications, providing the data necessary for detailed photovoltaic "
 "system modeling."
 msgstr ""
+"تعتبر قاعدة البيانات الوطنية للإشعاع الشمسي (National Solar Radiation Database) "
+"المصدر الأساسي للبيانات حول الإشعاع الشمسي والظروف الجوية. توفر NSRDB "
+"قياسات ساعية لمكونات الإشعاع الشمسي (DNI وDHI وGHI) ودرجة الحرارة المحيطة "
+"وسرعة الرياح وغيرها من المعاملات الأرصادية الجوية المجمعة في مواقع عديدة "
+"عبر الولايات المتحدة. تعد هذه القاعدة واحدة من أشمل مصادر البيانات الشمسية "
+"المتاحة لتطبيقات الطاقة المتجددة، حيث توفر البيانات اللازمة لنمذجة الأنظمة "
+"الكهروضوئية المفصلة."
 
 #: ../../content/C4_rsgp_solar_system_simulation.rst:164
 msgid ""
@@ -3661,14 +3904,18 @@ msgid ""
 "calculations of the solar energy in that specific moment in the "
 "simulation."
 msgstr ""
+"تغطي مجموعة البيانات المستخدمة من NSRDB القياسات المذكورة أعلاه المأخوذة في فينيكس/أريزونا "
+"لعام كامل واحد، بمعدل سجل واحد كل نصف ساعة. يتم استخراج البيانات باستخدام وقت المحاكاة؛ "
+"يتم استخدام السجل ذي الطابع الزمني الأقرب للطابع الزمني الحالي للمحاكاة "
+"في حسابات الطاقة الشمسية في تلك اللحظة المحددة في المحاكاة."
 
 #: ../../content/C4_rsgp_solar_system_simulation.rst:169
 msgid "Snapshot of the NSRDB dataset used"
-msgstr ""
+msgstr "لقطة من مجموعة بيانات NSRDB المستخدمة"
 
 #: ../../content/C4_rsgp_solar_system_simulation.rst:172
 msgid "Power Management Interface"
-msgstr ""
+msgstr "واجهة إدارة الطاقة"
 
 #: ../../content/C4_rsgp_solar_system_simulation.rst:173
 msgid ""
@@ -3679,12 +3926,18 @@ msgid ""
 "the load, and the solar system provides metrics specifying how the load "
 "is being met."
 msgstr ""
+"يستقبل النظام الشمسي الحمولة من مدير الطاقة ويرجع الطاقة المستخدمة من الألواح "
+"الشمسية والبطارية المفرغة واستيراد أو تصدير الشبكة الكهربائية. يستخدم مدير الطاقة "
+"هذه البيانات لاتخاذ قرارات بشأن الحمولة. الواجهة ثنائية الاتجاه؛ يوفر مدير الطاقة "
+"الحمولة بينما يوفر النظام الشمسي المقاييس التي تحدد كيفية تلبية الحمولة."
 
 #: ../../content/C4_rsgp_solar_system_simulation.rst:175
 msgid ""
 "Currently, the interface consists purely of the exchange of data; there "
 "is no exchange of commands or requests between the components."
 msgstr ""
+"حالياً، تتكون الواجهة من تبادل البيانات فقط؛ فلا يوجد تبادل للأوامر أو الطلبات بين "
+"المكونات."
 
 #: ../../content/C4_rsgp_solar_system_simulation.rst:179
 msgid ""
@@ -3696,6 +3949,11 @@ msgid ""
 "important metrics collected, as they are direct metrics of the "
 "effectiveness of the power management solution."
 msgstr ""
+"تعمل عملية جمع البيانات بشكل مستمر طوال فترة المحاكاة لالتقاط بيانات السلاسل الزمنية "
+"حول توليد الطاقة الشمسية وتشغيل البطارية وتدفقات الطاقة على مستوى النظام. يمكن "
+"تحليل البيانات المجمعة لتحديد المشاكل في النموذج والمساعدة في تحسين المحاكاة "
+"وحلول إدارة الطاقة. يمثل استيراد وتصدير شبكة المرافق أهم المقاييس المجمعة "
+"لأنها مقاييس مباشرة لفعالية حل إدارة الطاقة."
 
 #: ../../content/C4_rsgp_solar_system_simulation.rst:181
 msgid ""
@@ -3705,6 +3963,10 @@ msgid ""
 "import and export, among other metrics. The data is logged to a CSV file "
 "continuously throughout the simulation."
 msgstr ""
+"يلتقط النظام البيانات من جميع المكونات لتمكين أي شكل من أشكال التحليل. جمع البيانات واسع: "
+"حالة شحن البطارية والطاقة المولدة من الألواح والحمولة على مستوى النظام "
+"واستيراد وتصدير شبكة المرافق ومقاييس أخرى. يتم تسجيل البيانات في ملف CSV "
+"بشكل مستمر طوال فترة المحاكاة."
 
 #: ../../_static/plots/C4_solar_system_simulation_visualization.py:7
 msgid ""
@@ -3733,6 +3995,9 @@ msgid ""
 " battery operation, system connection states, and utility grid exchange "
 "during controlled operational scenarios"
 msgstr ""
+"عرض توضيحي لمحاكاة النظام الشمسي في الوقت الفعلي يظهر توليد الطاقة الشمسية وتشغيل "
+"البطارية وحالات اتصال النظام وتبادل شبكة المرافق الكهربائية أثناء سيناريوهات "
+"التشغيل المحكومة"
 
 #: ../../content/C4_rsgp_solar_system_simulation.rst:188
 msgid ""
@@ -3746,6 +4011,13 @@ msgid ""
 "keep the battery for that shortage and thus maintain long-term system "
 "stability."
 msgstr ""
+"إلى جانب بيانات NSRDB، توفر ملفات CSV المسجلة جميع البيانات اللازمة لإجراء "
+"تحليل اتجاهات توليد واستهلاك الطاقة. قد يؤدي تحليل الاتجاهات إلى تحسينات "
+"على حلول إدارة الطاقة. إضافة إلى ذلك، يمكن استخدام تقنيات الذكاء الاصطناعي "
+"(AI) للاستفادة من البيانات وتوسيع مدير الطاقة بقدرات AI. يمكن أن يكون هذا "
+"مفيداً بشكل خاص لتوقع نقص توليد الطاقة وبالتالي تغيير وضع تشغيل العاكس "
+"لاستيراد من المرافق لابقاء على البطارية لهذا النقص وبالتالي الحفاظ على "
+"استقرار النظام طويل المدى."
 
 #: ../../content/C5_rsgp_power_management.rst:4
 msgid "Power Management"

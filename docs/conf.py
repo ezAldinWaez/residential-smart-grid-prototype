@@ -12,8 +12,8 @@ sys.path.insert(0, os.path.abspath('..'))
 # -- Project information -----------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#project-information
 project = 'Residential Smart Grid'
-copyright = '2025, RSG Team'
-author = 'RSG Team'
+copyright = '2025, RSGP Team'
+author = 'RSGP Team'
 
 # -- General configuration ---------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#general-configuration
@@ -82,9 +82,9 @@ latex_show_pagerefs = True
 latex_show_urls = 'footnote'
 latex_documents = [(
     'index',  # startdocname
-    'RSG.tex',  # targetname
+    'RSGP.tex',  # targetname
     'Residential Smart Grid',  # title
-    'RSG Team',  # author
+    'RSGP Team',  # author
     'manual',  # theme
     True  # toctree_only
 )]
@@ -129,6 +129,11 @@ latex_elements = {
         \phantomsection
 
         \listoffigures
+
+        \cleardoublepage
+        \phantomsection
+
+        \listoftables
 
         \cleardoublepage
         \phantomsection

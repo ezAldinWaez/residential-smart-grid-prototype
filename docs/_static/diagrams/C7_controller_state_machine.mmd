@@ -2,21 +2,10 @@ stateDiagram-v2
    [*] --> Initialize
    Initialize --> MainLoop : GPIO setup complete
    state MainLoop {
-      [*] --> ReadButtons
       ReadButtons --> CheckButtonPress : Scan all pins
       CheckButtonPress --> ExecuteCallback : Button pressed
       CheckButtonPress --> UpdateLEDs : No press detected
       ExecuteCallback --> UpdateLEDs : Action completed
       UpdateLEDs --> SyncWithSimulation : Query device states
-      SyncWithSimulation --> Wait : LEDs updated
-      Wait --> ReadButtons : 100ms delay
+      SyncWithSimulation --> ReadButtons : Wait 100ms delay
    }
-   state ExecuteCallback {
-      [*] --> UtilityControl : Global button
-      [*] --> LoadLineControl : Load line button
-      [*] --> DeviceControl : Device button
-      UtilityControl --> [*]
-      LoadLineControl --> [*]
-      DeviceControl --> [*]
-   }
-   MainLoop --> [*] : Stop requested

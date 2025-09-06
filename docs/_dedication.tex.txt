@@ -1,3 +1,37 @@
 \chapter*{Dedication}
 
-some content for section: Dedication
+\begin{center}
+
+\textit{To my beloved family, whose endless love and sacrifices}\\
+\textit{have paved the way for every achievement.}\\
+\textit{To my friends, who made this journey memorable.}\\
+\vspace{0.2cm}
+\textbf{\small Ez Aldin Waez}\\[0.8cm]
+
+\textit{To my parents, who believed in me when I didn't believe in myself.}\\
+\textit{To my siblings, who inspire me to be better every day.}\\
+\textit{To knowledge seekers everywhere.}\\
+\vspace{0.2cm}
+\textbf{\small Abdullah Naal}\\[0.8cm]
+
+\textit{To my family, the source of my strength and motivation.}\\
+\textit{To my teachers, who shaped my understanding of the world.}\\
+\textit{To the pursuit of sustainable innovation.}\\
+\vspace{0.2cm}
+\textbf{\small Mohammad Labaniah}\\[0.8cm]
+
+\textit{To my loved ones, who stood by me through every challenge.}\\
+\textit{To my mentors, who guided me toward excellence.}\\
+\textit{To the future of clean energy solutions.}\\
+\vspace{0.2cm}
+\textbf{\small Abdo Kialy}\\[0.8cm]
+
+\textit{To my family, whose support has been my anchor.}\\
+\textit{To my colleagues, who made this collaborative work possible.}\\
+\textit{To the advancement of smart grid technology.}\\
+\vspace{0.2cm}
+\textbf{\small Ruby Abbassy}\\[1cm]
+
+\end{center}
+
+\vfill

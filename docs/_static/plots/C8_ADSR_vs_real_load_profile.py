@@ -30,7 +30,7 @@ def load_real_refrigerator_data():
     """
 
     # Path to the extracted data    
-    csv_path = 'docs/_static/data/real_refrigerator_power_MDPI_2018_figure4_WebPlotDigitizer.csv'
+    csv_path = '../data/real_refrigerator_power_MDPI_2018_figure4_WebPlotDigitizer.csv'
 
     # Load data
     data = np.loadtxt(csv_path, delimiter=',')
@@ -39,10 +39,6 @@ def load_real_refrigerator_data():
 
     # Clean negative baseline values (likely digitization artifacts)
     power_watts = np.maximum(power_watts, 0)
-
-    print(f"Loaded real refrigerator data: {len(time_hours)} points")
-    print(f"Time range: {time_hours.min():.2f} - {time_hours.max():.2f} hours")
-    print(f"Power range: {power_watts.min():.1f} - {power_watts.max():.1f} W")
 
     return time_hours, power_watts
 
@@ -82,10 +78,8 @@ def generate_adsr_refrigerator_data(real_time_hours, real_power_watts):
             device_off_times.append(real_time_hours[i])
             is_currently_on = False
 
-    print(f"Detected device transitions:")
     for i, on_time in enumerate(device_on_times):
         off_time = device_off_times[i] if i < len(device_off_times) else "end"
-        print(f"  ON at {on_time:.3f}h, OFF at {off_time}")
 
     # Create time array matching real data
     time_hours = real_time_hours.copy()
@@ -125,10 +119,6 @@ def generate_adsr_refrigerator_data(real_time_hours, real_power_watts):
         power_adsr.append(power)
 
     power_adsr = np.array(power_adsr)
-
-    print(f"Generated ADSR data: {len(time_hours)} points")
-    print(f"ADSR time range: {time_hours.min():.2f} - {time_hours.max():.2f} hours")
-    print(f"ADSR power range: {power_adsr.min():.1f} - {power_adsr.max():.1f} W")
 
     return time_hours, power_adsr
 
@@ -171,10 +161,10 @@ ax3.legend()
 ax3.set_ylim(0, max(power_real.max(), power_adsr.max()) * 1.1)
 
 # Calculate comparison statistics
-real_energy = np.trapezoid(power_real, time_real)
-adsr_energy = np.trapezoid(power_adsr, time_adsr)
-real_avg = np.mean(power_real[power_real > 5])  # Average when on
-adsr_avg = np.mean(power_adsr[power_adsr > 5])  # Average when on
+real_energy = np.trapezoid(y=power_real, x=time_real)
+adsr_energy = np.trapezoid(y=power_adsr, x=time_adsr)
+real_avg = np.mean(power_real[power_real > 25])
+adsr_avg = np.mean(power_adsr[power_adsr > 25])
 
 # Add statistics box
 stats_text = f"""Energy Comparison:

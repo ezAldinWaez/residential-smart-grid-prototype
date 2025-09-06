@@ -1,25 +1,25 @@
-# Residential Smart Grid Project (RSGP)
+# Residential Smart Grid Prototype (RSGP)
 
-A comprehensive simulation system for modeling and managing energy distribution in residential smart grid environments. This project simulates the complex interactions between solar power generation, residential energy consumption, battery storage, and intelligent grid management.
+A comprehensive simulation framework that addresses energy distribution inefficiencies in residential solar systems. The project implements an intelligent power management system that coordinates energy allocation among houses with varying consumption patterns and renewable generation capabilities, minimizing grid dependence through virtual battery allocation and adaptive learning algorithms.
 
 ## 🌟 Features
 
 ### Core Simulation Components
 
-- **Time Simulation Engine** - Real-time simulation with configurable time acceleration
-- **Solar System Modeling** - Realistic PV panels, battery storage, and inverter simulation
-- **Houses Simulation** - Device-level energy consumption modeling for multiple houses
-- **Intelligent Power Management** - Priority-based energy distribution and load balancing
-- **Remote Control Interface** - Distributed system control via Pyro5
+- **Houses Simulation** - ADSR envelope modeling for realistic device behavior and energy consumption patterns
+- **Solar System Simulation** - PV panels, battery storage, and inverter simulation using NSRDB data with pvlib/pvwatts libraries
+- **Power Management** - Virtual battery allocation with statistical learning algorithms and adaptive weight adjustment
+- **Time Simulation Engine** - Synchronized timestep coordination with configurable acceleration factors
+- **Remote Object Interface** - Distributed architecture using Pyro5 for component communication
 
 ### Key Capabilities
 
-- Multi-threaded concurrent simulation architecture
-- Real weather data integration (NSRDB)
-- Advanced inverter modeling with multiple operating modes
-- Dynamic load shedding and utility line management
-- Comprehensive logging and data export
-- Real-time dashboard for monitoring and control
+- **Virtual Battery System** - Fair energy allocation among houses based on consumption patterns
+- **Adaptive Learning** - Statistical analysis with normalized load deviation calculations
+- **Real-time Coordination** - Synchronized simulation across distributed components
+- **NSRDB Integration** - Authoritative solar irradiance data for accurate modeling
+- **Hardware Interface** - Raspberry Pi GPIO controller with physical interaction capabilities
+- **Comprehensive Logging** - Timestamped CSV data export for analysis and validation
 
 ## 🏗️ Architecture
 
@@ -133,12 +133,18 @@ graph TB
    python -m dashboard
    ```
 
+5. **Launch the Raspberry Pi controller** (optional, requires GPIO setup)
+   ```bash
+   python -m rasp_controller
+   ```
+
 ### First Run
 
-1. Start the RSGP simulation - this will begin all simulation components
-2. Launch the dashboard to monitor and control the system
-3. Use the dashboard to view real-time energy flows and system status
-4. Check the `rsgp/_logs/` directory for simulation data
+1. Start the RSGP simulation - initializes houses, solar system, and power management components
+2. Launch the dashboard for real-time monitoring and control capabilities
+3. Optionally run the GPIO controller for hardware interaction
+4. Monitor energy flows, virtual battery allocations, and system performance
+5. Check timestamped directories in `rsgp/_logs/` for simulation data
 
 ## 📖 Usage
 
@@ -154,6 +160,20 @@ python -m rsgp
 
 ```bash
 python -m dashboard
+```
+
+**Launch the hardware controller:**
+
+```bash
+python -m rasp_controller
+```
+
+**Run analysis notebooks:**
+
+```bash
+marimo run notebooks/rsgp_logs_visualization.py
+marimo run notebooks/nsrdb_visualization.py
+marimo edit notebooks/graphs_editor.py
 ```
 
 **Stop simulation:**
@@ -178,12 +198,12 @@ TIME_FACTOR = 3600  # 1 hour simulation = 1 second real time
 
 ### Data Analysis
 
-Explore the Jupyter notebooks in `notebooks/` for:
+Explore the Marimo notebooks in `notebooks/` for:
 
-- Solar irradiance visualization
-- System performance analysis
-- Energy flow patterns
-- Inverter data analysis
+- RSGP simulation data visualization and analysis
+- NSRDB solar irradiance data exploration  
+- Interactive graph editing and data processing
+- System performance metrics and validation
 
 ## 📊 System Specifications
 
@@ -196,17 +216,17 @@ Explore the Jupyter notebooks in `notebooks/` for:
 
 ### Residential Loads
 
-- **Houses**: 12 residential units
-- **Load Modeling**: Device-level ADSR envelope patterns
-- **Power Control**: Individual load line and utility line management
-- **Load Range**: Dynamic consumption based on time-of-day patterns
+- **Houses**: Configurable number of residential units (default: multiple houses)
+- **Load Modeling**: ADSR envelope patterns for realistic device behavior
+- **Device Categories**: Refrigerator, HVAC, Water Heater, and other appliances
+- **Power Control**: Individual load line and utility line management per house
 
 ### Power Management
 
-- **Priority System**: Solar → Utility → Battery → Load Shedding
-- **Virtual Batteries**: Fair energy allocation per house
-- **Load Balancing**: Real-time distribution optimization
-- **Grid Interface**: Utility connection status management
+- **Virtual Battery System**: Dynamic allocation based on consumption patterns
+- **Adaptive Learning**: Statistical weight adjustment with fairness constraints
+- **Distribution Algorithm**: Weighted power allocation among houses
+- **Load Balancing**: Real-time coordination and grid interface management
 
 ## 🔧 Development
 
@@ -215,39 +235,45 @@ Explore the Jupyter notebooks in `notebooks/` for:
 ```
 residential-smart-grid/
 ├── rsgp/                      # Main simulation package
-│   ├── solar_system_sim/     # Solar PV system modeling
-│   ├── houses_sim/     # Residential load simulation
-│   ├── power_mng/           # Power management algorithms
-│   ├── remote_object/       # Pyro5 remote interface
-│   ├── config/              # Configuration settings
-│   └── utils/               # Utilities and helpers
-├── dashboard/                # GUI monitoring interface
-├── docs/                    # Sphinx documentation
-├── notebooks/               # Analysis notebooks
-└── requirements.txt         # Python dependencies
+│   ├── houses_sim/           # Houses simulation with ADSR device modeling
+│   ├── solar_system_sim/     # Solar system with panels, battery, and inverter
+│   ├── power_mng/            # Virtual battery and adaptive learning algorithms
+│   ├── utils/                # Time simulation, logging, and remote objects
+│   └── config/               # Configuration settings
+├── dashboard/                # tkinter/ttkbootstrap GUI interface
+├── rasp_controller/          # Raspberry Pi GPIO hardware controller
+├── docs/                     # Sphinx documentation (bilingual EN/AR)
+├── notebooks/                # Marimo analysis notebooks
+└── requirements.txt          # Python dependencies
 ```
 
 ### Key Dependencies
 
-- **pvlib**: Solar irradiance and PV modeling
-- **Pyro5**: Distributed object communication
-- **numpy/pandas**: Scientific computing
-- **tkinter/ttkbootstrap**: GUI framework
-- **sphinx**: Documentation generation
+- **pvlib/pvwatts**: Solar irradiance modeling and PV system calculations
+- **Pyro5**: Distributed object communication and remote interfaces
+- **numpy/pandas**: Scientific computing and data manipulation
+- **tkinter/ttkbootstrap**: GUI framework for dashboard
+- **marimo**: Interactive notebook environment for data analysis
+- **lgpio**: Raspberry Pi GPIO control library
+- **sphinx**: Documentation generation with bilingual support
 
 ## 📚 Documentation
 
-Comprehensive documentation is available in the `docs/` directory:
+Comprehensive bilingual documentation is available in the `docs/` directory:
 
-- **Build HTML docs**: `make --directory=docs html`
-- **View docs**: Open `docs/_build/html/index.html`
+- **Build English HTML**: `cd docs && make html-en`
+- **Build Arabic HTML**: `cd docs && make html-ar`
+- **Build English PDF**: `cd docs && make latex-en`
+- **Build Arabic PDF**: `cd docs && make latex-ar`
 
 Documentation covers:
 
-- System architecture and design
-- API reference
-- Configuration options
-- Advanced usage examples
+- Houses simulation and ADSR device modeling
+- Solar system simulation with NSRDB integration
+- Power management and virtual battery algorithms
+- Dashboard and hardware controller interfaces
+- Results validation and system analysis
+- API reference and development workflows
 
 ## 📈 Monitoring & Logging
 
@@ -255,26 +281,27 @@ Documentation covers:
 
 The dashboard provides:
 
-- System status overview
-- Energy flow visualization
-- House-level load monitoring
-- Solar generation tracking
-- Battery status and management
+- Real-time system status and component states
+- Houses simulation monitoring with device controls
+- Solar system generation and battery status
+- Power management algorithm performance
+- Virtual battery allocation visualization
 
 ### Data Logging
 
-- **Text Logs**: `rsgp/_logs/rsgp.log`
-- **CSV Data**: Timestamped simulation data in `rsgp/_logs/rsgp_YYYY-MM-DD_HH-MM/`
-- **Configurable**: Enable/disable logging in settings
+- **CSV Data**: Timestamped directories in `rsgp/_logs/` with separate files for each component
+- **Houses Data**: `houses_simulation.csv` with device loads and connectivity states
+- **Solar Data**: `solar_system_simulation.csv` with generation and battery metrics
+- **Power Management**: `power_management.csv` with virtual battery states and allocations
 
 ### Performance Metrics
 
-Monitor key performance indicators:
+Key performance indicators include:
 
-- Energy self-sufficiency ratio
-- Battery utilization efficiency
-- Load balancing effectiveness
-- System stability metrics
+- Grid dependence reduction ratio
+- Virtual battery utilization efficiency
+- Energy distribution fairness among houses
+- Learning algorithm convergence metrics
 
 ## 🤝 Use Cases
 
@@ -301,9 +328,13 @@ Monitor key performance indicators:
 
 ## 🙏 Acknowledgments
 
-- NSRDB for solar irradiance data
-- PVLib community for solar modeling tools
+- **Dr. Fadi Farha** - Project supervisor and academic guidance
+- **University of Aleppo** - Faculty of Informatics Engineering, Department of Systems and Computer Networks
+- **NREL** - National Solar Radiation Database and PVLib/PVWatts libraries
+- **Open Source Community** - Python ecosystem and supporting libraries
 
 ---
 
-**Note**: This simulation is designed for research and educational purposes. For production deployments, additional safety and reliability measures should be implemented.
+**Project Team**: Ez Aldin Waez, Abdullah Naal, Mohammad Labaniah, Abdo Kialy, Ruby Abbassy
+
+**Note**: This simulation framework is designed for research and educational purposes. For production deployments, additional safety, security, and reliability measures should be implemented.

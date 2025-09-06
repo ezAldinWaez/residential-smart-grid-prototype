@@ -2,7 +2,7 @@ Raspberry Pi Controller
 =======================
 Introduction
 ------------
-The Raspberry Pi controller serves as the physical hardware interface for the residential smart grid project. This chapter examines the implementation of the GPIO controller system that bridges between the software simulation and physical hardware controls. The controller enables real-time interaction with the RSGP simulation through physical buttons and visual feedback via LEDs; thus providing an intuitive testing environment.
+The Raspberry Pi controller serves as the physical hardware interface for the residential smart grid Prototype. This chapter examines the implementation of the GPIO controller system that bridges between the software simulation and physical hardware controls. The controller enables real-time interaction with the RSGP simulation through physical buttons and visual feedback via LEDs; thus providing an intuitive testing environment.
 
 System Architecture Overview
 ----------------------------

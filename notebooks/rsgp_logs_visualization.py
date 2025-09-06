@@ -6,7 +6,7 @@ app = marimo.App(width="medium")
 
 @app.cell(hide_code=True)
 def _(mo):
-    mo.md("""# RSG Logs Visualization""")
+    mo.md("""# RSGP Logs Visualization""")
     return
 
 
@@ -31,7 +31,7 @@ def _(file_browser, pd):
     data = pd.read_csv(file_browser.path(0)) if len(
         file_browser.value) else None
     if data is not None:
-        data["timestamp"] = pd.to_datetime(data["timestamp"])
+        data["timestamp"] = pd.to_datetime(data["timestamp"], format='ISO8601')
     return (data,)
 
 

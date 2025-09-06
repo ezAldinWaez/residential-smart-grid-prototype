@@ -1,5 +1,5 @@
 # SOME DESCRIPTIVE TITLE.
-# Copyright (C) 2025, RSG Team
+# Copyright (C) 2025, RSGP Team
 # This file is distributed under the same license as the Residential Smart
 # Grid package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, 2025.
@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Residential Smart Grid \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-08-11 22:10+0300\n"
+"POT-Creation-Date: 2025-09-06 23:23+0300\n"
 "PO-Revision-Date: 2025-09-02 11:45+0300\n"
 "Last-Translator: Ez Aldin Waez <ez.aldin.waez@gmail.com>\n"
 "Language: ar\n"
@@ -24,27 +24,69 @@ msgstr ""
 msgid "Residential Smart Grid"
 msgstr "الشبكة الذكية للمباني السكنية"
 
-#: ../../index.rst:4
-msgid "This is some content that is showen only in the HTLM and TEXT outputs."
-msgstr "هذا محتوى يظهر فقط في مخرجات HTML وTEXT."
+#: ../../index.rst:3
+msgid ""
+"Residential solar energy systems create distribution inefficiencies where"
+" individual houses generate excess energy while others lack energy, "
+"resulting in wasted resources and increased grid dependence despite "
+"available energy. The Residential Smart Grid Prototype (RSGP) addresses "
+"this problem by implementing an intelligent power management solution "
+"that optimizes energy allocation among houses with varying consumption "
+"patterns. The system employs a distributed simulation architecture "
+"consisting of houses simulation using Attack-Decay-Sustain-Release "
+"envelope modeling for realistic device behavior, solar system simulation "
+"integrating National Solar Radiation Database data with pvlib and pvwatts"
+" libraries, and power management implementing a statistical learning "
+"algorithm for virtual battery allocation based on consumption patterns. "
+"The power management algorithm partitions shared physical battery among "
+"individual houses through a virtual battery system with dynamically "
+"adjusted allocation weights, employing normalized load deviation "
+"calculations and fairness constraints to ensure fair energy distribution "
+"while minimizing grid dependence. Implementation includes real-time "
+"monitoring interfaces through tkinter-based dashboard systems and "
+"Raspberry Pi GPIO controllers enabling physical interaction through "
+"button controls and LED feedback. Results of validation demonstrate "
+"correlation between ADSR device modeling and published consumption data, "
+"with system performance metrics indicating reduced utility grid "
+"dependence."
+msgstr ""
+"تؤدي أنظمة الطاقة الشمسية السكنية إلى عدم كفاءة في التوزيع حيث تولد البيوت "
+"الفردية طاقة زائدة بينما تفتقر أخرى للطاقة، مما يؤدي إلى هدر الموارد وزيادة "
+"الاعتماد على الشبكة الكهربائية رغم توافر الطاقة. يعالج النموذج الأولي للشبكة "
+"الذكية السكنية (Residential Smart Grid Prototype - RSGP) هذه المشكلة من خلال "
+"تنفيذ حل ذكي لإدارة الطاقة يحسن توزيع الطاقة بين البيوت ذات أنماط الاستهلاك "
+"المتباينة. يستخدم النظام هيكل محاكاة موزع يتكون من محاكاة البيوت باستخدام نمذجة "
+"الغلاف Attack-Decay-Sustain-Release للحصول على سلوك واقعي للأجهزة، ومحاكاة "
+"النظام الشمسي التي تدمج بيانات قاعدة البيانات الوطنية للإشعاع الشمسي "
+"(National Solar Radiation Database) مع مكتبات pvlib وpvwatts، وإدارة الطاقة "
+"التي تطبق خوارزمية تعلم إحصائي لتخصيص البطارية الافتراضية (Virtual Battery) "
+"بناءً على أنماط الاستهلاك. تقوم خوارزمية إدارة الطاقة بتقسيم البطارية الفيزيائية "
+"المشتركة بين البيوت الفردية من خلال نظام البطارية الافتراضية مع أوزان التخصيص "
+"المعدلة ديناميكياً، وتستخدم حسابات انحراف الحمولة المُطبَّعة وقيود الإنصاف "
+"لضمان التوزيع العادل للطاقة مع تقليل الاعتماد على الشبكة الكهربائية. يشمل "
+"التنفيذ واجهات المراقبة في الوقت الفعلي من خلال أنظمة لوحة المعلومات القائمة "
+"على tkinter ومتحكمات Raspberry Pi GPIO التي تمكن التفاعل الفيزيائي من خلال "
+"التحكم بالأزرار وتغذية راجعة LED. تُظهر نتائج التحقق وجود ارتباط بين نمذجة "
+"الأجهزة ADSR وبيانات الاستهلاك المنشورة، مع مؤشرات أداء النظام التي تشير إلى "
+"انخفاض الاعتماد على شبكة المرافق الكهربائية."
 
-#: ../../index.rst:7
+#: ../../index.rst:6
 msgid "Table of Contents"
 msgstr "جدول المحتويات"
 
-#: ../../index.rst:30
+#: ../../index.rst:37
 msgid "Indices and tables"
 msgstr "الفهارس والجداول"
 
-#: ../../index.rst:32
+#: ../../index.rst:39
 msgid ":ref:`genindex`"
 msgstr ":ref:`genindex`"
 
-#: ../../index.rst:33
+#: ../../index.rst:40
 msgid ":ref:`modindex`"
 msgstr ":ref:`modindex`"
 
-#: ../../index.rst:34
+#: ../../index.rst:41
 msgid ":ref:`search`"
 msgstr ":ref:`search`"
 

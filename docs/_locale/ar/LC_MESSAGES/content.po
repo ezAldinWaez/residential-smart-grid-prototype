@@ -22,7 +22,7 @@ msgstr ""
 
 #: ../../content/A1_docs_workflow.rst:6
 msgid "Documentation Workflow"
-msgstr ""
+msgstr "سير عمل التوثيق"
 
 #: ../../content/A1_docs_workflow.rst:8
 #: ../../content/A2_notebooks_workflow.rst:4
@@ -43,16 +43,21 @@ msgid ""
 "development and it separates the work into writing, editing, enrichment, "
 "and validation phases."
 msgstr ""
+"ينفذ سير العمل نهجاً متعدد المراحل يضمن دقة المحتوى والاتساق البصري "
+"والدقة الرياضية مع دعم كل من توثيق التطوير المبني على الويب وأشكال النشر "
+"الأكاديمي. يستخدم النظام التحكم في الإصدارات للسماح بالتطوير التعاوني "
+"ويفصل العمل إلى مراحل الكتابة والتحرير والإثراء والتحقق."
 
 #: ../../content/A1_docs_workflow.rst:12
 msgid "Collaborative Development Approach"
-msgstr ""
+msgstr "نهج التطوير التعاوني"
 
 #: ../../content/A1_docs_workflow.rst:13
 msgid ""
 "The collaborative approach implements clear role separation to optimize "
 "the development process:"
 msgstr ""
+"ينفذ النهج التعاوني فصلاً واضحاً للأدوار لتحسين عملية التطوير:"
 
 #: ../../content/A1_docs_workflow.rst:15
 msgid ""
@@ -60,6 +65,8 @@ msgid ""
 "coverage of system components without concern for formatting or "
 "presentation details."
 msgstr ""
+"**مؤلفو المحتوى**: يركزون على الدقة التقنية والتغطية الشاملة لمكونات النظام "
+"دون الاهتمام بتفاصيل التنسيق أو العرض."
 
 #: ../../content/A1_docs_workflow.rst:16
 msgid ""
@@ -67,38 +74,47 @@ msgid ""
 "representations, and cross-reference accuracy between documentation and "
 "implementation."
 msgstr ""
+"**المحررون التقنيون**: يتحققون من الصيغ الرياضية وتمثيلات الخوارزميات، "
+"ودقة المراجع المتقاطعة بين التوثيق والتنفيذ."
 
 #: ../../content/A1_docs_workflow.rst:17
 msgid ""
 "**Content Enrichers**: Add diagrams, plots, figures, and visual elements "
 "that support the text without modifying core technical information."
 msgstr ""
+"**مثري المحتوى**: يضيفون المخططات والرسوم البيانية والأشكال والعناصر البصرية "
+"التي تدعم النص دون تعديل المعلومات التقنية الأساسية."
 
 #: ../../content/A1_docs_workflow.rst:18
 msgid ""
 "**Language Reviewers**: Ensure consistency in technical terminology, "
 "writing style, and adherence to academic standards."
 msgstr ""
+"**مراجعو اللغة**: يضمنون الاتساق في المصطلحات التقنية وأسلوب الكتابة "
+"والالتزام بالمعايير الأكاديمية."
 
 #: ../../content/A1_docs_workflow.rst:20
 msgid ""
 "This separation enables parallel development where multiple team members "
 "can contribute simultaneously without conflicts or redundant effort."
 msgstr ""
+"يمكّن هذا الفصل التطوير المتزامن حيث يمكن لعدة أعضاء في الفريق المساهمة "
+"في آن واحد دون تضارب أو جهد زائد."
 
 #: ../../content/A1_docs_workflow.rst:23
 msgid "Documentation Development Phases"
-msgstr ""
+msgstr "مراحل تطوير التوثيق"
 
 #: ../../content/A1_docs_workflow.rst:24
 msgid ""
 "The documentation development follows four phases that ensure content "
 "accuracy and presentation quality."
 msgstr ""
+"يتبع تطوير التوثيق أربع مراحل تضمن دقة المحتوى وجودة العرض."
 
 #: ../../content/A1_docs_workflow.rst:27
 msgid "Phase 1: Initial Writing"
-msgstr ""
+msgstr "المرحلة الأولى: الكتابة الأولية"
 
 #: ../../content/A1_docs_workflow.rst:28
 msgid ""
@@ -107,50 +123,54 @@ msgid ""
 "technical accuracy, comprehensive coverage, and clear explanation of "
 "system components."
 msgstr ""
+"تركز مرحلة الكتابة الأولية على إنشاء المحتوى دون الاهتمام بالتنسيق أو المخططات "
+"أو عناصر العرض. يركز المؤلفون على الدقة التقنية والتغطية الشاملة "
+"والشرح الواضح لمكونات النظام."
 
 #: ../../content/A1_docs_workflow.rst:30
 msgid "During this phase, content authors:"
-msgstr ""
+msgstr "خلال هذه المرحلة، يقوم مؤلفو المحتوى ب:"
 
 #: ../../content/A1_docs_workflow.rst:32
 msgid "Document system architecture, algorithms, and mathematical formulas"
-msgstr ""
+msgstr "توثيق بنية النظام والخوارزميات والصيغ الرياضية"
 
 #: ../../content/A1_docs_workflow.rst:34
 msgid ""
 "Create comprehensive technical explanations using plain reStructuredText "
 "markup"
 msgstr ""
+"إنشاء شروحات تقنية شاملة باستخدام ترقيم reStructuredText البسيط"
 
 #: ../../content/A1_docs_workflow.rst:36
 msgid "Create placeholders for diagrams and plots to be added later"
-msgstr ""
+msgstr "إنشاء حافظات مكان للمخططات والرسوم البيانية لإضافتها لاحقاً"
 
 #: ../../content/A1_docs_workflow.rst:38
 msgid "Focus on content completeness rather than presentation quality"
-msgstr ""
+msgstr "التركيز على اكتمال المحتوى بدلاً من جودة العرض"
 
 #: ../../content/A1_docs_workflow.rst:40
 msgid ""
 "The writing phase employs minimal markup to avoid distraction from "
 "content development."
-msgstr ""
+msgstr "تستخدم مرحلة الكتابة ترقيماً أدنى لتجنب التشتت عن تطوير المحتوى."
 
 #: ../../content/A1_docs_workflow.rst:43
 msgid "Phase 2: Technical Editing"
-msgstr ""
+msgstr "المرحلة الثانية: التحرير التقني"
 
 #: ../../content/A1_docs_workflow.rst:44
 msgid ""
 "The technical editing phase goes through two rounds of reviews: one for "
 "mathematical formulas and one for algorithms."
-msgstr ""
+msgstr "تمر مرحلة التحرير التقني بجولتين من المراجعة: واحدة للصيغ الرياضية وواحدة للخوارزميات."
 
 #: ../../content/A1_docs_workflow.rst:46
 msgid ""
 "**Mathematical Formula Verification**: All mathematical formulas undergo "
 "consistency checking between related equations."
-msgstr ""
+msgstr "**التحقق من الصيغ الرياضية**: تخضع جميع الصيغ الرياضية لفحص التسق بين المعادلات المترابطة."
 
 #: ../../content/A1_docs_workflow.rst:48
 #: ../../content/C4_rsgp_solar_system_simulation.rst:63
@@ -158,64 +178,64 @@ msgstr ""
 msgid ""
 "P_{total} = POA_{irradiance} \\times A_{panel} \\times \\eta_{panel} "
 "\\times N_{panels}"
-msgstr ""
+msgstr "P_{total} = POA_{irradiance} \\times A_{panel} \\times \\eta_{panel} \\times N_{panels}"
 
 #: ../../content/A1_docs_workflow.rst:52
 msgid "Each formula receives validation for:"
-msgstr ""
+msgstr "تتلقى كل صيغة تحققاً من:"
 
 #: ../../content/A1_docs_workflow.rst:54
 msgid ""
 "**Implementation correlation**: Verification that documented formulations"
 " match actual code implementations"
-msgstr ""
+msgstr "**الارتباط بالتنفيذ**: التحقق من أن الصيغ الموثقة تطابق تطبيقات الكود الفعلية"
 
 #: ../../content/A1_docs_workflow.rst:55
 msgid ""
 "**Cross-reference accuracy**: Ensuring mathematical symbols maintain "
 "consistent meaning throughout documentation"
-msgstr ""
+msgstr "**دقة المراجع المتقاطعة**: ضمان أن الرموز الرياضية تحافظ على معنى متسق عبر الوثائق"
 
 #: ../../content/A1_docs_workflow.rst:56
 msgid ""
 "**Consistence formatting**: Ensuring the mathematical formulas all follow"
 " the same conventions"
-msgstr ""
+msgstr "**التنسيق المتسق**: ضمان أن جميع الصيغ الرياضية تتبع نفس الاتفاقيات"
 
 #: ../../content/A1_docs_workflow.rst:58
 msgid ""
 "**Algorithm Representation Review**: All algorithm descriptions undergo "
 "verification to ensure accurate representation of the actual "
 "implementation. The review process examines:"
-msgstr ""
+msgstr "**مراجعة تمثيل الخوارزميات**: تخضع جميع أوصاف الخوارزميات للتحقق لضمان التمثيل الدقيق للتطبيق الفعلي. تتفحص عملية المراجعة:"
 
 #: ../../content/A1_docs_workflow.rst:60
 msgid "Flowchart accuracy against actual code execution paths"
-msgstr ""
+msgstr "دقة المخططات الانسيابية مقابل مسارات تنفيذ الكود الفعلية"
 
 #: ../../content/A1_docs_workflow.rst:61
 msgid "Decision tree completeness for all conditional branches"
-msgstr ""
+msgstr "اكتمال أشجار القرار لجميع الفروع الشرطية"
 
 #: ../../content/A1_docs_workflow.rst:62
 msgid "Consistency between flowcharts in the conventions they use"
-msgstr ""
+msgstr "التسق بين المخططات الانسيابية في الاتفاقيات التي تستخدمها"
 
 #: ../../content/A1_docs_workflow.rst:65
 msgid "Phase 3: Content Enrichment"
-msgstr ""
+msgstr "المرحلة الثالثة: إثراء المحتوى"
 
 #: ../../content/A1_docs_workflow.rst:66
 msgid ""
 "The content enrichment phase adds visual elements, diagrams, and plots "
 "that support the text without modifying core technical information."
-msgstr ""
+msgstr "تضيف مرحلة إثراء المحتوى عناصر بصرية ومخططات ورسوم بيانية تدعم النص دون تعديل المعلومات التقنية الأساسية."
 
 #: ../../content/A1_docs_workflow.rst:68
 msgid ""
 "**Mermaid Diagram Integration**: System architecture and workflow "
 "diagrams use Mermaid markup for consistency and maintainability:"
-msgstr ""
+msgstr "**تكامل مخططات Mermaid**: تستخدم مخططات بنية النظام وسير العمل ترقيم Mermaid للتسق وقابلية الصيانة:"
 
 #: ../../content/A1_docs_workflow.rst:77
 msgid ""
@@ -223,13 +243,13 @@ msgid ""
 "technical accuracy. The diagram development process includes validation "
 "against actual system architecture to prevent documentation drift from "
 "implementation reality."
-msgstr ""
+msgstr "تخضع المخططات لتحسين تكراري لضمان الوضوح البصري والدقة التقنية. تتضمن عملية تطوير المخططات التحقق من بنية النظام الفعلية لمنع انحراف الوثائق عن واقع التطبيق."
 
 #: ../../content/A1_docs_workflow.rst:79
 msgid ""
 "**Matplotlib Plot Generation**: Technical visualizations use Python "
 "scripts that generate plots dynamically during documentation builds:"
-msgstr ""
+msgstr "**إنتاج رسوم Matplotlib البيانية**: تستخدم التصورات التقنية سكريبتات Python التي تولد الرسوم البيانية ديناميكياً أثناء بناء الوثائق:"
 
 #: ../../content/A1_docs_workflow.rst:81
 msgid ""
@@ -237,145 +257,145 @@ msgid ""
 "``docs/_static/plots/`` to maintain separation between content and "
 "visualization code. This approach enables independent development and "
 "testing of visualizations without affecting documentation content."
-msgstr ""
+msgstr "توجد سكريبتات إنتاج الرسوم البيانية كملفات Python منفصلة في ``docs/_static/plots/`` للحفاظ على الفصل بين المحتوى وكود التصور. يمكن هذا النهج التطوير المستقل واختبار التصورات دون التأثير على محتوى الوثائق."
 
 #: ../../content/A1_docs_workflow.rst:84
 msgid "Phase 4: Final Validation"
-msgstr ""
+msgstr "المرحلة الرابعة: التحقق النهائي"
 
 #: ../../content/A1_docs_workflow.rst:85
 msgid ""
 "The final validation phase implements quality assurance to verify "
 "documentation integrity across all dimensions."
-msgstr ""
+msgstr "تطبق مرحلة التحقق النهائي ضمان الجودة للتأكد من سلامة الوثائق عبر جميع الأبعاد."
 
 #: ../../content/A1_docs_workflow.rst:87
 msgid ""
 "**Flowchart Integrity Verification**: All diagrams undergo systematic "
 "verification against actual system behavior through:"
-msgstr ""
+msgstr "**التحقق من سلامة المخططات الانسيابية**: تخضع جميع المخططات للتحقق المنهجي مقابل سلوك النظام الفعلي من خلال:"
 
 #: ../../content/A1_docs_workflow.rst:89
 msgid "Execution path tracing to ensure flowcharts represent actual code paths"
-msgstr ""
+msgstr "تتبع مسار التنفيذ لضمان أن المخططات الانسيابية تمثل مسارات الكود الفعلية"
 
 #: ../../content/A1_docs_workflow.rst:90
 msgid "State transition validation for simulation components"
-msgstr ""
+msgstr "التحقق من انتقالات الحالة لمكونات المحاكاة"
 
 #: ../../content/A1_docs_workflow.rst:91
 msgid "Interface verification between system components"
-msgstr ""
+msgstr "التحقق من الواجهات بين مكونات النظام"
 
 #: ../../content/A1_docs_workflow.rst:93
 msgid ""
 "**Build Verification**: Final validation includes verification of "
 "compilation success for all output formats to ensure that content renders"
 " correctly."
-msgstr ""
+msgstr "**التحقق من البناء**: يتضمن التحقق النهائي التأكد من نجاح التجميع لجميع تنسيقات الإخراج لضمان عرض المحتوى بشكل صحيح."
 
 #: ../../content/A1_docs_workflow.rst:96
 msgid "Sphinx"
-msgstr ""
+msgstr "Sphinx"
 
 #: ../../content/A1_docs_workflow.rst:97
 msgid ""
 "The documentation uses Sphinx as the primary documentation generator and "
 "reStructuredText as the primary markup language, as it proves "
 "extensibility for technical content:"
-msgstr ""
+msgstr "تستخدم الوثائق Sphinx كمولد الوثائق الأساسي و reStructuredText كلغة الترقيم الأساسية، حيث يثبت قابلية التوسع للمحتوى التقني:"
 
 #: ../../content/A1_docs_workflow.rst:109
 msgid ""
 "The documentation integrates multiple Sphinx extensions that provide "
 "specialized functionality for technical documentation."
-msgstr ""
+msgstr "تدمج الوثائق امتدادات Sphinx متعددة توفر وظائف متخصصة للوثائق التقنية."
 
 #: ../../content/A1_docs_workflow.rst:111
 msgid ""
 "**Autodoc Extension**: Automatic API documentation generation from Python"
 " docstrings:"
-msgstr ""
+msgstr "**امتداد Autodoc**: إنتاج وثائق API تلقائياً من docstrings في Python:"
 
 #: ../../content/A1_docs_workflow.rst:113
 msgid ""
 "The autodoc extension maintains synchronization between code "
 "documentation and generated API reference, ensuring that documentation "
 "remains current with implementation changes."
-msgstr ""
+msgstr "يحافظ امتداد autodoc على التزامن بين وثائق الكود ومرجع API المولد، مما يضمن بقاء الوثائق محدثة مع تغييرات التطبيق."
 
 #: ../../content/A1_docs_workflow.rst:115
 msgid ""
 "**Napoleon Extension**: Support for Google and NumPy docstring formats "
 "that provide structured parameter and return value documentation within "
 "source code."
-msgstr ""
+msgstr "**امتداد Napoleon**: دعم تنسيقات docstring لـ Google و NumPy التي توفر وثائق منظمة للمعاملات والقيم المُرجعة داخل الكود المصدري."
 
 #: ../../content/A1_docs_workflow.rst:118
 msgid "Automated API Reference Generation"
-msgstr ""
+msgstr "إنتاج مرجع API تلقائياً"
 
 #: ../../content/A1_docs_workflow.rst:119
 msgid ""
 "All source code employs Google-style docstrings that provide structured, "
 "machine-readable documentation directly within the codebase:"
-msgstr ""
+msgstr "يستخدم جميع الكود المصدري docstrings بنمط Google التي توفر وثائق منظمة قابلة للقراءة آلياً مباشرة داخل قاعدة الكود:"
 
 #: ../../content/A1_docs_workflow.rst:144
 msgid ""
 "This structured approach provides API documentation directly within "
 "source code, ensuring that documentation matches implementation behavior."
-msgstr ""
+msgstr "يوفر هذا النهج المنظم وثائق API مباشرة داخل الكود المصدري، مما يضمن مطابقة الوثائق لسلوك التطبيق."
 
 #: ../../content/A1_docs_workflow.rst:147
 msgid "Matplotlib Plot Integration"
-msgstr ""
+msgstr "تكامل رسوم Matplotlib البيانية"
 
 #: ../../content/A1_docs_workflow.rst:148
 msgid ""
 "The documentation uses matplotlib for technical visualizations, "
 "mathematical concepts, and simulation results."
-msgstr ""
+msgstr "تستخدم الوثائق matplotlib للتصورات التقنية والمفاهيم الرياضية ونتائج المحاكاة."
 
 #: ../../content/A1_docs_workflow.rst:150
 msgid ""
 "Technical plots exist as executable Python scripts within "
 "``docs/_static/plots/`` that generate visualizations during documentation"
 " builds:"
-msgstr ""
+msgstr "توجد الرسوم البيانية التقنية كسكريبتات Python قابلة للتنفيذ داخل ``docs/_static/plots/`` تولد التصورات أثناء بناء الوثائق:"
 
 #: ../../content/A1_docs_workflow.rst:161
 msgid "This architecture provides several advantages:"
-msgstr ""
+msgstr "توفر هذه البنية عدة مزايا:"
 
 #: ../../content/A1_docs_workflow.rst:163
 msgid "**Live data integration**: Plots use actual simulation data and code"
-msgstr ""
+msgstr "**تكامل البيانات المباشرة**: تستخدم الرسوم البيانية بيانات المحاكاة والكود الفعلية"
 
 #: ../../content/A1_docs_workflow.rst:164
 msgid "**Automatic updates**: Visualizations automatically reflect code changes"
-msgstr ""
+msgstr "**التحديثات التلقائية**: تعكس التصورات تلقائياً تغييرات الكود"
 
 #: ../../content/A1_docs_workflow.rst:165
 msgid ""
 "**Reproducibility**: Plot generation is completely automated and "
 "reproducible"
-msgstr ""
+msgstr "**القابلية للإعادة**: إنتاج الرسوم البيانية آلي بالكامل وقابل للإعادة"
 
 #: ../../content/A1_docs_workflow.rst:166
 msgid "**Version control**: Plot scripts maintain change history independently"
-msgstr ""
+msgstr "**التحكم في الإصدار**: تحافظ سكريبتات الرسوم البيانية على تاريخ التغييرات بشكل مستقل"
 
 #: ../../content/A1_docs_workflow.rst:169
 msgid "Scientific Data Extraction and Validation"
-msgstr ""
+msgstr "استخراج البيانات العلمية والتحقق منها"
 
 #: ../../content/A1_docs_workflow.rst:170
 msgid ""
 "The documentation workflow includes extracting real-world data from "
 "scientific literature to validate simulation models against established "
 "research findings."
-msgstr ""
+msgstr "يتضمن سير عمل الوثائق استخراج البيانات الواقعية من الأدبيات العلمية للتحقق من نماذج المحاكاة مقابل النتائج البحثية المثبتة."
 
 #: ../../content/A1_docs_workflow.rst:172
 msgid ""
@@ -383,11 +403,11 @@ msgid ""
 "raw data is not available, the workflow uses WebPlotDigitizer "
 "(https://automeris.io/WebPlotDigitizer/) to extract numerical data points"
 " from published scientific figures:"
-msgstr ""
+msgstr "**تكامل WebPlotDigitizer**: لسيناريوهات التحقق من النماذج حيث البيانات الخام غير متوفرة، يستخدم سير العمل WebPlotDigitizer (https://automeris.io/WebPlotDigitizer/) لاستخراج النقاط الرقمية من الأشكال العلمية المنشورة:"
 
 #: ../../content/A1_docs_workflow.rst:184
 msgid "Scenario-Based Plot Generation"
-msgstr ""
+msgstr "إنتاج الرسوم البيانية القائمة على السيناريوهات"
 
 #: ../../content/A1_docs_workflow.rst:185
 msgid ""
@@ -397,53 +417,54 @@ msgid ""
 "those lambda functions at the times specified in the scenario, then it "
 "plots the results for visualization. Events are not arbitrary and are "
 "meant to reflect typical usage patterns in residential houses:"
-msgstr ""
+msgstr "تستخدم الرسوم البيانية نظاماً قائماً على السيناريوهات حيث تُعرف الأحداث بوقت وصولها ودالة lambda المقابلة التي تغير حالة المحاكاة. يشغل سكريبت Python المحاكاة ويستدعي دوال lambda هذه في الأوقات المحددة في السيناريو، ثم يرسم النتائج للتصور. الأحداث ليست تعسفية وتهدف لتعكس أنماط الاستخدام النموذجية في المنازل السكنية:"
 
 #: ../../content/A1_docs_workflow.rst:208
 msgid "Scenario files enable:"
-msgstr ""
+msgstr "تمكن ملفات السيناريوهات:"
 
 #: ../../content/A1_docs_workflow.rst:210
 msgid ""
 "**Realistic Load Patterns**: Multi-house coordination that mimics actual "
 "residential behavior"
-msgstr ""
+msgstr "**أنماط الأحمال الواقعية**: تنسيق متعدد المنازل يحاكي السلوك السكني الفعلي"
 
 #: ../../content/A1_docs_workflow.rst:211
 msgid ""
 "**Sequencing**: Time-based event orchestration for morning, afternoon, "
 "and evening routines"
-msgstr ""
+msgstr "**التسلسل**: تنظيم الأحداث الزمنية لروتين الصباح والظهر والمساء"
 
 #: ../../content/A1_docs_workflow.rst:212
 msgid ""
 "**System Stress Testing**: Peak demand scenarios and load distribution "
 "analysis"
-msgstr ""
+msgstr "**اختبار إجهاد النظام**: سيناريوهات الطلب الذروي وتحليل توزيع الأحمال"
 
 #: ../../content/A1_docs_workflow.rst:213
 msgid "**Demonstrations**: Clear examples of power management algorithm responses"
-msgstr ""
+msgstr "**العروض التوضيحية**: أمثلة واضحة لاستجابات خوارزميات إدارة الطاقة"
 
 #: ../../content/A1_docs_workflow.rst:216
 msgid "Build System Integration"
-msgstr ""
+msgstr "تكامل نظام البناء"
 
 #: ../../content/A1_docs_workflow.rst:217
 msgid ""
 "Matplotlib plots integrate with Sphinx through the "
 "``matplotlib.sphinxext.plot_directive``:"
-msgstr ""
+msgstr "تتكامل رسوم Matplotlib البيانية مع Sphinx من خلال ``matplotlib.sphinxext.plot_directive``:"
 
 #: ../../content/A1_docs_workflow.rst:226
 msgid ""
 "The plot directive executes Python scripts during documentation builds "
 "and embeds the generated visualizations directly into the output."
-msgstr ""
+msgstr "ينفذ توجيه الرسم البياني سكريبتات Python أثناء بناء الوثائق ويدمج التصورات المولدة مباشرة في الإخراج."
+
 
 #: ../../content/A2_notebooks_workflow.rst:2
 msgid "Notebooks Workflow"
-msgstr ""
+msgstr "سير العمل للدفاتر (Notebooks Workflow)"
 
 #: ../../content/A2_notebooks_workflow.rst:5
 msgid ""
@@ -454,10 +475,15 @@ msgid ""
 "data can be downloaded as csv, JSON, or parquet to be imported into 3rd "
 "party analysis tools for mathematical analysis."
 msgstr ""
+"توفر الدفاتر تصور البيانات الشامل من خلال تطبيقات الويب المستندة إلى إطار العمل "
+"marimo. كل دفتر يستهدف جانباً محدداً من بيانات النظام، بما في ذلك قاعدة بيانات "
+"NSRDB. يضمن هذا النهج سهولة الفحص حيث يحتوي كل دفتر على البيانات ذات الصلة فقط. "
+"بالإضافة إلى ذلك، يمكن تنزيل البيانات بصيغة csv أو JSON أو parquet لاستيرادها "
+"في أدوات التحليل الخارجية للتحليل الرياضي."
 
 #: ../../content/A2_notebooks_workflow.rst:8
 msgid "marimo Framework Overview"
-msgstr ""
+msgstr "نظرة عامة على إطار العمل marimo"
 
 #: ../../content/A2_notebooks_workflow.rst:9
 msgid ""
@@ -467,6 +493,11 @@ msgid ""
 "automatically manages cell dependencies; when variables change in one "
 "cell, all dependent cells execute automatically to maintain consistency."
 msgstr ""
+"تستخدم الدفاتر إطار العمل marimo، وهو إطار دفاتر Python يخزن الدفاتر "
+"كملفات Python خالصة بدلاً من JSON، مما يتيح التطوير التعاوني المناسب وتحكم "
+"الإصدار (Version Control). يدير إطار العمل تلقائياً التبعيات بين الخلايا؛ "
+"عندما تتغير المتغيرات في خلية واحدة، تتنفذ جميع الخلايا التابعة تلقائياً "
+"للحفاظ على الاتساق."
 
 #: ../../content/A2_notebooks_workflow.rst:11
 msgid ""
@@ -477,6 +508,11 @@ msgid ""
 " modern Python tooling, including code formatting and interactive "
 "components that enable interactive analysis."
 msgstr ""
+"يضمن نموذج التنفيذ التفاعلي (Reactive Execution Model) أن حالة الدفتر تبقى "
+"متزامنة مع تغييرات الكود. يزيل هذا المشكلة الشائعة للمخرجات القديمة التي "
+"تحدث عند تنفيذ الخلايا خارج الترتيب في بيئات الدفاتر التقليدية. بالإضافة "
+"إلى ذلك، يوفر marimo دعماً مدمجاً لأدوات Python الحديثة، بما في ذلك تنسيق "
+"الكود والمكونات التفاعلية التي تتيح التحليل التفاعلي."
 
 #: ../../content/A2_notebooks_workflow.rst:13
 msgid ""
@@ -484,18 +520,20 @@ msgid ""
 "applications. This enables sharing the notebooks with researchers who "
 "need not set up the development environment to analyze the data."
 msgstr ""
+"يدعم إطار العمل نشر الدفاتر كتطبيقات ويب مستقلة. يتيح هذا مشاركة الدفاتر مع "
+"الباحثين الذين لا يحتاجون إلى إعداد بيئة التطوير لتحليل البيانات."
 
 #: ../../content/A2_notebooks_workflow.rst:16
 msgid "Notebook Applications"
-msgstr ""
+msgstr "تطبيقات الدفاتر (Notebook Applications)"
 
 #: ../../content/A2_notebooks_workflow.rst:17
 msgid "The project includes four specialized notebook applications."
-msgstr ""
+msgstr "يتضمن المشروع أربعة تطبيقات دفاتر متخصصة."
 
 #: ../../content/A2_notebooks_workflow.rst:20
 msgid "Graph Editor"
-msgstr ""
+msgstr "محرر الرسوم البيانية (Graph Editor)"
 
 #: ../../content/A2_notebooks_workflow.rst:21
 msgid ""
@@ -504,10 +542,13 @@ msgid ""
 "documentation. The live preview this notebook provides expedites the "
 "process of creating the diagrams."
 msgstr ""
+"يوفر دفتر محرر الرسوم البيانية بيئة تفاعلية لإنشاء وتعديل مخططات Mermaid "
+"المستخدمة في جميع أنحاء وثائق المشروع. المعاينة المباشرة التي يوفرها هذا "
+"الدفتر تسرع عملية إنشاء المخططات."
 
 #: ../../content/A2_notebooks_workflow.rst:26
 msgid "Graph editor notebook interface"
-msgstr ""
+msgstr "واجهة دفتر محرر الرسوم البيانية"
 
 #: ../../content/A2_notebooks_workflow.rst:28
 msgid ""
@@ -518,10 +559,15 @@ msgid ""
 "for file persistence, allowing users to save modifications directly to "
 "the project files."
 msgstr ""
+"تعرض المعاينة المباشرة مخططات Mermaid فوراً عند حدوث تغييرات في الكود، مما يوفر "
+"التعليقات البصرية الفورية أثناء عملية التصميم. يزيل هذا السلوك التفاعلي "
+"دورة التحرير-ترجمة-عرض التقليدية المرتبطة عادة بإنشاء المخططات. يتيح "
+"التطبيق أيضاً الاحتفاظ بالملفات، مما يسمح للمستخدمين بحفظ التعديلات مباشرة "
+"في ملفات المشروع."
 
 #: ../../content/A2_notebooks_workflow.rst:31
 msgid "NSRDB Visualization"
-msgstr ""
+msgstr "تصور NSRDB"
 
 #: ../../content/A2_notebooks_workflow.rst:32
 msgid ""
@@ -530,10 +576,14 @@ msgid ""
 "researchers to examine solar irradiance patterns, atmospheric conditions,"
 " and seasonal variations that affect photovoltaic system performance."
 msgstr ""
+"يوفر دفتر تصور NSRDB التصور لقاعدة بيانات الإشعاع الشمسي الوطنية المناخية "
+"(National Solar Radiation Database). يتيح هذا التطبيق للباحثين فحص أنماط "
+"الإشعاع الشمسي والظروف الجوية والتغيرات الموسمية التي تؤثر على أداء أنظمة "
+"الخلايا الشمسية (Photovoltaic)."
 
 #: ../../content/A2_notebooks_workflow.rst:37
 msgid "NSRDB visualization notebook interface"
-msgstr ""
+msgstr "واجهة دفتر تصور NSRDB"
 
 #: ../../content/A2_notebooks_workflow.rst:39
 msgid ""
@@ -546,10 +596,16 @@ msgid ""
 "periods and zoom in or out to cover them, supporting visualization of "
 "both short-term and long-term changes."
 msgstr ""
+"يصور التطبيق ملفات CSV التي تحتوي على قياسات الإشعاع الشمسي الساعية من "
+"فينيكس، أريزونا. يوفر التصور اختيار الحقول التفاعلي، مما يسمح للمستخدمين "
+"بفحص معامل جوية مختلفة بما في ذلك الإشعاع الطبيعي المباشر (DNI) "
+"والإشعاع الأفقي المنتشر (DHI) والإشعاع الأفقي العام (GHI) ودرجة الحرارة "
+"وظروف الرياح. يمكن للمستخدمين التركيز على فترات زمنية محددة والتكبير أو "
+"التصغير لتغطيتها، مما يدعم تصور التغييرات قصيرة المدى وطويلة المدى."
 
 #: ../../content/A2_notebooks_workflow.rst:42
 msgid "Inverter Logs Visualization"
-msgstr ""
+msgstr "تصور سجلات العاكس (Inverter Logs Visualization)"
 
 #: ../../content/A2_notebooks_workflow.rst:43
 msgid ""
@@ -559,10 +615,13 @@ msgid ""
 "thus enables validation of the theoretical models against actual device "
 "behavior."
 msgstr ""
+"يصور دفتر تصور سجلات العاكس بيانات من عاكس حقيقي مادي خارج المحاكاة. يتيح "
+"هذا التطبيق تحليل المحاكاة مقابل أداء العتاد الحقيقي، وبالتالي يتيح التحقق "
+"من النماذج النظرية مقابل سلوك الجهاز الفعلي."
 
 #: ../../content/A2_notebooks_workflow.rst:48
 msgid "Inverter logs visualization notebook interface"
-msgstr ""
+msgstr "واجهة دفتر تصور سجلات العاكس"
 
 #: ../../content/A2_notebooks_workflow.rst:50
 msgid ""
@@ -573,6 +632,10 @@ msgid ""
 "status, load consumption measurements, and the operational mode of the "
 "inverter."
 msgstr ""
+"يقرأ التطبيق ملفات Excel التي تحتوي على بيانات القياس عن بعد للعاكس الملتقطة "
+"عبر نظام مراقبة WatchPower. يمكن للمستخدمين الاختيار من الحقول المتاحة "
+"لفحص جوانب مختلفة من تشغيل العاكس. تتضمن الحقول مستويات توليد "
+"الطاقة وحالة شحن البطارية وقياسات استهلاك الحمل ونمط تشغيل العاكس."
 
 #: ../../content/A2_notebooks_workflow.rst:52
 msgid ""
@@ -580,10 +643,12 @@ msgid ""
 "simulation outputs, providing ground truth for model validation and "
 "system performance assessment."
 msgstr ""
+"تمثل بيانات العاكس قياسات عتاد فعلية بدلاً من مخرجات المحاكاة، مما يوفر "
+"الحقيقة المرجعية (Ground Truth) لاعتماد النموذج وتقييم أداء النظام."
 
 #: ../../content/A2_notebooks_workflow.rst:55
 msgid "RSGP Logs Visualization"
-msgstr ""
+msgstr "تصور سجلات RSGP"
 
 #: ../../content/A2_notebooks_workflow.rst:56
 msgid ""
@@ -592,10 +657,13 @@ msgid ""
 " enables researchers to examine system-wide behavior as well as the "
 "behavior of each individual component."
 msgstr ""
+"يصور دفتر تصور سجلات RSGP بيانات مخرجات المحاكاة المولدة بواسطة محاكاة "
+"الشبكة الذكية السكنية. يتيح هذا التطبيق للباحثين فحص السلوك على مستوى "
+"النظام وكذلك سلوك كل مكون فردي."
 
 #: ../../content/A2_notebooks_workflow.rst:61
 msgid "RSGP logs visualization notebook interface"
-msgstr ""
+msgstr "واجهة دفتر تصور سجلات RSGP"
 
 #: ../../content/A2_notebooks_workflow.rst:63
 msgid ""
@@ -605,6 +673,11 @@ msgid ""
 "data processing pipeline converts timestamps to proper datetime objects "
 "and provides field selection to examine different system metrics."
 msgstr ""
+"يعالج التطبيق ملفات CSV التي تحتوي على بيانات متسلسلة زمنياً من جولات "
+"المحاكاة، بما في ذلك ملفات الحمل على مستوى المنزل وتوليد الطاقة "
+"الشمسية ودورات شحن البطارية وقرارات إدارة الطاقة. خط معالجة "
+"البيانات يحول الطوابع الزمنية إلى كائنات زمن وتاريخ مناسبة "
+"ويوفر اختيار الحقول لفحص مقاييس نظام مختلفة."
 
 #: ../../content/A2_notebooks_workflow.rst:65
 msgid ""
@@ -614,10 +687,14 @@ msgid ""
 "supports the iterative refinement of power management strategies and "
 "validation of simulation accuracy."
 msgstr ""
+"يوفر التطبيق التغذية الراجعة الأساسية لتطوير خوارزمية إدارة الطاقة؛ يمكن "
+"للباحثين فحص كيف تؤثر قرارات التحكم على استقرار النظام وكفاءته "
+"واستيراد/تصدير الشبكة. يدعم هذا التطوير التدريجي لاستراتيجيات إدارة "
+"الطاقة واعتماد دقة المحاكاة."
 
 #: ../../content/A2_notebooks_workflow.rst:68
 msgid "Data Integration and Workflow"
-msgstr ""
+msgstr "تكامل البيانات وسير العمل (Data Integration and Workflow)"
 
 #: ../../content/A2_notebooks_workflow.rst:69
 msgid ""
@@ -627,6 +704,9 @@ msgid ""
 " multiple data sources and validation of simulation accuracy against "
 "real-world measurements."
 msgstr ""
+"تعمل تطبيقات الدفاتر معاً لتوفير تصور شامل للبيانات يمتد من نتائج المحاكاة "
+"إلى أداء العتاد الفعلي. يتيح هذا النهج المتكامل تحليل الارتباط عبر مصادر "
+"بيانات متعددة واعتماد دقة المحاكاة مقابل القياسات الحقيقية."
 
 #: ../../content/A2_notebooks_workflow.rst:71
 msgid ""
@@ -637,6 +717,11 @@ msgid ""
 " logs provide validation data to confirm that physical hardware behavior "
 "aligns with simulation predictions."
 msgstr ""
+"يبدأ سير العمل عادة بتحليل بيانات NSRDB لفهم الظروف البيئية خلال فترات "
+"زمنية محددة. بعد ذلك يفحص الباحثون نتائج المحاكاة باستخدام تصور "
+"سجلات RSGP لفهم كيف يستجيب النظام لهذه الظروف. أخيراً، توفر "
+"سجلات العاكس بيانات الاعتماد للتأكد من أن سلوك العتاد المادي "
+"يتوافق مع توقعات المحاكاة."
 
 #: ../../content/A2_notebooks_workflow.rst:73
 msgid ""
@@ -645,6 +730,9 @@ msgid ""
 " changes in dependent visualizations, supporting iterative hypothesis "
 "testing and parameter optimization."
 msgstr ""
+"تتيح الطبيعة التفاعلية لدفاتر marimo للباحثين تعديل معامل التحليل في دفتر "
+"واحد ومراقبة التغييرات المقابلة فوراً في التصورات التابعة، مما يدعم "
+"اختبار الفرضيات التدريجي وتحسين المعامل."
 
 #: ../../content/A2_notebooks_workflow.rst:75
 msgid ""
@@ -654,6 +742,10 @@ msgid ""
 "into project documentation, ensuring that visual representations remain "
 "synchronized with analytical discoveries."
 msgstr ""
+"يدعم محرر الرسوم البيانية هذا سير العمل التحليلي من خلال توفير أدوات لإنشاء "
+"الوثائق البصرية التي تنقل النتائج إلى جماهير أوسع. المخططات المنشأة "
+"عبر محرر الرسوم البيانية تندمج مباشرة في وثائق المشروع، مما "
+"يضمن أن التمثيلات البصرية تبقى متزامنة مع الاكتشافات التحليلية."
 
 #: ../../content/A3_api_reference.rst:2
 msgid "API Reference"
@@ -4019,6 +4111,7 @@ msgstr ""
 "لاستيراد من المرافق لابقاء على البطارية لهذا النقص وبالتالي الحفاظ على "
 "استقرار النظام طويل المدى."
 
+
 #: ../../content/C5_rsgp_power_management.rst:4
 msgid "Power Management"
 msgstr "إدارة الطاقة"
@@ -4029,6 +4122,8 @@ msgid ""
 " This chapter examines the algorithms and mathematical foundation that "
 "enable the power manager to achieve efficient energy utilization."
 msgstr ""
+"يعمل نظام إدارة الطاقة كطبقة التنسيق الذكية. يدرس هذا الفصل الخوارزميات "
+"والأساس الرياضي الذي يمكن مدير الطاقة من تحقيق الاستخدام الكفوء للطاقة."
 
 #: ../../content/C5_rsgp_power_management.rst:9
 msgid ""
@@ -4039,10 +4134,14 @@ msgid ""
 "decisions, and individual ``VirtualBattery`` instances that represent "
 "each house's allocation within the shared battery."
 msgstr ""
+"يطبق مدير الطاقة خوارزمية تكيفية تتعلم من أنماط الاستهلاك وتضبط أوزان "
+"التوزيع لتقليل الاعتماد على شبكة الخدمة. يعمل النظام من خلال مكونين أساسيين: "
+"``PowerManager`` المركزي الذي ينسق القرارات على مستوى النظام، ومثيلات "
+"``VirtualBattery`` الفردية التي تمثل تخصيص كل منزل ضمن البطارية المشتركة."
 
 #: ../../content/C5_rsgp_power_management.rst:12
 msgid "System Architecture"
-msgstr ""
+msgstr "هندسة النظام (System Architecture)"
 
 #: ../../content/C5_rsgp_power_management.rst:13
 msgid ""
@@ -4050,6 +4149,8 @@ msgid ""
 "and solar system simulation through well-defined interfaces that enable "
 "real-time coordination and control."
 msgstr ""
+"يتكامل نظام إدارة الطاقة مع محاكاة المنازل ومحاكاة النظام الشمسي من خلال واجهات "
+"محددة بوضوح تمكن التنسيق والتحكم في الزمن الفعلي."
 
 #: ../../content/C5_rsgp_power_management.rst:19
 msgid ""
@@ -4059,6 +4160,10 @@ msgid ""
 "algorithms that process current system state, update virtual battery "
 "parameters, and make power distribution decisions."
 msgstr ""
+"يعمل مدير الطاقة على دورة تحديث قابلة للتكوين، محددة عادة لتتطابق مع فترة تحديث "
+"محاكاة المنازل البالغة 100 ميلي ثانية. خلال كل دورة تحديث، ينفذ المدير تسلسلاً من "
+"الخوارزميات المنسقة التي تعالج الحالة الحالية للنظام، وتحدث معاملات البطارية الافتراضية "
+"(Virtual Battery)، وتتخذ قرارات توزيع الطاقة."
 
 #: ../../content/C5_rsgp_power_management.rst:21
 msgid ""
@@ -4068,10 +4173,13 @@ msgid ""
 "generation data, battery state information, and accepts load requirements"
 " while returning actual power delivery."
 msgstr ""
+"توفر واجهة التنسيق تواصلاً ثنائي الاتجاه بين المكونات. تقدم محاكاة المنازل متطلبات "
+"الحمل الحالية وتقبل أوامر التحكم في خط الحمل. تقدم محاكاة النظام الشمسي بيانات التوليد "
+"ومعلومات حالة البطارية، وتقبل متطلبات الحمل بينما ترجع توصيل الطاقة الفعلي."
 
 #: ../../content/C5_rsgp_power_management.rst:24
 msgid "Virtual Battery System"
-msgstr ""
+msgstr "نظام البطارية الافتراضية (Virtual Battery System)"
 
 #: ../../content/C5_rsgp_power_management.rst:25
 msgid ""
@@ -4081,10 +4189,13 @@ msgid ""
 "allocated capacity, manages charge and discharge, and tracks the house's "
 "weight that determines its share of the total system capacity."
 msgstr ""
+"يقسم نظام البطارية الافتراضية البطارية الفيزيائية المشتركة بين المنازل الفردية بناءً على أنماط "
+"استهلاكها. يحصل كل منزل على مثيل ``VirtualBattery`` مخصص يتتبع سعته المخصصة، ويدير "
+"الشحن والتفريغ، ويتتبع وزن المنزل الذي يحدد حصته من سعة النظام الإجمالية."
 
 #: ../../content/C5_rsgp_power_management.rst:28
 msgid "Mathematical Foundation"
-msgstr ""
+msgstr "الأساس الرياضي (Mathematical Foundation)"
 
 #: ../../content/C5_rsgp_power_management.rst:29
 msgid ""
@@ -4093,10 +4204,12 @@ msgid ""
 "fundamental relationship establishes the connection between virtual "
 "battery capacity and system-wide resources:"
 msgstr ""
+"يوظف نظام تخصيص البطارية الافتراضية عدة علاقات رياضية لضمان توزيع عادل وفعال للطاقة. "
+"تؤسس العلاقة الأساسية الربط بين سعة البطارية الافتراضية وموارد النظام الشامل:"
 
 #: ../../content/C5_rsgp_power_management.rst:31
 msgid "C_{vb,i} = \\frac {C_{total}}{N} \\times w_i"
-msgstr ""
+msgstr "C_{vb,i} = \\frac {C_{total}}{N} \\times w_i"
 
 #: ../../content/C5_rsgp_power_management.rst:35
 #: ../../content/C5_rsgp_power_management.rst:59
@@ -4106,37 +4219,38 @@ msgstr ""
 #: ../../content/C5_rsgp_power_management.rst:289
 #: ../../content/C5_rsgp_power_management.rst:310
 msgid "where:"
-msgstr ""
+msgstr "حيث:"
 
 #: ../../content/C5_rsgp_power_management.rst:37
 #, python-brace-format
 msgid "`C_{vb,i}` represents the total capacity of the i-th virtual battery"
-msgstr ""
+msgstr "``C_{vb,i}`` يمثل السعة الإجمالية للبطارية الافتراضية رقم i"
 
 #: ../../content/C5_rsgp_power_management.rst:39
 #, python-brace-format
 msgid "`C_{total}` represents the total capacity of the physical battery"
-msgstr ""
+msgstr "``C_{total}`` يمثل السعة الإجمالية للبطارية الفيزيائية"
 
 #: ../../content/C5_rsgp_power_management.rst:41
 msgid "`N` represents the number of houses in the system"
-msgstr ""
+msgstr "``N`` يمثل عدد المنازل في النظام"
 
 #: ../../content/C5_rsgp_power_management.rst:43
 #, python-brace-format
 msgid "`w_{i}` represents the weight assigned to the i-th house"
-msgstr ""
+msgstr "``w_{i}`` يمثل الوزن المخصص للمنزل رقم i"
 
 #: ../../content/C5_rsgp_power_management.rst:45
 msgid ""
 "The weight constraint ensures that the sum of all virtual capacities "
 "equals the total physical capacity:"
 msgstr ""
+"يضمن قيد الوزن أن مجموع جميع السعات الافتراضية يساوي السعة الفيزيائية الإجمالية:"
 
 #: ../../content/C5_rsgp_power_management.rst:47
 #, python-brace-format
 msgid "\\sum_{i=1}^{N} w_{i} = N"
-msgstr ""
+msgstr "\\sum_{i=1}^{N} w_{i} = N"
 
 #: ../../content/C5_rsgp_power_management.rst:51
 msgid ""
@@ -4144,31 +4258,34 @@ msgid ""
 "ensures energy conservation between the physical battery and the virtual "
 "batteries."
 msgstr ""
+"حيث *N* يمثل عدد المنازل في النظام. يضمن هذا القيد حفظ الطاقة بين البطارية الفيزيائية والبطاريات "
+"الافتراضية."
 
 #: ../../content/C5_rsgp_power_management.rst:53
 msgid ""
 "The system implements weight boundaries to ensure fairness and prevent "
 "extreme allocations:"
 msgstr ""
+"يطبق النظام حدودًا للأوزان لضمان العدالة ومنع التخصيصات المتطرفة:"
 
 #: ../../content/C5_rsgp_power_management.rst:55
 #, python-brace-format
 msgid "w_{min} \\leq w_i \\leq w_{max}"
-msgstr ""
+msgstr "w_{min} \\leq w_i \\leq w_{max}"
 
 #: ../../content/C5_rsgp_power_management.rst:61
 #, python-brace-format
 msgid "`w_{min} = \\alpha` (guaranteed minimum weight, typically 0.8)"
-msgstr ""
+msgstr "``w_{min} = \\alpha`` (الوزن الأدنى المضمون، عادة 0.8)"
 
 #: ../../content/C5_rsgp_power_management.rst:63
 #, python-brace-format
 msgid "`w_{max} = 1 + (1 - \\alpha) \\times (N - 1)`"
-msgstr ""
+msgstr "``w_{max} = 1 + (1 - \\alpha) \\times (N - 1)``"
 
 #: ../../content/C5_rsgp_power_management.rst:66
 msgid "Virtual Battery Operations"
-msgstr ""
+msgstr "عمليات البطارية الافتراضية"
 
 #: ../../content/C5_rsgp_power_management.rst:67
 msgid ""
@@ -4176,28 +4293,30 @@ msgid ""
 "maintain energy conservation across the distributed system. The charge "
 "operation accounts for charging efficiency and capacity constraints:"
 msgstr ""
+"تطبق البطارية الافتراضية عمليات شحن وتفريغ تحافظ على حفظ الطاقة عبر النظام الموزع. تأخذ عملية "
+"الشحن في الاعتبار كفاءة الشحن وقيود السعة:"
 
 #: ../../content/C5_rsgp_power_management.rst:69
 msgid ""
 "P_{charge,actual} = \\min\\left(P_{charge} \\times \\eta_{charge} \\times"
 " \\Delta t, C_{total} - C_{residual}\\right) \\times \\frac{1}{\\Delta t "
 "\\times \\eta_{charge}}"
-msgstr ""
+msgstr "P_{charge,actual} = \\min\\left(P_{charge} \\times \\eta_{charge} \\times \\Delta t, C_{total} - C_{residual}\\right) \\times \\frac{1}{\\Delta t \\times \\eta_{charge}}"
 
 #: ../../content/C5_rsgp_power_management.rst:75
 #, python-brace-format
 msgid "`P_{charge,actual}` represents the actual power consumed for charging"
-msgstr ""
+msgstr "``P_{charge,actual}`` يمثل الطاقة الفعلية المستهلكة للشحن"
 
 #: ../../content/C5_rsgp_power_management.rst:76
 #, python-brace-format
 msgid "`P_{charge}` represents the requested charging power"
-msgstr ""
+msgstr "``P_{charge}`` يمثل طاقة الشحن المطلوبة"
 
 #: ../../content/C5_rsgp_power_management.rst:77
 #, python-brace-format
 msgid "`\\eta_{charge}` represents the charging efficiency"
-msgstr ""
+msgstr "``\\eta_{charge}`` يمثل كفاءة الشحن"
 
 #: ../../content/C5_rsgp_power_management.rst:78
 msgid ""
@@ -4205,66 +4324,71 @@ msgid ""
 "\\frac{\\Delta t_{s}}{3600}` where `\\Delta t_{s}` represents the time "
 "interval in seconds"
 msgstr ""
+"``\\Delta t`` يمثل الفترة الزمنية بالساعات: ``\\Delta t = \\frac{\\Delta t_{s}}{3600}`` حيث "
+"``\\Delta t_{s}`` يمثل الفترة الزمنية بالثواني"
 
 #: ../../content/C5_rsgp_power_management.rst:79
 #, python-brace-format
 msgid "`C_{total}` represents the maximum capacity"
-msgstr ""
+msgstr "``C_{total}`` يمثل السعة العظمى"
 
 #: ../../content/C5_rsgp_power_management.rst:80
 #, python-brace-format
 msgid "`C_{residual}` represents the current residual capacity"
-msgstr ""
+msgstr "``C_{residual}`` يمثل السعة المتبقية الحالية"
 
 #: ../../content/C5_rsgp_power_management.rst:82
 msgid ""
 "The discharge operation implements efficiency losses and capacity "
 "limitations:"
 msgstr ""
+"تطبق عملية التفريغ خسائر الكفاءة وقيود السعة:"
 
 #: ../../content/C5_rsgp_power_management.rst:84
 msgid ""
 "P_{discharge,actual} = \\min\\left(\\frac{P_{discharge} \\times \\Delta "
 "t}{\\eta_{charge}}, C_{residual}\\right) \\times "
 "\\frac{\\eta_{charge}}{\\Delta t}"
-msgstr ""
+msgstr "P_{discharge,actual} = \\min\\left(\\frac{P_{discharge} \\times \\Delta t}{\\eta_{charge}}, C_{residual}\\right) \\times \\frac{\\eta_{charge}}{\\Delta t}"
 
 #: ../../content/C5_rsgp_power_management.rst:88
 msgid "The energy conversion between power and capacity uses the relationship:"
-msgstr ""
+msgstr "تستخدم عملية تحويل الطاقة بين القدرة والسعة العلاقة:"
 
 #: ../../content/C5_rsgp_power_management.rst:90
 msgid "E = P \\times \\Delta t"
-msgstr ""
+msgstr "E = P \\times \\Delta t"
 
 #: ../../content/C5_rsgp_power_management.rst:94
 msgid "where energy is measured in watt-hours and power in watts."
-msgstr ""
+msgstr "حيث يُقاس الطاقة بالواط ساعة والقدرة بالواط."
 
 #: ../../content/C5_rsgp_power_management.rst:97
 msgid "Weight Adjustment Algorithm"
-msgstr ""
+msgstr "خوارزمية ضبط الوزن (Weight Adjustment Algorithm)"
 
 #: ../../content/C5_rsgp_power_management.rst:98
 msgid ""
 "The adjustment function modifies weights while maintaining system "
 "constraints:"
 msgstr ""
+"تُعدّل دالة الضبط الأوزان بينما تحافظ على قيود النظام:"
 
 #: ../../content/C5_rsgp_power_management.rst:100
 #, python-brace-format
 msgid "w_{i}^{t+1} = \\text{clamp}(w_{i}^{t} + \\Delta w_{i}, w_{min}, w_{max})"
-msgstr ""
+msgstr "w_{i}^{t+1} = \\text{clamp}(w_{i}^{t} + \\Delta w_{i}, w_{min}, w_{max})"
 
 #: ../../content/C5_rsgp_power_management.rst:104
 msgid ""
 "After adjusting the weights, the new capacity for the virtual battery is "
 "calculated:"
 msgstr ""
+"بعد ضبط الأوزان، يُحسب السعة الجديدة للبطارية الافتراضية:"
 
 #: ../../content/C5_rsgp_power_management.rst:106
 msgid "C_{vb,i}^{t+1} = \\frac {C_{total}}{N} \\times w_{i}^{t+1}"
-msgstr ""
+msgstr "C_{vb,i}^{t+1} = \\frac {C_{total}}{N} \\times w_{i}^{t+1}"
 
 #: ../../content/C5_rsgp_power_management.rst:110
 #, python-brace-format
@@ -4273,17 +4397,20 @@ msgid ""
 "current residual capacity `C_{vb,i}^{residual}`, the excess energy is "
 "calculated and returned to the system:"
 msgstr ""
+"عندما يُقلّل ضبط الوزن السعة الإجمالية ``C_{vb,i}^{t+1}`` الى ما دون السعة المتبقية الحالية "
+"``C_{vb,i}^{residual}``، يُحسب فائض الطاقة ويُرجع الى النظام:"
 
 #: ../../content/C5_rsgp_power_management.rst:112
 #, python-brace-format
 msgid "E_{excess} = \\max(0, C_{vb,i}^{residual} - C_{vb,i}^{t+1})"
-msgstr ""
+msgstr "E_{excess} = \\max(0, C_{vb,i}^{residual} - C_{vb,i}^{t+1})"
 
 #: ../../content/C5_rsgp_power_management.rst:116
 msgid ""
 "This excess energy is then redistributed among the other virtual "
 "batteries to conserve the energy during system optimization."
 msgstr ""
+"يُعاد توزيع فائض الطاقة هذا بين البطاريات الافتراضية الأخرى لحفظ الطاقة خلال تحسين النظام."
 
 #: ../../_static/plots/C5_virtual_battery_weight_and_allocation.py:7
 msgid ""
@@ -4311,10 +4438,12 @@ msgid ""
 "Virtual battery weight evolution and capacity allocation showing adaptive"
 " learning behavior and fair energy distribution among houses"
 msgstr ""
+"تطور أوزان البطارية الافتراضية وتخصيص السعة يظهر سلوك التعلم التكيفي والتوزيع العادل للطاقع بين "
+"المنازل"
 
 #: ../../content/C5_rsgp_power_management.rst:124
 msgid "Adaptive Learning Algorithm"
-msgstr ""
+msgstr "خوارزمية التعلم التكيفي (Adaptive Learning Algorithm)"
 
 #: ../../content/C5_rsgp_power_management.rst:125
 msgid ""
@@ -4324,10 +4453,13 @@ msgid ""
 "time, improving efficiency as it learns each house's consumption "
 "patterns."
 msgstr ""
+"يطبق نظام إدارة الطاقة خوارزمية تعلم تكيفية تضبط بشكل مستمر أوزان البطارية الافتراضية بناءً "
+"على الاستهلاك. تُمكّن هذه الخوارزمية النظام من تحسين تخصيص الطاقة عبر الوقت، وتحسين الكفاءة "
+"بينما تتعلم أنماط استهلاك كل منزل."
 
 #: ../../content/C5_rsgp_power_management.rst:128
 msgid "Load Deviation Calculation"
-msgstr ""
+msgstr "حساب انحراف الحمل"
 
 #: ../../content/C5_rsgp_power_management.rst:129
 msgid ""
@@ -4336,31 +4468,34 @@ msgid ""
 "deviations from the mean consumption to identify houses with above-"
 "average and below-average demand:"
 msgstr ""
+"توظف خوارزمية التعلم التحليل الإحصائي لاستهلاك المنازل لاتخاذ قرارات بشأن أوزانها. تبدأ بحساب "
+"الانحرافات عن متوسط الاستهلاك لتحديد المنازل ذات الطلب فوق وتحت المتوسط:"
 
 #: ../../content/C5_rsgp_power_management.rst:131
 #, python-brace-format
 msgid "\\mu_{L} = \\frac{1}{N} \\sum_{i=1}^{N} L_{i}"
-msgstr ""
+msgstr "\\mu_{L} = \\frac{1}{N} \\sum_{i=1}^{N} L_{i}"
 
 #: ../../content/C5_rsgp_power_management.rst:135
 #, python-brace-format
 msgid "\\sigma_{i} = L_i - \\mu_{L}"
-msgstr ""
+msgstr "\\sigma_{i} = L_i - \\mu_{L}"
 
 #: ../../content/C5_rsgp_power_management.rst:141
 #, python-brace-format
 msgid "`L_{i}` represents the current load for the i-th house"
-msgstr ""
+msgstr "``L_{i}`` يمثل الحمل الحالي للمنزل رقم i"
 
 #: ../../content/C5_rsgp_power_management.rst:143
 msgid ""
 "The deviation values undergo normalization to ensure consistent scaling "
 "across different load magnitudes:"
 msgstr ""
+"تخضع قيم الانحراف للتطبيع لضمان تقييس متسق عبر مقادير أحمال مختلفة:"
 
 #: ../../content/C5_rsgp_power_management.rst:145
 msgid "\\sigma_{norm,i} = \\frac{\\sigma_{i}}{\\max_j |\\sigma_{j}|}"
-msgstr ""
+msgstr "\\sigma_{norm,i} = \\frac{\\sigma_{i}}{\\max_j |\\sigma_{j}|}"
 
 #: ../../content/C5_rsgp_power_management.rst:149
 msgid ""
@@ -4369,10 +4504,12 @@ msgid ""
 "proportionally to relative consumption differences rather than absolute "
 "values."
 msgstr ""
+"يمنع هذا التطبيع قيم الحمل الكبيرة من إرباك خوارزمية التعلم، ويضمن أن تضبط الأوزان تستجيب بتناسب "
+"مع الفروقات النسبية في الاستهلاك بدلاً من القيم المطلقة."
 
 #: ../../content/C5_rsgp_power_management.rst:152
 msgid "Load Redistribution for Minimum Weight Houses"
-msgstr ""
+msgstr "إعادة توزيع الحمل للمنازل ذات الوزن الأدنى"
 
 #: ../../content/C5_rsgp_power_management.rst:153
 msgid ""
@@ -4381,48 +4518,54 @@ msgid ""
 " below-average consumption, the algorithm redistributes its negative "
 "deviation to houses with above-average consumption:"
 msgstr ""
+"تطبق الخوارزمية آلية إعادة توزيع للمنازل التي تعمل بالوزن الأدنى. عندما يصل منزل إلى وزنه "
+"الأدنى ويُظهر استهلاكًا دون المتوسط، تُعيد الخوارزمية توزيع انحرافه السالب إلى المنازل ذات "
+"الاستهلاك فوق المتوسط:"
 
 #: ../../content/C5_rsgp_power_management.rst:155
 msgid "S_{pos} = \\{i \\mid \\sigma_{i} > 0 \\}"
-msgstr ""
+msgstr "S_{pos} = \\{i \\mid \\sigma_{i} > 0 \\}"
 
 #: ../../content/C5_rsgp_power_management.rst:159
 msgid "S_{neg} = \\{i \\mid \\sigma_{i} < 0 \\}"
-msgstr ""
+msgstr "S_{neg} = \\{i \\mid \\sigma_{i} < 0 \\}"
 
 #: ../../content/C5_rsgp_power_management.rst:163
 msgid "S_{min} = \\{i \\mid w_{i} = w_{min} \\}"
-msgstr ""
+msgstr "S_{min} = \\{i \\mid w_{i} = w_{min} \\}"
 
 #: ../../content/C5_rsgp_power_management.rst:167
 msgid ""
 "\\sigma_{norm,j}^{adjusted} = \\sigma_{norm,j} + \\sigma_{norm,i} \\times"
 " \\frac{\\sigma_{norm,j}}{\\sum_{k \\in S_{pos}} \\sigma_{norm,k}}, "
 "\\quad i \\in S_{min} \\cap S_{neg}, \\; j \\in S_{pos}"
-msgstr ""
+msgstr "\\sigma_{norm,j}^{adjusted} = \\sigma_{norm,j} + \\sigma_{norm,i} \\times \\frac{\\sigma_{norm,j}}{\\sum_{k \\in S_{pos}} \\sigma_{norm,k}}, \\quad i \\in S_{min} \\cap S_{neg}, \\; j \\in S_{pos}"
 
 #: ../../content/C5_rsgp_power_management.rst:171
 msgid ""
 "This redistribution maintains energy conservation and ensures that houses"
 " at minimum weight do not continue to lose capacity allocation."
 msgstr ""
+"تحافظ هذه الإعادة في التوزيع على حفظ الطاقة وتضمن أن المنازل ذات الوزن الأدنى لا تستمر في فقدان تخصيص "
+"السعة."
 
 #: ../../content/C5_rsgp_power_management.rst:174
 msgid "Weight Update and Learning Step"
-msgstr ""
+msgstr "تحديث الوزن وخطوة التعلم"
 
 #: ../../content/C5_rsgp_power_management.rst:175
 msgid ""
 "The calculated adjustments are then scaled by the learning rate and sent "
 "to the virtual battery to calculate its new weight:"
 msgstr ""
+"يتم بعد ذلك تقييس التضبطات المحسوبة بمعدل التعلم وإرسالها إلى البطارية الافتراضية لحساب وزنها الجديد:"
 
 #: ../../content/C5_rsgp_power_management.rst:177
 #, python-brace-format
 msgid ""
 "\\Delta w_{i}^{t+1} = \\sigma_{norm,i}^{adjusted} \\times "
 "\\alpha_{learning}"
-msgstr ""
+msgstr "\\Delta w_{i}^{t+1} = \\sigma_{norm,i}^{adjusted} \\times \\alpha_{learning}"
 
 #: ../../content/C5_rsgp_power_management.rst:181
 #, python-brace-format
@@ -4433,17 +4576,21 @@ msgid ""
 "cost of slower adaptation, while larger values enable rapid adaptation "
 "but may introduce oscillatory behavior."
 msgstr ""
+"حيث ``\\alpha_{learning}`` يمثل معدل التعلم (عادة 0.002). يتحكم معامل معدل التعلم في سرعة التقارب واستقرار "
+"النظام. توفر القيم الأصغر تقاربًا أكثر استقرارًا على حساب بطء التكيف، بينما تُمكّن القيم الأكبر التكيف السريع ولكن "
+"قد تُدخل سلوكًا تذبذبيًا."
 
 #: ../../content/C5_rsgp_power_management.rst:183
 msgid ""
 "The total excess capacity released from all weight adjustments is then "
 "aggregated:"
 msgstr ""
+"يُجمّع بعد ذلك إجمالي فائض السعة المُحرر من جميع تضبطات الوزن:"
 
 #: ../../content/C5_rsgp_power_management.rst:185
 #, python-brace-format
 msgid "E_{excess} = \\sum_{i=1}^{N} E_{excess,i}"
-msgstr ""
+msgstr "E_{excess} = \\sum_{i=1}^{N} E_{excess,i}"
 
 #: ../../content/C5_rsgp_power_management.rst:189
 msgid ""
@@ -4451,6 +4598,8 @@ msgid ""
 "charging phase, ensuring that energy released through weight reductions "
 "does not disappear, thus maintaining energy conservation."
 msgstr ""
+"تصبح هذه السعة الفائضة متاحة لإعادة التوزيع أثناء مرحلة الشحن، مما يضمن أن الطاقة المُحررة من خلال "
+"تخفيض الأوزان لا تختفي، وبالتالي تحافظ على حفظ الطاقة."
 
 #: ../../_static/plots/C5_learning_convergence_analysis.py:7
 msgid ""
@@ -4478,6 +4627,7 @@ msgid ""
 "Learning algorithm convergence analysis comparing different learning "
 "rates and their impact on weight stability and adaptation speed"
 msgstr ""
+"تحليل تقارب خوارزمية التعلم مقارنة معدلات تعلم مختلفة وتأثيرها على استقرار الوزن وسرعة التكيف"
 
 #: ../../_static/plots/C5_weight_variance_analysis.py:7
 msgid ""
@@ -4506,10 +4656,12 @@ msgid ""
 "measures of algorithm stability and deviation from initial state across "
 "different learning rates"
 msgstr ""
+"تحليل تباين الوزن ومقاييس التقارب يظهر مقاييس كمية لاستقرار الخوارزمية والانحراف عن الحالة الأولية عبر "
+"معدلات تعلم مختلفة"
 
 #: ../../content/C5_rsgp_power_management.rst:202
 msgid "Power Distribution Algorithms"
-msgstr ""
+msgstr "خوارزميات توزيع الطاقة"
 
 #: ../../content/C5_rsgp_power_management.rst:203
 msgid ""
@@ -4519,10 +4671,14 @@ msgid ""
 "utility grid power, and virtual battery discharge to meet residential "
 "demand."
 msgstr ""
+"ينفذ نظام إدارة الطاقة خوارزميات لتوزيع مصادر الطاقة المتوفرة بين المنازل "
+"المتصلة مع الحفاظ على العدالة وكفاءة النظام. تنسق هذه الخوارزميات مخرجات "
+"الألواح الشمسية وطاقة الشبكة العامة وتفريغ البطارية الافتراضية لتلبية "
+"الطلب السكني."
 
 #: ../../content/C5_rsgp_power_management.rst:206
 msgid "Houses Virtual Battery Usage Calculation"
-msgstr ""
+msgstr "حساب استخدام البطاريات الافتراضية للمنازل"
 
 #: ../../content/C5_rsgp_power_management.rst:207
 msgid ""
@@ -4532,48 +4688,56 @@ msgid ""
 "based allocation system that processes houses in ascending order of load "
 "demand to ensure fair distribution:"
 msgstr ""
+"يحدد حساب استخدام البطارية الافتراضية مقدار الطاقة التي يجب أن يسحبها كل "
+"منزل من بطاريته الافتراضية بعد احتساب الطاقة الشمسية وطاقة المرافق "
+"المتوفرة. تنفذ الخوارزمية نظام تخصيص قائم على الأولوية يعالج المنازل "
+"بترتيب تصاعدي لطلب الحمولة لضمان التوزيع العادل:"
 
 #: ../../content/C5_rsgp_power_management.rst:209
 msgid ""
 "P_{panels,used,i} = \\min\\left(L_i, "
 "\\frac{P_{panels,available}}{N_{remaining}}\\right)"
 msgstr ""
+"P_{panels,used,i} = \\min\\left(L_i, "
+"\\frac{P_{panels,available}}{N_{remaining}}\\right)"
 
 #: ../../content/C5_rsgp_power_management.rst:213
 msgid ""
 "P_{utility,used,i} = \\min\\left(L_i - P_{panels,used,i}, "
 "\\frac{P_{utility,available}}{N_{remaining}}\\right)"
 msgstr ""
+"P_{utility,used,i} = \\min\\left(L_i - P_{panels,used,i}, "
+"\\frac{P_{utility,available}}{N_{remaining}}\\right)"
 
 #: ../../content/C5_rsgp_power_management.rst:217
 #, python-brace-format
 msgid "P_{vb,i} = L_i - P_{panels,used,i} - P_{utility,used,i}"
-msgstr ""
+msgstr "P_{vb,i} = L_i - P_{panels,used,i} - P_{utility,used,i}"
 
 #: ../../content/C5_rsgp_power_management.rst:223
 #, python-brace-format
 msgid "`L_{i}` represents the load of the i-th house"
-msgstr ""
+msgstr "`L_{i}` يمثل حمولة المنزل رقم i"
 
 #: ../../content/C5_rsgp_power_management.rst:224
 #, python-brace-format
 msgid "`P_{panels,available}` represents remaining solar panel power"
-msgstr ""
+msgstr "`P_{panels,available}` يمثل طاقة الألواح الشمسية المتبقية"
 
 #: ../../content/C5_rsgp_power_management.rst:225
 #, python-brace-format
 msgid "`P_{utility,available}` represents remaining utility power"
-msgstr ""
+msgstr "`P_{utility,available}` يمثل طاقة المرافق المتبقية"
 
 #: ../../content/C5_rsgp_power_management.rst:226
 #, python-brace-format
 msgid "`N_{remaining}` represents the number of houses not yet processed"
-msgstr ""
+msgstr "`N_{remaining}` يمثل عدد المنازل غير المعالجة بعد"
 
 #: ../../content/C5_rsgp_power_management.rst:227
 #, python-brace-format
 msgid "`P_{vb,i}` represents the i-th house power demand from its virtual battery"
-msgstr ""
+msgstr "`P_{vb,i}` يمثل طلب طاقة المنزل رقم i من بطاريته الافتراضية"
 
 #: ../../content/C5_rsgp_power_management.rst:229
 msgid ""
@@ -4582,6 +4746,10 @@ msgid ""
 "use their full share, thus allowing for efficient redistribution of the "
 "remainder equally among the remaining houses."
 msgstr ""
+"يضمن هذا التخصيص التسلسلي أن المنازل ذات الطلب الأقل تحصل على وصول "
+"مبكر إلى الطاقة الشمسية وطاقة المرافق المتاحة، حيث قد لا "
+"تستخدم حصتها الكاملة، مما يسمح بإعادة توزيع فعالة للباقي بالتساوي "
+"بين المنازل المتبقية."
 
 #: ../../_static/plots/C5_power_distribution_waterfall.py:7
 msgid ""
@@ -4611,10 +4779,13 @@ msgid ""
 "utility, virtual battery) across different time periods and load "
 "conditions"
 msgstr ""
+"تصوير شلالي لتوزيع الطاقة يوضح خوارزمية التخصيص التسلسلي القائمة "
+"على الأولوية مع مصادر الطاقة المكدسة (شمسية، مرافق، بطارية افتراضية) "
+"عبر فترات زمنية مختلفة وظروف حمولة متنوعة"
 
 #: ../../content/C5_rsgp_power_management.rst:237
 msgid "Virtual Battery Charging Algorithm"
-msgstr ""
+msgstr "خوارزمية شحن البطارية الافتراضية"
 
 #: ../../content/C5_rsgp_power_management.rst:238
 msgid ""
@@ -4623,19 +4794,23 @@ msgid ""
 "remaining capacity and charging capabilities. The algorithm implements "
 "priority charging for batteries with the lowest capacity deficit:"
 msgstr ""
+"عندما تصبح طاقة زائدة متوفرة من التوليد الشمسي، تقوم خوارزمية الشحن "
+"بتوزيع هذه الطاقة بين البطاريات الافتراضية بناءً على سعتها المتبقية "
+"وقدرات الشحن. تنفذ الخوارزمية شحناً ذا أولوية للبطاريات ذات أقل "
+"عجز في السعة:"
 
 #: ../../content/C5_rsgp_power_management.rst:240
 #, python-brace-format
 msgid "\\text{Charging order: } \\arg\\min_i (C_{total,i} - C_{residual,i})"
-msgstr ""
+msgstr "\\text{Charging order: } \\arg\\min_i (C_{total,i} - C_{residual,i})"
 
 #: ../../content/C5_rsgp_power_management.rst:244
 msgid "The charging power allocation follows:"
-msgstr ""
+msgstr "يتبع تخصيص طاقة الشحن ما يلي:"
 
 #: ../../content/C5_rsgp_power_management.rst:246
 msgid "P_{charge,i} = \\frac{P_{charge,available}}{N_{remaining}}"
-msgstr ""
+msgstr "P_{charge,i} = \\frac{P_{charge,available}}{N_{remaining}}"
 
 #: ../../content/C5_rsgp_power_management.rst:250
 msgid ""
@@ -4645,10 +4820,14 @@ msgid ""
 "efficient redistribution of the remainder of their share equally among "
 "the remaining virtual batteries."
 msgstr ""
+"حيث يتم معالجة البطاريات الافتراضية بترتيب عجز السعة الخاص بها، مما "
+"يضمن أن البطاريات ذات أقل مساحة متوفرة تحصل على أولوية في الشحن "
+"لأنها قد لا تحتاج لحصتها الكاملة، مما يسمح بإعادة توزيع فعالة لباقي "
+"حصتها بالتساوي بين البطاريات الافتراضية المتبقية."
 
 #: ../../content/C5_rsgp_power_management.rst:253
 msgid "Virtual Battery Discharging with Weighted Distribution"
-msgstr ""
+msgstr "تفريغ البطارية الافتراضية مع التوزيع المرجح"
 
 #: ../../content/C5_rsgp_power_management.rst:254
 msgid ""
@@ -4656,6 +4835,9 @@ msgid ""
 " the normalized power demands from the virtual batteries. The algorithm "
 "calculates discharge weights using sum normalization:"
 msgstr ""
+"تنفذ خوارزمية التفريغ توزيعاً مرجحاً للطاقة بناءً على متطلبات الطاقة "
+"المعيارية من البطاريات الافتراضية. تحسب الخوارزمية أوزان التفريغ باستخدام "
+"تعميم المجموع:"
 
 #: ../../content/C5_rsgp_power_management.rst:256
 msgid ""
@@ -4663,38 +4845,46 @@ msgid ""
 "P_{vb,j}} & \\sum_{j=1}^{N} P_{vb,j} > \\epsilon \\\\[2ex] \\dfrac{1}{N} "
 "& \\text{otherwise} \\end{cases}"
 msgstr ""
+"w_{discharge,i} = \\begin{cases} \\dfrac{P_{vb,i}}{\\sum_{j=1}^{N} "
+"P_{vb,j}} & \\sum_{j=1}^{N} P_{vb,j} > \\epsilon \\\\[2ex] \\dfrac{1}{N} "
+"& \\text{otherwise} \\end{cases}"
 
 #: ../../content/C5_rsgp_power_management.rst:260
 msgid ""
 "When the denominator approaches zero (no house demands discharging of its"
 " virtual battery), the algorithm defaults to equal distribution."
 msgstr ""
+"عندما يقترب المقام من الصفر (عندما لا يطلب أي منزل تفريغ بطاريته "
+"الافتراضية)، تتحول الخوارزمية افتراضياً إلى التوزيع المتساوي."
 
 #: ../../content/C5_rsgp_power_management.rst:262
 msgid "The actual discharge power for each virtual battery follows:"
-msgstr ""
+msgstr "تتبع طاقة التفريغ الفعلية لكل بطارية افتراضية ما يلي:"
 
 #: ../../content/C5_rsgp_power_management.rst:264
 #, python-brace-format
 msgid "P_{discharge,i} = P_{discharge,total} \\times w_{discharge,i}"
-msgstr ""
+msgstr "P_{discharge,i} = P_{discharge,total} \\times w_{discharge,i}"
 
 #: ../../content/C5_rsgp_power_management.rst:268
 msgid ""
 "The algorithm tracks whether each virtual battery can fully meet its "
 "required discharge:"
 msgstr ""
+"تتعقب الخوارزمية ما إذا كانت كل بطارية افتراضية يمكنها تلبية تفريغها المطلوب بالكامل:"
 
 #: ../../content/C5_rsgp_power_management.rst:270
 #, python-brace-format
 msgid "\\text{Usage Met} = |P_{discharge,i} - P_{actual,i}| < \\epsilon"
-msgstr ""
+msgstr "\\text{Usage Met} = |P_{discharge,i} - P_{actual,i}| < \\epsilon"
 
 #: ../../content/C5_rsgp_power_management.rst:274
 msgid ""
 "Houses whose virtual batteries cannot meet their full energy requirements"
 " trigger load line disconnection to prevent system instability."
 msgstr ""
+"المنازل التي لا تستطيع بطارياتها الافتراضية تلبية متطلباتها الكاملة "
+"من الطاقة تحفز قطع خط الحمولة لمنع عدم استقرار النظام."
 
 #: ../../_static/plots/C5_virtual_battery_soc_tracking.py:7
 msgid ""
@@ -4723,10 +4913,13 @@ msgid ""
 "storage utilization, capacity allocation dynamics, and charge-discharge "
 "patterns in response to house loads and solar generation"
 msgstr ""
+"تتبع حالة شحن البطارية الافتراضية استخدام تخزين الطاقة الفردي "
+"وديناميكيات تخصيص السعة وأنماط الشحن والتفريغ استجابة لأحمال "
+"المنازل والتوليد الشمسي"
 
 #: ../../content/C5_rsgp_power_management.rst:282
 msgid "System-Wide Load Line Coordination"
-msgstr ""
+msgstr "تنسيق خط الحمولة على مستوى النظام"
 
 #: ../../content/C5_rsgp_power_management.rst:283
 msgid ""
@@ -4735,23 +4928,26 @@ msgid ""
 " due to extreme power shortage, the power manager propagates this state "
 "to all connected houses:"
 msgstr ""
+"ينسق مدير الطاقة حالات خط الحمولة بين المنازل الفردية وعاكس النظام "
+"الشمسي. عندما ينفذ العاكس تخفيف الحمولة بسبب نقص شديد في الطاقة، ينشر "
+"مدير الطاقة هذه الحالة إلى جميع المنازل المتصلة:"
 
 #: ../../content/C5_rsgp_power_management.rst:285
 #, python-brace-format
 msgid "\\neg LL_{inverter} \\rightarrow \\neg LL_{i}, \\quad \\forall i"
-msgstr ""
+msgstr "\\neg LL_{inverter} \\rightarrow \\neg LL_{i}, \\quad \\forall i"
 
 #: ../../content/C5_rsgp_power_management.rst:291
 #, python-brace-format
 msgid "`LL_{inverter}` represents the state of the inverter load line connection"
-msgstr ""
+msgstr "`LL_{inverter}` يمثل حالة اتصال خط حمولة العاكس"
 
 #: ../../content/C5_rsgp_power_management.rst:292
 #, python-brace-format
 msgid ""
 "`LL_{i}` represents the state of the load line connection of the i-th "
 "house"
-msgstr ""
+msgstr "`LL_{i}` يمثل حالة اتصال خط الحمولة للمنزل رقم i"
 
 #: ../../content/C5_rsgp_power_management.rst:294
 msgid ""
@@ -4759,16 +4955,18 @@ msgid ""
 "overall system capacity and prevents conflicts between local and system-"
 "wide load management decisions."
 msgstr ""
+"يضمن هذا أن حالات خط الحمولة للمنازل الفردية تبقى متسقة مع سعة النظام العامة "
+"ويمنع الصراعات بين القرارات المحلية وقرارات إدارة الحمولة على مستوى النظام."
 
 #: ../../content/C5_rsgp_power_management.rst:296
 msgid ""
 "Restoration operates automatically after a configurable set interval "
 "(typically 30 seconds)."
-msgstr ""
+msgstr "تعمل استعادة الحالة تلقائياً بعد فترة زمنية قابلة للتكوين (حوالي 30 ثانية عادة)."
 
 #: ../../content/C5_rsgp_power_management.rst:299
 msgid "Utility Power Export Distribution"
-msgstr ""
+msgstr "توزيع تصدير طاقة المرافق"
 
 #: ../../content/C5_rsgp_power_management.rst:300
 msgid ""
@@ -4778,25 +4976,30 @@ msgid ""
 "benefits while accounting for individual house contributions to system "
 "efficiency."
 msgstr ""
+"ينفذ نظام إدارة الطاقة خوارزمية لتوزيع طاقة تصدير المرافق بين المنازل عندما "
+"تصبح طاقة زائدة متوفرة لتصدير الشبكة. تضمن الخوارزمية التوزيع العادل لفوائد "
+"التصدير مع اعتبار مساهمات المنازل الفردية في كفاءة النظام."
 
 #: ../../content/C5_rsgp_power_management.rst:303
 msgid "Export Eligibility and Weight Calculation"
-msgstr ""
+msgstr "الأهلية للتصدير وحساب الوزن"
 
 #: ../../content/C5_rsgp_power_management.rst:304
 msgid ""
 "The utility export distribution algorithm operates exclusively on houses "
 "that maintain active utility line connections:"
 msgstr ""
+"تعمل خوارزمية توزيع تصدير المرافق حصرياً على المنازل التي تحافظ على اتصالات فعالة لخط "
+"المرافق:"
 
 #: ../../content/C5_rsgp_power_management.rst:306
 msgid "S_{export} = \\{i \\mid UL_{i} \\}"
-msgstr ""
+msgstr "S_{export} = \\{i \\mid UL_{i} \\}"
 
 #: ../../content/C5_rsgp_power_management.rst:312
 #, python-brace-format
 msgid "`UL_{i}` represents the utility line connection state of the i-th house"
-msgstr ""
+msgstr "`UL_{i}` يمثل حالة اتصال خط المرافق للمنزل رقم i"
 
 #: ../../content/C5_rsgp_power_management.rst:314
 msgid ""
@@ -4804,42 +5007,49 @@ msgid ""
 "provide higher export allocation to houses with lower virtual battery "
 "weights, creating incentives for efficient energy usage:"
 msgstr ""
+"يستخدم حساب وزن التصدير أوزان البطارية الافتراضية العكسية لتوفير تخصيص تصدير "
+"أعلى للمنازل ذات أوزان البطارية الافتراضية الأقل، مما يولد حوافز لاستخدام فعال "
+"للطاقة:"
 
 #: ../../content/C5_rsgp_power_management.rst:316
 msgid "w_{export,i} = \\frac{1}{w_{vb,i}}"
-msgstr ""
+msgstr "w_{export,i} = \\frac{1}{w_{vb,i}}"
 
 #: ../../content/C5_rsgp_power_management.rst:320
 msgid ""
 "The normalized export distribution calculates each house's share of total"
 " export power using sum normalization:"
 msgstr ""
+"يحسب التوزيع المعياري للتصدير حصة كل منزل من إجمالي طاقة التصدير باستخدام "
+"تعميم المجموع:"
 
 #: ../../content/C5_rsgp_power_management.rst:322
 msgid ""
 "w_{export,norm,i} = \\frac{w_{export,i}}{\\sum_{j \\in S_{export}} "
 "w_{export,j}}, \\quad \\forall i \\in S_{export}"
 msgstr ""
+"w_{export,norm,i} = \\frac{w_{export,i}}{\\sum_{j \\in S_{export}} "
+"w_{export,j}}, \\quad \\forall i \\in S_{export}"
 
 #: ../../content/C5_rsgp_power_management.rst:327
 msgid "Export Power Allocation"
-msgstr ""
+msgstr "تخصيص طاقة التصدير"
 
 #: ../../content/C5_rsgp_power_management.rst:328
 msgid "The final export power allocation for each eligible house follows:"
-msgstr ""
+msgstr "يتبع تخصيص طاقة التصدير النهائي لكل منزل مؤهل ما يلي:"
 
 #: ../../content/C5_rsgp_power_management.rst:330
 #, python-brace-format
 msgid "P_{export,i} = P_{export,total} \\times w_{export,norm,i}"
-msgstr ""
+msgstr "P_{export,i} = P_{export,total} \\times w_{export,norm,i}"
 
 #: ../../content/C5_rsgp_power_management.rst:334
 #, python-brace-format
 msgid ""
 "where `P_{export,total}` represents the total power available for utility"
 " export from the solar system."
-msgstr ""
+msgstr "حيث `P_{export,total}` يمثل إجمالي الطاقة المتوفرة لتصدير المرافق من النظام الشمسي."
 
 #: ../../content/C5_rsgp_power_management.rst:336
 msgid ""
@@ -4847,6 +5057,9 @@ msgid ""
 "(lower weights) receive proportionally higher export benefits, creating "
 "economic incentives for optimal energy usage."
 msgstr ""
+"يضمن هذا أن المنازل ذات الاستخدام الأكثر فعالية للبطارية الافتراضية (أوزان أقل) "
+"تحصل على فوائد تصدير أعلى بنسبة متناسبة، مما يخلق حوافز اقتصادية "
+"لاستخدام الطاقة الأمثل."
 
 #: ../../_static/plots/C5_export_distribution_fairness.py:7
 msgid ""
@@ -4875,10 +5088,13 @@ msgid ""
 " relationship, export power allocation among houses, and economic "
 "incentives that reward efficient virtual battery utilization"
 msgstr ""
+"عرض توضيحي لعدالة توزيع تصدير المرافق يوضح علاقة الوزن العكسية "
+"وتخصيص طاقة التصدير بين المنازل والحوافز الاقتصادية التي تكافئ الاستخدام "
+"الفعال للبطارية الافتراضية"
 
 #: ../../content/C5_rsgp_power_management.rst:344
 msgid "System Integration and Real-Time Control"
-msgstr ""
+msgstr "تكامل النظام والتحكم في الوقت الفعلي"
 
 #: ../../content/C5_rsgp_power_management.rst:345
 msgid ""
@@ -4887,10 +5103,12 @@ msgid ""
 "architecture ensures that power management decisions reflect current "
 "system state."
 msgstr ""
+"يحافظ نظام إدارة الطاقة على تنسيق مستمر مع مكونات المحاكاة من خلال واجهات الوقت "
+"الفعلي. تضمن عمارة التكامل أن قرارات إدارة الطاقة تعكس حالة النظام الحالية."
 
 #: ../../content/C5_rsgp_power_management.rst:348
 msgid "Real-Time Update Cycle Implementation"
-msgstr ""
+msgstr "تنفيذ دورة التحديث في الوقت الفعلي"
 
 #: ../../content/C5_rsgp_power_management.rst:349
 msgid ""
@@ -4901,6 +5119,11 @@ msgid ""
 "management decisions occur at the same time as houses simulation and "
 "solar system simulation updates."
 msgstr ""
+"ينفذ مدير الطاقة خوارزميته الأساسية ضمن حلقة تحديث مع استخدام الخيوط (Threaded) "
+"التي تعمل بشكل مستقل عن مكونات النظام الأخرى. تتطابق مدة دورة التحديث مع "
+"الخطوة الزمنية للمحاكاة، وهي مكونة عادة لفترات 100 مللي ثانية. يضمن هذا التزامن أن "
+"قرارات إدارة الطاقة تحدث في نفس الوقت مع تحديثات محاكاة المنازل ومحاكاة النظام "
+"الشمسي."
 
 #: ../../content/C5_rsgp_power_management.rst:351
 msgid ""
@@ -4908,10 +5131,12 @@ msgid ""
 "system state, executes learning algorithms, performs power distribution "
 "calculations, and updates component states within each cycle:"
 msgstr ""
+"تنفذ تسلسل التحديث سير عمل منظم يعالج حالة النظام وينفذ خوارزميات التعلم ويؤدي "
+"حسابات توزيع الطاقة ويحدث حالات المكونات ضمن كل دورة:"
 
 #: ../../content/C5_rsgp_power_management.rst:358
 msgid "Inverter Synchronization"
-msgstr ""
+msgstr "تزامن العاكس"
 
 #: ../../content/C5_rsgp_power_management.rst:359
 msgid ""
@@ -4920,27 +5145,32 @@ msgid ""
 "requirements and power delivery capabilities. The synchronization "
 "algorithm updates inverter state based on aggregated house demands:"
 msgstr ""
+"يحافظ مدير الطاقة على التزامن مع عاكس النظام الشمسي من خلال الاتصال ثنائي "
+"الاتجاه الذي ينسق متطلبات الحمولة وقدرات توصيل الطاقة. تحدث خوارزمية التزامن "
+"حالة العاكس بناءً على متطلبات المنازل المجمعة:"
 
 #: ../../content/C5_rsgp_power_management.rst:361
 #, python-brace-format
 msgid "P_{load,inverter} = \\sum_{i=1}^{N} L_{i} \\times LL_{i}"
-msgstr ""
+msgstr "P_{load,inverter} = \\sum_{i=1}^{N} L_{i} \\times LL_{i}"
 
 #: ../../content/C5_rsgp_power_management.rst:365
 #, python-brace-format
 msgid "where `LL_{i}` represents the binary load line state for the i-th house."
-msgstr ""
+msgstr "حيث `LL_{i}` يمثل الحالة الثنائية لخط الحمولة للمنزل رقم i."
 
 #: ../../content/C5_rsgp_power_management.rst:367
 msgid ""
 "The utility line state coordination ensures that the inverter maintains "
 "proper grid connection based on house connectivity:"
 msgstr ""
+"يضمن تنسيق حالة خط المرافق أن العاكس يحافظ على اتصال صحيح بالشبكة بناءً على "
+"اتصال المنازل:"
 
 #: ../../content/C5_rsgp_power_management.rst:369
 #, python-brace-format
 msgid "UL_{inverter} = \\bigvee_{i=1}^{N} UL_{i}"
-msgstr ""
+msgstr "UL_{inverter} = \\bigvee_{i=1}^{N} UL_{i}"
 
 #: ../../content/C5_rsgp_power_management.rst:373
 #, python-brace-format
@@ -4949,6 +5179,9 @@ msgid ""
 "house. This coordination maintains consistency between individual house "
 "utility connections and overall system grid interface requirements."
 msgstr ""
+"حيث `UL_{i}` يمثل الحالة الثنائية لخط المرافق للمنزل رقم i. يحافظ هذا "
+"التنسيق على الاتساق بين اتصالات مرافق المنازل الفردية ومتطلبات واجهة شبكة "
+"النظام العامة."
 
 #: ../../content/C5_rsgp_power_management.rst:375
 msgid ""
@@ -4958,10 +5191,13 @@ msgid ""
 " a better idea, and further analysis of the problem was precluded by "
 "approaching deadlines."
 msgstr ""
+"النموذج الحالي لتحديد خط المرافق للعاكس لا يمثل العالم الحقيقي وبالتالي يجب تغييره "
+"إلى نموذج أكثر عكساً للواقع. تم تعيينه على هذا النحو الآن لغياب فكرة أفضل، "
+"وقد تم منع إجراء مزيد من التحليل للمشكلة بسبب قرب المواعيد النهائية."
 
 #: ../../content/C5_rsgp_power_management.rst:378
 msgid "Performance Monitoring and Data Collection"
-msgstr ""
+msgstr "مراقبة الأداء وجمع البيانات"
 
 #: ../../content/C5_rsgp_power_management.rst:379
 msgid ""
@@ -4970,6 +5206,9 @@ msgid ""
 "enables both real-time performance assessment and historical analysis of "
 "power management effectiveness."
 msgstr ""
+"ينفذ نظام إدارة الطاقة جمع بيانات يلتقط مقاييس أداء النظام وسلوك الخوارزمية. "
+"يمكن نظام المراقبة من تقييم الأداء في الوقت الفعلي والتحليل التاريخي "
+"لفعالية إدارة الطاقة."
 
 #: ../../content/C5_rsgp_power_management.rst:381
 msgid ""
@@ -4981,6 +5220,11 @@ msgid ""
 "from this data include average utility grid dependence, battery "
 "utilization efficiency, and load balancing effectiveness."
 msgstr ""
+"يجمع النظام بيانات زمنية متسلسلة لجميع حالات البطارية الافتراضية، يلتقط استخدام السعة "
+"وتطور الوزن وتدفق الطاقة طوال تنفيذ المحاكاة. تمكن البيانات المجمعة من التحليل "
+"الإحصائي لتقارب الخوارزمية وتطور توزيع الأوزان وتحسينات كفاءة النظام عبر "
+"الزمن. تتضمن مقاييس الأداء المشتقة من هذه البيانات متوسط اعتماد شبكة "
+"المرافق وكفاءة استخدام البطارية وفعالية موازنة الأحمال."
 
 #: ../../content/C5_rsgp_power_management.rst:383
 msgid ""
@@ -4989,18 +5233,25 @@ msgid ""
 "success. Primary metrics include utility grid import minimization and "
 "battery capacity utilization:"
 msgstr ""
+"تتيح البيانات المجمعة حساب مقاييس الأداء الرئيسية التي تقيس فعالية إدارة الطاقة "
+"ونجاح تحسين النظام. تتضمن المقاييس الأساسية تقليل استيراد شبكة المرافق واستخدام "
+"سعة البطارية:"
 
 #: ../../content/C5_rsgp_power_management.rst:385
 msgid ""
 "\\text{Grid Dependence Ratio} = \\frac{\\sum_t "
 "P_{utility,import,t}}{\\sum_t P_{load,total,t}}"
 msgstr ""
+"\\text{Grid Dependence Ratio} = \\frac{\\sum_t "
+"P_{utility,import,t}}{\\sum_t P_{load,total,t}}"
 
 #: ../../content/C5_rsgp_power_management.rst:389
 msgid ""
 "\\text{Battery Utilization} = \\frac{\\sum_t C_{discharge,t}}{\\sum_t "
 "C_{residual,t}}"
 msgstr ""
+"\\text{Battery Utilization} = \\frac{\\sum_t C_{discharge,t}}{\\sum_t "
+"C_{residual,t}}"
 
 #: ../../content/C5_rsgp_power_management.rst:393
 msgid ""
@@ -5008,12 +5259,16 @@ msgid ""
 "performance and enable comparison between different algorithm "
 "configurations and parameter settings."
 msgstr ""
+"توفر هذه المقاييس تقييماً كمياً لأداء إدارة الطاقة وتمكن من المقارنة بين تكوينات "
+"الخوارزمية المختلفة وإعدادات المعاملات."
 
 #: ../../content/C5_rsgp_power_management.rst:395
 msgid ""
 "The extensive data collection enables future integration of machine "
 "learning for predictive algorithms and advanced optimization techniques."
 msgstr ""
+"يمكن جمع البيانات الواسع من التكامل المستقبلي لتعلم الآلة للخوارزميات التنبؤية "
+"وتقنيات التحسين المتقدمة."
 
 #: ../../content/C6_dashboard.rst:5
 msgid ""
@@ -5373,7 +5628,7 @@ msgstr ""
 
 #: ../../content/C7_rasp_controller.rst:48
 msgid "Controller Initialization and Setup"
-msgstr ""
+msgstr "تهيئة وإعداد المتحكم (Controller Initialization and Setup)"
 
 #: ../../content/C7_rasp_controller.rst:49
 msgid ""
@@ -5382,6 +5637,10 @@ msgid ""
 "interactions. The initialization sequence ensures that all hardware "
 "resources are properly allocated before beginning the main control loop."
 msgstr ""
+"تقوم عملية تهيئة المتحكم بإنشاء الوصول إلى شريحة GPIO؛ "
+"وتكوين أنماط المسامير؛ وإعداد آليات الاستدعاء للتفاعلات المستخدمة. "
+"يضمن تسلسل التهيئة أن جميع موارد الأجهزة (Hardware) مخصصة بشكل صحيح "
+"قبل بدء حلقة التحكم الرئيسية."
 
 #: ../../content/C7_rasp_controller.rst:51
 msgid ""
@@ -5391,10 +5650,14 @@ msgid ""
 "internal state tracking for both buttons and LEDs to enable efficient "
 "change detection and minimize unnecessary GPIO operations."
 msgstr ""
+"يستخدم إعداد GPIO مقاومات السحب العلوي (Pull-up Resistors) لمدخلات الأزرار "
+"لضمان اكتشاف الإشارة الموثوقة؛ بينما تبدأ مخرجات LED في الحالة المطفأة "
+"لتوفير تكوين ابتدائي متسق. يحتفظ المتحكم بتتبع الحالة الداخلية "
+"لكل من الأزرار وLED لتمكين اكتشاف التغيير الفعال وتقليل عمليات GPIO غير الضرورية."
 
 #: ../../content/C7_rasp_controller.rst:54
 msgid "Button State Monitoring Algorithm"
-msgstr ""
+msgstr "خوارزمية مراقبة حالة الأزرار (Button State Monitoring Algorithm)"
 
 #: ../../content/C7_rasp_controller.rst:55
 msgid ""
@@ -5404,11 +5667,14 @@ msgid ""
 " readings to detect falling edge transitions that indicate button "
 "presses."
 msgstr ""
+"ينفذ نظام مراقبة الأزرار اكتشاف الحافة (Edge Detection) لتحديد أحداث ضغط الأزرار "
+"لمنع الإثارات المتعددة من الإجراءات الواحدة للمستخدم. تحتفظ الخوارزمية بحالات الأزرار السابقة "
+"وتقارنها مع القراءات الحالية لاكتشاف انتقالات الحافة الهابطة التي تشير إلى ضغط الأزرار."
 
 #: ../../content/C7_rasp_controller.rst:57
 #, python-brace-format
 msgid "\\text{Button Press} = S_{previous} \\land \\neg S_{current}"
-msgstr ""
+msgstr "\\text{Button Press} = S_{previous} \\land \\neg S_{current}"
 
 #: ../../content/C7_rasp_controller.rst:61
 #, python-brace-format
@@ -5418,16 +5684,20 @@ msgid ""
 "operation identifies the transition from high to low that occurs when a "
 "button is pressed with pull-up configuration."
 msgstr ""
+"حيث :math:`S_{previous}` تمثل حالة الزر السابقة و:math:`S_{current}` تمثل حالة الزر الحالية. "
+"هذه العملية المنطقية تحدد الانتقال من عالي إلى منخفض الذي يحدث عند ضغط زر مع تكوين السحب العلوي "
+"(Pull-up Configuration)."
 
 #: ../../content/C7_rasp_controller.rst:63
 msgid ""
 "The button reading cycle operates continuously within the main update "
 "loop:"
 msgstr ""
+"تعمل دورة قراءة الأزرار باستمرار ضمن حلقة التحديث الرئيسية:"
 
 #: ../../content/C7_rasp_controller.rst:70
 msgid "LED State Synchronization"
-msgstr ""
+msgstr "مزامنة حالة LED (LED State Synchronization)"
 
 #: ../../content/C7_rasp_controller.rst:71
 msgid ""
@@ -5437,12 +5707,16 @@ msgid ""
 " then updates LED states accordingly to provide real-time visual "
 "feedback."
 msgstr ""
+"يحافظ نظام مزامنة حالة LED على رجع التغذية البصرية التي "
+"تعكس بدقة الحالة الحالية لمكونات المحاكاة. تستعلم الخوارزمية عن مكونات المحاكاة "
+"لتحديد حالتها الحالية ثم تحديث حالات LED وفقًا لذلك لتوفير رجع التغذية البصرية في الزمن الفعلي."
 
 #: ../../content/C7_rasp_controller.rst:73
 msgid ""
 "The LED update process implements efficient change detection to minimize "
 "GPIO write operations:"
 msgstr ""
+"تنفذ عملية تحديث LED اكتشاف التغيير الفعال لتقليل عمليات الكتابة في GPIO:"
 
 #: ../../content/C7_rasp_controller.rst:75
 #, python-brace-format
@@ -5450,6 +5724,8 @@ msgid ""
 "\\text{LED Update Required} = S_{LED,cached} \\oplus "
 "S_{simulation,current}"
 msgstr ""
+"\\text{LED Update Required} = S_{LED,cached} \\oplus "
+"S_{simulation,current}"
 
 #: ../../content/C7_rasp_controller.rst:79
 #, python-brace-format
@@ -5459,14 +5735,17 @@ msgid ""
 "component state. This comparison prevents unnecessary GPIO operations "
 "when states remain unchanged."
 msgstr ""
+"حيث :math:`S_{LED,cached}` تمثل حالة LED المحفوظة مؤقتًا و:math:`S_{simulation,current}` "
+"تمثل حالة مكون المحاكاة الحالية. هذه المقارنة تمنع عمليات GPIO غير الضرورية "
+"عندما تبقى الحالات دون تغيير."
 
 #: ../../content/C7_rasp_controller.rst:82
 msgid "Device Control Callback Functions"
-msgstr ""
+msgstr "دوال استدعاء التحكم في الأجهزة (Device Control Callback Functions)"
 
 #: ../../content/C7_rasp_controller.rst:83
 msgid "The controller maps GPIO pins to callback functions."
-msgstr ""
+msgstr "يربط المتحكم مسامير GPIO بدوال الاستدعاء (Callback Functions)."
 
 #: ../../content/C7_rasp_controller.rst:85
 msgid ""
@@ -5474,16 +5753,20 @@ msgid ""
 "houses simultaneously; reflecting the global nature of utility grid "
 "connection."
 msgstr ""
+"**تحكم الخط المرافقي (Utility Line Control)**: يؤثر استدعاء تحكم الخط المرافقي على جميع المنازل في نفس الوقت؛ "
+"مما يعكس الطبيعة الشاملة لاتصال الشبكة المرافقية."
 
 #: ../../content/C7_rasp_controller.rst:87
 msgid ""
 "**Individual Device Control**: Individual device controls target specific"
 " house devices; enabling fine-grained control over simulation behavior."
 msgstr ""
+"**تحكم الجهاز الفردي (Individual Device Control)**: تستهدف ضوابط التحكم في الأجهزة الفردية أجهزة "
+"منزل محددة؛ مما يمكن التحكم الدقيق في سلوك المحاكاة."
 
 #: ../../content/C7_rasp_controller.rst:90
 msgid "Remote Communication Interface"
-msgstr ""
+msgstr "واجهة الاتصال عن بعد (Remote Communication Interface)"
 
 #: ../../content/C7_rasp_controller.rst:91
 msgid ""
@@ -5492,10 +5775,13 @@ msgid ""
 "the controller to operate independently of the main simulation while "
 "maintaining synchronized state information."
 msgstr ""
+"ينفذ المتحكم الاتصال عن بعد مع المحاكاة من خلال نظام الكائنات الموزعة Pyro5. "
+"هذا الاتصال يمكن المتحكم من العمل بشكل مستقل عن المحاكاة الرئيسية بينما يحافظ على "
+"معلومات الحالة المتزامنة."
 
 #: ../../content/C7_rasp_controller.rst:94
 msgid "Pyro5 Proxy Configuration"
-msgstr ""
+msgstr "تكوين وسيط Pyro5 (Pyro5 Proxy Configuration)"
 
 #: ../../content/C7_rasp_controller.rst:95
 msgid ""
@@ -5503,6 +5789,8 @@ msgid ""
 "employs environment variable configuration to enable flexible deployment "
 "across different network configurations."
 msgstr ""
+"ينشئ تكوين الوسيط معامل الاتصال. يستخدم النظام تكوين متغيرات البيئة لتمكين النشر المرن "
+"عبر تكوينات شبكة مختلفة."
 
 #: ../../content/C7_rasp_controller.rst:103
 msgid ""
@@ -5510,10 +5798,12 @@ msgid ""
 "scenarios. Local deployment enables single-machine testing; while "
 "networked deployment enables distributed system evaluation."
 msgstr ""
+"يدعم تكوين الوسيط سيناريوهات نشر محلية وعبر الشبكة. النشر المحلي يمكن اختبار الماكينة الواحدة؛ "
+"بينما النشر الشبكي يمكن تقييم النظام الموزع."
 
 #: ../../content/C7_rasp_controller.rst:106
 msgid "Real-Time Control Loop Implementation"
-msgstr ""
+msgstr "تنفيذ حلقة التحكم في الزمن الفعلي (Real-Time Control Loop Implementation)"
 
 #: ../../content/C7_rasp_controller.rst:107
 msgid ""
@@ -5523,12 +5813,17 @@ msgid ""
 "interaction while preventing excessive GPIO polling that could impact "
 "system performance."
 msgstr ""
+"يستخدم المتحكم توقيت دورة تحديث ثابت يوازن بين الاستجابة والكفاءة الحوسبية. فترة التحديث الافتراضية "
+"البالغة 100 ميللي ثانية توفر استجابة مناسبة للتفاعل البشري بينما تمنع استطلاع GPIO "
+"المفرط الذي يمكن أن يؤثر على أداء النظام."
 
 #: ../../content/C7_rasp_controller.rst:109
 msgid ""
 "f_{update} = \\frac{1}{\\Delta t_{update}} = \\frac{1}{0.1} = 10 \\text{ "
 "Hz}"
 msgstr ""
+"f_{update} = \\frac{1}{\\Delta t_{update}} = \\frac{1}{0.1} = 10 \\text{ "
+"Hz}"
 
 #: ../../content/C7_rasp_controller.rst:113
 msgid ""
@@ -5536,10 +5831,12 @@ msgid ""
 "recognition and LED updates occur frequently enough to provide smooth "
 "visual feedback."
 msgstr ""
+"تضمن تردد التحديث البالغ 10 Hz أن ضغطات الأزرار تتلقى اعترافًا فوريًا وتحديثات LED تحدث بتردد كاف "
+"لتوفير رجع التغذية البصرية السلسة."
 
 #: ../../content/C7_rasp_controller.rst:116
 msgid "Hardware Integration and Deployment"
-msgstr ""
+msgstr "تكامل ونشر الأجهزة (Hardware Integration and Deployment)"
 
 #: ../../content/C7_rasp_controller.rst:117
 msgid ""
@@ -5547,10 +5844,12 @@ msgid ""
 "considerations to ensure reliable operation within the residential smart "
 "grid testing environment."
 msgstr ""
+"يتطلب المتحكم تكوين أجهزة محدد واعتبارات نشر لضمان التشغيل الموثوق ضمن بيئة اختبار الشبكة "
+"الذكية السكنية."
 
 #: ../../content/C7_rasp_controller.rst:120
 msgid "Physical Hardware Requirements"
-msgstr ""
+msgstr "متطلبات الأجهزة الفيزيائية (Physical Hardware Requirements)"
 
 #: ../../content/C7_rasp_controller.rst:121
 msgid ""
@@ -5558,50 +5857,55 @@ msgid ""
 "computer with sufficient GPIO pins to support the defined control "
 "mappings. The system requires:"
 msgstr ""
+"يتطلب تنفيذ المتحكم حاسوب Raspberry Pi وحيد اللوحة مع عدد كاف من مسامير GPIO لدعم "
+"تعيينات التحكم المحددة. يتطلب النظام:"
 
 #: ../../content/C7_rasp_controller.rst:123
 msgid "Raspberry Pi 4 or equivalent with 40-pin GPIO header"
-msgstr ""
+msgstr "Raspberry Pi 4 أو ما يعادله مع رأس GPIO بـ 40 مسمار"
 
 #: ../../content/C7_rasp_controller.rst:124
 msgid "13 push-button switches with pull-up configuration"
-msgstr ""
+msgstr "13 مفتاح ضغط مع تكوين سحب علوي (Pull-up Configuration)"
 
 #: ../../content/C7_rasp_controller.rst:125
 msgid "13 LED indicators with appropriate current-limiting resistors"
-msgstr ""
+msgstr "13 مؤشر LED مع مقاومات تحديد التيار المناسبة"
 
 #: ../../content/C7_rasp_controller.rst:126
 msgid "Breadboard or custom PCB for component mounting"
-msgstr ""
+msgstr "لوح تجارب (Breadboard) أو دارة طباعة مخصصة (PCB) لتركيب المكونات"
 
 #: ../../content/C7_rasp_controller.rst:127
 msgid "Power supply suitable for Raspberry Pi and connected components"
-msgstr ""
+msgstr "مزود طاقة مناسب لـ Raspberry Pi والمكونات المتصلة"
 
 #: ../../content/C7_rasp_controller.rst:132
 msgid "Raspberry Pi used in the project"
-msgstr ""
+msgstr "Raspberry Pi المستخدم في المشروع"
 
 #: ../../content/C7_rasp_controller.rst:137
 msgid "Hardware parts required by the system"
-msgstr ""
+msgstr "قطع الأجهزة المطلوبة للنظام"
 
 #: ../../content/C7_rasp_controller.rst:140
 msgid "Physical Hardware Layout and Wiring Specifications"
-msgstr ""
+msgstr "تخطيط الأجهزة الفيزيائية ومواصفات الأسلاك (Physical Hardware Layout and Wiring Specifications)"
 
 #: ../../content/C7_rasp_controller.rst:141
 msgid ""
 "The hardware configuration implements a comprehensive physical layout "
 "that maps logical device controls to specific GPIO pins."
 msgstr ""
+"ينفذ تكوين الأجهزة تخطيطًا فيزيائيًا شاملاً يربط ضوابط الأجهزة المنطقية بمسامير GPIO محددة."
 
 #: ../../content/C7_rasp_controller.rst:146
 msgid ""
 "Raspberry Pi 5 GPIO pinout diagram showing 40-pin header layout and pin "
 "assignments (Source: Raspberry Pi Documentation)"
 msgstr ""
+"مخطط مسامير GPIO لـ Raspberry Pi 5 يظهر تخطيط الرأس بـ 40 مسمار وتعيينات المسامير "
+"(المصدر: Raspberry Pi Documentation)"
 
 #: ../../content/C7_rasp_controller.rst:148
 msgid ""
@@ -5609,10 +5913,12 @@ msgid ""
 "defined in the hardware configuration system. The complete hardware "
 "mapping is shown in the following table:"
 msgstr ""
+"يتبع تخصيص مسامير GPIO نمط التعيين الرياضي المحدد في نظام تكوين الأجهزة. يظهر التعيين "
+"الهاردويري الكامل في الجدول التالي:"
 
 #: ../../content/C7_rasp_controller.rst:150
 msgid "GPIO Pin Mappings for Hardware Controls"
-msgstr ""
+msgstr "تعيينات مسامير GPIO لضوابط الأجهزة (GPIO Pin Mappings for Hardware Controls)"
 
 #: ../../content/C7_rasp_controller.rst:154
 msgid "Control Function"

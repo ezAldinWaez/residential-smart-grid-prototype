@@ -6,6 +6,7 @@ from .data import InverterConf, InverterMode, ChargePriority
 from .panels import Panels
 from .battery import Battery
 from ..config.settings import settings
+from ..config.constants import EPSILON
 
 from Pyro5.api import expose
 import pvlib
@@ -148,14 +149,14 @@ class Inverter:
 
             """
             battery_exchange_power = 0.0
-            if available_panels_dc_power > 0:
+            if available_panels_dc_power > EPSILON:
                 dc_to_inverter_for_load = min(available_panels_dc_power, required_load_dc_power)
 
                 available_panels_dc_power -= dc_to_inverter_for_load
                 required_load_dc_power -= dc_to_inverter_for_load
 
                 # It is worth noting this will not change regardless of the charge priority of the battery
-                if available_panels_dc_power > 0:
+                if available_panels_dc_power > EPSILON:
                     battery_exchange_power = self._battery.charge(available_panels_dc_power, dt_seconds)
                     available_panels_dc_power -= battery_exchange_power
             return available_panels_dc_power, required_load_dc_power, battery_exchange_power
@@ -174,9 +175,9 @@ class Inverter:
 
             """
             battery_exchange_power = 0.0
-            if required_load_dc_power > 0.0:
+            if required_load_dc_power > EPSILON:
                 battery_exchange_power = self._battery.discharge(required_load_dc_power, dt_seconds)
-                if battery_exchange_power > 0.0:
+                if battery_exchange_power > EPSILON:
                     required_load_dc_power -= battery_exchange_power
             return required_load_dc_power, -battery_exchange_power
 
@@ -190,7 +191,7 @@ class Inverter:
                 float: Load power still needed after utility contribution [Watt].
 
             """
-            if required_load_dc_power > 0.0 and self.utility_line:
+            if required_load_dc_power > EPSILON and self.utility_line:
                 imported_power = self.dc_to_ac(required_load_dc_power)
                 self.utility_exchange_power = -imported_power
                 required_load_dc_power = 0.0
@@ -228,7 +229,7 @@ class Inverter:
         battery_exchange_power += battery_usage
 
         # Export remaining panels dc to utility after meeting all demands
-        if available_panels_dc_power > 0.0 and self.utility_line:
+        if available_panels_dc_power > EPSILON and self.utility_line:
             ac_power_exported_to_utility = self.dc_to_ac(available_panels_dc_power)
             self.utility_exchange_power = ac_power_exported_to_utility
             available_panels_dc_power = 0.0
@@ -237,10 +238,11 @@ class Inverter:
         self.panels_power = self._panels.total_power - available_panels_dc_power
 
         # Disconnect load if demand not met
-        if required_load_dc_power > 0.0:
+        if required_load_dc_power > EPSILON:
             self.load_line = False
-            required_load_dc_power = 0.0
             self._load_reconnection_time = timestamp + timedelta(seconds=settings.INVERTER_LOAD_RECONNECTION_INTERVAL)
+
+        required_load_dc_power = 0.0
 
         # Charge battery from utility after all is said and done and store the exchange power of the battrey
         # The condition seems complex, here it is: it enters when the priority is UTILITY_OR_SOLAR, or when SOLAR_FIRST and solar

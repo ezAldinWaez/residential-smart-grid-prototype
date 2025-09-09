@@ -34,7 +34,7 @@ class Settings:
     BATTERY_INIT_RESIDUAL_CAPACITY = 50_000  #: The initial charge level of the battery [Wh].
     BATTERY_CHARGE_EFFICIENCY = 0.95  #: The efficiency of charging and discharging for the battery [%].
     BATTERY_MAX_CHARGE_POWER = 40_000  #: The maximum charge power for the battery [Watt].
-    BATTERY_MAX_DISCHARGE_POWER = 10_000  #: The maximum discharge power for the battery [Watt].
+    BATTERY_MAX_DISCHARGE_POWER = 40_000  #: The maximum discharge power for the battery [Watt].
 
     PANELS_NUM = 80  #: The number of panels in the system.
     PANEL_AREA = 1.6  #: The area of a single solar panel in square meters [m^2].
@@ -46,7 +46,7 @@ class Settings:
     INVERTER_ETA_INV_REF = 0.9637  #: Reference inverter efficiency [%] (e.g., 0.9637).
     INVERTER_PNT = 20.0  #: AC power consumed by inverter at night [Watt].
     INVERTER_ETA_OVR = INVERTER_ETA_INV_NOM  #: Simplified overall nominal efficiency for reverse calculation [%].
-    INVERTER_INIT_MODE = InverterMode.SBU  #: Initial mode the inverter is set to use.
+    INVERTER_INIT_MODE = InverterMode.USB  #: Initial mode the inverter is set to use.
     INVERTER_INIT_CHARGE_PRIORITY = ChargePriority.SOLAR_ONLY  #: Initial charge priority the inverter is set to use.
     INVERTER_LOAD_RECONNECTION_INTERVAL = 30.0  #: float: Interval to reconnect the load line after disconnection [sec].
 

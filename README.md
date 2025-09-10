@@ -28,76 +28,103 @@ The system consists of multiple simulation components running concurrently with 
 ### System Overview
 
 ```mermaid
-graph TB
-
-  subgraph HHC[Hardware Houses Controls]
-    HHC_H1([House 1])
-    HHC_H2([House 2])
-    HHC_H3([House 3])
-  end
-
+graph LR
   subgraph RSGP[RSGP]
     RSGP_SSS([Solar System Simulation])
     RSGP_PM([Power Management])
     RSGP_HS([Houses Simulation])
-    RSGP_IOT([I/O Tracker])
-    RSGP_RO([RSGP Remote Object])
   end
-
-  subgraph D[Dashboard]
-    D_V([Views])
-    D_A([App])
-  end
+  D([Dashboard])
+  RC([Raspberry Pi Controller])
+  HHC([Hardware Houses Controls])
 
   RSGP_SSS <--Data--> RSGP_PM <--Data--> RSGP_HS
-  RSGP_HS <--Data--> RSGP_IOT <--Electric Signals--> HHC_H1 & HHC_H2 & HHC_H3
-  RSGP_RO <--Data--> D_A
+  RSGP <--Data--> D & RC
+  RC <--Electric Signals--> HHC
 ```
 
 ### Detailed Architecture
 
 ```mermaid
-graph TB
-
-  subgraph HHC[Hardware Houses Controls]
-    HHC_H1([House 1])
-    HHC_H2([House 2])
-    HHC_H3([House 3])
-  end
-
+graph LR
   subgraph RSGP[RSGP]
     subgraph RSGP_SSS[Solar System Simulation]
-      RSGP_SSS_I([Inverter])
-      RSGP_SSS_B([Battery])
-      RSGP_SSS_P([Panels])
+      subgraph RSGP_SSS_P[Panels]
+        RSGP_SSS_P_D[NSRDB Dataset]
+        RSGP_SSS_P_C[PVLib Calculations]
+        RSGP_SSS_P_O[Solar Power Output]
+      end
+      subgraph RSGP_SSS_B[Battery]
+        RSGP_SSS_B_M[Charge State Management]
+      end
+      subgraph RSGP_SSS_I[Inverter]
+        RSGP_SSS_I_M[Power Flow Management] 
+        RSGP_SSS_I_LG[Load & Grid Interfaces]
+      end
     end
     subgraph RSGP_PM[Power Management]
-      RSGP_PM_([...])
+      RSGP_PMnger[Power Manager]
+      subgraph RSGP_PM_VBA[Virtual Battery Array]
+        RSGP_PM_VB1[Virtual Battery 1]
+        RSGP_PM_VB2[Virtual Battery 2]
+        RSGP_PM_VBK[...]
+        RSGP_PM_VBN[Virtual Battery N]
+      end
     end
     subgraph RSGP_HS[Houses Simulation]
-      subgraph RSGP_HS_H1[House 1]
-        RSGP_HS_H1_D([Devices])
+      subgraph RSGP_HS_HN[House N]
+        RSGP_HS_H3_D1([Device 1])
+        RSGP_HS_H3_D2([Device 2])
+        RSGP_HS_H3_DK([...])
+        RSGP_HS_H3_DM([Device M])
       end
+      RSGP_HS_HK[...]
       subgraph RSGP_HS_H2[House 2]
-        RSGP_HS_H2_D([Devices])
+        RSGP_HS_H2_D1([Device 1])
+        RSGP_HS_H2_D2([Device 2])
+        RSGP_HS_H2_DK([...])
+        RSGP_HS_H2_DM([Device M])
       end
-      subgraph RSGP_HS_H3[House 3]
-        RSGP_HS_H3_D([Devices])
+      subgraph RSGP_HS_H1[House 1]
+        RSGP_HS_H1_D1([Device 1])
+        RSGP_HS_H1_D2([Device 2])
+        RSGP_HS_H1_DK([...])
+        RSGP_HS_H1_DM([Device M])
       end
     end
-    RSGP_IOT([I/O Tracker])
-    RSGP_RO([RSGP Remote Object])
+  end
+  D([Dashboard])
+  RC([Raspberry Pi Controller])
+  subgraph HHC[Hardware Houses Controls]
+    subgraph HHC_HN[House N]
+      HHC_HN_D1([Device 1])
+      HHC_HN_D2([Device 2])
+      HHC_HN_DK([...])
+      HHC_HN_DM([Device M])
+    end
+    subgraph HHC_HK[...]
+    end
+    subgraph HHC_H2[House 2]
+      HHC_H2_D1([Device 1])
+      HHC_H2_D2([Device 2])
+      HHC_H2_DK([...])
+      HHC_H2_DM([Device M])
+    end
+    subgraph HHC_H1[House 1]
+      HHC_H1_D1([Device 1])
+      HHC_H1_D2([Device 2])
+      HHC_H1_DK([...])
+      HHC_H1_DM([Device M])
+    end
   end
 
-  subgraph D[Dashboard]
-    D_A([App])
-    D_V([Views])
-  end
-
-  RSGP_SSS_P & RSGP_SSS_B <--Data--> RSGP_SSS_I
-  RSGP_SSS_I <--Data--> RSGP_PM_ <--Data--> RSGP_HS_H1 & RSGP_HS_H2 & RSGP_HS_H3
-  RSGP_HS_H1 & RSGP_HS_H2 & RSGP_HS_H3 <--Data--> RSGP_IOT <--Electric Signals--> HHC_H1 & HHC_H2 & HHC_H3
-  RSGP_RO <--Data--> D_A
+  RSGP_SSS_P_D --Data--> RSGP_SSS_P_C --Data--> RSGP_SSS_P_O --Data--> RSGP_SSS_I_M
+  RSGP_SSS_B_M <--Data--> RSGP_SSS_I_M <--Data--> RSGP_SSS_I_LG
+  RSGP_SSS_I_LG <--Data--> RSGP_PM
+  RSGP_PMnger <--Data & Controls--> RSGP_PM_VB1 & RSGP_PM_VB2 & RSGP_PM_VBK & RSGP_PM_VBN
+  RSGP_PM <--Data & Controls--> RSGP_HS_H1 & RSGP_HS_H2 & RSGP_HS_HK & RSGP_HS_HN
+  RSGP <--Data & Controls--> D & RC
+  RC <--Electric Signals--> HHC_H1 & HHC_H2 & HHC_HK & HHC_HN
 ```
 
 ## 🚀 Quick Start

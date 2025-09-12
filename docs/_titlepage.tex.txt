@@ -7,7 +7,7 @@
 \textsc{\Large Bachelor Graduation Project}\\[0.5cm]
 \newcommand{\HRule}{\rule{\linewidth}{0.5mm}}
 \HRule \\[0.5cm]
-{\huge \bfseries Residential Smart Grid\par}\vspace{0.2cm}
+{\huge \bfseries Residential Smart Grid Prototype\par}\vspace{0.2cm}
 \HRule \\[0.5cm]
 \begin{minipage}[t]{0.4\textwidth}
 \begin{flushleft} \large
@@ -28,9 +28,8 @@ Dr. Fadi Farha\\[1cm]
 \end{flushright}
 \end{minipage}\\[1cm]
 \vfill
-\includegraphics[width=4cm]{logo.png}\\[1cm]
-\large \textit{A project submitted in fulfillment of the requirements\\ for the Bachelor's Degree in Informatics Engineering}\\[0.5cm]
+\large \textit{This project is submitted in fulfillment of one of the requirements \\for the degree of Bachelor of Science in Informatics Engineering}\\[0.5cm]
 \vfill
-{\large September 2025}\\[2cm]        
+{\large September 2025}\\[2cm]
 \end{center}
 \end{titlepage}

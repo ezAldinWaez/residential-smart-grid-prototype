@@ -75,7 +75,7 @@ class DeviceClass:
         """Get device class envelopes.
 
         Returns:
-            list[tuple[float, float, bool]]: Device class envelopes. 
+            list[tuple[float, float, bool]]: Device class envelopes.
 
         """
         return [

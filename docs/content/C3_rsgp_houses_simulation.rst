@@ -10,13 +10,13 @@ Architecture Overview
 ---------------------
 The architecture separates simulation coordination, individual house modeling, and device-level power consumption calculations.
 
-.. mermaid:: ../_static/diagrams/C3_hs_arch.mmd
-   :align: center
-   :caption: Houses simulation architecture
-
 - The ``HousesSimulator`` serves as the coordination layer; it manages the house instances and coordinates their execution.
 - The ``House`` serves as the individual unit; it maintains state information about its devices and utility and load lines.
 - The ``DeviceClass`` serves as the base for the loads; it does the calculations per each device's parameters to simulate realistic load consumption patterns.
+
+.. mermaid:: ../_static/diagrams/C3_hs_arch.mmd
+   :align: center
+   :caption: Houses simulation architecture
 
 .. note:: The design prioritizes modularity and allows for dynamic addition of new device types without modification to the core simulation. This makes it easier to craft testing scenarios.
 
@@ -32,7 +32,7 @@ where :math:`N` represents the number of the houses, :math:`L_{i}` the load of t
 
 .. mermaid:: ../_static/diagrams/C3_hs_workflow.mmd
    :align: center
-   :caption: HousesSimulator coordination and load aggregation workflow
+   :caption: Houses simulator coordination and load aggregation workflow
 
 The simulator implements a configurable update cycle usually set to 100-millisecond intervals. During each update cycle, the simulator queries all house instances for their current power consumption and aggregates these values. The system-wide total load is then made available to the power management system.
 
@@ -66,6 +66,11 @@ The **ADSR envelope** provides the temporal structure for the device's power con
 - The **Sustain** phase models the steady-state operation where the device maintains its power consumption level. This phase also uses wave modulation to model load variations due to changing conditions. The sustain level maintains: :math:`P(t) = s` for :math:`t > a+d`.
 - The **Release** phase models the shutdown. This includes braking effects in motor systems and thermal cool-down periods that continue to consume power for a short while until complete shutdown. The release function follows: :math:`P(t) = -\frac{s}{r} \times t + P_{toggle}` where :math:`P_{toggle}` represents the power level at device deactivation.
 
+.. plot:: _static/plots/C3_device_parameter_impact.py
+   :align: center
+
+   ADSR parameter impact comparison
+
 Wave modulation introduces realistic variations in power consumption over the ADSR envelope. The framework supports multiple modulation types: sine waves, square waves, and random modulation. These modulation patterns operate at different frequencies and amplitudes to create complex power signatures that more closely match measured residential devices' behavior.
 
 The wave modulation mathematical functions include:
@@ -80,11 +85,6 @@ where :math:`w_a` represents wave amplitude, :math:`w_p` represents wave period,
    :align: center
 
    Some regular devices simulated load profiles
-
-.. plot:: _static/plots/C3_device_parameter_impact.py
-   :align: center
-
-   ADSR parameter impact comparison showing how Attack time, Sustain level, Release time, and Wave modulation affect device load curves
 
 The device modeling framework organizes electrical devices into categories. Each category implements specialized ADSR parameters and wave modulation to capture the unique behavior of the device. The total device class load calculation combines all active device instances:
 
@@ -109,4 +109,4 @@ CSV logging operates in the update cycle (usually once every 100-milliseconds). 
 .. plot:: _static/plots/C3_houses_simulation_visualization.py
    :align: center
 
-   Real-time data demonstration showing system load and individual house loads during a controlled device operation scenario
+   Real-time houses simulation demonstration

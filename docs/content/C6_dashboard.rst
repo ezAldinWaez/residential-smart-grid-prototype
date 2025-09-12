@@ -21,11 +21,11 @@ The dashboard application builds upon the Tkinter GUI framework enhanced with tt
 
    Dashboard snapshot
 
-The application implements a hierarchical view structure that scales to accommodate varying numbers of houses and devices within the simulation. The framework provides scrollable interfaces for scenarios with large numbers of components, ensuring usability regardless of simulation scale.
-
 .. mermaid:: ../_static/diagrams/C6_component_layout.mmd
    :align: center
-   :caption: Dashboard component layout showing hierarchical view structure and UI organization
+   :caption: Dashboard component layout
+
+The application implements a hierarchical view structure that scales to accommodate varying numbers of houses and devices within the simulation. The framework provides scrollable interfaces for scenarios with large numbers of components, ensuring usability regardless of simulation scale.
 
 Houses Simulation Interface
 ---------------------------
@@ -50,5 +50,3 @@ The dashboard implements a real-time update system that maintains synchronizatio
 Data Collection and Analysis Support
 ------------------------------------
 The dashboard provides access to simulation data through its summary views and component monitoring interfaces. This information supports both real-time system analysis and post-simulation evaluation of system performance and algorithm effectiveness.
-
-.. note:: The data is currently displayed only as summaries, lacking any visualization, as the goal of the dashboard was to debug the simulation and power management solutions. However, the data exported to CSV files from the various simulation components can be imported into a third party tool for visualization and statistical analysis.

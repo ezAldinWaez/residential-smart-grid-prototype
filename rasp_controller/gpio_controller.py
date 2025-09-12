@@ -13,7 +13,6 @@ try:
     import lgpio
     GPIO_LIB = 'lgpio'
 except ImportError:
-    print("No GPIO library available.")
     GPIO_LIB = None
 
 

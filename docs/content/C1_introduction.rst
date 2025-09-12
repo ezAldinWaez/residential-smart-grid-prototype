@@ -14,7 +14,7 @@ Chapters 3 through 5 constitute the technical core of the documentation, examini
 
 Chapters 6 and 7 address interactive user interfaces implementations. Chapter 6 details dashboard system architecture, remote object communication, and real-time monitoring. Chapter 7 presents hardware integration through Raspberry Pi, GPIO mapping, and physical interaction mechanisms.
 
-Chapter 8 presents results from simulation validation, performance analysis, and system effectiveness evaluation. The results demonstrate correlation between simulation models and real-world data and quantifies system performance improvements in grid independence. 
+Chapter 8 presents results from simulation validation, performance analysis, and system effectiveness evaluation. The results demonstrate correlation between simulation models and real-world data and quantifies system performance improvements in grid independence.
 
 Chapter 9 concludes with analysis of project outcomes, identification of future development opportunities, and recommendations for continued research and real-world deployment.
 

@@ -37,13 +37,13 @@ During this phase, content authors:
 
 - Focus on content completeness rather than presentation quality
 
-The writing phase employs minimal markup to avoid distraction from content development. 
+The writing phase employs minimal markup to avoid distraction from content development.
 
 Phase 2: Technical Editing
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
-The technical editing phase goes through two rounds of reviews: one for mathematical formulas and one for algorithms. 
+The technical editing phase goes through two rounds of reviews: one for mathematical formulas and one for algorithms.
 
-**Mathematical Formula Verification**: All mathematical formulas undergo consistency checking between related equations. 
+**Mathematical Formula Verification**: All mathematical formulas undergo consistency checking between related equations.
 
 .. math::
 
@@ -70,9 +70,10 @@ The content enrichment phase adds visual elements, diagrams, and plots that supp
 .. code-block:: text
 
    graph TD
-     A[Houses Simulation] --> B[Power Management]
-     B --> C[Solar System Simulation]
-     C --> A
+      SSS[Solar System Simulation]
+      PM[Power Management]
+      HS[Houses Simulation]
+      SSS <--Data--> PM <--Data--> HS
 
 Diagrams undergo iterative refinement to ensure visual clarity and technical accuracy. The diagram development process includes validation against actual system architecture to prevent documentation drift from implementation reality.
 
@@ -98,12 +99,9 @@ The documentation uses Sphinx as the primary documentation generator and reStruc
 
 .. code-block:: rst
 
-   .. math::
-   
-      C_{vb,i} = \frac {C_{total}}{N} \times w_i
-   
+   .. math:: C_{vb,i} = \frac {C_{total}}{N} \times w_i
+
    .. mermaid:: ../_static/diagrams/C5_pm_arch.mmd
-      :align: center
       :caption: Power management architecture
 
 The documentation integrates multiple Sphinx extensions that provide specialized functionality for technical documentation.
@@ -120,26 +118,23 @@ All source code employs Google-style docstrings that provide structured, machine
 
 .. code-block:: python
 
-   def _S(available_panels_dc_power: float, required_load_dc_power: float) -> tuple[float, float, float]:
-      """Meet load from panels dc (S is for solar), convert it to ac, charge battery with the remaining.
-      The function is given the vague name _S because it is a function defined within a function, 
-      that of the inverter's operation, and the functions were then supposed to be called like this: 
-         _S()
-         _U()
-         _B()
-      Thus making it clear where the inverter's mode of operation was implemented in the code. 
+   def example_function(param1: int, param2: str) -> bool:
+       """
+       This is an example function demonstrating Google-style docstrings.
 
-      Args:
-            available_panels_dc_power (float): The current DC power available from panels [Watt].
-            required_load_dc_power (float): The DC power required by the load [Watt].
+       Args:
+           param1 (int): The first parameter.
+           param2 (str): The second parameter.
 
-      Returns:
-          tuple[float, float, float]: A tuple containing:
-               - **remaining_panels_dc_power** (*float*): Solar power left after meeting load and charging battery [Watt].
-               - **remaining_load_dc_power** (*float*): Load power still needed after solar contribution [Watt].
-               - **battery_charge_power** (*float*): Power used to charge the battery from solar [Watt].
+       Returns:
+           bool: The return value. True if successful, False otherwise.
 
-            """
+       Raises:
+           ValueError: If param1 is negative.
+       """
+       if param1 < 0:
+           raise ValueError("param1 cannot be negative")
+       return param2 == "success"
 
 This structured approach provides API documentation directly within source code, ensuring that documentation matches implementation behavior.
 
@@ -152,10 +147,9 @@ Technical plots exist as executable Python scripts within ``docs/_static/plots/`
 .. code-block:: python
 
    import matplotlib.pyplot as plt
-   from rsgp.utils.nsrdb_data import NSRDBData
-   
-   data = NSRDBData()
-   plt.plot(data.time, data.ghi, label='Global Horizontal Irradiance')
+   from rsgp.utils.nsrdb_data import nsrdb_data
+
+   plt.plot(nsrdb_data['Timestamp'], nsrdb_data['GHI'], label='Global Horizontal Irradiance')
    plt.show()
 
 This architecture provides several advantages:
@@ -171,14 +165,11 @@ The documentation workflow includes extracting real-world data from scientific l
 
 **WebPlotDigitizer Integration**: For model validation scenarios where raw data is not available, the workflow uses WebPlotDigitizer (https://automeris.io/WebPlotDigitizer/) to extract numerical data points from published scientific figures:
 
-.. code-block:: text
-
-   1. Identify peer-reviewed papers with relevant experimental data
-   2. Use WebPlotDigitizer to extract data points from figures
-   3. Save extracted data as CSV with proper source attribution
-   4. Create comparison plots showing model vs. real data
-   5. Include statistical analysis and validation metrics
-
+1. Identify peer-reviewed papers with relevant experimental data
+2. Use WebPlotDigitizer to extract data points from figures
+3. Save extracted data as CSV with proper source attribution
+4. Create comparison plots showing model vs. real data
+5. Include statistical analysis and validation metrics
 
 Scenario-Based Plot Generation
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

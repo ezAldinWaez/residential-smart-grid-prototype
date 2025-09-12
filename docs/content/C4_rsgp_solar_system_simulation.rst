@@ -10,13 +10,34 @@ Solar System Architecture Overview
 ----------------------------------
 The solar system simulation architecture consists of photovoltaic panels, one battery, and an inverter connecting the elements. The inverter is then connected to the power manager through a load line and a utility line. This design separates concerns between energy generation, storage, and power conversion and enables more realistic modeling of each component.
 
-.. mermaid:: ../_static/diagrams/C4_sss_arch.mmd
-   :align: center
-   :caption: Solar system simulation architecture
-
 The **Panels** handle solar irradiance calculations and power generation based on the data collected from the National Solar Radiation Database (NSRDB). The **Battery** manages charge state tracking. The **Inverter** adheres to its operational mode control and manages power distribution from and to the solar system components and the demands of the power manager.
 
 .. note:: The three-component architecture enables independent development and testing of solar generation, energy storage, and power distribution.
+
+.. only:: html
+
+   .. container:: diagram-75
+
+      .. mermaid:: ../_static/diagrams/C4_sss_arch.mmd
+         :align: center
+         :caption: Solar system simulation architecture
+
+.. only:: latex
+
+   .. raw:: latex
+
+      \begin{figure}[h]
+      \centering
+      \scalebox{0.75}{
+
+   .. mermaid:: ../_static/diagrams/C4_sss_arch.mmd
+
+   .. raw:: latex
+
+      }
+      \caption{Solar system simulation architecture}
+      \end{figure}
+
 
 Photovoltaic Panel Modeling
 ---------------------------
@@ -30,12 +51,6 @@ The NSRDB contains hourly solar irradiance measurements, temperature data, and a
 
 Solar position calculations account for latitude, longitude, time of year, and time of day to determine solar azimuth and elevation angles. The solar position information combines with irradiance data (DNI, DHI, and GHI) to calculate the effective solar energy. The PVLib library performs these calculations using established solar position algorithms. Below is an overview of the parameters of that calculation.
 
-.. figure:: ../_static/images/C4_components_of_solar_radiation.png
-   :align: center
-   :scale: 50%
-
-   Components of solar radiation (Source: ResearchGate)
-
 - **Direct Normal Irradiance (DNI)** represents the irradiance directly from the sun to the surface of the photovoltaic panels.
 
 - **Diffuse Horizontal Irradiance(DHI)** represents the irradiance indirectly reaching the surface of the photovoltaic panels through the rays scattered by the sky dome.
@@ -46,12 +61,18 @@ Solar position calculations account for latitude, longitude, time of year, and t
 
    GHI = DNI \times \cos(\theta) + DHI
 
-where :math:`\theta` is the solar zenith angle. 
+where :math:`\theta` is the solar zenith angle.
+
+.. figure:: ../_static/images/C4_components_of_solar_radiation.png
+   :align: center
+   :width: 50%
+
+   Components of solar radiation (Source: ResearchGate)
 
 .. plot:: _static/plots/C4_solar_irradiance_daily_cycle.py
    :align: center
 
-   Solar irradiance components over a typical clear day showing DNI, DHI, and GHI variations with solar zenith angle
+   Solar irradiance components over a typical clear day
 
 .. figure:: ../_static/images/C4_zenith_angle.jpg
    :align: center
@@ -119,7 +140,7 @@ where :math:`\eta_{inv}` represents inverter efficiency, :math:`P_{dc0}` represe
 .. plot:: _static/plots/C4_dc_ac_conversion_efficiency.py
    :align: center
 
-   DC-to-AC conversion characteristics showing PVWatts model efficiency curve compared to ideal linear conversion
+   DC-to-AC conversion characteristics
 
 The inverter implements three operating modes for power flow priority.
 
@@ -147,11 +168,11 @@ In all charge priorities, the inverter will export to utility only when the batt
 
 where power sources are allocated according to the configured priority mode, and any remaining unmet load triggers load line disconnection.
 
+The inverter implements load shedding as a protective measure that prevents system overload. It disconnects the load when available power sources prove insufficient. The load is then automatically reconnected after a set period of time, during which the power manager should have taken care of the issue.
+
 .. mermaid:: ../_static/diagrams/C4_inverter_operational_modes.mmd
    :align: center
-   :caption: Inverter operational modes showing power flow priority and decision trees for SBU, SUB, and USB modes
-
-The inverter implements load shedding as a protective measure that prevents system overload. It disconnects the load when available power sources prove insufficient. The load is then automatically reconnected after a set period of time, during which the power manager should have taken care of the issue.
+   :caption: Inverter operational modes
 
 .. note:: The power manager ensures that load shedding may not happen as it automatically disconnects loads from the specific houses that are overusing. As such, load shedding is only ever triggered in the extreme situations where the power manager fails.
 
@@ -183,6 +204,6 @@ The system captures data from all the components to enable any form of analysis.
 .. plot:: _static/plots/C4_solar_system_simulation_visualization.py
    :align: center
 
-   Real-time solar system simulation demonstration showing solar generation, battery operation, system connection states, and utility grid exchange during controlled operational scenarios
+   Real-time solar system simulation demonstration
 
 Along the data from NSRDB, the logged CSV files provide all the data needed to carry out analysis on the trends of power generation and consumption. Trend analysis might lead to improvements on the power management solutions. Additionally, AI techniques can be used to benefit from the data and extend the power manager with AI capabilities. This could be especially useful to predict shortages of power generation and thus switch the operation mode of the inverter to import from utility to keep the battery for that shortage and thus maintain long-term system stability.

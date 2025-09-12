@@ -54,6 +54,30 @@ Button State Monitoring Algorithm
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 The button monitoring system implements edge detection to identify button press events to prevent multiple triggers from single user actions. The algorithm maintains previous button states and compares them with current readings to detect falling edge transitions that indicate button presses.
 
+.. only:: html
+
+   .. container:: diagram-75
+
+      .. mermaid:: ../_static/diagrams/C7_controller_state_machine.mmd
+         :align: center
+         :caption: GPIO controller state machine
+
+.. only:: latex
+
+   .. raw:: latex
+
+      \begin{figure}[h]
+      \centering
+      \scalebox{0.75}{
+
+   .. mermaid:: ../_static/diagrams/C7_controller_state_machine.mmd
+
+   .. raw:: latex
+
+      }
+      \caption{GPIO controller state machine}
+      \end{figure}
+
 .. math::
 
    \text{Button Press} = S_{previous} \land \neg S_{current}
@@ -61,10 +85,6 @@ The button monitoring system implements edge detection to identify button press 
 where :math:`S_{previous}` represents the previous button state and :math:`S_{current}` represents the current button state. This logical operation identifies the transition from high to low that occurs when a button is pressed with pull-up configuration.
 
 The button reading cycle operates continuously within the main update loop:
-
-.. mermaid:: ../_static/diagrams/C7_controller_state_machine.mmd
-   :align: center
-   :caption: GPIO controller state machine showing main control loop, button processing, and LED synchronization with simulation components
 
 LED State Synchronization
 ~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -118,6 +138,12 @@ The controller requires specific hardware configuration and deployment considera
 
 Physical Hardware Requirements
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.. figure:: ../_static/images/C7_raspberry_pi.jpg
+   :align: center
+   :width: 75%
+
+   Raspberry Pi used in the project
+
 The controller implementation requires a Raspberry Pi single-board computer with sufficient GPIO pins to support the defined control mappings. The system requires:
 
 - Raspberry Pi 4 or equivalent with 40-pin GPIO header
@@ -126,13 +152,9 @@ The controller implementation requires a Raspberry Pi single-board computer with
 - Breadboard or custom PCB for component mounting
 - Power supply suitable for Raspberry Pi and connected components
 
-.. figure:: ../_static/images/C7_raspberry_pi.jpg
-   :align: center
-
-   Raspberry Pi used in the project
-
 .. figure:: ../_static/images/C7_hardware_parts.jpg
    :align: center
+   :width: 75%
 
    Hardware parts required by the system
 
@@ -140,46 +162,46 @@ Physical Hardware Layout and Wiring Specifications
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 The hardware configuration implements a comprehensive physical layout that maps logical device controls to specific GPIO pins.
 
+.. table:: GPIO pin mappings for hardware controls
+   :align: center
+   
+   +-------------------+-------------+----------+----------+
+   | Control Function  | House ID    | Button   | LED      |
+   |                   |             | GPIO Pin | GPIO Pin |
+   +===================+=============+==========+==========+
+   | H1 Refrigerator   | 1           | 2        | 15       |
+   +-------------------+-------------+----------+----------+
+   | H1 HVAC           | 1           | 3        | 16       |
+   +-------------------+-------------+----------+----------+
+   | H1 Water Heater   | 1           | 4        | 17       |
+   +-------------------+-------------+----------+----------+
+   | H1 Load Line      | 1           | 5        | 18       |
+   +-------------------+-------------+----------+----------+
+   | H2 Refrigerator   | 2           | 6        | 19       |
+   +-------------------+-------------+----------+----------+
+   | H2 HVAC           | 2           | 7        | 20       |
+   +-------------------+-------------+----------+----------+
+   | H2 Water Heater   | 2           | 8        | 21       |
+   +-------------------+-------------+----------+----------+
+   | H2 Load Line      | 2           | 9        | 22       |
+   +-------------------+-------------+----------+----------+
+   | H3 Refrigerator   | 3           | 10       | 23       |
+   +-------------------+-------------+----------+----------+
+   | H3 HVAC           | 3           | 11       | 24       |
+   +-------------------+-------------+----------+----------+
+   | H3 Water Heater   | 3           | 12       | 25       |
+   +-------------------+-------------+----------+----------+
+   | H3 Load Line      | 3           | 13       | 26       |
+   +-------------------+-------------+----------+----------+
+   | Utility Line      | Global (0)  | 14       | 27       |
+   +-------------------+-------------+----------+----------+
+
 .. figure:: ../_static/images/C7_raspberry_pi_5_gpio_pinout_diagram.png
    :align: center
    
-   Raspberry Pi 5 GPIO pinout diagram showing 40-pin header layout and pin assignments (Source: Raspberry Pi Documentation)
+   Raspberry Pi 5 GPIO pinout diagram
 
 The GPIO pin allocation follows the mathematical assignment pattern defined in the hardware configuration system. The complete hardware mapping is shown in the following table:
-
-.. table:: GPIO Pin Mappings for Hardware Controls
-   :align: center
-   
-   +-------------------+-------------+----------+----------+-----------------+
-   | Control Function  | House ID    | Button   | LED      | Device Type     |
-   |                   |             | GPIO Pin | GPIO Pin |                 |
-   +===================+=============+==========+==========+=================+
-   | H1 Refrigerator   | 1           | 2        | 15       | REFRIGERATOR    |
-   +-------------------+-------------+----------+----------+-----------------+
-   | H1 HVAC           | 1           | 3        | 16       | HVAC            |
-   +-------------------+-------------+----------+----------+-----------------+
-   | H1 Water Heater   | 1           | 4        | 17       | WATER_HEATER    |
-   +-------------------+-------------+----------+----------+-----------------+
-   | H1 Load Line      | 1           | 5        | 18       | LOAD_LINE       |
-   +-------------------+-------------+----------+----------+-----------------+
-   | H2 Refrigerator   | 2           | 6        | 19       | REFRIGERATOR    |
-   +-------------------+-------------+----------+----------+-----------------+
-   | H2 HVAC           | 2           | 7        | 20       | HVAC            |
-   +-------------------+-------------+----------+----------+-----------------+
-   | H2 Water Heater   | 2           | 8        | 21       | WATER_HEATER    |
-   +-------------------+-------------+----------+----------+-----------------+
-   | H2 Load Line      | 2           | 9        | 22       | LOAD_LINE       |
-   +-------------------+-------------+----------+----------+-----------------+
-   | H3 Refrigerator   | 3           | 10       | 23       | REFRIGERATOR    |
-   +-------------------+-------------+----------+----------+-----------------+
-   | H3 HVAC           | 3           | 11       | 24       | HVAC            |
-   +-------------------+-------------+----------+----------+-----------------+
-   | H3 Water Heater   | 3           | 12       | 25       | WATER_HEATER    |
-   +-------------------+-------------+----------+----------+-----------------+
-   | H3 Load Line      | 3           | 13       | 26       | LOAD_LINE       |
-   +-------------------+-------------+----------+----------+-----------------+
-   | Utility Line      | Global (0)  | 14       | 27       | UTILITY_LINE    |
-   +-------------------+-------------+----------+----------+-----------------+
 
 Button inputs employ internal pull-up resistors provided by the Raspberry Pi GPIO controller; thus simplifying external wiring requirements and ensuring reliable signal detection.
 

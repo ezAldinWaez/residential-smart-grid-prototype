@@ -19,7 +19,6 @@ class Panels:
 
     conf: PanelsConf  #: PanelsConf: The panels configuration.
     pv_loc: Location  #: Location: The `pvlib` location info from the NSRDB meta data.
-    # TODO: make that as data type in .data; an interface between panels and nsrdb data.
     pv_data: pd.Series  #: Series: The data row from the NSRDB for the current timestamp.
     total_power: float  #: float: The theoretical total power produced by the panels [Watt].
 

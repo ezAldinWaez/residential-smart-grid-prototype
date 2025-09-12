@@ -21,7 +21,6 @@ extensions = [
     'sphinx.ext.autodoc',
     'sphinx.ext.napoleon',
     'sphinx.ext.viewcode',
-    'sphinx.ext.todo',
     'sphinxcontrib.mermaid',
     'matplotlib.sphinxext.plot_directive',
 ]
@@ -40,14 +39,27 @@ gettext_uuid = False
 # Extensions configuration
 autodoc_typehints = "description"
 
-todo_include_todos = True
-
 napoleon_attr_annotations = True
 napoleon_include_special_with_doc = False
 napoleon_include_private_with_doc = False
 
 mermaid_output_format = 'svg'
 mermaid_pdfcrop = 'pdfcrop'
+mermaid_params = ['--theme', 'neutral']
+mermaid_init_js = r"""
+    mermaid.initialize({
+        startOnLoad: true,
+        theme: 'default',
+        flowchart: {
+            useMaxWidth: false,
+            htmlLabels: true,
+            curve: 'basis'
+        },
+        themeVariables: {
+            fontSize: '14px'
+        }
+    });
+"""
 
 numfig = True
 
@@ -70,13 +82,12 @@ html_theme_options = {
     'collapse_navigation': True,
     'navigation_depth': 3,
 }
-html_css_files = ['css/rtl.css'] if language == 'ar' else []
+html_css_files = ['css/custom.css', 'css/rtl.css'] if language == 'ar' else ['css/custom.css']
 html_js_files = ['js/rtl.js'] if language == 'ar' else []
 
 # -- Options for LaTeX output ------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#options-for-latex-output
 latex_engine = 'pdflatex'
-latex_logo = '_static/images/logo.png'
 latex_domain_indices = False
 latex_show_pagerefs = True
 latex_show_urls = 'footnote'
@@ -100,8 +111,6 @@ latex_elements = {
         \usepackage{etoolbox}
     ''',
     'figure_align': 'H',
-    'atendofbody': '',
-    'extraclassoptions': 'oneside,openany',
     'geometry': r'\usepackage{geometry} \geometry{outer=2.5cm}',
     'maketitle': r'''
         \pagenumbering{roman}
@@ -118,7 +127,10 @@ latex_elements = {
 
         \input{_dedication.tex.txt}
     ''',
-    'atendofbody': '',
+    'atendofbody': r'''
+        \cleardoublepage
+        \phantomsection
+    ''',
     'tableofcontents': r'''
         \cleardoublepage
         \phantomsection

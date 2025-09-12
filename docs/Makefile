@@ -32,8 +32,9 @@ latex-en:
 	$(MAKE) --directory=$(BUILDDIR)/latex/en/
 
 latex-ar:
-	SPHINX_LANG=ar $(SPHINXBUILD) -b latex $(SOURCEDIR) $(BUILDDIR)/latex/ar/ $(SPHINXOPTS)
-	$(MAKE) --directory=$(BUILDDIR)/latex/ar/
+	echo "Arabic LaTeX is not supported yet."
+# 	SPHINX_LANG=ar $(SPHINXBUILD) -b latex $(SOURCEDIR) $(BUILDDIR)/latex/ar/ $(SPHINXOPTS)
+# 	$(MAKE) --directory=$(BUILDDIR)/latex/ar/
 
 # Catch-all target: route all unknown targets to Sphinx using the new
 # "make mode" option.  $(O) is meant as a shortcut for $(SPHINXOPTS).

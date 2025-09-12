@@ -109,7 +109,6 @@ ax2.grid(True, alpha=0.3)
 ax2.xaxis.set_major_formatter(mdates.DateFormatter('%H:%M'))
 
 # Plot 3: Utility grid exchange
-# TODO: Simplify and fix this plot
 ax4 = axes[2]
 positive_mask = df['inverter_utility_exchange_power'] >= 0
 negative_mask = df['inverter_utility_exchange_power'] < 0

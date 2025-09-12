@@ -63,7 +63,7 @@ class Inverter:
             p_dc (float): DC power input to the inverter [Watt].
 
         Returns:
-            float: AC power output from the inverter [Watt]. 
+            float: AC power output from the inverter [Watt].
 
         """
         if p_dc <= 0:

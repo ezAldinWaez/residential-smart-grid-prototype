@@ -8,19 +8,19 @@ System Design Validation
 ------------------------
 The system uses three models as the base of its simulation: the ADSR Envelope for device modeling, pvwatts for inverter modeling, and pvlib for solar panels modeling. The results of validating the models are as follows:
 
-**ADSR Device Modeling**: The ADSR envelope model demonstrated good correlation with real power consumption data extracted from scientific literature. Below is a comparison between data collected from a real refrigerator versus that collected from the ADSR envelope for a refrigerator. 
+**ADSR Device Modeling**: The ADSR envelope model demonstrated good correlation with real power consumption data extracted from scientific literature. Below is a comparison between data collected from a real refrigerator versus that collected from the ADSR envelope for a refrigerator.
 
 .. plot:: _static/plots/C8_ADSR_vs_real_load_profile.py
    :align: center
 
-   RSGP ADSR refrigerator model validation against real power consumption data from MDPI paper (Energies 2018, 11, 607). The comparison shows the ADSR envelope model's ability to approximate real device behavior with synchronized timing and comparable power levels.
+   RSGP ADSR refrigerator model validation against real power consumption data
 
 **Solar System Modeling Accuracy**: Due to usage of the standard libraries pvlib and pvwatts, and the usage of a dataset from the National Solar Radiation Database, the solar system simulation, including the inverter and panels, closely match reality.
 
 .. plot:: _static/plots/C8_sss_visualization_vs_real_visualization.py
    :align: center
 
-   RSGP solar system simulation validation against real SolarMax inverter data from 8-panel installation in Aleppo, Syria (February 4, 2025). The comparison shows RSGP pvlib modeling accuracy against real-world PV power generation, demonstrating good correlation despite geographic differences between NSRDB Arizona data and Syrian conditions.
+   RSGP solar system simulation validation against real SolarMax inverter data
 
 .. note:: The SSS data represents theoretical maximum power generation capacity calculated by pvlib based on solar irradiance and panel specifications, while the real inverter data shows practical power extraction limited by actual load demand. Solar panels only deliver the power that is actively consumed by the connected loads, which explains potential differences between theoretical generation capacity and measured inverter output.
 

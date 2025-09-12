@@ -12,13 +12,33 @@ System Architecture
 -------------------
 The power management system integrates with both the houses simulation and solar system simulation through well-defined interfaces that enable real-time coordination and control.
 
-.. mermaid:: ../_static/diagrams/C5_pm_arch.mmd
-   :align: center
-   :caption: Power management architecture
-
 The power manager operates on a configurable update cycle, typically set to match the houses simulation update interval of 100 milliseconds. During each update cycle, the manager executes a sequence of coordinated algorithms that process current system state, update virtual battery parameters, and make power distribution decisions.
 
 The coordination interface provides bidirectional communication between components. The houses simulation provides current load demands and accepts load line control commands. The solar system simulation provides generation data, battery state information, and accepts load requirements while returning actual power delivery.
+
+.. only:: html
+
+   .. container:: diagram-75
+
+      .. mermaid:: ../_static/diagrams/C5_pm_arch.mmd
+         :align: center
+         :caption: Power management architecture
+
+.. only:: latex
+
+   .. raw:: latex
+
+      \begin{figure}[h]
+      \centering
+      \scalebox{0.75}{
+
+   .. mermaid:: ../_static/diagrams/C5_pm_arch.mmd
+
+   .. raw:: latex
+
+      }
+      \caption{Power management architecture}
+      \end{figure}
 
 Virtual Battery System
 ----------------------
@@ -118,7 +138,7 @@ This excess energy is then redistributed among the other virtual batteries to co
 .. plot:: _static/plots/C5_virtual_battery_weight_and_allocation.py
    :align: center
 
-   Virtual battery weight evolution and capacity allocation showing adaptive learning behavior and fair energy distribution among houses
+   Virtual battery weight evolution and capacity allocation
 
 Adaptive Learning Algorithm
 ---------------------------
@@ -178,7 +198,17 @@ The calculated adjustments are then scaled by the learning rate and sent to the 
 
    \Delta w_{i}^{t+1} = \sigma_{norm,i}^{adjusted} \times \alpha_{learning}
 
-where `\alpha_{learning}` represents the learning rate (typically 0.002). The learning rate parameter controls the convergence speed and system stability. Smaller values provide more stable convergence at the cost of slower adaptation, while larger values enable rapid adaptation but may introduce oscillatory behavior. 
+where `\alpha_{learning}` represents the learning rate (typically 0.002). The learning rate parameter controls the convergence speed and system stability. Smaller values provide more stable convergence at the cost of slower adaptation, while larger values enable rapid adaptation but may introduce oscillatory behavior.
+
+.. plot:: _static/plots/C5_learning_convergence_analysis.py
+   :align: center
+
+   Learning algorithm convergence analysis
+
+.. plot:: _static/plots/C5_weight_variance_analysis.py
+   :align: center
+
+   Weight variance and convergence metrics analysis
 
 The total excess capacity released from all weight adjustments is then aggregated:
 
@@ -187,16 +217,6 @@ The total excess capacity released from all weight adjustments is then aggregate
    E_{excess} = \sum_{i=1}^{N} E_{excess,i}
 
 This excess capacity becomes available for redistribution during the charging phase, ensuring that energy released through weight reductions does not disappear, thus maintaining energy conservation.
-
-.. plot:: _static/plots/C5_learning_convergence_analysis.py
-   :align: center
-
-   Learning algorithm convergence analysis comparing different learning rates and their impact on weight stability and adaptation speed
-
-.. plot:: _static/plots/C5_weight_variance_analysis.py
-   :align: center
-
-   Weight variance and convergence metrics analysis showing quantitative measures of algorithm stability and deviation from initial state across different learning rates
 
 Power Distribution Algorithms
 -----------------------------
@@ -226,12 +246,12 @@ where:
 - `N_{remaining}` represents the number of houses not yet processed
 - `P_{vb,i}` represents the i-th house power demand from its virtual battery
 
-This sequential allocation ensures that houses with lower demand receive priority access to available solar and utility power, as they might not use their full share, thus allowing for efficient redistribution of the remainder equally among the remaining houses.
-
 .. plot:: _static/plots/C5_power_distribution_waterfall.py
    :align: center
 
-   Power distribution waterfall visualization showing priority-based sequential allocation algorithm with stacked power sources (solar, utility, virtual battery) across different time periods and load conditions
+   Power distribution waterfall visualization
+
+This sequential allocation ensures that houses with lower demand receive priority access to available solar and utility power, as they might not use their full share, thus allowing for efficient redistribution of the remainder equally among the remaining houses.
 
 Virtual Battery Charging Algorithm
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -276,7 +296,7 @@ Houses whose virtual batteries cannot meet their full energy requirements trigge
 .. plot:: _static/plots/C5_virtual_battery_soc_tracking.py
    :align: center
 
-   Virtual battery state-of-charge tracking showing individual energy storage utilization, capacity allocation dynamics, and charge-discharge patterns in response to house loads and solar generation
+   Virtual battery state-of-charge tracking
 
 System-Wide Load Line Coordination
 ----------------------------------
@@ -338,7 +358,7 @@ This ensures that houses with more efficient virtual battery utilization (lower 
 .. plot:: _static/plots/C5_export_distribution_fairness.py
    :align: center
 
-   Utility export distribution fairness demonstration showing inverse weight relationship, export power allocation among houses, and economic incentives that reward efficient virtual battery utilization
+   Utility export distribution fairness demonstration
 
 System Integration and Real-Time Control
 ----------------------------------------
@@ -352,7 +372,7 @@ The update sequence implements a structured workflow that processes system state
 
 .. mermaid:: ../_static/diagrams/C5_pm_flowchart.mmd
    :align: center
-   :caption: Power manager real-time update cycle with detailed learning algorithm flowchart
+   :caption: Power manager real-time update cycle
 
 Inverter Synchronization
 ~~~~~~~~~~~~~~~~~~~~~~~~

@@ -1,7 +1,5 @@
 """NSRDB data handlers."""
 
-# TODO: Use `pvlib.iotools` instead.
-
 from datetime import datetime, timedelta, timezone
 from typing import Any
 

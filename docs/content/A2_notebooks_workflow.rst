@@ -2,30 +2,30 @@ Notebooks Workflow
 ==================
 Introduction
 ------------
-The notebooks provide comprehensive data visualization through marimo-based web applications. Each notebook targets a specific aspect of the system data, including the NSRDB dataset. This approach ensures ease of examination as each notebook contains related data only. Additionally, data can be downloaded as csv, JSON, or parquet to be imported into 3rd party analysis tools for mathematical analysis. 
+The notebooks provide comprehensive data visualization through marimo-based web applications. Each notebook targets a specific aspect of the system data, including the NSRDB dataset. This approach ensures ease of examination as each notebook contains related data only. Additionally, data can be downloaded as csv, JSON, or parquet to be imported into 3rd party analysis tools for mathematical analysis.
 
 marimo Framework Overview
 -------------------------
-The notebooks employ marimo, a Python notebook framework that stores notebooks as pure Python files rather than JSON, enabling proper collaborative development and version control. The framework automatically manages cell dependencies; when variables change in one cell, all dependent cells execute automatically to maintain consistency. 
+The notebooks employ marimo, a Python notebook framework that stores notebooks as pure Python files rather than JSON, enabling proper collaborative development and version control. The framework automatically manages cell dependencies; when variables change in one cell, all dependent cells execute automatically to maintain consistency.
 
-The reactive execution model ensures that notebook state remains synchronized with code changes. This eliminates the common problem of stale outputs that occurs when cells execute out of order in traditional notebook environments. Additionally, marimo provides built-in support for modern Python tooling, including code formatting and interactive components that enable interactive analysis. 
+The reactive execution model ensures that notebook state remains synchronized with code changes. This eliminates the common problem of stale outputs that occurs when cells execute out of order in traditional notebook environments. Additionally, marimo provides built-in support for modern Python tooling, including code formatting and interactive components that enable interactive analysis.
 
-The framework supports deployment of notebooks as standalone web applications. This enables sharing the notebooks with researchers who need not set up the development environment to analyze the data. 
+The framework supports deployment of notebooks as standalone web applications. This enables sharing the notebooks with researchers who need not set up the development environment to analyze the data.
 
 Notebook Applications
 ---------------------
-The project includes four specialized notebook applications. 
+The project includes four specialized notebook applications.
 
 Graph Editor
 ~~~~~~~~~~~~
-The graph editor notebook provides an interactive environment for creating and modifying Mermaid diagrams used throughout the project documentation. The live preview this notebook provides expedites the process of creating the diagrams. 
+The graph editor notebook provides an interactive environment for creating and modifying Mermaid diagrams used throughout the project documentation. The live preview this notebook provides expedites the process of creating the diagrams.
 
 .. figure:: ../_static/images/A2_graphs_editor_notebook.png
    :align: center
 
    Graph editor notebook interface
 
-The live preview renders Mermaid diagrams immediately as code changes occur, providing instant visual feedback during the design process. This reactive behavior eliminates the traditional edit-compile-view cycle commonly associated with diagram creation. The application also allows for file persistence, allowing users to save modifications directly to the project files. 
+The live preview renders Mermaid diagrams immediately as code changes occur, providing instant visual feedback during the design process. This reactive behavior eliminates the traditional edit-compile-view cycle commonly associated with diagram creation. The application also allows for file persistence, allowing users to save modifications directly to the project files.
 
 NSRDB Visualization
 ~~~~~~~~~~~~~~~~~~~
@@ -36,24 +36,24 @@ The NSRDB visualization notebook provides visualization for the National Solar R
 
    NSRDB visualization notebook interface
 
-The application visualizes CSV files containing hourly solar radiation measurements from Phoenix, Arizona. The visualization provides interactive field selection, allowing users to examine different atmospheric parameters including Direct Normal Irradiance (DNI), Diffuse Horizontal Irradiance (DHI), Global Horizontal Irradiance (GHI), temperature, and wind conditions. Users can focus on specific time periods and zoom in or out to cover them, supporting visualization of both short-term and long-term changes. 
+The application visualizes CSV files containing hourly solar radiation measurements from Phoenix, Arizona. The visualization provides interactive field selection, allowing users to examine different atmospheric parameters including Direct Normal Irradiance (DNI), Diffuse Horizontal Irradiance (DHI), Global Horizontal Irradiance (GHI), temperature, and wind conditions. Users can focus on specific time periods and zoom in or out to cover them, supporting visualization of both short-term and long-term changes.
 
 Inverter Logs Visualization
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
-The inverter logs visualization notebook viusalizes data from a real, physical inverter outside of the simulation. This application enables analysis of the simulation against real-world hardware performance, and thus enables validation of the theoretical models against actual device behavior. 
+The inverter logs visualization notebook viusalizes data from a real, physical inverter outside of the simulation. This application enables analysis of the simulation against real-world hardware performance, and thus enables validation of the theoretical models against actual device behavior.
 
 .. figure:: ../_static/images/A2_inverter_logs_visualization_notebook.png
    :align: center
 
    Inverter logs visualization notebook interface
 
-The application reads Excel files containing inverter telemetry data captured through the WatchPower monitoring system. Users can select from the available fields to examine different aspects of the inverter operation. The fields include power generation levels, battery charge status, load consumption measurements, and the operational mode of the inverter. 
+The application reads Excel files containing inverter telemetry data captured through the WatchPower monitoring system. Users can select from the available fields to examine different aspects of the inverter operation. The fields include power generation levels, battery charge status, load consumption measurements, and the operational mode of the inverter.
 
-.. note:: The inverter data represents actual hardware measurements rather than simulation outputs, providing ground truth for model validation and system performance assessment. 
+.. note:: The inverter data represents actual hardware measurements rather than simulation outputs, providing ground truth for model validation and system performance assessment.
 
 RSGP Logs Visualization
 ~~~~~~~~~~~~~~~~~~~~~~~
-The RSGP logs visualization notebook visualizes the simulation output data generated by the residential smart grid simulation. This application enables researchers to examine system-wide behavior as well as the behavior of each individual component. 
+The RSGP logs visualization notebook visualizes the simulation output data generated by the residential smart grid simulation. This application enables researchers to examine system-wide behavior as well as the behavior of each individual component.
 
 .. figure:: ../_static/images/A2_rsgp_logs_visualization_notebook.png
    :align: center
@@ -62,7 +62,7 @@ The RSGP logs visualization notebook visualizes the simulation output data gener
 
 The application processes CSV files containing time-series data from simulation runs, including house-level load profiles, solar power generation, battery charge cycles, and power management decisions. The data processing pipeline converts timestamps to proper datetime objects and provides field selection to examine different system metrics.
 
-The application provides essential feedback for power management algorithm development; researchers can examine how control decisions affect system stability, efficiency, and grid import/export. This supports the iterative refinement of power management strategies and validation of simulation accuracy. 
+The application provides essential feedback for power management algorithm development; researchers can examine how control decisions affect system stability, efficiency, and grid import/export. This supports the iterative refinement of power management strategies and validation of simulation accuracy.
 
 Data Integration and Workflow
 -----------------------------

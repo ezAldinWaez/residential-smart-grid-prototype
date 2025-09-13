@@ -31,7 +31,6 @@
 \vspace{0.2cm}
 \textbf{\small Ruby Abbassy}\\[0.8cm]
 
-
 \end{center}
 
 \vfill

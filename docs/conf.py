@@ -11,9 +11,9 @@ sys.path.insert(0, os.path.abspath('..'))
 
 # -- Project information -----------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#project-information
-project = 'Residential Smart Grid'
-copyright = '2025, RSGP Team'
-author = 'RSGP Team'
+project = 'Residential Smart Grid Prototype'
+copyright = '2025, Ez Aldin Waez; Abdullah Naal; Mohammad Labaniah; Abdo Kialy; Ruby Abbassy'
+author = 'Ez Aldin Waez; Abdullah Naal; Mohammad Labaniah; Abdo Kialy; Ruby Abbassy'
 
 # -- General configuration ---------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#general-configuration
@@ -94,8 +94,8 @@ latex_show_urls = 'footnote'
 latex_documents = [(
     'index',  # startdocname
     'RSGP.tex',  # targetname
-    'Residential Smart Grid',  # title
-    'RSGP Team',  # author
+    'Residential Smart Grid Prototype',  # title
+    'Ez Aldin Waez; Abdullah Naal; Mohammad Labaniah; Abdo Kialy; Ruby Abbassy',  # author
     'manual',  # theme
     True  # toctree_only
 )]
@@ -120,12 +120,12 @@ latex_elements = {
         \cleardoublepage
         \phantomsection
 
-        \input{_abstract.tex.txt}
+        \input{_dedication.tex.txt}
 
         \cleardoublepage
         \phantomsection
 
-        \input{_dedication.tex.txt}
+        \input{_abstract.tex.txt}
     ''',
     'atendofbody': r'''
         \cleardoublepage

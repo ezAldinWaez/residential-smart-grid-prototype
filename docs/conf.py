@@ -73,7 +73,7 @@ html_static_path = ['_static']
 html_use_index = True
 html_domain_indices = True
 html_theme_options = {
-    'repository_url': 'https://gitlab.com/ezAldinWaez/residential-smart-grid',
+    'repository_url': 'https://github.com/ezAldinWaez/residential-smart-grid-prototype',
     'use_repository_button': True,
     'use_issues_button': False,
     'use_edit_page_button': False,

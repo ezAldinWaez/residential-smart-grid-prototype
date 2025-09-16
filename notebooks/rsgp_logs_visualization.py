@@ -11,6 +11,13 @@ def _(mo):
 
 
 @app.cell
+def _(mo):
+    refresh = mo.ui.refresh(default_interval="1s")
+    refresh
+    return (refresh,)
+
+
+@app.cell
 def _(Path, mo):
     _RSGP_LOGS_DIR = Path(__file__).parent.parent / "rsgp" / "_logs"
     _RSGP_LOGS_DIR.mkdir(parents=True, exist_ok=True)
@@ -27,9 +34,10 @@ def _(Path, mo):
 
 
 @app.cell
-def _(file_browser, pd):
-    data = pd.read_csv(file_browser.path(0)) if len(
-        file_browser.value) else None
+def _(file_browser, pd, refresh):
+    refresh
+
+    data = pd.read_csv(file_browser.path(0)) if len(file_browser.value) else None
     if data is not None:
         data["timestamp"] = pd.to_datetime(data["timestamp"], format='ISO8601')
     return (data,)
@@ -64,7 +72,9 @@ def _(data, mo):
 
 
 @app.cell
-def _(alt, data, field_selector, mo, pd):
+def _(alt, data, field_selector, mo, pd, refresh):
+    refresh
+
     if data is None:
         chart = None
     else:

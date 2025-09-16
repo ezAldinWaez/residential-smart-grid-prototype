@@ -263,7 +263,8 @@ class PowerManager:
             log_record_into_csv(
                 settings.CSV_PM_LOG_PATH,
                 timestamp=f"{time_sim.get_timestamp(elapsed)}",
-                ** {f"virtual_battery_{vb.idx+1}_charge_level": f"{vb.residual_capacity:.3f}" for vb in self.virtual_batteries},
+                ** {f"virtual_battery_{vb.idx+1}_total_capacity": f"{vb.total_capacity:.3f}" for vb in self.virtual_batteries},
+                ** {f"virtual_battery_{vb.idx+1}_residual_capacity": f"{vb.residual_capacity:.3f}" for vb in self.virtual_batteries},
             )
 
     def summary(self) -> str:

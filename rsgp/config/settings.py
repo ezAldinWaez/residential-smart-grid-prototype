@@ -20,7 +20,7 @@ class Settings:
     # =================================================================================================================
     # TIME SIMULATION SETTINGS
     # =================================================================================================================
-    TIME_FACTOR = 10 * SECONDS_IN_MINUTE  #: The time factor to multiply the simulation time with to get the real time.
+    TIME_FACTOR = 100 * SECONDS_IN_MINUTE  #: The time factor to multiply the simulation time with to get the real time.
 
     # =================================================================================================================
     # HOUSES SIMULATION SETTINGS

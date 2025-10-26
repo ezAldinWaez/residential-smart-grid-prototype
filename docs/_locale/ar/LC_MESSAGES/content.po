@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Residential Smart Grid \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-09-13 05:19+0300\n"
+"POT-Creation-Date: 2025-10-26 23:13+0300\n"
 "PO-Revision-Date: 2025-09-02 11:52+0300\n"
 "Last-Translator: Ez Aldin Waez <ez.aldin.waez@gmail.com>\n"
 "Language: ar\n"
@@ -2736,8 +2736,8 @@ msgid ""
 " reference documentation that enables future development and integration "
 "with external systems."
 msgstr ""
-"توفر الملاحق توثيقاً داعماً ضرورياً لفهم المشروع واستمراره. يفصل الملحق "
-"A سير عمل التوثيق، بما في ذلك معايير التدوين الرياضي ومنهجيات إنشاء "
+"توفر الملاحق توثيقاً داعماً ضرورياً لفهم المشروع واستمراره. يفصل الملحق A"
+" سير عمل التوثيق، بما في ذلك معايير التدوين الرياضي ومنهجيات إنشاء "
 "المخططات التي تضمن الاتساق. يقدم الملحق B أداة التحليل القائمة على "
 "Notebook وإطار عمل تصور البيانات الذي يدعم جهود البحث المستمرة وتحسين "
 "النظام. يوفر الملحق C توثيق مرجع API يمكن التطوير المستقبلي والتكامل مع "
@@ -4398,10 +4398,10 @@ msgstr "C_{vb,i} = \\frac {C_{total}}{N} \\times w_i"
 #: ../../content/C5_rsgp_power_management.rst:55
 #: ../../content/C5_rsgp_power_management.rst:79
 #: ../../content/C5_rsgp_power_management.rst:93
-#: ../../content/C5_rsgp_power_management.rst:159
-#: ../../content/C5_rsgp_power_management.rst:241
-#: ../../content/C5_rsgp_power_management.rst:309
-#: ../../content/C5_rsgp_power_management.rst:330
+#: ../../content/C5_rsgp_power_management.rst:165
+#: ../../content/C5_rsgp_power_management.rst:247
+#: ../../content/C5_rsgp_power_management.rst:315
+#: ../../content/C5_rsgp_power_management.rst:336
 msgid "where:"
 msgstr "حيث:"
 
@@ -4601,6 +4601,34 @@ msgstr ""
 "يُعاد توزيع فائض الطاقة هذا بين البطاريات الافتراضية الأخرى لحفظ الطاقة "
 "خلال تحسين النظام."
 
+#: ../../content/C5_rsgp_power_management.rst:139
+msgid "Virtual Battery Synchronization"
+msgstr "مزامنة البطاريات الافتراضية"
+
+#: ../../content/C5_rsgp_power_management.rst:140
+msgid ""
+"The system implements a periodic synchronization mechanism to ensure the "
+"virtual batteries maintain perfect alignment with the physical battery "
+"state. This corrects accumulated floating-point precision errors that can"
+" arise from iterative charge and discharge operations."
+msgstr ""
+"ينفذ النظام آلية مزامنة دورية لضمان الحفاظ على محاذاة مثالية للبطاريات "
+"الافتراضية مع حالة البطارية الفيزيائية. هذا يصحح أخطاء دقة الفاصلة العائمة "
+"المتراكمة التي يمكن أن تنشأ من عمليات الشحن والتفريغ التكرارية."
+
+#: ../../content/C5_rsgp_power_management.rst:142
+msgid ""
+"The synchronization treats the physical battery as the authoritative "
+"source of truth and distributes any detected error proportionally among "
+"virtual batteries based on their total capacities. This approach reflects"
+" real-world implementation where the power manager reads from but does "
+"not directly control the physical battery system."
+msgstr ""
+"تتعامل المزامنة مع البطارية الفيزيائية كمصدر موثوق للمعلومات وتوزع أي خطأ "
+"مكتشف بشكل متناسب بين البطاريات الافتراضية بناءً على قدراتها الإجمالية. "
+"يعكس هذا النهج التطبيق الواقعي حيث يقرأ مدير الطاقة من نظام البطارية "
+"الفيزيائية لكن لا يتحكم فيه مباشرة."
+
 #: ../../_static/plots/C5_virtual_battery_weight_and_allocation.py:7
 msgid ""
 "(:download:`Source code "
@@ -4626,11 +4654,11 @@ msgstr ""
 msgid "Virtual battery weight evolution and capacity allocation"
 msgstr "تطور وزن البطارية الافتراضية وتوزيع السعة"
 
-#: ../../content/C5_rsgp_power_management.rst:144
+#: ../../content/C5_rsgp_power_management.rst:150
 msgid "Adaptive Learning Algorithm"
 msgstr "خوارزمية التعلم التكيفي"
 
-#: ../../content/C5_rsgp_power_management.rst:145
+#: ../../content/C5_rsgp_power_management.rst:151
 msgid ""
 "The power management system implements an adaptive learning algorithm "
 "that continuously adjusts virtual battery weights based on consumption. "
@@ -4643,11 +4671,11 @@ msgstr ""
 "تحسين تخصيص الطاقة عبر الوقت، وتحسين الكفاءة بينما تتعلم أنماط استهلاك كل"
 " منزل."
 
-#: ../../content/C5_rsgp_power_management.rst:148
+#: ../../content/C5_rsgp_power_management.rst:154
 msgid "Load Deviation Calculation"
 msgstr "حساب انحراف الحمل"
 
-#: ../../content/C5_rsgp_power_management.rst:149
+#: ../../content/C5_rsgp_power_management.rst:155
 msgid ""
 "The learning algorithm employs statistical analysis of houses consumption"
 " to make decisions regarding their weights. It begins by calculating "
@@ -4658,32 +4686,32 @@ msgstr ""
 " أوزانها. تبدأ بحساب الانحرافات عن متوسط الاستهلاك لتحديد المنازل ذات "
 "الطلب فوق وتحت المتوسط:"
 
-#: ../../content/C5_rsgp_power_management.rst:151
+#: ../../content/C5_rsgp_power_management.rst:157
 #, python-brace-format
 msgid "\\mu_{L} = \\frac{1}{N} \\sum_{i=1}^{N} L_{i}"
 msgstr "\\mu_{L} = \\frac{1}{N} \\sum_{i=1}^{N} L_{i}"
 
-#: ../../content/C5_rsgp_power_management.rst:155
+#: ../../content/C5_rsgp_power_management.rst:161
 #, python-brace-format
 msgid "\\sigma_{i} = L_i - \\mu_{L}"
 msgstr "\\sigma_{i} = L_i - \\mu_{L}"
 
-#: ../../content/C5_rsgp_power_management.rst:161
+#: ../../content/C5_rsgp_power_management.rst:167
 #, python-brace-format
 msgid "`L_{i}` represents the current load for the i-th house"
 msgstr "``L_{i}`` يمثل الحمل الحالي للمنزل رقم i"
 
-#: ../../content/C5_rsgp_power_management.rst:163
+#: ../../content/C5_rsgp_power_management.rst:169
 msgid ""
 "The deviation values undergo normalization to ensure consistent scaling "
 "across different load magnitudes:"
 msgstr "تخضع قيم الانحراف للتطبيع لضمان تقييس متسق عبر مقادير أحمال مختلفة:"
 
-#: ../../content/C5_rsgp_power_management.rst:165
+#: ../../content/C5_rsgp_power_management.rst:171
 msgid "\\sigma_{norm,i} = \\frac{\\sigma_{i}}{\\max_j |\\sigma_{j}|}"
 msgstr "\\sigma_{norm,i} = \\frac{\\sigma_{i}}{\\max_j |\\sigma_{j}|}"
 
-#: ../../content/C5_rsgp_power_management.rst:169
+#: ../../content/C5_rsgp_power_management.rst:175
 msgid ""
 "This normalization prevents large load values from overwhelming the "
 "learning algorithm and ensures that weight adjustments respond "
@@ -4694,11 +4722,11 @@ msgstr ""
 "تضبط الأوزان تستجيب بتناسب مع الفروقات النسبية في الاستهلاك بدلاً من "
 "القيم المطلقة."
 
-#: ../../content/C5_rsgp_power_management.rst:172
+#: ../../content/C5_rsgp_power_management.rst:178
 msgid "Load Redistribution for Minimum Weight Houses"
 msgstr "إعادة توزيع الحمل للمنازل ذات الوزن الأدنى"
 
-#: ../../content/C5_rsgp_power_management.rst:173
+#: ../../content/C5_rsgp_power_management.rst:179
 msgid ""
 "The algorithm implements a redistribution mechanism for houses operating "
 "at a minimum weight. When a house reaches its minimum weight and exhibits"
@@ -4709,19 +4737,19 @@ msgstr ""
 "يصل منزل إلى وزنه الأدنى ويُظهر استهلاكًا دون المتوسط، تُعيد الخوارزمية "
 "توزيع انحرافه السالب إلى المنازل ذات الاستهلاك فوق المتوسط:"
 
-#: ../../content/C5_rsgp_power_management.rst:175
+#: ../../content/C5_rsgp_power_management.rst:181
 msgid "S_{pos} = \\{i \\mid \\sigma_{i} > 0 \\}"
 msgstr "S_{pos} = \\{i \\mid \\sigma_{i} > 0 \\}"
 
-#: ../../content/C5_rsgp_power_management.rst:179
+#: ../../content/C5_rsgp_power_management.rst:185
 msgid "S_{neg} = \\{i \\mid \\sigma_{i} < 0 \\}"
 msgstr "S_{neg} = \\{i \\mid \\sigma_{i} < 0 \\}"
 
-#: ../../content/C5_rsgp_power_management.rst:183
+#: ../../content/C5_rsgp_power_management.rst:189
 msgid "S_{min} = \\{i \\mid w_{i} = w_{min} \\}"
 msgstr "S_{min} = \\{i \\mid w_{i} = w_{min} \\}"
 
-#: ../../content/C5_rsgp_power_management.rst:187
+#: ../../content/C5_rsgp_power_management.rst:193
 msgid ""
 "\\sigma_{norm,j}^{adjusted} = \\sigma_{norm,j} + \\sigma_{norm,i} \\times"
 " \\frac{\\sigma_{norm,j}}{\\sum_{k \\in S_{pos}} \\sigma_{norm,k}}, "
@@ -4731,7 +4759,7 @@ msgstr ""
 " \\frac{\\sigma_{norm,j}}{\\sum_{k \\in S_{pos}} \\sigma_{norm,k}}, "
 "\\quad i \\in S_{min} \\cap S_{neg}, \\; j \\in S_{pos}"
 
-#: ../../content/C5_rsgp_power_management.rst:191
+#: ../../content/C5_rsgp_power_management.rst:197
 msgid ""
 "This redistribution maintains energy conservation and ensures that houses"
 " at minimum weight do not continue to lose capacity allocation."
@@ -4739,11 +4767,11 @@ msgstr ""
 "تحافظ هذه الإعادة في التوزيع على حفظ الطاقة وتضمن أن المنازل ذات الوزن "
 "الأدنى لا تستمر في فقدان تخصيص السعة."
 
-#: ../../content/C5_rsgp_power_management.rst:194
+#: ../../content/C5_rsgp_power_management.rst:200
 msgid "Weight Update and Learning Step"
 msgstr "تحديث الوزن وخطوة التعلم"
 
-#: ../../content/C5_rsgp_power_management.rst:195
+#: ../../content/C5_rsgp_power_management.rst:201
 msgid ""
 "The calculated adjustments are then scaled by the learning rate and sent "
 "to the virtual battery to calculate its new weight:"
@@ -4751,7 +4779,7 @@ msgstr ""
 "يتم بعد ذلك تقييس التضبطات المحسوبة بمعدل التعلم وإرسالها إلى البطارية "
 "الافتراضية لحساب وزنها الجديد:"
 
-#: ../../content/C5_rsgp_power_management.rst:197
+#: ../../content/C5_rsgp_power_management.rst:203
 #, python-brace-format
 msgid ""
 "\\Delta w_{i}^{t+1} = \\sigma_{norm,i}^{adjusted} \\times "
@@ -4760,7 +4788,7 @@ msgstr ""
 "\\Delta w_{i}^{t+1} = \\sigma_{norm,i}^{adjusted} \\times "
 "\\alpha_{learning}"
 
-#: ../../content/C5_rsgp_power_management.rst:201
+#: ../../content/C5_rsgp_power_management.rst:207
 #, python-brace-format
 msgid ""
 "where `\\alpha_{learning}` represents the learning rate (typically "
@@ -4824,18 +4852,18 @@ msgstr ""
 msgid "Weight variance and convergence metrics analysis"
 msgstr "تحليل التباين في الوزن ومقاييس التقارب"
 
-#: ../../content/C5_rsgp_power_management.rst:213
+#: ../../content/C5_rsgp_power_management.rst:219
 msgid ""
 "The total excess capacity released from all weight adjustments is then "
 "aggregated:"
 msgstr "يُجمّع بعد ذلك إجمالي فائض السعة المُحرر من جميع تضبطات الوزن:"
 
-#: ../../content/C5_rsgp_power_management.rst:215
+#: ../../content/C5_rsgp_power_management.rst:221
 #, python-brace-format
 msgid "E_{excess} = \\sum_{i=1}^{N} E_{excess,i}"
 msgstr "E_{excess} = \\sum_{i=1}^{N} E_{excess,i}"
 
-#: ../../content/C5_rsgp_power_management.rst:219
+#: ../../content/C5_rsgp_power_management.rst:225
 msgid ""
 "This excess capacity becomes available for redistribution during the "
 "charging phase, ensuring that energy released through weight reductions "
@@ -4845,11 +4873,11 @@ msgstr ""
 "أن الطاقة المُحررة من خلال تخفيض الأوزان لا تختفي، وبالتالي تحافظ على حفظ"
 " الطاقة."
 
-#: ../../content/C5_rsgp_power_management.rst:222
+#: ../../content/C5_rsgp_power_management.rst:228
 msgid "Power Distribution Algorithms"
 msgstr "خوارزميات توزيع الطاقة"
 
-#: ../../content/C5_rsgp_power_management.rst:223
+#: ../../content/C5_rsgp_power_management.rst:229
 msgid ""
 "The power management system implements algorithms for distributing "
 "available power sources among connected houses while maintaining fairness"
@@ -4862,11 +4890,11 @@ msgstr ""
 " الألواح الشمسية وطاقة الشبكة العامة وتفريغ البطارية الافتراضية لتلبية "
 "الطلب السكني."
 
-#: ../../content/C5_rsgp_power_management.rst:226
+#: ../../content/C5_rsgp_power_management.rst:232
 msgid "Houses Virtual Battery Usage Calculation"
 msgstr "حساب استخدام البطاريات الافتراضية للمنازل"
 
-#: ../../content/C5_rsgp_power_management.rst:227
+#: ../../content/C5_rsgp_power_management.rst:233
 msgid ""
 "The virtual battery usage calculation determines how much energy each "
 "house should draw from their virtual battery after accounting for the "
@@ -4879,7 +4907,7 @@ msgstr ""
 "المتوفرة. تنفذ الخوارزمية نظام تخصيص قائم على الأولوية يعالج المنازل "
 "بترتيب تصاعدي لطلب الحمولة لضمان التوزيع العادل:"
 
-#: ../../content/C5_rsgp_power_management.rst:229
+#: ../../content/C5_rsgp_power_management.rst:235
 msgid ""
 "P_{panels,used,i} = \\min\\left(L_i, "
 "\\frac{P_{panels,available}}{N_{remaining}}\\right)"
@@ -4887,7 +4915,7 @@ msgstr ""
 "P_{panels,used,i} = \\min\\left(L_i, "
 "\\frac{P_{panels,available}}{N_{remaining}}\\right)"
 
-#: ../../content/C5_rsgp_power_management.rst:233
+#: ../../content/C5_rsgp_power_management.rst:239
 msgid ""
 "P_{utility,used,i} = \\min\\left(L_i - P_{panels,used,i}, "
 "\\frac{P_{utility,available}}{N_{remaining}}\\right)"
@@ -4895,32 +4923,32 @@ msgstr ""
 "P_{utility,used,i} = \\min\\left(L_i - P_{panels,used,i}, "
 "\\frac{P_{utility,available}}{N_{remaining}}\\right)"
 
-#: ../../content/C5_rsgp_power_management.rst:237
+#: ../../content/C5_rsgp_power_management.rst:243
 #, python-brace-format
 msgid "P_{vb,i} = L_i - P_{panels,used,i} - P_{utility,used,i}"
 msgstr "P_{vb,i} = L_i - P_{panels,used,i} - P_{utility,used,i}"
 
-#: ../../content/C5_rsgp_power_management.rst:243
+#: ../../content/C5_rsgp_power_management.rst:249
 #, python-brace-format
 msgid "`L_{i}` represents the load of the i-th house"
 msgstr "`L_{i}` يمثل حمولة المنزل رقم i"
 
-#: ../../content/C5_rsgp_power_management.rst:244
+#: ../../content/C5_rsgp_power_management.rst:250
 #, python-brace-format
 msgid "`P_{panels,available}` represents remaining solar panel power"
 msgstr "`P_{panels,available}` يمثل طاقة الألواح الشمسية المتبقية"
 
-#: ../../content/C5_rsgp_power_management.rst:245
+#: ../../content/C5_rsgp_power_management.rst:251
 #, python-brace-format
 msgid "`P_{utility,available}` represents remaining utility power"
 msgstr "`P_{utility,available}` يمثل طاقة المرافق المتبقية"
 
-#: ../../content/C5_rsgp_power_management.rst:246
+#: ../../content/C5_rsgp_power_management.rst:252
 #, python-brace-format
 msgid "`N_{remaining}` represents the number of houses not yet processed"
 msgstr "`N_{remaining}` يمثل عدد المنازل غير المعالجة بعد"
 
-#: ../../content/C5_rsgp_power_management.rst:247
+#: ../../content/C5_rsgp_power_management.rst:253
 #, python-brace-format
 msgid "`P_{vb,i}` represents the i-th house power demand from its virtual battery"
 msgstr "`P_{vb,i}` يمثل طلب طاقة المنزل رقم i من بطاريته الافتراضية"
@@ -4950,7 +4978,7 @@ msgstr ""
 msgid "Power distribution waterfall visualization"
 msgstr "تصور شلال توزيع الطاقة"
 
-#: ../../content/C5_rsgp_power_management.rst:254
+#: ../../content/C5_rsgp_power_management.rst:260
 msgid ""
 "This sequential allocation ensures that houses with lower demand receive "
 "priority access to available solar and utility power, as they might not "
@@ -4961,11 +4989,11 @@ msgstr ""
 "إلى الطاقة الشمسية وطاقة المرافق المتاحة، حيث قد لا تستخدم حصتها الكاملة،"
 " مما يسمح بإعادة توزيع فعالة للباقي بالتساوي بين المنازل المتبقية."
 
-#: ../../content/C5_rsgp_power_management.rst:257
+#: ../../content/C5_rsgp_power_management.rst:263
 msgid "Virtual Battery Charging Algorithm"
 msgstr "خوارزمية شحن البطارية الافتراضية"
 
-#: ../../content/C5_rsgp_power_management.rst:258
+#: ../../content/C5_rsgp_power_management.rst:264
 msgid ""
 "When excess power becomes available from solar generation, the charging "
 "algorithm distributes this power among virtual batteries based on their "
@@ -4977,20 +5005,20 @@ msgstr ""
 "وقدرات الشحن. تنفذ الخوارزمية شحناً ذا أولوية للبطاريات ذات أقل عجز في "
 "السعة:"
 
-#: ../../content/C5_rsgp_power_management.rst:260
+#: ../../content/C5_rsgp_power_management.rst:266
 #, python-brace-format
 msgid "\\text{Charging order: } \\arg\\min_i (C_{total,i} - C_{residual,i})"
 msgstr "\\text{Charging order: } \\arg\\min_i (C_{total,i} - C_{residual,i})"
 
-#: ../../content/C5_rsgp_power_management.rst:264
+#: ../../content/C5_rsgp_power_management.rst:270
 msgid "The charging power allocation follows:"
 msgstr "يتبع تخصيص طاقة الشحن ما يلي:"
 
-#: ../../content/C5_rsgp_power_management.rst:266
+#: ../../content/C5_rsgp_power_management.rst:272
 msgid "P_{charge,i} = \\frac{P_{charge,available}}{N_{remaining}}"
 msgstr "P_{charge,i} = \\frac{P_{charge,available}}{N_{remaining}}"
 
-#: ../../content/C5_rsgp_power_management.rst:270
+#: ../../content/C5_rsgp_power_management.rst:276
 msgid ""
 "where virtual batteries are processed in order of their capacity deficit,"
 " ensuring that batteries with the least available space receive charging "
@@ -5003,11 +5031,11 @@ msgstr ""
 "تحتاج لحصتها الكاملة، مما يسمح بإعادة توزيع فعالة لباقي حصتها بالتساوي "
 "بين البطاريات الافتراضية المتبقية."
 
-#: ../../content/C5_rsgp_power_management.rst:273
+#: ../../content/C5_rsgp_power_management.rst:279
 msgid "Virtual Battery Discharging with Weighted Distribution"
 msgstr "تفريغ البطارية الافتراضية مع التوزيع المرجح"
 
-#: ../../content/C5_rsgp_power_management.rst:274
+#: ../../content/C5_rsgp_power_management.rst:280
 msgid ""
 "The discharging algorithm implements weighted power distribution based on"
 " the normalized power demands from the virtual batteries. The algorithm "
@@ -5017,7 +5045,7 @@ msgstr ""
 "المعيارية من البطاريات الافتراضية. تحسب الخوارزمية أوزان التفريغ باستخدام"
 " تعميم المجموع:"
 
-#: ../../content/C5_rsgp_power_management.rst:276
+#: ../../content/C5_rsgp_power_management.rst:282
 msgid ""
 "w_{discharge,i} = \\begin{cases} \\dfrac{P_{vb,i}}{\\sum_{j=1}^{N} "
 "P_{vb,j}} & \\sum_{j=1}^{N} P_{vb,j} > \\epsilon \\\\[2ex] \\dfrac{1}{N} "
@@ -5027,7 +5055,7 @@ msgstr ""
 "P_{vb,j}} & \\sum_{j=1}^{N} P_{vb,j} > \\epsilon \\\\[2ex] \\dfrac{1}{N} "
 "& \\text{otherwise} \\end{cases}"
 
-#: ../../content/C5_rsgp_power_management.rst:280
+#: ../../content/C5_rsgp_power_management.rst:286
 msgid ""
 "When the denominator approaches zero (no house demands discharging of its"
 " virtual battery), the algorithm defaults to equal distribution."
@@ -5035,16 +5063,16 @@ msgstr ""
 "عندما يقترب المقام من الصفر (عندما لا يطلب أي منزل تفريغ بطاريته "
 "الافتراضية)، تتحول الخوارزمية افتراضياً إلى التوزيع المتساوي."
 
-#: ../../content/C5_rsgp_power_management.rst:282
+#: ../../content/C5_rsgp_power_management.rst:288
 msgid "The actual discharge power for each virtual battery follows:"
 msgstr "تتبع طاقة التفريغ الفعلية لكل بطارية افتراضية ما يلي:"
 
-#: ../../content/C5_rsgp_power_management.rst:284
+#: ../../content/C5_rsgp_power_management.rst:290
 #, python-brace-format
 msgid "P_{discharge,i} = P_{discharge,total} \\times w_{discharge,i}"
 msgstr "P_{discharge,i} = P_{discharge,total} \\times w_{discharge,i}"
 
-#: ../../content/C5_rsgp_power_management.rst:288
+#: ../../content/C5_rsgp_power_management.rst:294
 msgid ""
 "The algorithm tracks whether each virtual battery can fully meet its "
 "required discharge:"
@@ -5052,12 +5080,12 @@ msgstr ""
 "تتعقب الخوارزمية ما إذا كانت كل بطارية افتراضية يمكنها تلبية تفريغها "
 "المطلوب بالكامل:"
 
-#: ../../content/C5_rsgp_power_management.rst:290
+#: ../../content/C5_rsgp_power_management.rst:296
 #, python-brace-format
 msgid "\\text{Usage Met} = |P_{discharge,i} - P_{actual,i}| < \\epsilon"
 msgstr "\\text{Usage Met} = |P_{discharge,i} - P_{actual,i}| < \\epsilon"
 
-#: ../../content/C5_rsgp_power_management.rst:294
+#: ../../content/C5_rsgp_power_management.rst:300
 msgid ""
 "Houses whose virtual batteries cannot meet their full energy requirements"
 " trigger load line disconnection to prevent system instability."
@@ -5090,11 +5118,11 @@ msgstr ""
 msgid "Virtual battery state-of-charge tracking"
 msgstr "تتبع حالة شحن البطارية الافتراضية"
 
-#: ../../content/C5_rsgp_power_management.rst:302
+#: ../../content/C5_rsgp_power_management.rst:308
 msgid "System-Wide Load Line Coordination"
 msgstr "تنسيق خط الحمولة على مستوى النظام"
 
-#: ../../content/C5_rsgp_power_management.rst:303
+#: ../../content/C5_rsgp_power_management.rst:309
 msgid ""
 "The power manager coordinates load line states between individual houses "
 "and the solar system inverter. When the inverter implements load shedding"
@@ -5105,24 +5133,24 @@ msgstr ""
 "الشمسي. عندما ينفذ العاكس تخفيف الحمولة بسبب نقص شديد في الطاقة، ينشر "
 "مدير الطاقة هذه الحالة إلى جميع المنازل المتصلة:"
 
-#: ../../content/C5_rsgp_power_management.rst:305
+#: ../../content/C5_rsgp_power_management.rst:311
 #, python-brace-format
 msgid "\\neg LL_{inverter} \\rightarrow \\neg LL_{i}, \\quad \\forall i"
 msgstr "\\neg LL_{inverter} \\rightarrow \\neg LL_{i}, \\quad \\forall i"
 
-#: ../../content/C5_rsgp_power_management.rst:311
+#: ../../content/C5_rsgp_power_management.rst:317
 #, python-brace-format
 msgid "`LL_{inverter}` represents the state of the inverter load line connection"
 msgstr "`LL_{inverter}` يمثل حالة اتصال خط حمولة العاكس"
 
-#: ../../content/C5_rsgp_power_management.rst:312
+#: ../../content/C5_rsgp_power_management.rst:318
 #, python-brace-format
 msgid ""
 "`LL_{i}` represents the state of the load line connection of the i-th "
 "house"
 msgstr "`LL_{i}` يمثل حالة اتصال خط الحمولة للمنزل رقم i"
 
-#: ../../content/C5_rsgp_power_management.rst:314
+#: ../../content/C5_rsgp_power_management.rst:320
 msgid ""
 "This ensures individual house load line states remain consistent with "
 "overall system capacity and prevents conflicts between local and system-"
@@ -5132,7 +5160,7 @@ msgstr ""
 "العامة ويمنع الصراعات بين القرارات المحلية وقرارات إدارة الحمولة على "
 "مستوى النظام."
 
-#: ../../content/C5_rsgp_power_management.rst:316
+#: ../../content/C5_rsgp_power_management.rst:322
 msgid ""
 "Restoration operates automatically after a configurable set interval "
 "(typically 30 seconds)."
@@ -5140,11 +5168,11 @@ msgstr ""
 "تعمل استعادة الحالة تلقائياً بعد فترة زمنية قابلة للتكوين (حوالي 30 ثانية"
 " عادة)."
 
-#: ../../content/C5_rsgp_power_management.rst:319
+#: ../../content/C5_rsgp_power_management.rst:325
 msgid "Utility Power Export Distribution"
 msgstr "توزيع تصدير طاقة المرافق"
 
-#: ../../content/C5_rsgp_power_management.rst:320
+#: ../../content/C5_rsgp_power_management.rst:326
 msgid ""
 "The power management system implements an algorithm for distributing "
 "utility export power among houses when excess energy becomes available "
@@ -5156,11 +5184,11 @@ msgstr ""
 "عندما تصبح طاقة زائدة متوفرة لتصدير الشبكة. تضمن الخوارزمية التوزيع "
 "العادل لفوائد التصدير مع اعتبار مساهمات المنازل الفردية في كفاءة النظام."
 
-#: ../../content/C5_rsgp_power_management.rst:323
+#: ../../content/C5_rsgp_power_management.rst:329
 msgid "Export Eligibility and Weight Calculation"
 msgstr "الأهلية للتصدير وحساب الوزن"
 
-#: ../../content/C5_rsgp_power_management.rst:324
+#: ../../content/C5_rsgp_power_management.rst:330
 msgid ""
 "The utility export distribution algorithm operates exclusively on houses "
 "that maintain active utility line connections:"
@@ -5168,16 +5196,16 @@ msgstr ""
 "تعمل خوارزمية توزيع تصدير المرافق حصرياً على المنازل التي تحافظ على "
 "اتصالات فعالة لخط المرافق:"
 
-#: ../../content/C5_rsgp_power_management.rst:326
+#: ../../content/C5_rsgp_power_management.rst:332
 msgid "S_{export} = \\{i \\mid UL_{i} \\}"
 msgstr "S_{export} = \\{i \\mid UL_{i} \\}"
 
-#: ../../content/C5_rsgp_power_management.rst:332
+#: ../../content/C5_rsgp_power_management.rst:338
 #, python-brace-format
 msgid "`UL_{i}` represents the utility line connection state of the i-th house"
 msgstr "`UL_{i}` يمثل حالة اتصال خط المرافق للمنزل رقم i"
 
-#: ../../content/C5_rsgp_power_management.rst:334
+#: ../../content/C5_rsgp_power_management.rst:340
 msgid ""
 "The export weight calculation employs inverse virtual battery weights to "
 "provide higher export allocation to houses with lower virtual battery "
@@ -5187,11 +5215,11 @@ msgstr ""
 "تصدير أعلى للمنازل ذات أوزان البطارية الافتراضية الأقل، مما يولد حوافز "
 "لاستخدام فعال للطاقة:"
 
-#: ../../content/C5_rsgp_power_management.rst:336
+#: ../../content/C5_rsgp_power_management.rst:342
 msgid "w_{export,i} = \\frac{1}{w_{vb,i}}"
 msgstr "w_{export,i} = \\frac{1}{w_{vb,i}}"
 
-#: ../../content/C5_rsgp_power_management.rst:340
+#: ../../content/C5_rsgp_power_management.rst:346
 msgid ""
 "The normalized export distribution calculates each house's share of total"
 " export power using sum normalization:"
@@ -5199,7 +5227,7 @@ msgstr ""
 "يحسب التوزيع المعياري للتصدير حصة كل منزل من إجمالي طاقة التصدير باستخدام"
 " تعميم المجموع:"
 
-#: ../../content/C5_rsgp_power_management.rst:342
+#: ../../content/C5_rsgp_power_management.rst:348
 msgid ""
 "w_{export,norm,i} = \\frac{w_{export,i}}{\\sum_{j \\in S_{export}} "
 "w_{export,j}}, \\quad \\forall i \\in S_{export}"
@@ -5207,20 +5235,20 @@ msgstr ""
 "w_{export,norm,i} = \\frac{w_{export,i}}{\\sum_{j \\in S_{export}} "
 "w_{export,j}}, \\quad \\forall i \\in S_{export}"
 
-#: ../../content/C5_rsgp_power_management.rst:347
+#: ../../content/C5_rsgp_power_management.rst:353
 msgid "Export Power Allocation"
 msgstr "تخصيص طاقة التصدير"
 
-#: ../../content/C5_rsgp_power_management.rst:348
+#: ../../content/C5_rsgp_power_management.rst:354
 msgid "The final export power allocation for each eligible house follows:"
 msgstr "يتبع تخصيص طاقة التصدير النهائي لكل منزل مؤهل ما يلي:"
 
-#: ../../content/C5_rsgp_power_management.rst:350
+#: ../../content/C5_rsgp_power_management.rst:356
 #, python-brace-format
 msgid "P_{export,i} = P_{export,total} \\times w_{export,norm,i}"
 msgstr "P_{export,i} = P_{export,total} \\times w_{export,norm,i}"
 
-#: ../../content/C5_rsgp_power_management.rst:354
+#: ../../content/C5_rsgp_power_management.rst:360
 #, python-brace-format
 msgid ""
 "where `P_{export,total}` represents the total power available for utility"
@@ -5229,7 +5257,7 @@ msgstr ""
 "حيث `P_{export,total}` يمثل إجمالي الطاقة المتوفرة لتصدير المرافق من "
 "النظام الشمسي."
 
-#: ../../content/C5_rsgp_power_management.rst:356
+#: ../../content/C5_rsgp_power_management.rst:362
 msgid ""
 "This ensures that houses with more efficient virtual battery utilization "
 "(lower weights) receive proportionally higher export benefits, creating "
@@ -5264,11 +5292,11 @@ msgstr ""
 msgid "Utility export distribution fairness demonstration"
 msgstr "عرض توضيحي لعدالة توزيع تصدير المرافق"
 
-#: ../../content/C5_rsgp_power_management.rst:364
+#: ../../content/C5_rsgp_power_management.rst:370
 msgid "System Integration and Real-Time Control"
 msgstr "تكامل النظام والتحكم في الوقت الفعلي"
 
-#: ../../content/C5_rsgp_power_management.rst:365
+#: ../../content/C5_rsgp_power_management.rst:371
 msgid ""
 "The power management system maintains continuous coordination with "
 "simulation components through real-time interfaces. The integration "
@@ -5279,11 +5307,11 @@ msgstr ""
 " الوقت الفعلي. تضمن عمارة التكامل أن قرارات إدارة الطاقة تعكس حالة النظام"
 " الحالية."
 
-#: ../../content/C5_rsgp_power_management.rst:368
+#: ../../content/C5_rsgp_power_management.rst:374
 msgid "Real-Time Update Cycle Implementation"
 msgstr "تنفيذ دورة التحديث في الوقت الفعلي"
 
-#: ../../content/C5_rsgp_power_management.rst:369
+#: ../../content/C5_rsgp_power_management.rst:375
 msgid ""
 "The power manager executes its core algorithm within a threaded update "
 "loop that operates independently of other system components. The update "
@@ -5298,7 +5326,7 @@ msgstr ""
 " يضمن هذا التزامن أن قرارات إدارة الطاقة تحدث في نفس الوقت مع تحديثات "
 "محاكاة المنازل ومحاكاة النظام الشمسي."
 
-#: ../../content/C5_rsgp_power_management.rst:371
+#: ../../content/C5_rsgp_power_management.rst:377
 msgid ""
 "The update sequence implements a structured workflow that processes "
 "system state, executes learning algorithms, performs power distribution "
@@ -5307,11 +5335,11 @@ msgstr ""
 "تنفذ تسلسل التحديث سير عمل منظم يعالج حالة النظام وينفذ خوارزميات التعلم "
 "ويؤدي حسابات توزيع الطاقة ويحدث حالات المكونات ضمن كل دورة:"
 
-#: ../../content/C5_rsgp_power_management.rst:378
+#: ../../content/C5_rsgp_power_management.rst:384
 msgid "Inverter Synchronization"
 msgstr "تزامن العاكس"
 
-#: ../../content/C5_rsgp_power_management.rst:379
+#: ../../content/C5_rsgp_power_management.rst:385
 msgid ""
 "The power manager maintains synchronization with the solar system "
 "inverter through bidirectional communication that coordinates load "
@@ -5322,17 +5350,17 @@ msgstr ""
 " الاتجاه الذي ينسق متطلبات الحمولة وقدرات توصيل الطاقة. تحدث خوارزمية "
 "التزامن حالة العاكس بناءً على متطلبات المنازل المجمعة:"
 
-#: ../../content/C5_rsgp_power_management.rst:381
+#: ../../content/C5_rsgp_power_management.rst:387
 #, python-brace-format
 msgid "P_{load,inverter} = \\sum_{i=1}^{N} L_{i} \\times LL_{i}"
 msgstr "P_{load,inverter} = \\sum_{i=1}^{N} L_{i} \\times LL_{i}"
 
-#: ../../content/C5_rsgp_power_management.rst:385
+#: ../../content/C5_rsgp_power_management.rst:391
 #, python-brace-format
 msgid "where `LL_{i}` represents the binary load line state for the i-th house."
 msgstr "حيث `LL_{i}` يمثل الحالة الثنائية لخط الحمولة للمنزل رقم i."
 
-#: ../../content/C5_rsgp_power_management.rst:387
+#: ../../content/C5_rsgp_power_management.rst:393
 msgid ""
 "The utility line state coordination ensures that the inverter maintains "
 "proper grid connection based on house connectivity:"
@@ -5340,12 +5368,12 @@ msgstr ""
 "يضمن تنسيق حالة خط المرافق أن العاكس يحافظ على اتصال صحيح بالشبكة بناءً "
 "على اتصال المنازل:"
 
-#: ../../content/C5_rsgp_power_management.rst:389
+#: ../../content/C5_rsgp_power_management.rst:395
 #, python-brace-format
 msgid "UL_{inverter} = \\bigvee_{i=1}^{N} UL_{i}"
 msgstr "UL_{inverter} = \\bigvee_{i=1}^{N} UL_{i}"
 
-#: ../../content/C5_rsgp_power_management.rst:393
+#: ../../content/C5_rsgp_power_management.rst:399
 #, python-brace-format
 msgid ""
 "where `UL_{i}` represents the binary utility line state for the i-th "
@@ -5356,7 +5384,7 @@ msgstr ""
 "التنسيق على الاتساق بين اتصالات مرافق المنازل الفردية ومتطلبات واجهة شبكة"
 " النظام العامة."
 
-#: ../../content/C5_rsgp_power_management.rst:395
+#: ../../content/C5_rsgp_power_management.rst:401
 msgid ""
 "The current model for setting the inverter's utility line is not "
 "representative of the real world and thus must be changed to one more "
@@ -5369,11 +5397,11 @@ msgstr ""
 "لغياب فكرة أفضل، وقد تم منع إجراء مزيد من التحليل للمشكلة بسبب قرب "
 "المواعيد النهائية."
 
-#: ../../content/C5_rsgp_power_management.rst:398
+#: ../../content/C5_rsgp_power_management.rst:404
 msgid "Performance Monitoring and Data Collection"
 msgstr "مراقبة الأداء وجمع البيانات"
 
-#: ../../content/C5_rsgp_power_management.rst:399
+#: ../../content/C5_rsgp_power_management.rst:405
 msgid ""
 "The power management system implements data collection that captures "
 "system performance metrics and algorithm behavior. The monitoring system "
@@ -5384,7 +5412,7 @@ msgstr ""
 "الخوارزمية. يمكن نظام المراقبة من تقييم الأداء في الوقت الفعلي والتحليل "
 "التاريخي لفعالية إدارة الطاقة."
 
-#: ../../content/C5_rsgp_power_management.rst:401
+#: ../../content/C5_rsgp_power_management.rst:407
 msgid ""
 "The system collects time-series data for all virtual battery states, "
 "capturing capacity utilization, weight evolution, and energy flow "
@@ -5401,7 +5429,7 @@ msgstr ""
 "البيانات متوسط اعتماد شبكة المرافق وكفاءة استخدام البطارية وفعالية موازنة"
 " الأحمال."
 
-#: ../../content/C5_rsgp_power_management.rst:403
+#: ../../content/C5_rsgp_power_management.rst:409
 msgid ""
 "The collected data allows for the calculation of key performance metrics "
 "that measure power management effectiveness and system optimization "
@@ -5412,7 +5440,7 @@ msgstr ""
 "الطاقة ونجاح تحسين النظام. تتضمن المقاييس الأساسية تقليل استيراد شبكة "
 "المرافق واستخدام سعة البطارية:"
 
-#: ../../content/C5_rsgp_power_management.rst:405
+#: ../../content/C5_rsgp_power_management.rst:411
 msgid ""
 "\\text{Grid Dependence Ratio} = \\frac{\\sum_t "
 "P_{utility,import,t}}{\\sum_t P_{load,total,t}}"
@@ -5420,7 +5448,7 @@ msgstr ""
 "\\text{Grid Dependence Ratio} = \\frac{\\sum_t "
 "P_{utility,import,t}}{\\sum_t P_{load,total,t}}"
 
-#: ../../content/C5_rsgp_power_management.rst:409
+#: ../../content/C5_rsgp_power_management.rst:415
 msgid ""
 "\\text{Battery Utilization} = \\frac{\\sum_t C_{discharge,t}}{\\sum_t "
 "C_{residual,t}}"
@@ -5428,7 +5456,7 @@ msgstr ""
 "\\text{Battery Utilization} = \\frac{\\sum_t C_{discharge,t}}{\\sum_t "
 "C_{residual,t}}"
 
-#: ../../content/C5_rsgp_power_management.rst:413
+#: ../../content/C5_rsgp_power_management.rst:419
 msgid ""
 "These metrics provide quantitative assessment of power management "
 "performance and enable comparison between different algorithm "
@@ -5437,7 +5465,7 @@ msgstr ""
 "توفر هذه المقاييس تقييماً كمياً لأداء إدارة الطاقة وتمكن من المقارنة بين "
 "تكوينات الخوارزمية المختلفة وإعدادات المعاملات."
 
-#: ../../content/C5_rsgp_power_management.rst:415
+#: ../../content/C5_rsgp_power_management.rst:421
 msgid ""
 "The extensive data collection enables future integration of machine "
 "learning for predictive algorithms and advanced optimization techniques."

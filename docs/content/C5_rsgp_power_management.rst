@@ -135,6 +135,12 @@ When weight adjustment reduces total capacity `C_{vb,i}^{t+1}` below current res
 
 This excess energy is then redistributed among the other virtual batteries to conserve the energy during system optimization.
 
+Virtual Battery Synchronization
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+The system implements a periodic synchronization mechanism to ensure the virtual batteries maintain perfect alignment with the physical battery state. This corrects accumulated floating-point precision errors that can arise from iterative charge and discharge operations.
+
+The synchronization treats the physical battery as the authoritative source of truth and distributes any detected error proportionally among virtual batteries based on their total capacities. This approach reflects real-world implementation where the power manager reads from but does not directly control the physical battery system.
+
 .. plot:: _static/plots/C5_virtual_battery_weight_and_allocation.py
    :align: center
 

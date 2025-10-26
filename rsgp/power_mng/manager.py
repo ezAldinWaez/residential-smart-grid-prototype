@@ -200,6 +200,49 @@ class PowerManager:
             usage_met_fully_mask[idx] = discharging_power * discharging_weights[idx] - taken_power < EPSILON
         return usage_met_fully_mask
 
+    def _redistribute_excess_energy(self, excess_energy: float) -> None:
+        """Redistribute excess energy directly among virtual batteries without efficiency losses.
+        
+        Args:
+            excess_energy (float): The excess energy to redistribute [Wh].
+        """
+        if excess_energy <= EPSILON:
+            return
+            
+        # Redistribute using the same priority as charge_all_vb (least charged first)
+        remaining_energy = excess_energy
+        vb_indices = np.argsort([vb.total_capacity - vb.residual_capacity for vb in self.virtual_batteries])
+        
+        for idx, num_vbs_remaining in zip(vb_indices, range(len(self.virtual_batteries), 0, -1)):
+            vb = self.virtual_batteries[int(idx)]
+            energy_share = remaining_energy / num_vbs_remaining
+            available_space = vb.total_capacity - vb.residual_capacity
+            energy_to_add = min(energy_share, available_space)
+            
+            vb.residual_capacity += energy_to_add
+            remaining_energy -= energy_to_add
+
+    def _synchronize_vb_totals(self) -> None:
+        """Periodically synchronize VB totals to match solar battery state.
+        
+        Treats the solar battery as the source of truth and corrects accumulated
+        errors in VB calculations.
+        """
+        vb_total = sum(vb.residual_capacity for vb in self.virtual_batteries)
+        solar_total = self._solar_system_sim.battery.residual_capacity
+        error = solar_total - vb_total
+        
+        if abs(error) > EPSILON:
+            # Distribute the error proportionally to VB total capacities
+            total_capacity = sum(vb.total_capacity for vb in self.virtual_batteries)
+            if total_capacity > EPSILON:
+                for vb in self.virtual_batteries:
+                    capacity_ratio = vb.total_capacity / total_capacity
+                    adjustment = error * capacity_ratio
+                    vb.residual_capacity += adjustment
+                    # Ensure VB doesn't exceed its capacity limits
+                    vb.residual_capacity = max(0, min(vb.residual_capacity, vb.total_capacity))
+
     @log_start_end_error("Starting power manager.", "Stoping power manager.")
     def _update_loop(self) -> None:
         while self._running:
@@ -224,10 +267,13 @@ class PowerManager:
 
         # Learn step
         excess_capacity = self.learn_step(houses_load_powers)
+        
+        # Redistribute excess energy between VBs
+        self._redistribute_excess_energy(excess_capacity)
 
-        # Charging/discharging
+        # Charging/discharging with solar system battery
         if inverter_battery_exchange_power > EPSILON:
-            self.charge_all_vb(inverter_battery_exchange_power + excess_capacity)
+            self.charge_all_vb(inverter_battery_exchange_power)
         elif inverter_battery_exchange_power < -EPSILON:
             houses_vb_usage = self.calc_houses_vb_usage(
                 houses_load_powers,
@@ -259,12 +305,17 @@ class PowerManager:
         self._solar_system_sim.inverter.utility_line = any([h.utility_line for h in self._houses_sim.houses])
         self._solar_system_sim.inverter.load_power = self._houses_sim.get_system_load()
 
+        # Synchronize VB totals to match solar battery
+        self._synchronize_vb_totals()
+
         if settings.CSV_LOGGING:
             log_record_into_csv(
                 settings.CSV_PM_LOG_PATH,
                 timestamp=f"{time_sim.get_timestamp(elapsed)}",
                 ** {f"virtual_battery_{vb.idx+1}_total_capacity": f"{vb.total_capacity:.3f}" for vb in self.virtual_batteries},
                 ** {f"virtual_battery_{vb.idx+1}_residual_capacity": f"{vb.residual_capacity:.3f}" for vb in self.virtual_batteries},
+                vbs_total_cap_error=str(self._solar_system_sim.battery.residual_capacity - sum(vb.residual_capacity for vb in self.virtual_batteries)),
+                vbs_resid_cap_error=str(self._solar_system_sim.battery.conf.total_capacity - sum(vb.total_capacity for vb in self.virtual_batteries)),
             )
 
     def summary(self) -> str:

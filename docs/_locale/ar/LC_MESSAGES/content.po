@@ -6140,8 +6140,8 @@ msgid "15"
 msgstr "15"
 
 #: ../../content/C7_rasp_controller.rst:174
-msgid "H1 HVAC"
-msgstr "H1 HVAC"
+msgid "H1 Washing Machine"
+msgstr "H1 Washing Machine"
 
 #: ../../content/C7_rasp_controller.rst:174
 #: ../../content/C7_rasp_controller.rst:188
@@ -6192,8 +6192,8 @@ msgid "19"
 msgstr "19"
 
 #: ../../content/C7_rasp_controller.rst:182
-msgid "H2 HVAC"
-msgstr "H2 HVAC"
+msgid "H2 Washing Machine"
+msgstr "H2 Washing Machine"
 
 #: ../../content/C7_rasp_controller.rst:182
 msgid "7"
@@ -6240,8 +6240,8 @@ msgid "23"
 msgstr "23"
 
 #: ../../content/C7_rasp_controller.rst:190
-msgid "H3 HVAC"
-msgstr "H3 HVAC"
+msgid "H3 Washing Machine"
+msgstr "H3 Washing Machine"
 
 #: ../../content/C7_rasp_controller.rst:190
 msgid "11"

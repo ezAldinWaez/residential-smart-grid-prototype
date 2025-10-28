@@ -8,7 +8,7 @@ from typing import List
 class DeviceType(Enum):
     """Device type enumeration."""
     REFRIGERATOR = "REFRIGERATOR"
-    HVAC = "HVAC"
+    WASHING_MACHINE = "WASHING_MACHINE"
     WATER_HEATER = "WATER_HEATER"
     LOAD_LINE = "LOAD_LINE"
     UTILITY_LINE = "UTILITY_LINE"
@@ -36,19 +36,19 @@ class HardwareConfig:
     GPIO_MAPPINGS: List[GPIOMapping] = [
         # House 1
         GPIOMapping(2, 15, 1, DeviceType.REFRIGERATOR),
-        GPIOMapping(3, 16, 1, DeviceType.HVAC),
+        GPIOMapping(3, 16, 1, DeviceType.WASHING_MACHINE),
         GPIOMapping(4, 17, 1, DeviceType.WATER_HEATER),
         GPIOMapping(5, 18, 1, DeviceType.LOAD_LINE),
         
         # House 2
         GPIOMapping(6, 19, 2, DeviceType.REFRIGERATOR),
-        GPIOMapping(7, 20, 2, DeviceType.HVAC),
+        GPIOMapping(7, 20, 2, DeviceType.WASHING_MACHINE),
         GPIOMapping(8, 21, 2, DeviceType.WATER_HEATER),
         GPIOMapping(9, 22, 2, DeviceType.LOAD_LINE),
         
         # House 3
         GPIOMapping(10, 23, 3, DeviceType.REFRIGERATOR),
-        GPIOMapping(11, 24, 3, DeviceType.HVAC),
+        GPIOMapping(11, 24, 3, DeviceType.WASHING_MACHINE),
         GPIOMapping(12, 25, 3, DeviceType.WATER_HEATER),
         GPIOMapping(13, 26, 3, DeviceType.LOAD_LINE),
         

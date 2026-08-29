@@ -56,6 +56,34 @@ class PowerManager:
         """
         return self._running
 
+    def get_dashboard_metrics(self) -> dict:
+        """Return one serializable snapshot for dashboard refreshes."""
+        total_capacity = float(sum(vb.total_capacity for vb in self.virtual_batteries))
+        residual_capacity = float(sum(vb.residual_capacity for vb in self.virtual_batteries))
+        return {
+            "running": self._running,
+            "virtual_batteries": len(self.virtual_batteries),
+            "total_capacity": total_capacity,
+            "residual_capacity": residual_capacity,
+            "state_of_charge": (
+                residual_capacity / total_capacity if total_capacity > 0 else 0.0
+            ),
+            "batteries": [
+                {
+                    "idx": vb.idx,
+                    "weight": float(vb.weight),
+                    "total_capacity": float(vb.total_capacity),
+                    "residual_capacity": float(vb.residual_capacity),
+                    "state_of_charge": (
+                        float(vb.residual_capacity) / float(vb.total_capacity)
+                        if vb.total_capacity > 0
+                        else 0.0
+                    ),
+                }
+                for vb in self.virtual_batteries
+            ],
+        }
+
     def start(self, dt: int = None) -> None:
         """Start the power manager.
 

@@ -73,8 +73,9 @@ The system foundation uses **Python** as the primary programming language, provi
 - **NSRDB** (National Solar Radiation Database) serves as the primary data source, providing hourly solar irradiance measurements required for realistic solar system modeling.
 - **timezonefinder** provides geographic timezone detection.
 - **Pyro5** (Python Remote Objects) enables the distributed simulation architecture by providing remote method invocation.
-- **Tkinter** provides the graphical user interfaces.
-- **ttkbootstrap** extends the interface with modern themes and enhanced widget styling.
+- **Starlette** provides the dashboard web server and control application programming interface.
+- **Uvicorn** runs the local web application through the Asynchronous Server Gateway Interface.
+- **HTML, CSS, and JavaScript** provide the responsive browser interface without a frontend build step.
 - **Raspberry Pi** serves as the embedded computing platform for hardware integration.
 - **lgpio** library provides modern GPIO control with improved performance and reliability compared to legacy alternatives.
 

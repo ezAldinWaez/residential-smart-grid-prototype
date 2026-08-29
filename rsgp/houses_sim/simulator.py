@@ -81,6 +81,75 @@ class HousesSimulator:
         """
         return time_sim.get_elapsed()
 
+    def get_dashboard_metrics(self) -> dict:
+        """Return one serializable snapshot for dashboard refreshes."""
+        return {
+            "system_load": float(self.system_load),
+            "running": self._running,
+            "houses": [
+                {
+                    "idx": house.idx,
+                    "load": float(house.load_power),
+                    "utility_line": bool(house.utility_line),
+                    "load_line": bool(house.load_line),
+                }
+                for house in self.houses
+            ],
+        }
+
+    def set_all_utility_lines(self, state: bool) -> None:
+        """Set every house utility line with one remote call."""
+        for house in self.houses:
+            house.set_utility_line(state)
+
+    def set_all_load_lines(self, state: bool) -> None:
+        """Set every house load line with one remote call."""
+        for house in self.houses:
+            house.set_load_line(state)
+
+    def toggle_house_utility_line(self, idx: int) -> bool:
+        """Toggle one house utility line and return its new state."""
+        house = self.houses[idx]
+        house.toggle_utility_line()
+        return bool(house.utility_line)
+
+    def toggle_house_load_line(self, idx: int) -> bool:
+        """Toggle one house load line and return its new state."""
+        house = self.houses[idx]
+        house.toggle_load_line()
+        return bool(house.load_line)
+
+    def get_house_devices_metrics(self, idx: int) -> dict:
+        """Return a serializable device-control snapshot for one house."""
+        house = self.houses[idx]
+        return {
+            "house_idx": house.idx,
+            "load": float(house.load_power),
+            "utility_line": bool(house.utility_line),
+            "load_line": bool(house.load_line),
+            "running": self._running,
+            "devices": [
+                {
+                    "name": name,
+                    "load": float(device.get_load()),
+                    "summary": device.get_conf_summary(),
+                    "envelopes": [
+                        {"idx": envelope_idx, "active": bool(envelope[2])}
+                        for envelope_idx, envelope in enumerate(device.get_envelopes())
+                    ],
+                }
+                for name, device in house.devices.items()
+            ],
+        }
+
+    def toggle_house_device(self, house_idx: int, device_name: str, envelope_idx: int) -> bool:
+        """Toggle one appliance envelope and return its new state."""
+        device = self.houses[house_idx].devices[device_name]
+        if envelope_idx < 0 or envelope_idx >= len(device.get_envelopes()):
+            raise IndexError(envelope_idx)
+        device.toggle_envelope_state(envelope_idx, time_sim.get_elapsed())
+        return bool(device.get_envelopes()[envelope_idx][2])
+
     def start(self, dt: int) -> None:
         """Start the houses simulation.
 

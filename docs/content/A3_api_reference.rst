@@ -140,20 +140,6 @@ App
   :undoc-members:
   :show-inheritance:
 
-Views
-"""""
-.. automodule:: dashboard.views
-  :members:
-  :undoc-members:
-  :show-inheritance:
-
-Utilities
-"""""""""
-.. automodule:: dashboard.utils
-  :members:
-  :undoc-members:
-  :show-inheritance:
-
 Raspberry Pi Controller
 ~~~~~~~~~~~~~~~~~~~~~~~
 Hardware Configuration

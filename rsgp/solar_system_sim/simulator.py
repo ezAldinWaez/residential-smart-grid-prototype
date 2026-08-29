@@ -42,6 +42,35 @@ class SolarSystemSimulator:
         """
         return self._running
 
+    def get_dashboard_metrics(self) -> dict:
+        """Return one serializable snapshot for dashboard refreshes."""
+        total_capacity = float(self.battery.conf.total_capacity)
+        return {
+            "running": self._running,
+            "solar_power": float(self.panels.total_power),
+            "panels_power": float(self.inverter.panels_power),
+            "load_power": float(self.inverter.load_power),
+            "battery_capacity": total_capacity,
+            "battery_residual": float(self.battery.residual_capacity),
+            "battery_soc": (
+                float(self.battery.residual_capacity) / total_capacity
+                if total_capacity > 0
+                else 0.0
+            ),
+            "battery_exchange_power": float(self.inverter.battery_exchange_power),
+            "utility_exchange_power": float(self.inverter.utility_exchange_power),
+            "utility_line": bool(self.inverter.utility_line),
+            "load_line": bool(self.inverter.load_line),
+            "inverter_mode": self.inverter.conf.mode.value,
+            "charge_priority": self.inverter.conf.charge_priority.value,
+            "inverter_rated_power": float(self.inverter.conf.paco),
+            "panel_count": int(self.panels.conf.num_panels),
+            "panel_area": float(self.panels.conf.panel_area),
+            "panel_efficiency": float(self.panels.conf.panel_efficiency),
+            "battery_max_charge_power": float(self.battery.conf.max_charge_power),
+            "battery_max_discharge_power": float(self.battery.conf.max_discharge_power),
+        }
+
     def start(self, dt: int) -> None:
         """Start the solar system simulation.
 

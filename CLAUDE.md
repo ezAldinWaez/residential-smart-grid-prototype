@@ -17,7 +17,7 @@ The RSGP follows a modular, distributed architecture with three main simulation 
 - **`rsgp/utils/`** - Shared utilities: Time simulation, remote object interface, logging, and data handling
 
 ### Supporting Components
-- **`dashboard/`** - GUI dashboard using tkinter/ttkbootstrap for visualization and control
+- **`dashboard/`** - Browser dashboard using Starlette, standards-based HTML, CSS, and JavaScript
 - **`rasp_controller/`** - Raspberry Pi GPIO controller for hardware integration
 - **`notebooks/`** - Jupyter notebooks for data visualization and analysis
 - **`docs/`** - Sphinx documentation with multi-language support (English/Arabic)
@@ -101,7 +101,7 @@ When writing documentation for this project, follow the established style guide 
 The project uses these key dependencies:
 - **Simulation**: `numpy`, `pandas`, `scipy`, `pvlib` (solar calculations)
 - **Remote Objects**: `Pyro5` for distributed simulation
-- **GUI**: `tkinter`, `ttkbootstrap` for dashboard
+- **Web UI**: `Starlette` and `Uvicorn` with dependency-free HTML, CSS, and JavaScript
 - **Data**: `h5py`, `xlrd` for data file handling  
 - **Hardware**: GPIO libraries for Raspberry Pi integration
 - **Documentation**: `sphinx`, `sphinx-rtd-theme` for docs generation

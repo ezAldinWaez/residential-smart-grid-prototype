@@ -1,0 +1,180 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light">
+  <meta name="theme-color" content="#f3f7f4">
+  <title>RSGP · النموذج الأولي للشبكة السكنية الذكية</title>
+  <link rel="stylesheet" href="/static/styles.css">
+  <script src="/static/app.js" defer></script>
+</head>
+<body>
+  <a class="skip-link" href="#main-content">تخطَّ إلى العمليات</a>
+
+  <svg class="svg-sprite" aria-hidden="true">
+    <symbol id="icon-zap" viewBox="0 0 24 24"><path d="M13 2 3 14h9l-1 8 10-12h-9Z"/></symbol>
+    <symbol id="icon-home" viewBox="0 0 24 24"><path d="m3 11 9-8 9 8"/><path d="M5 10v10h14V10"/><path d="M9 20v-6h6v6"/></symbol>
+    <symbol id="icon-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.42 1.42M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.42-1.42M17.66 6.34l1.41-1.41"/></symbol>
+    <symbol id="icon-battery" viewBox="0 0 24 24"><rect x="2" y="6" width="18" height="12" rx="2"/><path d="M22 10v4M6 10v4M10 10v4M14 10v4"/></symbol>
+    <symbol id="icon-grid" viewBox="0 0 24 24"><path d="M12 2 5 22M12 2l7 20M7 10h10M5 16h14M3 22h18"/></symbol>
+    <symbol id="icon-activity" viewBox="0 0 24 24"><path d="M3 12h4l2-7 4 14 2-7h6"/></symbol>
+    <symbol id="icon-pause" viewBox="0 0 24 24"><rect x="6" y="4" width="4" height="16" rx="1"/><rect x="14" y="4" width="4" height="16" rx="1"/></symbol>
+    <symbol id="icon-play" viewBox="0 0 24 24"><path d="m7 4 13 8-13 8Z"/></symbol>
+    <symbol id="icon-sliders" viewBox="0 0 24 24"><path d="M4 21v-7M4 10V3M12 21v-9M12 8V3M20 21v-5M20 12V3M1 14h6M9 8h6M17 16h6"/></symbol>
+    <symbol id="icon-x" viewBox="0 0 24 24"><path d="m6 6 12 12M18 6 6 18"/></symbol>
+    <symbol id="icon-check" viewBox="0 0 24 24"><path d="m5 12 4 4L19 6"/></symbol>
+    <symbol id="icon-alert" viewBox="0 0 24 24"><path d="M12 9v4M12 17h.01"/><path d="M10.3 3.6 2.2 18a2 2 0 0 0 1.8 3h16a2 2 0 0 0 1.8-3L13.7 3.6a2 2 0 0 0-3.4 0Z"/></symbol>
+    <symbol id="icon-chevron" viewBox="0 0 24 24"><path d="m9 18 6-6-6-6"/></symbol>
+    <symbol id="icon-search" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="m20 20-4-4"/></symbol>
+  </svg>
+
+  <header class="app-header">
+    <div class="header-inner">
+      <a class="brand" href="#main-content" aria-label="النموذج الأولي للشبكة السكنية الذكية RSGP">
+        <span class="brand-mark"><svg aria-hidden="true"><use href="#icon-zap"></use></svg></span>
+        <span><strong>RSGP</strong><small>النموذج الأولي للشبكة السكنية الذكية</small></span>
+      </a>
+
+      <div class="header-state" aria-label="حالة المحاكاة">
+        <span class="status-dot" data-status-dot></span>
+        <span><strong data-running-label>جارٍ الاتصال</strong><small data-last-updated>بانتظار القياسات</small></span>
+      </div>
+
+      <div class="header-actions">
+        <div class="simulation-time"><span>وقت المحاكاة</span><strong id="simulation-clock">--:--:--</strong><small id="simulation-date">بانتظار الوقت</small></div>
+        <button id="engineering-button" class="button button-secondary" type="button"><svg aria-hidden="true"><use href="#icon-activity"></use></svg><span>البيانات الهندسية</span></button>
+        <button id="network-controls-button" class="button button-secondary" type="button"><svg aria-hidden="true"><use href="#icon-sliders"></use></svg><span>تحكم الشبكة</span></button>
+        <button id="simulation-toggle" class="button button-primary" type="button"><svg aria-hidden="true"><use href="#icon-pause"></use></svg><span>إيقاف مؤقت</span></button>
+      </div>
+    </div>
+  </header>
+
+  <main id="main-content" class="workspace" tabindex="-1">
+    <div id="connection-banner" class="connection-banner" role="alert" hidden>
+      <svg aria-hidden="true"><use href="#icon-alert"></use></svg>
+      <span><strong>خدمات المحاكاة غير متاحة.</strong> ستتم إعادة المحاولة تلقائياً.</span>
+    </div>
+
+    <section class="workspace-intro" aria-labelledby="workspace-title">
+      <div>
+        <p class="eyebrow">النموذج الأولي للشبكة السكنية الذكية</p>
+        <h1 id="workspace-title">توزيع ذكي وعادل للطاقة الشمسية بين المنازل.</h1>
+        <p id="system-narrative">يحاكي RSGP الاستهلاك السكني والتوليد الشمسي، ويوزّع البطارية المشتركة افتراضياً حسب أنماط الاستهلاك لتقليل الاعتماد على الشبكة العامة.</p>
+      </div>
+      <div id="system-verdict" class="verdict verdict-neutral"><span class="verdict-icon"><svg aria-hidden="true"><use href="#icon-activity"></use></svg></span><span><small>حالة إدارة الطاقة</small><strong>جارٍ الاتصال</strong></span></div>
+    </section>
+
+    <section class="signal-strip" aria-label="قياسات النظام الحالية">
+      <article><span class="signal-icon solar"><svg aria-hidden="true"><use href="#icon-sun"></use></svg></span><span><small>إنتاج الطاقة الشمسية</small><strong id="metric-solar">—</strong><em id="metric-solar-meta">بانتظار البيانات</em></span></article>
+      <article><span class="signal-icon demand"><svg aria-hidden="true"><use href="#icon-home"></use></svg></span><span><small>الطلب السكني</small><strong id="metric-demand">—</strong><em id="metric-demand-meta">بانتظار البيانات</em></span></article>
+      <article><span class="signal-icon storage"><svg aria-hidden="true"><use href="#icon-battery"></use></svg></span><span><small>احتياطي البطارية</small><strong id="metric-battery">—</strong><em id="metric-battery-meta">بانتظار البيانات</em></span></article>
+      <article><span class="signal-icon utility"><svg aria-hidden="true"><use href="#icon-grid"></use></svg></span><span><small>تبادل الشبكة العامة</small><strong id="metric-utility">—</strong><em id="metric-utility-meta">بانتظار البيانات</em></span></article>
+    </section>
+
+    <section class="operations-grid" aria-label="عمليات الشبكة المباشرة">
+      <article class="panel flow-panel">
+        <div class="panel-heading">
+          <div><p class="eyebrow">إدارة الطاقة المشتركة</p><h2>مسار الطاقة بين المصادر والمنازل</h2></div>
+          <span id="flow-balance-chip" class="status-badge">جارٍ حساب التوازن</span>
+        </div>
+
+        <div class="flow-map" aria-describedby="flow-summary">
+          <div class="source-node source-solar"><span class="node-icon"><svg aria-hidden="true"><use href="#icon-sun"></use></svg></span><span><small>المصفوفة الشمسية</small><strong id="flow-solar">—</strong><em id="flow-solar-state">بانتظار البيانات</em></span></div>
+          <div class="flow-path path-solar" aria-hidden="true"><span></span><svg><use href="#icon-chevron"></use></svg></div>
+          <div class="load-node"><span class="node-icon"><svg aria-hidden="true"><use href="#icon-home"></use></svg></span><span><small>طلب المجتمع</small><strong id="flow-demand">—</strong><em id="flow-homes-state">بانتظار البيانات</em></span></div>
+          <div class="flow-path path-storage" aria-hidden="true"><span></span><svg><use href="#icon-chevron"></use></svg></div>
+          <div class="support-stack">
+            <div class="source-node"><span class="node-icon"><svg aria-hidden="true"><use href="#icon-battery"></use></svg></span><span><small id="flow-battery-state">البطارية</small><strong id="flow-battery">—</strong></span></div>
+            <div class="source-node"><span class="node-icon"><svg aria-hidden="true"><use href="#icon-grid"></use></svg></span><span><small id="flow-utility-state">الشبكة العامة</small><strong id="flow-utility">—</strong></span></div>
+          </div>
+        </div>
+        <p id="flow-summary" class="flow-summary">بانتظار بيانات تدفق الطاقة.</p>
+
+        <div class="trend-block">
+          <div class="trend-heading"><span><small>سجل الطلب</small><strong id="trend-current">—</strong></span><span class="trend-period">آخر 60 تحديثاً</span></div>
+          <svg class="trend-chart" viewBox="0 0 720 132" role="img" aria-labelledby="trend-title trend-summary">
+            <title id="trend-title">سجل طلب المجتمع</title>
+            <desc id="trend-summary">بانتظار عينات الطلب.</desc>
+            <line x1="0" y1="32" x2="720" y2="32"></line><line x1="0" y1="76" x2="720" y2="76"></line><line x1="0" y1="120" x2="720" y2="120"></line>
+            <path id="demand-area" class="chart-area" d=""></path><path id="demand-line" class="chart-line" d=""></path>
+          </svg>
+        </div>
+      </article>
+
+      <aside class="panel attention-panel" aria-labelledby="attention-title">
+        <div class="panel-heading">
+          <div><p class="eyebrow">قرارات إدارة الطاقة</p><h2 id="attention-title">حالات تؤثر في التوزيع</h2></div>
+          <span id="attention-count" class="count-badge">0</span>
+        </div>
+        <div id="attention-list" class="attention-list"><p class="empty-state">جارٍ فحص حالات النظام…</p></div>
+        <div class="service-footprint" aria-label="توافر الخدمات">
+          <span data-service="houses"><i></i>المنازل</span><span data-service="solar"><i></i>الطاقة الشمسية</span><span data-service="power"><i></i>التوزيع</span>
+        </div>
+      </aside>
+    </section>
+
+    <section class="community-section panel" aria-labelledby="community-title">
+      <div class="section-heading">
+        <div><p class="eyebrow">أنماط الاستهلاك السكني</p><h2 id="community-title">أحمال المنازل واتصالها</h2><p>تُستخدم أنماط الاستهلاك لتكييف حصة كل منزل من البطارية المشتركة.</p></div>
+        <div class="community-totals"><span><small>إجمالي الطلب</small><strong id="houses-total-demand">—</strong></span><span><small>متصل</small><strong id="houses-online">—</strong></span></div>
+      </div>
+
+      <div class="community-toolbar">
+        <label class="search-field"><svg aria-hidden="true"><use href="#icon-search"></use></svg><span class="sr-only">البحث في المنازل</span><input id="house-search" type="search" placeholder="ابحث عن منزل" autocomplete="off"></label>
+        <div class="filter-group" aria-label="تصفية المنازل">
+          <button class="filter-button is-active" type="button" data-house-filter="all" aria-pressed="true">الكل</button>
+          <button class="filter-button" type="button" data-house-filter="attention" aria-pressed="false">يحتاج انتباهاً <span id="house-attention-count">0</span></button>
+        </div>
+      </div>
+
+      <div class="house-list-header" aria-hidden="true"><span>المنزل</span><span>الطلب</span><span>الشبكة</span><span>الحمل</span><span>الأجهزة</span></div>
+      <div id="house-list" class="house-list" aria-live="off"></div>
+      <p id="house-empty" class="empty-state" hidden>لا توجد منازل مطابقة.</p>
+    </section>
+  </main>
+
+  <dialog id="engineering-dialog" class="task-dialog engineering-dialog" aria-labelledby="engineering-dialog-title">
+    <div class="dialog-header"><div><p class="eyebrow">نماذج RSGP وخوارزمياته</p><h2 id="engineering-dialog-title">المحاكاة وتخصيص البطارية الافتراضية</h2><p>نمذجة التوليد الشمسي والبطارية المشتركة والحصص المتكيفة للمنازل.</p></div><button class="icon-button" type="button" data-close-dialog="engineering-dialog" aria-label="إغلاق البيانات الهندسية"><svg aria-hidden="true"><use href="#icon-x"></use></svg></button></div>
+    <div class="engineering-content">
+      <article class="engineering-card">
+        <div class="panel-heading"><div><p class="eyebrow">المصدر الفعلي المشترك</p><h2>المحاكاة الشمسية والبطارية</h2></div><span id="solar-service-state" class="status-badge">بانتظار البيانات</span></div>
+        <div class="plant-stats">
+          <span><small>خرج الطاقة الشمسية</small><strong id="solar-output">—</strong><em id="solar-output-meta">بانتظار البيانات</em></span>
+          <span><small>تبادل البطارية</small><strong id="solar-battery-power">—</strong><em id="solar-battery-state">بانتظار البيانات</em></span>
+          <span><small>تبادل الشبكة</small><strong id="solar-utility-power">—</strong><em id="solar-utility-state">بانتظار البيانات</em></span>
+        </div>
+        <div class="reserve-block"><div><span>احتياطي البطارية الفعلية</span><strong id="solar-reserve-label">—</strong></div><div id="solar-reserve-progress" class="progress-track" role="progressbar" aria-label="احتياطي البطارية الفعلية" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><span></span></div></div>
+        <dl class="config-grid"><div><dt>وضع العاكس</dt><dd id="config-mode">—</dd></div><div><dt>أولوية الشحن</dt><dd id="config-priority">—</dd></div><div><dt>المصفوفة الشمسية</dt><dd id="config-array">—</dd></div><div><dt>استطاعة العاكس</dt><dd id="config-inverter">—</dd></div><div><dt>حدود البطارية</dt><dd id="config-battery">—</dd></div></dl>
+      </article>
+
+      <article class="engineering-card allocation-card">
+        <div class="panel-heading"><div><p class="eyebrow">خوارزمية التعلّم التكيفي</p><h2>حصص البطارية الافتراضية</h2></div><span><small>المتاح</small><strong id="allocation-reserve">—</strong></span></div>
+        <div class="allocation-summary"><span><small>المخصص</small><strong id="allocation-capacity">—</strong></span><span><small>الاحتياطي الإجمالي</small><strong id="allocation-soc">—</strong></span><span><small>مجال الأوزان</small><strong id="allocation-range">—</strong></span></div>
+        <div class="table-scroll" tabindex="0" role="region" aria-label="توزيع الاحتياطي الافتراضي حسب المنزل">
+          <table><caption class="sr-only">توزيع الاحتياطي الافتراضي لكل منزل</caption><thead><tr><th scope="col">المنزل</th><th scope="col">الوزن</th><th scope="col">المخصص</th><th scope="col">المتبقي</th><th scope="col">الاحتياطي</th></tr></thead><tbody id="allocation-body"></tbody></table>
+        </div>
+      </article>
+    </div>
+    <div class="dialog-footer"><span>تُحدَّث البيانات مباشرة.</span><button class="button button-primary" type="button" data-close-dialog="engineering-dialog">تم</button></div>
+  </dialog>
+
+  <dialog id="network-dialog" class="task-dialog" aria-labelledby="network-dialog-title">
+    <div class="dialog-header"><div><p class="eyebrow">إجراءات على جميع المنازل</p><h2 id="network-dialog-title">تحكم الشبكة</h2><p>طبّق حالة اتصال واحدة على كل المنازل.</p></div><button class="icon-button" type="button" data-close-dialog="network-dialog" aria-label="إغلاق تحكم الشبكة"><svg aria-hidden="true"><use href="#icon-x"></use></svg></button></div>
+    <div class="network-action-list">
+      <article><span><strong>خطوط الشبكة العامة</strong><small>صِل جميع المنازل بالتغذية العامة أو اعزلها عنها.</small></span><span><button class="button button-secondary" type="button" data-bulk-line="utility" data-state="false">فصل الكل</button><button class="button button-primary" type="button" data-bulk-line="utility" data-state="true">وصل الكل</button></span></article>
+      <article><span><strong>خطوط الحمل</strong><small>فعّل الطلب النموذجي أو افصله عن جميع المنازل.</small></span><span><button class="button button-secondary" type="button" data-bulk-line="load" data-state="false">تعطيل الكل</button><button class="button button-primary" type="button" data-bulk-line="load" data-state="true">تفعيل الكل</button></span></article>
+    </div>
+    <div class="dialog-footer"><span>تُطبَّق التغييرات فوراً.</span><button class="button button-secondary" type="button" data-close-dialog="network-dialog">تم</button></div>
+  </dialog>
+
+  <dialog id="device-dialog" class="task-dialog device-dialog" aria-labelledby="device-dialog-title" aria-describedby="device-dialog-description">
+    <div class="dialog-header"><div><p class="eyebrow">نموذج الاستهلاك السكني</p><h2 id="device-dialog-title">أجهزة المنزل</h2><p id="device-dialog-description">تُكوّن حالات الأجهزة حمل المنزل الذي تعتمد عليه خوارزمية التخصيص.</p></div><button class="icon-button" type="button" data-close-dialog="device-dialog" aria-label="إغلاق تحكم المنزل"><svg aria-hidden="true"><use href="#icon-x"></use></svg></button></div>
+    <div class="dialog-summary"><span><small>الطلب الحالي</small><strong id="dialog-house-load">—</strong></span><span class="dialog-line-states"><span id="dialog-utility-state" class="status-badge">بانتظار الشبكة</span><span id="dialog-load-state" class="status-badge">بانتظار الحمل</span></span></div>
+    <div id="device-list" class="device-list"></div>
+    <div class="dialog-footer"><span>اضغط Esc للإغلاق</span><button class="button button-primary" type="button" data-close-dialog="device-dialog">تم</button></div>
+  </dialog>
+
+  <div id="toast" class="toast" role="status" aria-live="polite" aria-atomic="true" hidden></div>
+</body>
+</html>

@@ -18,10 +18,9 @@ serpent==1.41                    # Pyro5 serialization protocol
 # User Interfaces and Visualization
 # =============================================================================
 
-# GUI Framework
+# Visualization and Browser Dashboard
 matplotlib>=3.5.0               # Publication-quality plots and visualizations
-tk==0.1.0                        # Tkinter GUI foundation
-ttkbootstrap==1.14.0            # Modern tkinter themes and styling
+# The web dashboard uses Starlette and Uvicorn, declared below.
 
 # Interactive Analysis
 marimo==0.14.10                  # Reactive notebooks for data exploration

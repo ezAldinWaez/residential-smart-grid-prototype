@@ -155,10 +155,11 @@ graph LR
    python -m rsgp
    ```
 
-4. **Launch the dashboard** (in a separate terminal)
+4. **Launch the web dashboard** (in a separate terminal)
    ```bash
    python -m dashboard
    ```
+   Then open `http://127.0.0.1:8080` in a browser.
 
 5. **Launch the Raspberry Pi controller** (optional, requires GPIO setup)
    ```bash
@@ -183,11 +184,14 @@ graph LR
 python -m rsgp
 ```
 
-**Launch the monitoring dashboard:**
+**Launch the browser monitoring dashboard:**
 
 ```bash
 python -m dashboard
 ```
+
+Open `http://127.0.0.1:8080`. Set `RSGP_DASHBOARD_HOST` and
+`RSGP_DASHBOARD_PORT` to change the local bind address or port.
 
 **Launch the hardware controller:**
 
@@ -267,7 +271,7 @@ residential-smart-grid/
 │   ├── power_mng/            # Virtual battery and adaptive learning algorithms
 │   ├── utils/                # Time simulation, logging, and remote objects
 │   └── config/               # Configuration settings
-├── dashboard/                # tkinter/ttkbootstrap GUI interface
+├── dashboard/                # Starlette browser dashboard and JSON control API
 ├── rasp_controller/          # Raspberry Pi GPIO hardware controller
 ├── docs/                     # Sphinx documentation (bilingual EN/AR)
 ├── notebooks/                # Marimo analysis notebooks
@@ -279,7 +283,7 @@ residential-smart-grid/
 - **pvlib/pvwatts**: Solar irradiance modeling and PV system calculations
 - **Pyro5**: Distributed object communication and remote interfaces
 - **numpy/pandas**: Scientific computing and data manipulation
-- **tkinter/ttkbootstrap**: GUI framework for dashboard
+- **Starlette/Uvicorn**: Local web server and control API for the browser dashboard
 - **marimo**: Interactive notebook environment for data analysis
 - **lgpio**: Raspberry Pi GPIO control library
 - **sphinx**: Documentation generation with bilingual support
@@ -306,13 +310,15 @@ Documentation covers:
 
 ### Real-time Dashboard
 
-The dashboard provides:
+The responsive web dashboard provides:
 
+- A compact Arabic right-to-left interface in an enforced light theme
 - Real-time system status and component states
 - Houses simulation monitoring with device controls
 - Solar system generation and battery status
 - Power management algorithm performance
 - Virtual battery allocation visualization
+- A unified, responsive operations workspace with keyboard-accessible task dialogs
 
 ### Data Logging
 
